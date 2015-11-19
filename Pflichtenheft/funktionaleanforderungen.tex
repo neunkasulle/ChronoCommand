@@ -2,12 +2,34 @@
 
 Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+'" hinter der Indentifikationsnummer markiert.
 
-\subsection{Zeiterfassung}
+\subsection{Stundenzettel und Zeiterfassung}
 
-\subsection{Benutzerverwaltung}
+\begin{requirements}
+    \req[Zeiterfassung]{F110}
+    Ein User kann in seiner Hauptseite eine Zeiterfassung starten und stoppen.
+    \begin{requirements}
+        \req[Kategorie]{F111} Eine Zeiterfassung ist mit einer Kategorie versehen.
+        \req[Tätigkeit]{F112} Eine Zeiterfassung ist mit einer Tätigkeit verbunden.
+        \req[Zeiterfassung ändern]{F113} Eine Zeiterfassung kann nachträglich geändert werden.
+        \req[Alternative Zeiterfassung]{F114} Eine Zeiterfassung kann auch manuell ohne das Starten und Stoppen einer Zeit erfasst werden.
+        \req[Zeiterfassung löschen]{Eine erfasste Zeit kann vom Benutzer wieder gelöscht werden}
+    \end{requirements}
 
-\subsection{Stundenzettel}
+    \req[Gesetzliche Vorgaben]{F120}
+    Die Zeiterfassung und der Stundenzettel folgen den gesetzlichen Bestimmungen.
+    \begin{requirements}
+        \req[Maximale Arbeitszeit]{F121} Die gesetzlich maximale Arbeitszeit kann bei einer Zeiterfassung nicht überschritten werden
+        \req[Pausenzeiten]{F122} Eine Zeiterfassung kann nicht dem Stundenzettel hinzugefügt werden wenn für ihren Umfang gesetzliche Pausenzeiten nicht eingetragen wurden.
+    \end{requirements}
 
-%\begin{requirements}
-%
-%\end{requirements}
+    \req[Stundenzettel]{F130}
+    Der Stundenzettel stellt eine Aufzeichnung der Arbeitstunden in einem vorgesetzten Zeitraum dar.
+    \begin{requirements}
+        \req[Sichtbarkeit]{F131} Der Betreuer und der Administrator können den Stundenzettel einsehen.
+        \req[Stundenzettel abgeben]{F132} Ist der Benutzer mit seiner Zeiterfassung in einem Zeitraum fertig, so kann er den Stundenzettel abgeben.
+        \req[abgegebene Stundenzettel]{F133} Der Betreuer und der Admin werden über abgegebene Stundenzettel Informiert
+        \req[Stundenkonto]{F134} Im Stundenzettel ist die tatsächliche und die zu leistende Arbeitszeit sichtbar.
+        \req[Betreuerkontrolle]{F135} Ein Stundenzettel kann vom Betreuer als Okay befunden werden.
+    \end{requirements}
+
+\end{requirements}
