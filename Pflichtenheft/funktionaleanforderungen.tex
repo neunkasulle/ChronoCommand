@@ -33,3 +33,35 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+'" hinter d
     \end{requirements}
 
 \end{requirements}
+
+\subsection{Benutzer und Rechte}
+
+\begin{requirements}
+    \req[Benutzer]{F210}
+    Ein Benutzer stellt den Standart User dar.
+    \begin{requirements}
+        \req[Stundenzettel]{F211} Ein Benutzer kann nur seinen eigenen Stundenzettel einsehen und verändern.
+        \req[Warnungen]{F212} Ein Benutzer erhält nur Warnungen über seine eigenen Aktionen.
+        \req[Erinnerungen]{F213} Ein Benutzer erhält nur Erinnerungen, die ihn selbst betreffen.
+    \end{requirements}
+
+    \req[Betreuer]{F220}
+        Ein Betreuer ist für mehrere Benutzer zuständig.
+        \begin{requirements}
+            \req[Benutzer zuweisen]{F221} Einem Betreuer können Benutzer zugewiesen werden
+            \req[Stundenzettel]{F222} Der Betreuer kann über seine übersicht alle ihm zugewiesenen Benutzer einsehen
+            \req[Warnungen]{F223} Der Betreuer erhält Warnungen für alle Benutzer die ihn zugewiesen sind.
+            \req[Erinnerungen]{F224} Der Betreuer erhält Erinnerungen für alle Benutzer die ihm zugewiesen sind.
+            \req[Stundenzettel prüfen]{F225} Der Betreuer überprüft die agegebenen Stundenzettel der im zugewiesenen Benutzer.
+        \end{requirements}
+
+    \req[Admin]{F230}
+        Ein Admin stellt das Verwaltungsorgan dar.
+        \begin{requirements}
+            \req[Benutzer erstellen]{F231} Der Admin kann neue Benutzer anlegen.
+            \req[Benutzer editieren]{F232} Der Admin kann die Daten existierende Benutzer verändern.
+            \reg[Benutzer löschen]{F233} Der Admin kann einen existierenden Benutzer löschen.
+            \req[Benutzer zuweisen]{F234} Der Admin kann Benutzer einem Betreuer zuweisen.
+        \end{requirements}
+\end{requirements}
+
