@@ -57,12 +57,6 @@
                     \item die Stundendaten der Benutzer
                 \end{itemize}
 
-	\req{T130} Betreuer sieht Stundendaten ein \\
-	        \textbf{Stand} Der Betreuer befindet sich auf der Betreuer Hauptseite. \\
-            \textbf{Aktion} Der Betreuer klickt die Schaltfläche "`Stundenzettel einsehen"' \\
-            \textbf{Reaktion} Der Betreuer erhält die Stundendaten der ihm zugewiesenen Benutzer.
-
-
 	\req{T140} Benutzer erhält Warnung wegen nicht abgegebenem Studenzettel \\
         \textbf{Stand} Der Benutzer ist nicht eingeloggt. \\
         \textbf{Aktion} Der Benutzer meldet sich an \textit{T110}. \\
@@ -101,7 +95,7 @@
 	        \textbf{Aktion} Der Benutzer klickt dem Editieren Button bei einer eingetragenen Zeit.\\
             \textbf{Reaktion} Die Elemente der eingetragenen Zeit werden editierbar.
         \req{T162}
-        \textbf{Stand} Die Elemente der eingetragenen Zeit sind editierbar.\\
+        \textbf{Stand} Die Elemente der eingetragenen Zeit sind editierbar. \\
         \textbf{Aktion} Der Benutzer
             \begin{itemize}
                 \item klickt in das Textfeld in dem die Tätigkeit vermerkt wird.
@@ -111,12 +105,12 @@
             \textbf{Reaktion} Die eingetragene Tätigkeit ist damit geändert
     \end{requirements}
 
-    \req{T170} Der Benutzer wählt die Seite an und besitz ein gültiges Session Cookie
+    \req{T170} Der Benutzer wählt die Seite an und besitz ein gültiges Session Cookie. \\
         \textbf{Stand} Offenes Browserfenster. \\
         \textbf{Aktion} Der Benutzer gibt chronoCommand.eu in die Browserzeile ein in betätigt Enter. \\
         \textbf{Reaktion} Da Session Cookie geladen, wird die Benutzer Hauptseite gezeigt.
 
-    \req{T180} Der Benutzer verletzt gesetzliche Vorgaben.
+    \req{T180} Der Benutzer verletzt gesetzliche Vorgaben. \\
         \textbf{Stand} Zeiterfassung läuft. \\
         \textbf{Aktion} Die Zeiterfassung überschreitet ein gesetzes Limit.
         \textbf{Reaktion}
@@ -124,4 +118,10 @@
                 \item Der Benutzer erhält eine Warnung, dass er gesetzliche Vorgaben verletzt.
                 \item Die Zeiterfassung stoppt.
             \end{itemize}
+
+    \req{T190} Betreuer sieht Stundendaten ein. \\
+        \textbf{Stand} Der Betreuer befindet sich auf der Betreuer Hauptseite. \\
+        \textbf{Aktion} Der Betreuer klickt die Schaltfläche "`Stundenzettel einsehen"' \\
+        \textbf{Reaktion} Der Betreuer erhält die Stundendaten der ihm zugewiesenen Benutzer.
+
 \end{requirements}
