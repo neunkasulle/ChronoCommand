@@ -65,7 +65,7 @@
 
 	\req{T140} Benutzer erhält Warnung wegen nicht abgegebenem Studenzettel \\
         \textbf{Stand} Der Benutzer ist nicht eingeloggt. \\
-        \textbf{Aktion} Der Benutzer meldet sich an \textbf{T110}. \\
+        \textbf{Aktion} Der Benutzer meldet sich an \textit{T110}. \\
         \textbf{Reaktion} Der Benutzer erhält nach der Anmeldung ein Popup, dass ihn auffordert, den Stundenzettel abzugeben.
 
 	\req{T150} Betreuer prüft neu abgebenen Stundenzettel
@@ -111,9 +111,17 @@
             \textbf{Reaktion} Die eingetragene Tätigkeit ist damit geändert
     \end{requirements}
 
-    \req{T170} Der Benutzer wählt die Seite an und besitz ein gültiges Session Cookies
+    \req{T170} Der Benutzer wählt die Seite an und besitz ein gültiges Session Cookie
         \textbf{Stand} Offenes Browserfenster. \\
         \textbf{Aktion} Der Benutzer gibt chronoCommand.eu in die Browserzeile ein in betätigt Enter. \\
         \textbf{Reaktion} Da Session Cookie geladen, wird die Benutzer Hauptseite gezeigt.
 
+    \req{T180} Der Benutzer verletzt gesetzliche Vorgaben.
+        \textbf{Stand} Zeiterfassung läuft. \\
+        \textbf{Aktion} Die Zeiterfassung überschreitet ein gesetzes Limit.
+        \textbf{Reaktion}
+            \begin{itemize}
+                \item Der Benutzer erhält eine Warnung, dass er gesetzliche Vorgaben verletzt.
+                \item Die Zeiterfassung stoppt.
+            \end{itemize}
 \end{requirements}
