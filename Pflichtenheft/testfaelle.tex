@@ -4,60 +4,111 @@
 \begin{requirements}
 	\req{T110} Benutzer Meldet sich an
 	\begin{itemize}
-  			\item Der Benutzer wählt in seinem Webbrowser die Website der Zeiterfassung an
-  			\item Da der Benutzer keinen Session Cookie besitzt wird ihm ein Anmeldescreen gezeigt
-  			\item Der Benutzer gibt dort seine Email an
-  			\item Der Benutzer gibt dort sein Passwort an
-  			\item Der Benutzer klickt auf die Schaltfläche "`Anmelden"'
-  			\item Wenn Email und Passwort korrekt, hat sich der Benutzer damit erfolgreich angemeldet
+  			\item
+  			    \textbf{Stand} Offenes Browserfenster. \\
+  			    \textbf{Aktion} Der Benutzer gibt chronoCommand.eu in die Browserzeile ein in betätigt Enter. \\
+  			    \textbf{Reaktion} Da Kein Session Cookie geladen, wird der Anmeldescreen gezeigt.
+  			\item
+  			    \textbf{Stand} Der Anmeldeseite wurde geladen.\\
+                \textbf{Aktion}
+                    \begin{itemize} Der Benutzer
+                        \item gibt im Nutzernamen Feld seinen Nutzernamen an.
+                        \item gibt im Passwort Feld sein Passwort an.
+                        \item betätigt die Anmelden Schaltfläche.
+                    \end{itemize}
+                \begin{itemize}
+                    \textbf{Reaktion\[Benutzerdaten Korrekt\]} Der Benutzer wird Angemeldet.
+                    \textbf{Reaktion\[Benutzerdaten Nicht Korrekt\]} Der Benutzer bekommt eine Fehlermeldung.
+                \end{itemize}
+
 	\end{itemize}
-	\req{T120} Angemeldeter Benutzer startet/stoppt eine Zeiterfassung
+	\req{T120} Angemeldeter Benutzer startet/stoppt eine Zeiterfassung.
 	\begin{itemize}
-		\item Der Benutzer befindet sich auf der Hauptseite
-		\item Der Benutzer klickt die Schaltfläche "`neue Zeiterfassung"'
-		\item Der Benutzer weist der Zeiterfassung eine Kategorie über die Schaltfläche "`Kategorie"' zu
-		\item Der Benutzer weist der Zeiterfassung eine Tätigkeit über das Textfeld "`Tätigkeit"' zu
-		\item Der Benutzer startet die Zeiterfassung über die Schaltfläche "`Start"'
-		\item Der Benutzer stoppt die Zeiterfassung über die Schaltfläche "`Zeiterfassung stoppen"'
+	    \item
+            \textbf{Stand} Der Benutzer befindet sich angemeldet auf der Hauptseite. \\
+            \textbf{Aktion} Der Benutzer klickt die Schaltfläche "`neue Zeiterfassung"' \\
+            \textbf{Reaktion} Es werden die Elemente für eine neue Zeiterfassung geladen.
+            \item
+                \textbf{Stand} Der Benutzer sieht die Elemente für eine neue Zeiterfassung. \\
+                \textbf{Aktion}
+                    \begin{itemize} Der Benutzer
+                        \item weist der Zeiterfassung eine Kategorie über das Textfeld "`Kategorie"' zu.
+                        \item weist der Zeiterfassung eine Tätigkeit über das Textfeld "`Tätigkeit"' zu
+                        \item startet die Zeiterfassung über die Schaltfläche "`Start"'
+                    \end{itemize}
+                \textbf{Reaktion} Die Zeiterfassung läuft.
+        \item
+            \textbf{Stand} Die Zeiterfassung läuft. \\
+            \textbf{Aktion} Der Benutzer stoppt die Zeiterfassung über die Schaltfläche "`Zeiterfassung stoppen"' \\
+            \textbf{Reaktion}
+                \begin{itemize}
+                    \item Die Zeiterfassung Stoppt.
+                    \item Die Erfasste Zeit wird in die erfassten Zeiten eingetragen.
+                \end{itemize}
 	\end {itemize}
+
+
 	\req{T130} Admin sammelt Stundendaten ein
-	\begin{itemize}
-		\item Der Admin befindet sich auf der Admin Hauptseite
-		\item Der Admin klickt die Schaltfläche "`Stundenzettel einsammeln"'
-		\item Der Admin erhält Informationen über den Erfolg des Einsammelns
-		\item Der Admin erhält die Stundendaten der Benutzer
-	\end {itemize}
+            \textbf{Stand} Der Admin befindet sich auf der Admin Hauptseite. \\
+            \textbf{Aktion} Der Admin klickt die Schaltfläche "`Stundenzettel einsammeln"'' \\
+            \textbf{Reaktion}
+                \begin{itemize} Der Admin erhält
+                    \item Informationen über den Erfolg des Einsammelns
+                    \item die Stundendaten der Benutzer
+                \end{itemize}
+
 	\req{T130} Betreuer sieht Stundendaten ein
-	\begin{itemize}
-		\item Der Betreuer befindet sich auf der Betreuer Hauptseite
-		\item Der Betreuer klickt die Schaltfläche "`Stundenzettel einsehen"'
-		\item Der Betreuer erhält die Stundendaten der ihm zugewiesenen Benutzer
-	\end {itemize}
+	        \textbf{Stand} Der Betreuer befindet sich auf der Betreuer Hauptseite. \\
+            \textbf{Aktion} Der Betreuer klickt die Schaltfläche "`Stundenzettel einsehen"' \\
+            \textbf{Reaktion} Der Betreuer erhält die Stundendaten der ihm zugewiesenen Benutzer.
+
+
 	\req{T140} Benutzer erhält Warnung wegen nicht abgegebenem Studenzettel
-    \begin{itemize}
-		\item Der Benutzer meldet sich an
-		\item Der Benutzer erhält nach der Anmeldung ein Popup, dass ihn auffordert, den Stundenzettel abzugeben.
-		\item Der Benutzer kann im Popup über die Schaltfläche "`zum Stundenzettel"' auf die Stundenzettel Seite wechseln und diesen dort als abzugeben markieren.
-	\end {itemize}
+        \textbf{Stand} Der Benutzer ist nicht eingeloggt. \\
+        \textbf{Aktion} Der Benutzer meldet sich an \textbf{T110}. \\
+        \textbf{Reaktion} Der Benutzer erhält nach der Anmeldung ein Popup, dass ihn auffordert, den Stundenzettel abzugeben.
 
 	\req{T150} Betreuer prüft neu abgebenen Stundenzettel
 	\begin{itemize}
-	    \item Der Betreuer ist angemeldet.
-	    \item Der Betreuer erhält über die Benachrichtigungs-Schaltfläche mittgeteilt das ein neuer Stundenzettel abegeben wurde.
-	    \item Der Betreuer wechselt, idem er die Benachrichtigung anwählt, zur Stundenzettel Seite des abgebenen Stundenzettels.
-	    \item Der Stundenzettel wird vom Betreuer überprüft
-	    \item Wird der Stundenzettel für korrekt befunden, so kann er mit der Schaltfläche Stundenzettel Okay, dem Stundenzettel als Überfprüft markieren.
+	    \item
+	        \textbf{Stand}
+	            \begin{itemize} Der Betreuer
+	                \item ist angemeldet.
+	                \item erhält über die Benachrichtigungs-Schaltfläche mittgeteilt das ein neuer Stundenzettel abegeben wurde.
+	            \end{itemize}
+            \textbf{Aktion} Der Betreuer klickt auf die Benachrichtigung. \\
+            \textbf{Reaktion} Die entsprechende Stundenzettelseite wird  geladen.
+	    \item
+	        \textbf{Stand} Die Stundenzettelseite ist geladen. \\
+            \textbf{Aktion}
+                \begin{itemize}
+                    \item Der Betreuer überprüft den Stundenzettel.
+                    \item \textit{Stundenzettel Korrekt} Der Betreuer klickt die Schaltfläche Stundenzettel Okay.
+                    \item \textit{Stundenzettel nicht Korrekt}  Der Betreuer klickt die Schaltfläche Stundenzettel nicht Okay.
+                \end{itemize}
+            \textbf{Reaktion}
+                \begin{itemize}
+                    \item Die Stundenzettel Seite wird geschlossen der Betreuer wird zur Hauptseite zurückgeleitet
+                    \item \textit{Stundenzettel Korrekt} Der Stundenzettel ist als Okay markiert und der Admin wird darüber benachrichtigt
+                    \item \textit{Stundenzettel nicht Korrekt} Der Stundenzettel wird als nicht abgegben markiert und der Benutzer darüber benachrichtigt
+                \end{itemize}
 	\end{itemize}
 
 	\req{T160} Benutzer editiert die Tätigkeit in einem nicht abgegebenem Stundenzettel
 	\begin{itemize}
-	    \item Benutzer befindet sich auf seiner Hauptseite mit den auflistungen der eingetragenen Zeiten.
-	    \item Der Benutzer klickt dem Editieren Button bei einer eingetragenen Zeit.
-	    \item Die Elemente der eingetragenen Zeit werden editierbar.
-	    \item Der Benutzer klickt in das Textfeld in dem die Tätigkeit vermerkt wird.
-	    \item Der Benutzer ändert die dort eingetragene Tätigkeit.
-	    \item Der Benutzer klickt auf die Speichern Schaltfläche.
-	    \item Die eingetragene Tätigkeit ist damit geändert
-	\end{itemize}
+	    \item
+	        \textbf{Stand} Benutzer befindet sich auf seiner Hauptseite mit den auflistungen der eingetragenen Zeiten. \\
+	        \textbf{Aktion} Der Benutzer klickt dem Editieren Button bei einer eingetragenen Zeit.\\
+            \textbf{Reaktion} Die Elemente der eingetragenen Zeit werden editierbar.
+        \item
+        \textbf{Stand} Die Elemente der eingetragenen Zeit sind editierbar.\\
+        \textbf{Aktion}
+            \begin{itemize} Der Benutzer
+                \item klickt in das Textfeld in dem die Tätigkeit vermerkt wird.
+                \item ändert die dort eingetragene Tätigkeit.
+                \item klickt auf die Speichern Schaltfläche.
+            \end{itemize}
+            \textbf{Reaktion} Die eingetragene Tätigkeit ist damit geändert
 
+    \end{itemize}
 \end{requirements}
