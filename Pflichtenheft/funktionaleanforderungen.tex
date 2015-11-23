@@ -1,9 +1,102 @@
-\section{Funktionale Anforderungen}
+\ section{Funktionale Anforderungen}
 
-Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+'" hinter der Indentifikationsnummer markiert.
+Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter der Indentifikationsnummer markiert.
 
-\subsection{Sub1}
+\subsection{Stundenzettel und Zeiterfassung}
 
-%\begin{requirements}
-%
-%\end{requirements}
+\begin{requirements}
+    \req[Zeiterfassung]{F110}
+    Ein User kann in seiner Hauptseite eine Zeiterfassung starten und stoppen.
+    \begin{requirements}
+        \req[Kategorie]{F111} Eine Zeiterfassung ist mit einer Kategorie versehen.
+        \req[Tätigkeit]{F112} Eine Zeiterfassung ist mit einer Tätigkeit verbunden.
+        \req[Zeiterfassung ändern]{F113} Eine Zeiterfassung kann nachträglich geändert werden.
+        \req[Alternative Zeiterfassung]{F114} Eine Zeiterfassung kann auch manuell ohne das Starten und Stoppen einer Zeit erfasst werden.
+        \req[Zeiterfassung löschen]{F115} Eine erfasste Zeit kann vom Benutzer wieder gelöscht werden.
+    \end{requirements}
+
+    \req[Gesetzliche Vorgaben]{F120}
+    Die Zeiterfassung und der Stundenzettel folgen den gesetzlichen Bestimmungen.
+    \begin{requirements}
+        \req[Maximale Arbeitszeit]{F121} Die gesetzlich maximale Arbeitszeit kann bei einer Zeiterfassung nicht überschritten werden.
+        \req[Pausenzeiten]{F122} Eine Zeiterfassung kann nicht dem Stundenzettel hinzugefügt werden wenn für ihren Umfang gesetzliche Pausenzeiten nicht eingetragen wurden.
+        \req[Konfigurierbarkeit]{F123} Der Admin kann die gesetzlichen Vorgaben ändern.
+    \end{requirements}
+
+    \req[Stundenzettel]{F130}
+    Der Stundenzettel stellt eine Aufzeichnung der Arbeitstunden in einem vorgesetzten Zeitraum dar.
+    \begin{requirements}
+        \req[Sichtbarkeit]{F131} Der Betreuer und der Administrator können den Stundenzettel einsehen.
+        \req[Stundenzettel abgeben]{F132} Ist der Benutzer mit seiner Zeiterfassung in einem Zeitraum fertig, so kann er den Stundenzettel abgeben.
+        \req[abgegebener Stundenzettel]{F133} Ein abgegebener Stundenzettel kann vom Benutzer nichtmehr verändert werden.
+        \req[abgegebene Stundenzettel]{F134} Der Betreuer und der Admin werden über abgegebene Stundenzettel informiert
+        \req[Stundenkonto]{F135} Im Stundenzettel ist die tatsächliche und die zu leistende Arbeitszeit sichtbar.
+        \req[Betreuerkontrolle]{F136} Ein Stundenzettel kann vom Betreuer als Okay befunden werden.
+        \req[Betreuerkontrolle erfolgreich]{F137} Ein vom Betreuer als Okay befundener Stundenzettel wird dem Admin als abgegeben angezeigt.
+        \req[Betreuerkontrolle fehlgeschlagen]{F138} Ein vom Betreuer abgelehnter Stundenzettel wird als nicht abgegeben markiert und der Benutzer darüber informiert.
+        \req[Stundenzettel exportieren]{F139} Ein Administrator kann alle abgegebenen Stundenzettel eines Monats zum Drucken exportieren
+    \end{requirements}
+
+\end{requirements}
+
+\subsection{Benutzer und Rechte}
+
+\begin{requirements}
+    \req[Benutzer]{F210}
+    Ein Benutzer stellt den Standart User dar.
+    \begin{requirements}
+        \req[Stundenzettel]{F211} Ein Benutzer kann nur seinen eigenen Stundenzettel einsehen und verändern.
+        \req[Warnungen]{F212} Ein Benutzer erhält nur Warnungen über seine eigenen Aktionen.
+        \req[Erinnerungen]{F213} Ein Benutzer erhält nur Erinnerungen, die ihn selbst betreffen.
+    \end{requirements}
+
+    \req[Betreuer]{F220}
+        Ein Betreuer ist für mehrere Benutzer zuständig.
+        \begin{requirements}
+            \req[Benutzer zuweisen]{F221} Einem Betreuer können Benutzer zugewiesen werden
+            \req[Stundenzettel]{F222} Der Betreuer kann über seine übersicht alle ihm zugewiesenen Benutzer einsehen
+            \req[Warnungen]{F223} Der Betreuer erhält Warnungen für alle Benutzer die ihn zugewiesen sind.
+            \req[Erinnerungen]{F224} Der Betreuer erhält Erinnerungen für alle Benutzer die ihm zugewiesen sind.
+            \req[Stundenzettel prüfen]{F225} Der Betreuer überprüft die agegebenen Stundenzettel der im zugewiesenen Benutzer.
+        \end{requirements}
+
+    \req[Admin]{F230}
+        Ein Admin stellt das Verwaltungsorgan dar.
+        \begin{requirements}
+            \req[Benutzer erstellen]{F231} Der Admin kann neue Benutzer anlegen.
+            \req[Benutzer editieren]{F232} Der Admin kann die Daten existierende Benutzer verändern.
+            \req[Benutzer löschen]{F233} Der Admin kann einen existierenden Benutzer löschen.
+            \req[Benutzer zuweisen]{F234} Der Admin kann Benutzer einem Betreuer zuweisen.
+            \req[Betreuer Ansicht]{F235} Der Admin kann für jedes Team auch auf die Betrueransicht zugreifen.
+        \end{requirements}
+\end{requirements}
+
+\subsection{Zeitüberwachung und Darstellung}
+    \begin{requirements}
+        \req[Graphische Darstellung Zeit]{F310+}
+        \begin{requirements}
+            \req[Übersicht Teams]{F311} Der Admin soll die bisher benötigte Zeit aller Teams auf seiner Hauptseite einsehen können.
+            \req[Übersicht Betreuer]{F312} Dem Betreuer soll die bisher benötigte Zeit aller im zugewiesenen Benutzer angezeigt werden.
+            \req[Übersicht Benutzer]{F313} Der Benutzer soll seine bisher aufgewedete Zeit graphisch angezeigt werden.
+        \end{requirements}
+
+        \req[Graphische Darstellung Stundenzettelabgabe]{F320}
+        \begin{requirements}
+            \req[Übersicht Teams]{F321} Der Admin soll auf seiner Hauptseite die bisherigen Abageben von Stundenzetteln angezeigt bekommen.
+            \req[Übersicht Betreuer]{F322} Der Betreuer soll den bisherigen Abgabefortschritt seines Teams dargestellt bekommen.
+        \end{requirements}
+
+        \req[Magie mit Daten]{F330}
+        \begin{requirements}
+            \req[Heatmap]{F331} Benutzer können einsehen an welchen Tagen die meinste Arbeitszeit geloggt wurde.
+            \req[Punch Card]{F332} Benutzer können einsehen zu welchen Zeiten die meinste Arbeitszeit geloggt wurde.
+        \end{requirements}
+
+        \req[Tätigkeiten Darstellung]{F340}
+        \begin{requirements}
+            \req[Tätigkeiten Ranking]{F341} Benutzer können sich den Zeitverbrauch pro Tätigkeit, gesammlt über alle Benutzer, anzeigen lassen.
+            \req[Tätigkeits Heatmap]{F342} Benutzer können sich eine Tätigkeits Heatmap, anzeigen lassen.
+        \end{requirements}
+
+    \end{requirements}
+
