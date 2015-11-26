@@ -1,7 +1,8 @@
 #!/usr/bin/make -f
 
 all:
-	latexmk -pdf -outdir=out pflichtenheft.tex
+    git clone https://github.com/adobe-fonts/source-serif-pro.git
+	xelatex -output-directory=out pflichtenheft.tex
 
 clean:
 	rm out/*
