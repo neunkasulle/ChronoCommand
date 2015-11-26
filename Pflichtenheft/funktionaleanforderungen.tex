@@ -18,9 +18,14 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
     \req[Gesetzliche Vorgaben]{F120}
     Die Zeiterfassung und der Stundenzettel folgen den gesetzlichen Bestimmungen.
     \begin{requirements}
-        \req[Maximale Arbeitszeit]{F121} Die gesetzlich maximale Arbeitszeit kann bei einer Zeiterfassung nicht überschritten werden.
-        \req[Pausenzeiten]{F122} Eine Zeiterfassung kann nicht dem Stundenzettel hinzugefügt werden wenn für ihren Umfang gesetzliche Pausenzeiten nicht eingetragen wurden.
-        \req[Konfigurierbarkeit]{F123} Der Admin kann die gesetzlichen Vorgaben ändern.
+        \req[Maximale Arbeitszeit]{F121} Die gesetzlich maximale Arbeitszeit kann bei einer Zeiterfassung nicht überschritten werden (siehe §3 ArbZG).
+        \req[Pausenzeiten]{F122} Eine Zeiterfassung kann nicht dem Stundenzettel hinzugefügt werden wenn für ihren Umfang gesetzliche Pausenzeiten nicht eingetragen wurden (siehe §4 ArbZG).
+        \req[Ruhezeiten]{F123} Die Einhaltung der Ruhezeiten wird erzwungen (siehe §5 ArbZG).
+        \req[Nachtarbeit]{F124} TODO gibt es da was zu tun? (siehe §6 ArbZG).
+        \req[Sonn- und Feiertage]{F125} Die Einhaltung der Sonn- und Feiertagsruhe wird erzwungen (siehe §9 ArbZG).
+                Dies kann für einzelne Benutzer vom Administrator deaktiviert werden (siehe §10 ArbZG), dabei wird dann §11 ArbZG beachtet. TODO wollen wir das?
+        \req[Manipulation verhindern]{F126} Die gesetzlichen Vorgaben sind über eine Konfigurationsdatei anpassbar deren Prüfsumme im Code hinterlegt ist.
+                Daher muss zum Ändern der gesetzlichen Vorgaben das Programm neu compiliert werden.
     \end{requirements}
 
     \req[Stundenzettel]{F130}
@@ -101,8 +106,8 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
         
         \req[Übersicht aller Daten]{F350}
         \begin{requirements}
-        	 \req[Admin]{F351} Admins können alle geleisteten Stunden aller HiWis graphisch einsehen. 
-        	 \req[Filter]{F352} Die graphische Anzeige erlaubt es nach Projekten, Betreuern, HiWis und Datum zu filtrieren.
+             \req[Admin]{F351} Admins können alle geleisteten Stunden aller HiWis graphisch einsehen.
+             \req[Filter]{F352} Die graphische Anzeige erlaubt es nach Projekten, Betreuern, HiWis und Datum zu filtrieren.
         \end{requirements}
        
     \end{requirements}
