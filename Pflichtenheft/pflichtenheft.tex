@@ -21,80 +21,66 @@
 \input{commands}
 
 \setmainfont{SourceSerifPro-Regular.otf}[
-    BoldFont=SourceSerifPro-Bold.otf
-    ItalicFont=EBGaramond08-Italic.otf
-]
+    BoldFont		=	SourceSerifPro-Bold.otf,
+    ItalicFont		=	EBGaramond08-Italic.otf]
 
 \begin{document}
-\setlength{\parindent}{0pt}
+	\setlength{\parindent}{0pt}
 
-\begin{titlepage}
+	\begin{titlepage}
 
-%Title
-\begin{center}
-	\huge \bfseries Chrono Command \\
-	\large  Web Basierte Zeiterfassung
-\end{center}
+		%Title
+		\begin{center}
+			\huge \bfseries Chrono Command \\
+			\large  Web Basierte Zeiterfassung
+		\end{center}
 
-%Subtitle
-\begin{center}
-	\large Pflichtenheft \\
-\end{center}
+		%Subtitle
+		\begin{center}
+				\large Pflichtenheft \\
+		\end{center}
 
-%Authors
-\begin{center}
-	Jannis Friedmann \\
-	David Kuhmann \\
-	Maria Schmid \\
-	Xiaoming Wang \\
-	Jan Zenkner \\
+		%Authors
+		\begin{center}
+			Jannis Friedmann \\
+			David Kuhmann \\
+			Maria Schmid \\
+			Xiaoming Wang \\
+			Jan Zenkner \\
 
-\end{center}
+		\end{center}
 
-%Date
-\begin{center}
-	\large \today
-\end{center}
+		%Date
+		\begin{center}
+			\large \today
+		\end{center}
 	
-\vfill
+		\vfill
+	\end{titlepage}
+	\thispagestyle{empty}
 
-\iffalse
-\title{Pflichtenheft}
-\author{ 
-	Jannis Friedman\and
-	David Kuhmann\and
-	Maria Schmidt\and
-	Xiaoming Wang\and
-	Jan Zenkner
-}
-\date{\today}
-\end{titlepage}
-\maketitle
-\thispagestyle{empty}
+	\pagenumbering{roman}
 
-\fi
-\pagenumbering{roman}
+	\clearpage
+	\pagestyle{empty}
+	\tableofcontents
 
-\clearpage
-\pagestyle{empty}
-\tableofcontents
+	\clearpage
+	\pagestyle{plain}
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
 
-\clearpage
-\pagestyle{plain}
-\pagenumbering{arabic}
-\setcounter{page}{1}
-
-\input{einleitung}
-\input{zielbestimmung}
-\input{produkteinsatz}
-\input{produktumgebung}
-\input{funktionaleanforderungen}
-\input{produktdaten}
-\input{nichtfunktionaleanforderungen}
-\input{testfaelle}
-\input{systemmodelle}
-\input{anwendungsfall}
-\input{produktdesign}
-\input{glossar}
+	\input{einleitung}
+	\input{zielbestimmung}
+	\input{produkteinsatz}
+	\input{produktumgebung}
+	\input{funktionaleanforderungen}
+	\input{produktdaten}
+	\input{nichtfunktionaleanforderungen}
+	\input{testfaelle}
+	\input{systemmodelle}
+	\input{anwendungsfall}
+	\input{produktdesign}
+	\input{glossar}
 
 \end{document}
