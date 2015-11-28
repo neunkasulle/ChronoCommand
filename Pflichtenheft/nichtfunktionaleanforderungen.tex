@@ -2,29 +2,29 @@
 
 \subsection{Allgemeine Ziele}
 \begin{requirements}
-    \req{NF110} Die Navigation durch die Weboberfläche ist Intuitiv.
+    \req{NF110} Die Navigation durch das \em{Frontend} ist Intuitiv.
 \end{requirements}
 
 \subsection{Benutzbarkeit, Performance und Stabilität}
 \begin{requirements}
-    \req{NF220} Die Ladezeit des Frontends liegt bei guter Internetverbindung unter 30 Sekunden.
-    \req{NF230} Es wird auf Einblendungen, die die Benutzung des Frontends einschränken verzichtet.
-    \req{NF240} Das Frontend läuft stabil, das bedeutet:
+    \req{NF220} Die Ladezeit des \em{Frontends} liegt bei guter Internetverbindung unter 30 Sekunden.
+    \req{NF230} Es wird auf Einblendungen, die die Benutzung des \em{Frontends} einschränken verzichtet.
+    \req{NF240} Das \em{Frontend} läuft stabil, das bedeutet:
      \begin{itemize}
-        \item Das Frontend verhält sich zu jedem Zeitpunkt vorhersehbar.
+        \item Das \em{Frontend} verhält sich zu jedem Zeitpunkt vorhersehbar.
         \item Alle Zustände und Übergänge sind zu jedem Zeitpunkt definiert
         \item unerwartete Eingaben werden abgefangen.
-        \item Im Ein-Benutzer Betrieb ist das Frontend stabil (Eine Zeiterfassung pro Nutzer).
+        \item Im Ein-Benutzer Betrieb ist das \em{Frontend} stabil (Eine Zeiterfassung pro Nutzer).
      \end{itemize}
-     \req{NF250} Das Backend läuft stabil, das bedeutet:
+     \req{NF250} Das \em{Backend} läuft stabil, das bedeutet:
           \begin{itemize}
-             \item Das Backend verhält sich zu jedem Zeitpunkt vorhersehbar.
+             \item Das \em{Backend} verhält sich zu jedem Zeitpunkt vorhersehbar.
              \item Alle Zustände und übergänge sind zu jedem Zeitpunkt definiert
              \item unerwartete Eingaben werden abgefangen.
-             \item Das Backend verhält sich in folgenden Grenzen stabil:
-	\begin{itemize}
-                    \item Es werden höchtens 25 gleichzeitige Anfragen an das Backend gestellt.
-                \end{itemize}
+             \item Das \em{Backend} verhält sich in folgenden Grenzen stabil:
+	         \begin{itemize}
+                    \item Es werden höchtens 25 gleichzeitige Anfragen an das \em{Backend} gestellt.
+             \end{itemize}
           \end{itemize}
 \end{requirements}
 
@@ -34,11 +34,11 @@
     \req{NF300} Um die Entwicklung und die Wartbarkeit des Produktes zu unterstützen, wird das Produkt in Module unterteilt.
     \begin{requirements}
         \req{NF310} Die Datenbank wird nicht Modularisiert.
-        \req{NF320} Das Backend wird in folgende Module unterteilt:
+        \req{NF320} Das \em{Backend} wird in folgende Module unterteilt:
             \begin{itemize}
                 \item TODO
             \end{itemize}
-        \req{NF330} Das Frontend wird in folgende Module unterteilt:
+        \req{NF330} Das \em{Frontend} wird in folgende Module unterteilt:
             \begin{itemize}
                 \item Zeitmessung
                 \item Benachrichtigungen
@@ -63,5 +63,5 @@
         \item benutzte Assets und Bibliotheken sind kommerziell nutzbar.
     	\item es finden sich Hinweise auf die jeweiligen Urheber und Lizenzen im Programm.
     \end{itemize}
-    \req{NF430} Datenbankelemente liegen mindestens in der dritten Normalform vor.
+    \req{NF430} \em{Datenbankelemente} liegen mindestens in der dritten Normalform vor.
 \end{requirements}

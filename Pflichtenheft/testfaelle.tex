@@ -2,126 +2,117 @@
 
 \subsection{Funktionssequenzen}
 \begin{requirements}
-	\req{T110} Benutzer Meldet sich an
+	\req{T110} \em{Benutzer} Meldet sich an
 	\begin{requirements}
   			\req{T111}
   			    \textbf{Stand} Offenes Browserfenster. \\
-  			    \textbf{Aktion} Der Benutzer gibt chronoCommand.eu in die Browserzeile ein und bestätigt mit Enter. \\
+  			    \textbf{Aktion} Der \em{Benutzer} gibt chronoCommand.eu in die Browserzeile ein und bestätigt mit Enter. \\
   			    \textbf{Reaktion} Da kein Session Cookie geladen ist, wird der Anmeldescreen gezeigt.
   			\req{T112}
   			    \textbf{Stand} Die Anmeldeseite wurde geladen.\\
-                \textbf{Aktion} Der Benutzer
+                \textbf{Aktion} Der \em{Benutzer}
                     \begin{itemize}
                         \item gibt im Nutzernamen Feld seinen Nutzernamen an.
                         \item gibt im Passwort Feld sein Passwort an.
                         \item betätigt die Anmelden Schaltfläche.
                     \end{itemize}
                 \begin{itemize}
-			\item \textbf{Reaktion [Benutzerdaten korrekt]} Der Benutzer wird angemeldet.
-			\item \textbf{Reaktion [Benutzerdaten nicht korrekt]} Der Benutzer bekommt eine Fehlermeldung.
+			\item \textbf{Reaktion \em{Benutzerdaten korrekt}} Der \em{Benutzer} wird angemeldet.
+			\item \textbf{Reaktion \em{Benutzerdaten nicht korrekt}} Der \em{Benutzer} bekommt eine Fehlermeldung.
                 \end{itemize}
 
 	\end{requirements}
-	\req{T120} Angemeldeter Benutzer startet/stoppt eine Zeiterfassung.
+	\req{T120} Angemeldeter \em{Benutzer} startet/stoppt eine \em{Zeiterfassung}.
 	\begin{requirements}
 	    \req{T121}
-            \textbf{Stand} Der Benutzer befindet sich angemeldet auf der Hauptseite. \\
-            \textbf{Aktion} Der Benutzer klickt die Schaltfläche "`neue Zeiterfassung"' \\
-            \textbf{Reaktion} Es werden die Elemente für eine neue Zeiterfassung geladen.
+            \textbf{Stand} Der \em{Benutzer} befindet sich angemeldet auf der \em{Hauptseite}. \\
+            \textbf{Aktion} Der \em{Benutzer} klickt die Schaltfläche "`neue Zeiterfassung"' \\
+            \textbf{Reaktion} Es werden die Elemente für eine neue \em{Zeiterfassung} geladen.
             \item
-                \textbf{Stand} Der Benutzer sieht die Elemente für eine neue Zeiterfassung. \\
-                \textbf{Aktion} Der Benutzer
+                \textbf{Stand} Der \em{Benutzer} sieht die Elemente für eine neue \em{Zeiterfassung}. \\
+                \textbf{Aktion} Der \em{Benutzer}
                     \begin{itemize}
-                        \item weist der Zeiterfassung eine Kategorie über das Textfeld "`Kategorie"' zu.
-                        \item weist der Zeiterfassung eine Tätigkeit über das Textfeld "`Tätigkeit"' zu
-                        \item startet die Zeiterfassung über die Schaltfläche "`Start"'
+                        \item weist der \em{Zeiterfassung} eine \em{Kategorie} über das Textfeld "`Kategorie"' zu.
+                        \item weist der \em{Zeiterfassung} eine \em{Tätigkeit} über das Textfeld "`Tätigkeit"' zu
+                        \item startet die \em{Zeiterfassung} über die Schaltfläche "`Start"'
                     \end{itemize}
-                \textbf{Reaktion} Die Zeiterfassung läuft.
+                \textbf{Reaktion} Die \em{Zeiterfassung} läuft.
         \req{T122}
-            \textbf{Stand} Die Zeiterfassung läuft. \\
-            \textbf{Aktion} Der Benutzer stoppt die Zeiterfassung über die Schaltfläche "`Zeiterfassung stoppen"' \\
+            \textbf{Stand} Die \em{Zeiterfassung} läuft. \\
+            \textbf{Aktion} Der \em{Benutzer} stoppt die \em{Zeiterfassung} über die Schaltfläche "`Zeiterfassung stoppen"' \\
             \textbf{Reaktion}
                 \begin{itemize}
-                    \item Die Zeiterfassung stoppt.
+                    \item Die \em{Zeiterfassung} stoppt.
                     \item Die Erfasste Zeit wird in die erfassten Zeiten eingetragen.
                 \end{itemize}
 	\end{requirements}
 
 
-	\req{T130} Admin sammelt Stundendaten ein \\
-            \textbf{Stand} Der Admin befindet sich auf der Admin Hauptseite. \\
-            \textbf{Aktion} Der Admin klickt die Schaltfläche "`Stundenzettel einsammeln"'' \\
-            \textbf{Reaktion} Der Admin erhält
-                \begin{itemize}
-                    \item Informationen über den Erfolg des Einsammelns
-                    \item die Stundendaten der Benutzer
-                \end{itemize}
+	\req{T130} \em{Benutzer} erhält \em{Warnung} wegen nicht abgegebenem \em{Studenzettel} \\
+        \textbf{Stand} Der \em{Benutzer} ist nicht eingeloggt. \\
+        \textbf{Aktion} Der \em{Benutzer} meldet sich an \em{T110}. \\
+        \textbf{Reaktion} Der \em{Benutzer} erhält nach der Anmeldung ein Popup, dass ihn auffordert, den \em{Stundenzettel} abzugeben.
 
-	\req{T140} Benutzer erhält Warnung wegen nicht abgegebenem Studenzettel \\
-        \textbf{Stand} Der Benutzer ist nicht eingeloggt. \\
-        \textbf{Aktion} Der Benutzer meldet sich an \textit{T110}. \\
-        \textbf{Reaktion} Der Benutzer erhält nach der Anmeldung ein Popup, dass ihn auffordert, den Stundenzettel abzugeben.
-
-	\req{T150} Betreuer prüft neu abgebenen Stundenzettel
+	\req{T140} \em{Betreuer} prüft neu \em{abgebenen Stundenzettel}
 	\begin{requirements}
-	    \req{T151}
-	        \textbf{Stand} Der Betreuer
+	    \req{T141}
+	        \textbf{Stand} Der \em{Betreuer}
 	            \begin{itemize}
 	                \item ist angemeldet.
-	                \item erhält über die Benachrichtigungs-Schaltfläche mittgeteilt das ein neuer Stundenzettel abegeben wurde.
+	                \item erhält über die Benachrichtigungs-Schaltfläche mittgeteilt das ein neuer \em{Stundenzettel} abegeben wurde.
 	            \end{itemize}
-            \textbf{Aktion} Der Betreuer klickt auf die Benachrichtigung. \\
-            \textbf{Reaktion} Die entsprechende Stundenzettelseite wird  geladen.
-	    \req{T152}
-	        \textbf{Stand} Die Stundenzettelseite ist geladen. \\
+            \textbf{Aktion} Der \em{Betreuer} klickt auf die Benachrichtigung. \\
+            \textbf{Reaktion} Die entsprechende \em{Stundenzettelseite} wird  geladen.
+	    \req{T142}
+	        \textbf{Stand} Die \em{Stundenzettelseite} ist geladen. \\
             \textbf{Aktion}
                 \begin{itemize}
-                    \item Der Betreuer überprüft den Stundenzettel.
-                    \item \textit{Stundenzettel Korrekt} Der Betreuer klickt die Schaltfläche Stundenzettel Okay.
-                    \item \textit{Stundenzettel nicht Korrekt}  Der Betreuer klickt die Schaltfläche Stundenzettel nicht Okay und kommentiert, was falsch ist.
+                    \item Der \em{Betreuer} überprüft den \em{Stundenzettel}.
+                    \item \textit{Stundenzettel Korrekt} Der \em{Betreuer} klickt die Schaltfläche Stundenzettel geprüft.
+                    \item \textit{Stundenzettel nicht Korrekt}  Der \em{Betreuer} klickt die Schaltfläche Stundenzettel nicht Okay und kommentiert, was nicht korrekt ist.
                 \end{itemize}
             \textbf{Reaktion}
                 \begin{itemize}
-                    \item Die Stundenzettel Seite wird geschlossen der Betreuer wird zur Hauptseite zurückgeleitet
-                    \item \textit{Stundenzettel Korrekt} Der Stundenzettel ist als Okay markiert und der Admin wird darüber benachrichtigt
-                    \item \textit{Stundenzettel nicht Korrekt} Der Stundenzettel wird als nicht abgegben markiert und der Benutzer darüber benachrichtigt
+                    \item Die \em{Stundenzettelseite} wird geschlossen der \em{Betreuer} wird zur \em{Hauptseite} zurückgeleitet
+                    \item \textit{Stundenzettel Korrekt} Der \em{Stundenzettel} ist als \em{geprüft} markiert und der \em{Administrator} wird darüber benachrichtigt
+                    \item \textit{Stundenzettel nicht Korrekt} Der \em{Stundenzettel} wird als \em{nicht abgegben} markiert und der \em{Benutzer} darüber benachrichtigt
                 \end{itemize}
 	\end{requirements}
 
-	\req{T160} Benutzer editiert die Tätigkeit in einem nicht abgegebenem Stundenzettel
+	\req{T150} \em{Benutzer} editiert die \em{Tätigkeit} in einem \em{nicht abgegebenem} \em{Stundenzettel}
 	\begin{requirements}
-	    \req{T161}
-	        \textbf{Stand} Benutzer befindet sich auf seiner Hauptseite mit den auflistungen der eingetragenen Zeiten. \\
-	        \textbf{Aktion} Der Benutzer klickt dem Editieren Button bei einer eingetragenen Zeit.\\
+	    \req{T151}
+	        \textbf{Stand} \em{Benutzer} befindet sich auf seiner \em{Hauptseite} mit den Auflistungen der eingetragenen Zeiten. \\
+	        \textbf{Aktion} Der \em{Benutzer} klickt dem Editieren Button bei einer eingetragenen Zeit.\\
             \textbf{Reaktion} Die Elemente der eingetragenen Zeit werden editierbar.
-        \req{T162}
+        \req{T152}
         \textbf{Stand} Die Elemente der eingetragenen Zeit sind editierbar. \\
-        \textbf{Aktion} Der Benutzer
+        \textbf{Aktion} Der \em{Benutzer}
             \begin{itemize}
-                \item klickt in das Textfeld in dem die Tätigkeit vermerkt wird.
-                \item ändert die dort eingetragene Tätigkeit.
+                \item klickt in das Textfeld in dem die \em{Tätigkeit} vermerkt wird.
+                \item ändert die dort eingetragene \em{Tätigkeit}.
                 \item klickt auf die Speichern Schaltfläche.
             \end{itemize}
-            \textbf{Reaktion} Die eingetragene Tätigkeit ist damit geändert
+            \textbf{Reaktion} Die eingetragene \em{Tätigkeit} ist damit geändert
     \end{requirements}
 
-    \req{T170} Der Benutzer wählt die Seite an und besitz ein gültiges Session Cookie. \\
+    \req{T160} Der \em{Benutzer} wählt die Seite an und besitz ein gültiges Session Cookie. \\
         \textbf{Stand} Offenes Browserfenster. \\
-        \textbf{Aktion} Der Benutzer gibt chronoCommand.eu in die Browserzeile ein in betätigt Enter. \\
-        \textbf{Reaktion} Da Session Cookie geladen, wird die Benutzer Hauptseite gezeigt.
+        \textbf{Aktion} Der \em{Benutzer} gibt chronoCommand.eu in die Browserzeile ein in betätigt Enter. \\
+        \textbf{Reaktion} Da Session Cookie geladen, wird die \em{Benutzer Hauptseite} gezeigt.
 
-    \req{T180} Der Benutzer verletzt gesetzliche Vorgaben. \\
-        \textbf{Stand} Zeiterfassung läuft. \\
-        \textbf{Aktion} Die Zeiterfassung überschreitet ein gesetzes Limit. \\
+    \req{T170} Der \em{Benutzer} verletzt gesetzliche Vorgaben. \\
+        \textbf{Stand} \em{Zeiterfassung} läuft. \\
+        \textbf{Aktion} Die \em{Zeiterfassung} überschreitet ein gesetzes Limit. \\
         \textbf{Reaktion}
             \begin{itemize}
-                \item Der Benutzer erhält eine Warnung, dass er gesetzliche Vorgaben verletzt.
-                \item Die Zeiterfassung stoppt.
+                \item Der \em{Benutzer} erhält eine \em{Warnung}, dass er gesetzliche Vorgaben verletzt.
+                \item Die \em{Zeiterfassung} stoppt.
             \end{itemize}
 
-    \req{T190} Betreuer sieht Stundendaten ein. \\
-        \textbf{Stand} Der Betreuer befindet sich auf der Betreuer Hauptseite. \\
-        \textbf{Aktion} Der Betreuer klickt die Schaltfläche "`Stundenzettel einsehen"' \\
-        \textbf{Reaktion} Der Betreuer erhält die Stundendaten der ihm zugewiesenen Benutzer.
+    \req{T180} \em{Betreuer} sieht \em{Stundendaten} ein. \\
+        \textbf{Stand} Der \em{Betreuer} befindet sich auf der \em{Betreuer Hauptseite}. \\
+        \textbf{Aktion} Der \em{Betreuer} klickt die Schaltfläche "`Stundenzettel einsehen"' \\
+        \textbf{Reaktion} Der \em{Betreuer} erhält die \em{Stundendaten} der ihm zugewiesenen \em{Benutzer}.
 
 \end{requirements}
