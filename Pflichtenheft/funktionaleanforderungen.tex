@@ -112,3 +112,12 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
        
     \end{requirements}
 
+\subsection{Sonstige FA}
+    \begin{requirements}
+        \req[Sicherheit von Konfigurationen]{F410} Konfigurationsdateien sind durch einen Hash vor dem Editieren geschützt
+        \req[Sicherheit der Datenbank]{F420} Die Datenbank wird durch einen Hash vor externem Editieren geschützt
+        \begin{requirements}
+            \req[Externe Veränderung der Datenbank]{F421} Sollte eine Veränderung stattgefunden haben, werden alle Nutzer über dieses externe Event informiert.
+        \end{requirements}
+    \end{requirements}
+
