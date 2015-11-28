@@ -22,8 +22,8 @@
              \item Alle Zustände und übergänge sind zu jedem Zeitpunkt definiert
              \item unerwartete Eingaben werden abgefangen.
              \item Das \emph{Backend} verhält sich in folgenden Grenzen stabil:
-	         \begin{itemize}
-                    \item Es werden höchtens 25 gleichzeitige Anfragen an das \emph{Backend} gestellt.
+             \begin{itemize}
+                 \item Es werden höchtens 25 gleichzeitige Anfragen an das \emph{Backend} gestellt.
              \end{itemize}
           \end{itemize}
 \end{requirements}
@@ -33,10 +33,16 @@
 \begin{requirements}
     \req{NF300} Um die Entwicklung und die Wartbarkeit des Produktes zu unterstützen, wird das Produkt in Module unterteilt.
     \begin{requirements}
-        \req{NF310} Die Datenbank wird nicht Modularisiert.
+        \req{NF310} Die Datenbank wird nicht modularisiert. TODO kommt der Unterpunkt weg?
         \req{NF320} Das \emph{Backend} wird in folgende Module unterteilt:
             \begin{itemize}
-                \item TODO
+                \item Kommunikation mit dem Frontend
+                \item Kommunikation mit der Datenbank
+                \item Benutzerauthentifizierung
+                \item Benutzerverwaltung
+                \item Gesetzeskonformität
+                \item Benachrichtigungen
+                \item Stundenzettelmanagement
             \end{itemize}
         \req{NF330} Das \emph{Frontend} wird in folgende Module unterteilt:
             \begin{itemize}
@@ -61,7 +67,7 @@
     \req{NF420} Eine kommerzielle Veröffentlichung des Produkts ist möglich, u.a. gilt:
     \begin{itemize}
         \item benutzte Assets und Bibliotheken sind kommerziell nutzbar.
-    	\item es finden sich Hinweise auf die jeweiligen Urheber und Lizenzen im Programm.
+        \item es finden sich Hinweise auf die jeweiligen Urheber und Lizenzen im Programm.
     \end{itemize}
     \req{NF430} \emph{Datenbankelemente} liegen mindestens in der dritten Normalform vor.
 \end{requirements}
