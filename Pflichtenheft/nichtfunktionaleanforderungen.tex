@@ -28,19 +28,36 @@
           \end{itemize}
 \end{requirements}
 
+\subsection{Modularisierung in der Entwicklung}
+
+\begin{requirements}
+    \req{NF300} Um die Entwicklung und die Wartbarkeit des Produktes zu unterstützen, wird das Produkt in Module unterteilt.
+    \begin{requirements}
+        \req{NF310}Die Datenbank wird nicht Modularisiert.
+        \req{NF320} Das Backend wird in folgende Module unterteilt:
+            \begin{itemmize}
+                \item TODO
+            \end{itemize}
+        \req{NF330} Das Frontend wird in folgende Module unterteilt:
+            \begin{itemize}
+                \item TODO
+            \end{itemize}
+    \end{requirement}
+\end{requirements}
+
 \subsection{Qualität und Rechtliches}
 \begin{requirements}
-    \req{NF310} Die in Laufe des Projekts erstelle Artefakte sind gut
+    \req{N410} Die in Laufe des Projekts erstelle Artefakte sind gut
     \begin{itemize}
         \item zu warten (Einhaltung von Code Standarts).
         \item zu erweitern (Objektorientierter, modularer Aufbau.)
         \item dokumentiert.
         \item mit Testfällen abgedeckt (Unittests, Überdeckung > 75\%).
     \end{itemize}
-    \req{NF320} Eine kommerzielle Veröffentlichung des Produkts ist möglich, u.a. gilt:
+    \req{NF420} Eine kommerzielle Veröffentlichung des Produkts ist möglich, u.a. gilt:
     \begin{itemize}
         \item benutzte Assets und Bibliotheken sind kommerziell nutzbar.
     	\item es finden sich Hinweise auf die jeweiligen Urheber und Lizenzen im Programm.
     \end{itemize}
-    \req{NF330} Datenbankelemente liegen mindestens in der dritten Normalform vor.
+    \req{NF430} Datenbankelemente liegen mindestens in der dritten Normalform vor.
 \end{requirements}
