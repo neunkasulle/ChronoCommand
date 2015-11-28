@@ -6,42 +6,42 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
 \begin{requirements}
     \req[Zeiterfassung]{F110}
-    Ein User kann in seiner Hauptseite eine \em{Zeiterfassung} starten und stoppen.
+    Ein User kann in seiner Hauptseite eine \emph{Zeiterfassung} starten und stoppen.
     \begin{requirements}
-        \req[Kategorie]{F111} Eine \em{Zeiterfassung} ist mit einer \em{Kategorie} versehen.
-        \req[Tätigkeit]{F112} Eine \em{Zeiterfassung} ist mit einer \em{Tätigkeit} verbunden.
-        \req[Zeiterfassung ändern]{F113} Eine \em{Zeiterfassung} kann nachträglich geändert werden.
-        \req[Alternative Zeiterfassung]{F114} Eine \em{Zeiterfassung} kann auch manuell ohne das Starten und Stoppen einer Zeit erfasst werden.
-        \req[Zeiterfassung löschen]{F115} Eine erfasste Zeit kann vom \em{Benutzer} wieder gelöscht werden.
+        \req[Kategorie]{F111} Eine \emph{Zeiterfassung} ist mit einer \emph{Kategorie} versehen.
+        \req[Tätigkeit]{F112} Eine \emph{Zeiterfassung} ist mit einer \emph{Tätigkeit} verbunden.
+        \req[Zeiterfassung ändern]{F113} Eine \emph{Zeiterfassung} kann nachträglich geändert werden.
+        \req[Alternative Zeiterfassung]{F114} Eine \emph{Zeiterfassung} kann auch manuell ohne das Starten und Stoppen einer Zeit erfasst werden.
+        \req[Zeiterfassung löschen]{F115} Eine erfasste Zeit kann vom \emph{Benutzer} wieder gelöscht werden.
     \end{requirements}
 
     \req[Gesetzliche Vorgaben]{F120}
-    Die \em{Zeiterfassung} und der \em{Stundenzettel} folgen den gesetzlichen Bestimmungen.
+    Die \emph{Zeiterfassung} und der \emph{Stundenzettel} folgen den gesetzlichen Bestimmungen.
     \begin{requirements}
-        \req[Maximale Arbeitszeit]{F121} Die gesetzlich maximale Arbeitszeit kann bei einer \em{Zeiterfassung} nicht überschritten werden \em{\(siehe §3 ArbZG\)}.
-        \req[Pausenzeiten]{F122} Eine \em{Zeiterfassung} kann nicht dem \em{Stundenzettel} hinzugefügt werden wenn für ihren Umfang gesetzliche Pausenzeiten nicht eingetragen wurden \em{\(siehe §4 ArbZG\)}.
-        \req[Ruhezeiten]{F123} Die Einhaltung der Ruhezeiten wird erzwungen \em{\(siehe §5 ArbZG\)}.
-        \req[Nachtarbeit]{F124} \em{Administratoren} können Nachtarbeit für einzelne Nutzer erlauben, allen anderen Nutzern ist Nachtarbeit nicht gestattet \em{\(siehe §6 ArbZG\)}.
-        \req[Sonn- und Feiertage]{F125} Die Einhaltung der Sonn- und Feiertagsruhe wird erzwungen \em{\(siehe §9 ArbZG\)}.
+        \req[Maximale Arbeitszeit]{F121} Die gesetzlich maximale Arbeitszeit kann bei einer \emph{Zeiterfassung} nicht überschritten werden \emph{(siehe §3 ArbZG)}.
+        \req[Pausenzeiten]{F122} Eine \emph{Zeiterfassung} kann nicht dem \emph{Stundenzettel} hinzugefügt werden wenn für ihren Umfang gesetzliche Pausenzeiten nicht eingetragen wurden \emph{(siehe §4 ArbZG)}.
+        \req[Ruhezeiten]{F123} Die Einhaltung der Ruhezeiten wird erzwungen \emph{(siehe §5 ArbZG)}.
+        \req[Nachtarbeit]{F124} \emph{Administratoren} können Nachtarbeit für einzelne Nutzer erlauben, allen anderen Nutzern ist Nachtarbeit nicht gestattet \emph{(siehe §6 ArbZG)}.
+        \req[Sonn- und Feiertage]{F125} Die Einhaltung der Sonn- und Feiertagsruhe wird erzwungen \emph{(siehe §9 ArbZG)}.
 		Dabei werden nur die Feiertage in Baden-Württemberg beachtet.
-                Die Sonn- und Feiertagsruhe kann für einzelne \em{Benutzer} von \em{Administratoren} deaktiviert werden \em{\(siehe §10 ArbZG\)}, dabei wird dann §11 ArbZG beachtet.
-        \req[Manipulation verhindern]{F126} Die gesetzlichen Vorgaben sind über eine Konfigurationsdatei anpassbar deren Prüfsumme im Code hinterlegt ist \em{\(auch F410\)}.
+                Die Sonn- und Feiertagsruhe kann für einzelne \emph{Benutzer} von \emph{Administratoren} deaktiviert werden \emph{(siehe §10 ArbZG)}, dabei wird dann §11 ArbZG beachtet.
+        \req[Manipulation verhindern]{F126} Die gesetzlichen Vorgaben sind über eine Konfigurationsdatei anpassbar deren Prüfsumme im Code hinterlegt ist \emph{(auch F410)}.
                 Daher muss zum Ändern der gesetzlichen Vorgaben das Programm neu compiliert werden.
     \end{requirements}
 
     \req[Stundenzettel]{F130}
-    Der \em{Stundenzettel} stellt eine Aufzeichnung der Arbeitstunden in einem vorgesetzten Zeitraum dar.
+    Der \emph{Stundenzettel} stellt eine Aufzeichnung der Arbeitstunden in einem vorgesetzten Zeitraum dar.
     \begin{requirements}
-        \req[Sichtbarkeit]{F131} Der \em{Betreuer} und der \em{Administrator} können den Stundenzettel einsehen.
-        \req[Stundenzettel abgeben]{F132} Ist der \em{Benutzer} mit seiner \em{Zeiterfassung} in einem Zeitraum fertig, so kann er den \em{Stundenzettel abgeben}.
-        \req[abgegebener Stundenzettel]{F133} Ein \em{abgegebener Stundenzettel} kann vom \em{Benutzer} nichtmehr verändert werden.
-        \req[abgegebene Stundenzettel]{F134} Der \em{Betreuer} und der \em{Administrator} werden über \em{abgegebene Stundenzettel} informiert
-        \req[Stundenkonto]{F135} Im \em{Stundenzettel} ist die tatsächliche und die zu leistende Arbeitszeit sichtbar.
-        \req[Betreuerkontrolle]{F136} Ein \em{Stundenzettel} kann vom \em{Betreuer} als \em{geprüft} eingestuft werden werden.
-        \req[Betreuerkontrolle erfolgreich]{F137} Ein vom \em{Betreuer} als \em{geprüft} eingestufter \em{Stundenzettel} wird dem \em{Administrator} als \em{abgegeben} angezeigt.
-        \req[Betreuerkontrolle fehlgeschlagen]{F138} Ein vom \em{Betreuer} abgelehnter \em{Stundenzettel} wird als \em{nicht abgegeben} markiert, vom \em{Betreuer} kommentiert, und der \em{Benutzer} darüber informiert.
-        \req[Stundenzettel exportieren]{F139} Ein \em{Administrator} kann alle \em{abgegebenen Stundenzettel} eines Monats zum Drucken exportieren.
-        \req[Drucken]{F13A}\em{Benutzer}, \em{Betreuer} und \em{Administratoren} können \em{Stundenzettel} drucken.
+        \req[Sichtbarkeit]{F131} Der \emph{Betreuer} und der \emph{Administrator} können den Stundenzettel einsehen.
+        \req[Stundenzettel abgeben]{F132} Ist der \emph{Benutzer} mit seiner \emph{Zeiterfassung} in einem Zeitraum fertig, so kann er den \emph{Stundenzettel abgeben}.
+        \req[abgegebener Stundenzettel]{F133} Ein \emph{abgegebener Stundenzettel} kann vom \emph{Benutzer} nichtmehr verändert werden.
+        \req[abgegebene Stundenzettel]{F134} Der \emph{Betreuer} und der \emph{Administrator} werden über \emph{abgegebene Stundenzettel} informiert
+        \req[Stundenkonto]{F135} Im \emph{Stundenzettel} ist die tatsächliche und die zu leistende Arbeitszeit sichtbar.
+        \req[Betreuerkontrolle]{F136} Ein \emph{Stundenzettel} kann vom \emph{Betreuer} als \emph{geprüft} eingestuft werden werden.
+        \req[Betreuerkontrolle erfolgreich]{F137} Ein vom \emph{Betreuer} als \emph{geprüft} eingestufter \emph{Stundenzettel} wird dem \emph{Administrator} als \emph{abgegeben} angezeigt.
+        \req[Betreuerkontrolle fehlgeschlagen]{F138} Ein vom \emph{Betreuer} abgelehnter \emph{Stundenzettel} wird als \emph{nicht abgegeben} markiert, vom \emph{Betreuer} kommentiert, und der \emph{Benutzer} darüber informiert.
+        \req[Stundenzettel exportieren]{F139} Ein \emph{Administrator} kann alle \emph{abgegebenen Stundenzettel} eines Monats zum Drucken exportieren.
+        \req[Drucken]{F13A}\emph{Benutzer}, \emph{Betreuer} und \emph{Administratoren} können \emph{Stundenzettel} drucken.
     \end{requirements}
 
 \end{requirements}
@@ -50,31 +50,31 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
 \begin{requirements}
     \req[Benutzer]{F210}
-    Ein \em{Benutzer} stellt den Standart User dar.
+    Ein \emph{Benutzer} stellt den Standart User dar.
     \begin{requirements}
-        \req[Stundenzettel]{F211} Ein \em{Benutzer} kann nur seinen eigenen \em{Stundenzettel} einsehen und verändern.
-        \req[Warnungen]{F212} Ein \em{Benutzer} erhält nur \em{Warnungen} über seine eigenen Aktionen.
-        \req[Erinnerungen]{F213} Ein \em{Benutzer} erhält nur \em{Erinnerungen}, die ihn selbst betreffen.
+        \req[Stundenzettel]{F211} Ein \emph{Benutzer} kann nur seinen eigenen \emph{Stundenzettel} einsehen und verändern.
+        \req[Warnungen]{F212} Ein \emph{Benutzer} erhält nur \emph{Warnungen} über seine eigenen Aktionen.
+        \req[Erinnerungen]{F213} Ein \emph{Benutzer} erhält nur \emph{Erinnerungen}, die ihn selbst betreffen.
     \end{requirements}
 
     \req[Betreuer]{F220}
-        Ein \em{Betreuer} ist für mehrere \em{Benutzer} zuständig.
+        Ein \emph{Betreuer} ist für mehrere \emph{Benutzer} zuständig.
         \begin{requirements}
-            \req[Benutzer zuweisen]{F221} Einem \em{Betreuer} können \em{Benutzer} zugewiesen werden
-            \req[Stundenzettel]{F222} Der \em{Betreuer} kann über seine Übersicht alle ihm zugewiesenen \em{Benutzer} einsehen
-            \req[Warnungen]{F223} Der \em{Betreuer} erhält \em{Warnungen} für alle \em{Benutzer} die ihn zugewiesen sind.
-            \req[Erinnerungen]{F224} Der \em{Betreuer} erhält \em{Erinnerungen} für alle \em{Benutzer} die ihm zugewiesen sind.
-            \req[Stundenzettel prüfen]{F225} Der \em{Betreuer} überprüft die \em{abgegebenen Stundenzettel} der im zugewiesenen \em{Benutzer}
+            \req[Benutzer zuweisen]{F221} Einem \emph{Betreuer} können \emph{Benutzer} zugewiesen werden
+            \req[Stundenzettel]{F222} Der \emph{Betreuer} kann über seine Übersicht alle ihm zugewiesenen \emph{Benutzer} einsehen
+            \req[Warnungen]{F223} Der \emph{Betreuer} erhält \emph{Warnungen} für alle \emph{Benutzer} die ihn zugewiesen sind.
+            \req[Erinnerungen]{F224} Der \emph{Betreuer} erhält \emph{Erinnerungen} für alle \emph{Benutzer} die ihm zugewiesen sind.
+            \req[Stundenzettel prüfen]{F225} Der \emph{Betreuer} überprüft die \emph{abgegebenen Stundenzettel} der im zugewiesenen \emph{Benutzer}
         \end{requirements}
 
     \req[Administrator]{F230}
-        Ein \em{Admin} stellt das Verwaltungsorgan dar.
+        Ein \emph{Admin} stellt das Verwaltungsorgan dar.
         \begin{requirements}
-            \req[Benutzer erstellen]{F231} Der \em{Administrator} kann neue \em{Benutzer} anlegen.
-            \req[Benutzer editieren]{F232} Der \em{Administrator} kann die Daten existierender \em{Benutzer} verändern.
-            \req[Benutzer löschen]{F233} Der \em{Administrator} kann einen existierenden \em{Benutzer} löschen.
-            \req[Benutzer zuweisen]{F234} Der \em{Administrator} kann \em{Benutzer} einem \em{Betreuer} zuweisen.
-            \req[Betreuer Ansicht]{F235} Der \em{Administrator} kann für jedes \em{Team} auch auf die \em{Betreueransicht} zugreifen.
+            \req[Benutzer erstellen]{F231} Der \emph{Administrator} kann neue \emph{Benutzer} anlegen.
+            \req[Benutzer editieren]{F232} Der \emph{Administrator} kann die Daten existierender \emph{Benutzer} verändern.
+            \req[Benutzer löschen]{F233} Der \emph{Administrator} kann einen existierenden \emph{Benutzer} löschen.
+            \req[Benutzer zuweisen]{F234} Der \emph{Administrator} kann \emph{Benutzer} einem \emph{Betreuer} zuweisen.
+            \req[Betreuer Ansicht]{F235} Der \emph{Administrator} kann für jedes \emph{Team} auch auf die \emph{Betreueransicht} zugreifen.
         \end{requirements}
 \end{requirements}
 
@@ -82,34 +82,34 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
     \begin{requirements}
         \req[Graphische Darstellung Zeit]{F310+}
         \begin{requirements}
-            \req[Übersicht Teams]{F311} Der \em{Administrator} soll die bisher benötigte Zeit aller \em{Teams} auf seiner \em{Hauptseite} einsehen können.
-            \req[Übersicht Betreuer]{F312} Dem \em{Betreuer} soll die bisher benötigte Zeit aller im zugewiesenen \em{Benutzer} angezeigt werden.
-            \req[Übersicht Benutzer]{F313} Der \em{Benutzer} soll seine bisher aufgewedete Zeit graphisch angezeigt werden.
-            \req[Burn Rate Benutzer]{F314} Der \em{Benutzer} soll seine durchschnittliche wöchentliche Stundenrate \(Burn Rate\) angezeigt bekommen.
+            \req[Übersicht Teams]{F311} Der \emph{Administrator} soll die bisher benötigte Zeit aller \emph{Teams} auf seiner \emph{Hauptseite} einsehen können.
+            \req[Übersicht Betreuer]{F312} Dem \emph{Betreuer} soll die bisher benötigte Zeit aller im zugewiesenen \emph{Benutzer} angezeigt werden.
+            \req[Übersicht Benutzer]{F313} Der \emph{Benutzer} soll seine bisher aufgewedete Zeit graphisch angezeigt werden.
+            \req[Burn Rate Benutzer]{F314} Der \emph{Benutzer} soll seine durchschnittliche wöchentliche Stundenrate (Burn Rate) angezeigt bekommen.
         \end{requirements}
 
         \req[Graphische Darstellung Stundenzettelabgabe]{F320}
         \begin{requirements}
-            \req[Übersicht Teams]{F321} Der \em{Administrator} soll auf seiner \em{Hauptseite} die bisherigen \em{Abgaben} von \em{Stundenzetteln} angezeigt bekommen.
-            \req[Übersicht Betreuer]{F322} Der \em{Betreuer} soll den bisherigen Abgabefortschritt seines \em{Teams} dargestellt bekommen.
+            \req[Übersicht Teams]{F321} Der \emph{Administrator} soll auf seiner \emph{Hauptseite} die bisherigen \emph{Abgaben} von \emph{Stundenzetteln} angezeigt bekommen.
+            \req[Übersicht Betreuer]{F322} Der \emph{Betreuer} soll den bisherigen Abgabefortschritt seines \emph{Teams} dargestellt bekommen.
         \end{requirements}
 
         \req[Darstellung von Daten]{F330}
         \begin{requirements}
-            \req[Heatmap]{F331} \em{Benutzer} können einsehen an welchen Tagen die meiste Arbeitszeit geloggt wurde.
-            \req[Punch Card]{F332} \em{Benutzer} können einsehen zu welchen Zeiten die meiste Arbeitszeit geloggt wurde.
+            \req[Heatmap]{F331} \emph{Benutzer} können einsehen an welchen Tagen die meiste Arbeitszeit geloggt wurde.
+            \req[Punch Card]{F332} \emph{Benutzer} können einsehen zu welchen Zeiten die meiste Arbeitszeit geloggt wurde.
         \end{requirements}
 
         \req[Tätigkeiten Darstellung]{F340}
         \begin{requirements}
-            \req[Tätigkeiten Ranking]{F341} \em{Benutzer} können sich den Zeitverbrauch pro Tätigkeit, gesammelt über alle \em{Benutzer}, anzeigen lassen.
-            \req[Tätigkeits Heatmap]{F342} \em{Benutzer} können sich eine Tätigkeits \em{Heatmap}, anzeigen lassen.
+            \req[Tätigkeiten Ranking]{F341} \emph{Benutzer} können sich den Zeitverbrauch pro Tätigkeit, gesammelt über alle \emph{Benutzer}, anzeigen lassen.
+            \req[Tätigkeits Heatmap]{F342} \emph{Benutzer} können sich eine Tätigkeits \emph{Heatmap}, anzeigen lassen.
         \end{requirements}
         
         \req[Übersicht aller Daten]{F350}
         \begin{requirements}
-             \req[Admin]{F351} \em{Administratoren} können alle geleisteten Stunden aller \em{Benutzer} graphisch einsehen.
-             \req[Filter]{F352} Die graphische Anzeige erlaubt es nach \em{Kategorien}, \em{Betreuern}, \em{Benutzer} und Datum zu filtrieren.
+             \req[Admin]{F351} \emph{Administratoren} können alle geleisteten Stunden aller \emph{Benutzer} graphisch einsehen.
+             \req[Filter]{F352} Die graphische Anzeige erlaubt es nach \emph{Kategorien}, \emph{Betreuern}, \emph{Benutzer} und Datum zu filtrieren.
         \end{requirements}
 
        \req[Framework zur Darstellung]{F360} Daten werden durch ein Statistik Framework visualisiert angezeigt.
