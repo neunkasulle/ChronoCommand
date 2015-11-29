@@ -6,7 +6,7 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
 \begin{requirements}
     \req[Zeiterfassung]{F110}
-    Ein Benutzer* kann in seiner Hauptseite eine \emph{Zeiterfassung} starten und stoppen.
+    Ein \emph{Benutzer*} kann in seiner Hauptseite eine \emph{Zeiterfassung} starten und stoppen.
     \begin{requirements}
         \req[Kategorie]{F111} Eine \emph{Zeiterfassung} ist mit einer \emph{Kategorie} versehen.
         \req[Tätigkeit]{F112} Eine \emph{Zeiterfassung} ist mit einer \emph{Tätigkeit} verbunden.
@@ -60,7 +60,7 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
     \req[Betreuer*]{F220}
         Ein \emph{Betreuer*} ist für mehrere \emph{Benutzer*} zuständig.
         \begin{requirements}
-            \req[Benutzer zuweisen]{F221} Einem \emph{Betreuer*} können \emph{Benutzer*} zugewiesen werden
+            \req[Benutzer* zuweisen]{F221} Einem \emph{Betreuer*} können \emph{Benutzer*} zugewiesen werden
             \req[Stundenzettel]{F222} Der \emph{Betreuer*} kann über seine Übersicht alle ihm zugewiesenen \emph{Benutzer*} einsehen
             \req[Warnungen]{F223} Der \emph{Betreuer*} erhält \emph{Warnungen} für alle \emph{Benutzer*} die ihn zugewiesen sind.
             \req[Erinnerungen]{F224} Der \emph{Betreuer*} erhält \emph{Erinnerungen} für alle \emph{Benutzer*} die ihm zugewiesen sind.
@@ -74,7 +74,7 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
             \req[Benutzer* editieren]{F232} Der \emph{Administrator*} kann die Daten existierender \emph{Benutzer*} verändern.
             \req[Benutzer* löschen]{F233} Der \emph{Administrator*} kann einen existierenden \emph{Benutzer*} löschen.
             \req[Benutzer* zuweisen]{F234} Der \emph{Administrator*} kann \emph{Benutzer*} einem \emph{Betreuer*} zuweisen.
-            \req[Betreuer Ansicht]{F235} Der \emph{Administrator*} kann für jedes \emph{Team} auch auf die \emph{Betreuer*ansicht} zugreifen.
+            \req[Betreuer* Ansicht]{F235} Der \emph{Administrator*} kann für jedes \emph{Team} auch auf die \emph{Betreuer*ansicht} zugreifen.
         \end{requirements}
 \end{requirements}
 
@@ -102,7 +102,7 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
         \req[Tätigkeiten Darstellung]{F340}
         \begin{requirements}
-            \req[Tätigkeiten Ranking]{F341} \emph{Benutzer*} können sich den Zeitverbrauch pro \emph{Tätigkeit}, gesammelt über alle \emph{Benutzer}, anzeigen lassen.
+            \req[Tätigkeiten Ranking]{F341} \emph{Benutzer*} können sich den Zeitverbrauch pro \emph{Tätigkeit}, gesammelt über alle \emph{Benutzer*}, anzeigen lassen.
             \req[Tätigkeits Heatmap]{F342} \emph{Benutzer*} können sich eine Tätigkeits \emph{Heatmap}, anzeigen lassen.
         \end{requirements}
         
@@ -117,8 +117,8 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
 \subsection{Sonstige FA}
     \begin{requirements}
-        \req[Sicherheit von Konfigurationen]{F410} Konfigurationsdateien sind durch einen Hash vor dem Editieren geschützt
-        \req[Sicherheit der Datenbank]{F420} Die Datenbank wird durch einen Hash vor externem Editieren geschützt
+        \req[Sicherheit von Konfigurationen]{F410} Bestimmte Konfigurationsdateien sind durch eine im Quellcode hinterlegte Prüfsumme vor dem Editieren geschützt.
+        \req[Sicherheit der Datenbank]{F420+} Die Datenbank wird durch eine Prüfsumme vor externem Editieren geschützt.
         \begin{requirements}
             \req[Externe Veränderung der Datenbank]{F421} Sollte eine Veränderung stattgefunden haben, werden alle Nutzer über dieses externe Event informiert.
         \end{requirements}
