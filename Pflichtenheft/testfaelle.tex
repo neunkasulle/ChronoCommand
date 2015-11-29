@@ -122,7 +122,7 @@
             \textbf{Aktion} Der \emph{Benutzer*} klickt auf die Schaltfläche "`Zeit manuell eintragen"'. \\
             \textbf{Reaktion} Die Seite zur manuellen Eintragung von Zeiten wird geladen.
         \req{T192}
-            \textbf{Stand} Die Seite zur manuellen Eintragung von Zeiten ist geladen.
+            \textbf{Stand} Die Seite zur manuellen Eintragung von Zeiten ist geladen. \\
             \textbf{Aktion} 
                 \begin{itemize}
                     \item Der \emph{Benutzer*} gibt die Daten für eine vollständige \emph{Zeiterfassung} ein.
@@ -141,6 +141,19 @@
 %                \item Der \emph{Benutzer*} erhält eine Warnung, dass die Daten unvollständig sind.
 %                \item Die Daten werden in die Liste der erfassten Zeiten eingetragen.
 %                \end{itemize}
-            
     \end{requirements}
+
+    \req{T200} Der \emph{Benutzer*} löscht eine erfasste Zeit.
+    \begin{requirements}
+        \req{T201}
+            \textbf{Stand} Der \emph{Benutzer*} befindet sich angemeldet auf seiner \emph{Hauptseite} mit den Auflistungen der eingetragenen Zeiten . \\
+            \textbf{Aktion}
+                \begin{itemize}
+                    \item Der \emph{Benutzer*} wählt eine eingetragene Zeit aus der Liste.
+                    \item Der \emph{Benutzer*} klickt auf die Schaltfläche "`Löschen".
+                \end{itemize}
+            \textbf{Reaktion} Die eingetragene Zeit wird gelöscht.
+    \end{requirements}
+            
+    
 \end{requirements}
