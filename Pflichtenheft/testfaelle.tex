@@ -2,35 +2,35 @@
 
 \subsection{Funktionssequenzen}
 \begin{requirements}
-	\req{T110} \emph{Benutzer} Meldet sich an
+	\req{T110} \emph{Benutzer*} Meldet sich an
 	\begin{requirements}
   			\req{T111}
   			    \textbf{Stand} Offenes Browserfenster. \\
-  			    \textbf{Aktion} Der \emph{Benutzer} gibt chronoCommand.eu in die Browserzeile ein und bestätigt mit Enter. \\
+  			    \textbf{Aktion} Der \emph{Benutzer*} gibt die lokale URL der ChronoCommand-Instanz in die Browserzeile ein und bestätigt mit Enter. \\
   			    \textbf{Reaktion} Da kein Session Cookie geladen ist, wird der Anmeldescreen gezeigt.
   			\req{T112}
   			    \textbf{Stand} Die Anmeldeseite wurde geladen.\\
-                \textbf{Aktion} Der \emph{Benutzer}
+                \textbf{Aktion} Der \emph{Benutzer*}
                     \begin{itemize}
-                        \item gibt im Nutzernamen Feld seinen Nutzernamen an.
+                        \item gibt im Benutzer*namen Feld seinen Benutzer*namen an.
                         \item gibt im Passwort Feld sein Passwort an.
                         \item betätigt die Anmelden Schaltfläche.
                     \end{itemize}
                 \begin{itemize}
-			\item \textbf{Reaktion \emph{Benutzerdaten korrekt}} Der \emph{Benutzer} wird angemeldet.
-			\item \textbf{Reaktion \emph{Benutzerdaten nicht korrekt}} Der \emph{Benutzer} bekommt eine Fehlermeldung.
+			\item \textbf{Reaktion \emph{Benutzer*daten korrekt}} Der \emph{Benutzer*} wird angemeldet.
+			\item \textbf{Reaktion \emph{Benutzer*daten nicht korrekt}} Der \emph{Benutzer*} bekommt eine Fehlermeldung.
                 \end{itemize}
 
 	\end{requirements}
-	\req{T120} Angemeldeter \emph{Benutzer} startet/stoppt eine \emph{Zeiterfassung}.
+	\req{T120} Angemeldeter \emph{Benutzer*} startet/stoppt eine \emph{Zeiterfassung}.
 	\begin{requirements}
 	    \req{T121}
-            \textbf{Stand} Der \emph{Benutzer} befindet sich angemeldet auf der \emph{Hauptseite}. \\
-            \textbf{Aktion} Der \emph{Benutzer} klickt die Schaltfläche "`neue Zeiterfassung"' \\
+            \textbf{Stand} Der \emph{Benutzer*} befindet sich angemeldet auf der \emph{Hauptseite}. \\
+            \textbf{Aktion} Der \emph{Benutzer*} klickt die Schaltfläche "`neue Zeiterfassung"' \\
             \textbf{Reaktion} Es werden die Elemente für eine neue \emph{Zeiterfassung} geladen.
             \item
-                \textbf{Stand} Der \emph{Benutzer} sieht die Elemente für eine neue \emph{Zeiterfassung}. \\
-                \textbf{Aktion} Der \emph{Benutzer}
+                \textbf{Stand} Der \emph{Benutzer*} sieht die Elemente für eine neue \emph{Zeiterfassung}. \\
+                \textbf{Aktion} Der \emph{Benutzer*}
                     \begin{itemize}
                         \item weist der \emph{Zeiterfassung} eine \emph{Kategorie} über das Textfeld "`Kategorie"' zu.
                         \item weist der \emph{Zeiterfassung} eine \emph{Tätigkeit} über das Textfeld "`Tätigkeit"' zu
@@ -39,55 +39,55 @@
                 \textbf{Reaktion} Die \emph{Zeiterfassung} läuft.
         \req{T122}
             \textbf{Stand} Die \emph{Zeiterfassung} läuft. \\
-            \textbf{Aktion} Der \emph{Benutzer} stoppt die \emph{Zeiterfassung} über die Schaltfläche "`Zeiterfassung stoppen"' \\
+            \textbf{Aktion} Der \emph{Benutzer*} stoppt die \emph{Zeiterfassung} über die Schaltfläche "`Zeiterfassung stoppen"' \\
             \textbf{Reaktion}
                 \begin{itemize}
                     \item Die \emph{Zeiterfassung} stoppt.
-                    \item Die Erfasste Zeit wird in die erfassten Zeiten eingetragen.
+                    \item Die erfasste Zeit wird in die Liste der erfassten Zeiten eingetragen.
                 \end{itemize}
 	\end{requirements}
 
 
-	\req{T130} \emph{Benutzer} erhält \emph{Warnung} wegen nicht abgegebenem \emph{Studenzettel} \\
-        \textbf{Stand} Der \emph{Benutzer} ist nicht eingeloggt. \\
-        \textbf{Aktion} Der \emph{Benutzer} meldet sich an \emph{T110}. \\
-        \textbf{Reaktion} Der \emph{Benutzer} erhält nach der Anmeldung ein Popup, dass ihn auffordert, den \emph{Stundenzettel} abzugeben.
+	\req{T130} \emph{Benutzer*} erhält \emph{Warnung} wegen nicht abgegebenem \emph{Studenzettel} \\
+        \textbf{Stand} Der \emph{Benutzer*} ist nicht eingeloggt. \\
+        \textbf{Aktion} Der \emph{Benutzer*} meldet sich an \emph{T110}. \\
+        \textbf{Reaktion} Der \emph{Benutzer*} erhält nach der Anmeldung ein Popup, dass ihn auffordert, den \emph{Stundenzettel} abzugeben.
 
-	\req{T140} \emph{Betreuer} prüft neu \emph{abgebenen Stundenzettel}
+	\req{T140} \emph{Betreuer*} prüft neu \emph{abgebenen Stundenzettel}
 	\begin{requirements}
 	    \req{T141}
-	        \textbf{Stand} Der \emph{Betreuer}
+	        \textbf{Stand} Der \emph{Betreuer*}
 	            \begin{itemize}
 	                \item ist angemeldet.
 	                \item erhält über die Benachrichtigungs-Schaltfläche mittgeteilt das ein neuer \emph{Stundenzettel} abegeben wurde.
 	            \end{itemize}
-            \textbf{Aktion} Der \emph{Betreuer} klickt auf die Benachrichtigung. \\
+            \textbf{Aktion} Der \emph{Betreuer*} klickt auf die Benachrichtigung. \\
             \textbf{Reaktion} Die entsprechende \emph{Stundenzettelseite} wird  geladen.
 	    \req{T142}
 	        \textbf{Stand} Die \emph{Stundenzettelseite} ist geladen. \\
             \textbf{Aktion}
                 \begin{itemize}
-                    \item Der \emph{Betreuer} überprüft den \emph{Stundenzettel}.
+                    \item Der \emph{Betreuer*} überprüft den \emph{Stundenzettel}.
                     \item \textit{Stundenzettel Korrekt} Der \emph{Betreuer} klickt die Schaltfläche Stundenzettel geprüft.
-                    \item \textit{Stundenzettel nicht Korrekt}  Der \emph{Betreuer} klickt die Schaltfläche Stundenzettel nicht Okay und kommentiert, was nicht korrekt ist.
+                    \item \textit{Stundenzettel nicht Korrekt}  Der \emph{Betreuer*} klickt die Schaltfläche Stundenzettel nicht Okay und kommentiert, was nicht korrekt ist.
                 \end{itemize}
             \textbf{Reaktion}
                 \begin{itemize}
                     \item Die \emph{Stundenzettelseite} wird geschlossen der \emph{Betreuer} wird zur \emph{Hauptseite} zurückgeleitet
-                    \item \textit{Stundenzettel Korrekt} Der \emph{Stundenzettel} ist als \emph{geprüft} markiert und der \emph{Administrator} wird darüber benachrichtigt
-                    \item \textit{Stundenzettel nicht Korrekt} Der \emph{Stundenzettel} wird als \emph{nicht abgegben} markiert und der \emph{Benutzer} darüber benachrichtigt
+                    \item \textit{Stundenzettel Korrekt} Der \emph{Stundenzettel} ist als \emph{geprüft} markiert und der \emph{Administrator*} wird darüber benachrichtigt
+                    \item \textit{Stundenzettel nicht Korrekt} Der \emph{Stundenzettel} wird als \emph{nicht abgegben} markiert und der \emph{Benutzer*} darüber benachrichtigt
                 \end{itemize}
 	\end{requirements}
 
-	\req{T150} \emph{Benutzer} editiert die \emph{Tätigkeit} in einem \emph{nicht abgegebenem} \emph{Stundenzettel}
+	\req{T150} \emph{Benutzer*} editiert die \emph{Tätigkeit} in einem \emph{nicht abgegebenem} \emph{Stundenzettel}
 	\begin{requirements}
 	    \req{T151}
-	        \textbf{Stand} \emph{Benutzer} befindet sich auf seiner \emph{Hauptseite} mit den Auflistungen der eingetragenen Zeiten. \\
-	        \textbf{Aktion} Der \emph{Benutzer} klickt dem Editieren Button bei einer eingetragenen Zeit.\\
+	        \textbf{Stand} \emph{Benutzer*} befindet sich auf seiner \emph{Hauptseite} mit den Auflistungen der eingetragenen Zeiten. \\
+	        \textbf{Aktion} Der \emph{Benutzer*} klickt dem Editieren Button bei einer eingetragenen Zeit.\\
             \textbf{Reaktion} Die Elemente der eingetragenen Zeit werden editierbar.
         \req{T152}
         \textbf{Stand} Die Elemente der eingetragenen Zeit sind editierbar. \\
-        \textbf{Aktion} Der \emph{Benutzer}
+        \textbf{Aktion} Der \emph{Benutzer*}
             \begin{itemize}
                 \item klickt in das Textfeld in dem die \emph{Tätigkeit} vermerkt wird.
                 \item ändert die dort eingetragene \emph{Tätigkeit}.
@@ -96,23 +96,23 @@
             \textbf{Reaktion} Die eingetragene \emph{Tätigkeit} ist damit geändert
     \end{requirements}
 
-    \req{T160} Der \emph{Benutzer} wählt die Seite an und besitz ein gültiges Session Cookie. \\
+    \req{T160} Der \emph{Benutzer*} wählt die Seite an und besitz ein gültiges Session Cookie. \\
         \textbf{Stand} Offenes Browserfenster. \\
-        \textbf{Aktion} Der \emph{Benutzer} gibt chronoCommand.eu in die Browserzeile ein in betätigt Enter. \\
-        \textbf{Reaktion} Da Session Cookie geladen, wird die \emph{Benutzer Hauptseite} gezeigt.
+        \textbf{Aktion} Der \emph{Benutzer*} gibt die lokae URL der ChronoCommand-Instanz in die Browserzeile ein in betätigt Enter. \\
+        \textbf{Reaktion} Da Session Cookie geladen, wird die \emph{Benutzer* Hauptseite} gezeigt.
 
-    \req{T170} Der \emph{Benutzer} verletzt gesetzliche Vorgaben. \\
+    \req{T170} Der \emph{Benutzer*} verletzt gesetzliche Vorgaben. \\
         \textbf{Stand} \emph{Zeiterfassung} läuft. \\
         \textbf{Aktion} Die \emph{Zeiterfassung} überschreitet ein gesetzes Limit. \\
         \textbf{Reaktion}
             \begin{itemize}
-                \item Der \emph{Benutzer} erhält eine \emph{Warnung}, dass er gesetzliche Vorgaben verletzt.
+                \item Der \emph{Benutzer*} erhält eine \emph{Warnung}, dass er gesetzliche Vorgaben verletzt.
                 \item Die \emph{Zeiterfassung} stoppt.
             \end{itemize}
 
-    \req{T180} \emph{Betreuer} sieht \emph{Stundendaten} ein. \\
-        \textbf{Stand} Der \emph{Betreuer} befindet sich auf der \emph{Betreuer Hauptseite}. \\
-        \textbf{Aktion} Der \emph{Betreuer} klickt die Schaltfläche "`Stundenzettel einsehen"' \\
-        \textbf{Reaktion} Der \emph{Betreuer} erhält die \emph{Stundendaten} der ihm zugewiesenen \emph{Benutzer}.
+    \req{T180} \emph{Betreuer*} sieht \emph{Stundendaten} ein. \\
+        \textbf{Stand} Der \emph{Betreuer*} befindet sich auf der \emph{Betreuer Hauptseite}. \\
+        \textbf{Aktion} Der \emph{Betreuer*} klickt die Schaltfläche "`Stundenzettel einsehen"' \\
+        \textbf{Reaktion} Der \emph{Betreuer*} erhält die \emph{Stundendaten} der ihm zugewiesenen \emph{Benutzer*}.
 
 \end{requirements}
