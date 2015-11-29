@@ -112,7 +112,35 @@
 
     \req{T180} \emph{Betreuer*} sieht \emph{Stundendaten} ein. \\
         \textbf{Stand} Der \emph{Betreuer*} befindet sich auf der \emph{Betreuer Hauptseite}. \\
-        \textbf{Aktion} Der \emph{Betreuer*} klickt die Schaltfläche "`Stundenzettel einsehen"' \\
+        \textbf{Aktion} Der \emph{Betreuer*} klickt die Schaltfläche "`Stundenzettel einsehen"'. \\
         \textbf{Reaktion} Der \emph{Betreuer*} erhält die \emph{Stundendaten} der ihm zugewiesenen \emph{Benutzer*}.
-
+        
+    \req{T190} Der \emph{Benutzer*} trägt manuell eine Zeit ein.
+    \begin{requirements}
+        \req{T191}
+            \textbf{Stand} Der \emph{Benutzer*} befindet sich angemeldet auf der \emph{Hauptseite}. \\
+            \textbf{Aktion} Der \emph{Benutzer*} klickt auf die Schaltfläche "`Zeit manuell eintragen"'. \\
+            \textbf{Reaktion} Die Seite zur manuellen Eintragung von Zeiten wird geladen.
+        \req{T192}
+            \textbf{Stand} Die Seite zur manuellen Eintragung von Zeiten ist geladen.
+            \textbf{Aktion} 
+                \begin{itemize}
+                    \item Der \emph{Benutzer*} gibt die Daten für eine vollständige \emph{Zeiterfassung} ein.
+                    \item Der \emph{Benutzer*} klickt auf die Schaltfäche "`Speichern"'.
+               \end{itemize}
+            \textbf{Reaktion} Die Daten werden als erfasste Zeit in die Liste der erfassten Zeiten eingetragen.
+        \req{193}
+            \textbf{Stand} Der \emph{Benutzer*} befindet sich angemeldet auf der \emph{Hauptseite}. \\
+            \textbf{Aktion}
+                \begin{itemize}
+                    \item Der \emph{Benutzer*} gibt unvollständige Daten für eine \emph{Zeiterfassung} ein.
+                    \item Der \emph{Benutzer*} klickt auf die Schaltfäche "`Speichern"'.
+                \end{itemize}
+            \textbf{Reaktion} Der \emph{Benutzer*} erhält eine Warnung, dass die Daten unvollständig sind.
+%                \begin{itemize}
+%                \item Der \emph{Benutzer*} erhält eine Warnung, dass die Daten unvollständig sind.
+%                \item Die Daten werden in die Liste der erfassten Zeiten eingetragen.
+%                \end{itemize}
+            
+    \end{requirements}
 \end{requirements}
