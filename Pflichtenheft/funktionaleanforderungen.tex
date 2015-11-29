@@ -6,7 +6,7 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
 \begin{requirements}
     \req[Zeiterfassung]{F110}
-    Ein Benutzer* kann in seiner Hauptseite eine \emph{Zeiterfassung} starten und stoppen.
+    Ein \emph{Benutzer*} kann in seiner Hauptseite eine \emph{Zeiterfassung} starten und stoppen.
     \begin{requirements}
         \req[Kategorie]{F111} Eine \emph{Zeiterfassung} ist mit einer \emph{Kategorie} versehen.
         \req[Tätigkeit]{F112} Eine \emph{Zeiterfassung} ist mit einer \emph{Tätigkeit} verbunden.
@@ -117,8 +117,8 @@ Die den Wunschkriterien zugeordneten Anforderungen sind mit einem "`+"' hinter d
 
 \subsection{Sonstige FA}
     \begin{requirements}
-        \req[Sicherheit von Konfigurationen]{F410} Konfigurationsdateien sind durch einen Hash vor dem Editieren geschützt
-        \req[Sicherheit der Datenbank]{F420} Die Datenbank wird durch einen Hash vor externem Editieren geschützt
+        \req[Sicherheit von Konfigurationen]{F410} Bestimmte Konfigurationsdateien sind durch eine im Quellcode hinterlegte Prüfsumme vor dem Editieren geschützt.
+        \req[Sicherheit der Datenbank]{F420+} Die Datenbank wird durch eine Prüfsumme vor externem Editieren geschützt.
         \begin{requirements}
             \req[Externe Veränderung der Datenbank]{F421} Sollte eine Veränderung stattgefunden haben, werden alle Nutzer über dieses externe Event informiert.
         \end{requirements}
