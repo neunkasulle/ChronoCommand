@@ -154,6 +154,35 @@
                 \end{itemize}
             \textbf{Reaktion} Die eingetragene Zeit wird gelöscht.
     \end{requirements}
+    
+\newpage
+    \req{T210} Der \emph{Benutzer*} stoppt eine unvollständige \emph{Zeiterfassung}.
+    \begin{requirements}
+        \req {211}
+            \textbf{Stand}
+            \begin{itemize}
+                \item Die \emph{Zeiterfassung} läuft.
+                \item Der \emph{Benutzer*} hat keine \emph{Tätigkeit} eingetragen.
+            \end{itemize}
+            \textbf{Aktion} Der \emph{Benutzer*} stoppt die \emph{Zeiterfassung}. \\
+            \textbf{Reaktion}
+            \begin{itemize}
+                \item Die \emph{Zeiterfassung} läuft weiter.
+                \item Der \emph{Benutzer*} erhält eine Warnung über die nicht eingetragene \emph{Tätigkeit}.
+            \end{itemize}
+        \req{212}
+            \textbf{Stand}
+            \begin{itemize}
+                \item Die \emph{Zeiterfassung} läuft.
+                \item Der \emph{Benutzer*} hat keine \emph{Kategorie} eingetragen.
+            \end{itemize}
+            \textbf{Aktion} Der \emph{Benutzer*} stoppt die \emph{Zeiterfassung}. \\
+            \textbf{Reaktion}
+            \begin{itemize}
+                \item Die \emph{Zeiterfassung} läuft weiter.
+                \item Der \emph{Benutzer*} erhält eine Warnung über die nicht eingetragene \emph{Kategorie}.
+            \end{itemize}
+    \end{requirements}
             
     
 \end{requirements}
