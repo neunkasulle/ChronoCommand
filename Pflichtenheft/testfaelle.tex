@@ -110,7 +110,7 @@
                 \item Die \emph{Zeiterfassung} stoppt.
             \end{itemize}
 
-    \req{T180} \emph{Betreuer*} sieht \emph{Stundendaten} ein. \\
+    \req{T180} Der \emph{Betreuer*} sieht \emph{Stundendaten} ein. \\
         \textbf{Stand} Der \emph{Betreuer*} befindet sich auf der \emph{Betreuer* Hauptseite}. \\
         \textbf{Aktion} Der \emph{Betreuer*} klickt die Schaltfläche "`Stundenzettel einsehen"'. \\
         \textbf{Reaktion} Der \emph{Betreuer*} erhält die \emph{Stundendaten} der ihm zugewiesenen \emph{Benutzer*}.
@@ -137,10 +137,6 @@
                     \item Der \emph{Benutzer*} klickt auf die Schaltfäche "`Speichern"'.
                 \end{itemize}
             \textbf{Reaktion} Der \emph{Benutzer*} erhält eine Warnung, dass die Daten unvollständig sind.
-%                \begin{itemize}
-%                \item Der \emph{Benutzer*} erhält eine Warnung, dass die Daten unvollständig sind.
-%                \item Die Daten werden in die Liste der erfassten Zeiten eingetragen.
-%                \end{itemize}
     \end{requirements}
 
     \req{T200} Der \emph{Benutzer*} löscht eine erfasste Zeit.
@@ -182,6 +178,18 @@
                 \item Die \emph{Zeiterfassung} läuft weiter.
                 \item Der \emph{Benutzer*} erhält eine Warnung über die nicht eingetragene \emph{Kategorie}.
             \end{itemize}
+    \end{requirements}
+    
+    \req{T220} Der \emph{Administrator*} schaut sich alle Daten an.
+    \begin{requirements}
+        \req{221}
+            \textbf{Stand} Der \emph{Administrator*} befindet sich angemeldet auf der \emph{Hauptseite}. \\
+            \textbf{Aktion} Der \emph{Administrator*} navigiert zur \emph{Übersicht aller Daten}. \\
+            \textbf{Reaktion} Der \emph{Administrator*} erhält eine graphische Übersicht aller erfasster Zeiten.
+        \req{222}
+            \textbf{Stand} Der \emph{Administrator*} befindet sich auf der Seite \emph{Übersicht aller Daten}. \\
+            \textbf{Aktion} Der \emph{Administrator*} wählt eine bestimmte \emph{Kategorie} aus. \\
+            \textbf{Reaktion} Die Übersicht zeigt alle geleisteten Stunden dieser \emph{Kategorie}.
     \end{requirements}
             
     
