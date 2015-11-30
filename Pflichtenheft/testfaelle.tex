@@ -6,8 +6,8 @@
 	\begin{requirements}
   			\req{T111}
   			    \textbf{Stand} Offenes Browserfenster. \\
-  			    \textbf{Aktion} Der \emph{Benutzer*} gibt die lokale URL der ChronoCommand-Instanz in die Browserzeile ein und bestätigt mit Enter. \\
-  			    \textbf{Reaktion} Da kein Session Cookie geladen ist, wird der Anmeldescreen gezeigt.
+  			    \textbf{Aktion} Der \emph{Benutzer*} gibt die lokale URL der ChronoCommand-Instanz in die Adresszeile des Browsers ein und bestätigt mit Enter. \\
+  			    \textbf{Reaktion} Da kein Session Cookie geladen ist, wird die Anmeldeseite gezeigt.
   			\req{T112}
   			    \textbf{Stand} Die Anmeldeseite wurde geladen.\\
                 \textbf{Aktion} Der \emph{Benutzer*}
@@ -48,18 +48,18 @@
 	\end{requirements}
 
 
-	\req{T130} \emph{Benutzer*} erhält \emph{Warnung} wegen nicht abgegebenem \emph{Studenzettel}. \\
+	\req{T130} \emph{Benutzer*} erhält eine \emph{Warnung} wegen einem nicht abgegebenen \emph{Studenzettel}. \\
         \textbf{Stand} Der \emph{Benutzer*} ist nicht eingeloggt. \\
         \textbf{Aktion} Der \emph{Benutzer*} meldet sich an \emph{T110}. \\
         \textbf{Reaktion} Der \emph{Benutzer*} erhält nach der Anmeldung ein Popup, dass ihn auffordert, den \emph{Stundenzettel} abzugeben.
 
-	\req{T140} \emph{Betreuer*} prüft neu \emph{abgebenen Stundenzettel}.
+	\req{T140} \emph{Betreuer*} prüft neu \emph{abgegebenen Stundenzettel}.
 	\begin{requirements}
 	    \req{T141}
 	        \textbf{Stand} Der \emph{Betreuer*}
 	            \begin{itemize}
 	                \item ist angemeldet.
-	                \item erhält über die Benachrichtigungs-Schaltfläche mittgeteilt das ein neuer \emph{Stundenzettel} abegeben wurde.
+	                \item erhält über die Benachrichtigungs-Schaltfläche mitgeteilt das ein neuer \emph{Stundenzettel} abgegeben wurde.
 	            \end{itemize}
             \textbf{Aktion} Der \emph{Betreuer*} klickt auf die Benachrichtigung. \\
             \textbf{Reaktion} Die entsprechende \emph{Stundenzettelseite} wird  geladen.
@@ -96,14 +96,14 @@
             \textbf{Reaktion} Die eingetragene \emph{Tätigkeit} ist damit geändert.
     \end{requirements}
 
-    \req{T160} Der \emph{Benutzer*} wählt die Seite an und besitz ein gültiges Session Cookie. \\
+    \req{T160} Der \emph{Benutzer*} wählt die Seite an und besitzt ein gültiges Session Cookie. \\
         \textbf{Stand} Offenes Browserfenster. \\
-        \textbf{Aktion} Der \emph{Benutzer*} gibt die lokae URL der ChronoCommand-Instanz in die Browserzeile ein in betätigt Enter. \\
+        \textbf{Aktion} Der \emph{Benutzer*} gibt die URL der ChronoCommand-Instanz in die Adresszeile des Browsers ein und bestätigt mit Enter. \\
         \textbf{Reaktion} Da Session Cookie geladen, wird die \emph{Benutzer* Hauptseite} gezeigt.
 
     \req{T170} Der \emph{Benutzer*} verletzt gesetzliche Vorgaben. \\
         \textbf{Stand} \emph{Zeiterfassung} läuft. \\
-        \textbf{Aktion} Die \emph{Zeiterfassung} überschreitet ein gesetzes Limit. \\
+        \textbf{Aktion} Die \emph{Zeiterfassung} überschreitet ein gesetztes Limit. \\
         \textbf{Reaktion}
             \begin{itemize}
                 \item Der \emph{Benutzer*} erhält eine \emph{Warnung}, dass er gesetzliche Vorgaben verletzt.
@@ -126,7 +126,7 @@
             \textbf{Aktion} 
                 \begin{itemize}
                     \item Der \emph{Benutzer*} gibt die Daten für eine vollständige \emph{Zeiterfassung} ein.
-                    \item Der \emph{Benutzer*} klickt auf die Schaltfäche "`Speichern"'.
+                    \item Der \emph{Benutzer*} klickt auf die Schaltfläche "`Speichern"'.
                \end{itemize}
             \textbf{Reaktion} Die Daten werden als erfasste Zeit in die Liste der erfassten Zeiten eingetragen.
         \req{193}
@@ -134,7 +134,7 @@
             \textbf{Aktion}
                 \begin{itemize}
                     \item Der \emph{Benutzer*} gibt unvollständige Daten für eine \emph{Zeiterfassung} ein.
-                    \item Der \emph{Benutzer*} klickt auf die Schaltfäche "`Speichern"'.
+                    \item Der \emph{Benutzer*} klickt auf die Schaltfläche "`Speichern"'.
                 \end{itemize}
             \textbf{Reaktion} Der \emph{Benutzer*} erhält eine Warnung, dass die Daten unvollständig sind.
     \end{requirements}
