@@ -3,7 +3,7 @@
 .PHONY: clean require
 
 all:
-	xelatex -output-directory=entwurf.tex
+	xelatex -output-directory=out entwurf.tex
 clean:
 	rm out/*
 
