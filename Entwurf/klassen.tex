@@ -1,1 +1,44 @@
 \section{Klassen}
+    \subsection{Model}
+        \begin{itemize}
+            \item{Company}
+                Speichert Informationen über die Firma in der die Zeiterfassung betrieben wird.
+            \item{Entity}
+                Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für Spezialisierte Benutzer bereit.
+                Folgende Spezialisierungen sind möglich:
+                \begin{itemize}
+                    \item{Admin}
+                        Stellt Daten für und über den Admin bereit.
+                    \item{User}
+                        Stellt Daten für und über den User bereit, darüber hinaus hat der User eine verbing zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
+                    \item{Supervisor}
+                        Erweiterung des User um Gruppen von Usern zu verwalten.
+                \end{itemize}
+            \item{EntityCatalogue}
+                Listet alle vorhanden Entities auf. Enthält Methoden um Entities hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle einträge einzigartig sind.
+            \item{Regulations}
+                Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
+            \item{TimeSheet}
+                Speichert Zeiterfassungen. Methoden zur Validierung und sicherstellung der unveränderlichkeit sind vorhanden.
+            \item{TimeSheetState}
+                Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
+            \item{MonthAndYear}
+                Klasse, die Zeitfunktionen für den Stundenzettel bereitstellt.
+            \item{TimeRecord}
+                Datenhaltung, der Zeiterfassung.
+            \item{Session}
+                Daten die mit einer Login Session assoziert sind(User, ablaufdatum, ...) werden in dieser Klasse gespeichert.
+            \item{Category}
+                Kategorie, die für die Zeiterfassung benötigt wird
+            \item{Categories}
+                Liste aller verfügbaren Kategorien.
+            \item{Message}
+                Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
+            \item{HashThingy}
+                Stellt Passwort Hash funktionen bereit.
+            \item{TimeSheetToPdf}
+                Klasse, um Stundenzettel als .pdf zu exportieren.
+        \end{itemize}
+    \subsection{Control}
+
+    \subsection{View}
