@@ -1,0 +1,22 @@
+\section{Dateiformate}
+\subsection{Dateiformat zur Definition von gesetzlichen Feiertagen}
+In einer Datei "`Feiertage.dat"' können die gesetzlichen Feiertage des entsprechenden Bundeslandes konfiguriert werden.
+Ausgeliefert wird das Programm mit den gesetzlichen Feiertagen für Baden-Württemberg.
+Wenn die Datei geändert wurde, muss das Programm danach neu kompiliert werden, da im Quellcode eine Prüfsumme der Datei hinterlegt ist um Manipulation zu erschweren.
+Die Datei ist ASCII-kodiert.
+
+In jeder Zeile steht der Name eines Feiertags gefolgt von einem Doppelpunkt und dem Datum.
+Das Datum kann auf zwei Arten hinterlegt werden:
+\begin{itemize}
+    \item Das Datum im Format TT.MM., also zum Beispiel 05.01.
+    \item Als Anzahl der Tage vor oder nach dem Osterdatum, im Format +N bzw -N, also zum Beispiel +60
+\end{itemize}
+
+\subsection{Datenbankanbindung}
+In der Datei "`hibernate.cfg.xml"' wird die Datenbankanbindung mittels der Variablen connection.driver\_class, connection.url, connection.username und connection.password definiert.
+Diese Datei muss
+Die Syntax der Datei entspricht den Vorgaben von Hibernate ORM 5.0.
+
+\subsection{Authentifizierung via LDAP}
+Falls die Authentifizierung via LDAP erwünscht ist, muss die Anbindung der "`Shiro.ini"' konfiguriert werden.
+Die Syntax der Datei entspricht den Vorgaben von Shiro 1.2.4.
