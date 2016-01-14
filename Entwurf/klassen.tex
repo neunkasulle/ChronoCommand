@@ -38,6 +38,7 @@
                 \begin{itemize}
                     \item{entity\(username:String , email:String, password:Hash\)}
                     \item{checkPassword\(password:Hash\):bool}
+                        Gibt true zurück wenn das Passwort korrekt ist sonst false.
                     \item{receiveMessage\(message:Message\)}
                 \end{itemize}
 
@@ -46,8 +47,13 @@
                 \begin{itemize}
                    \item{findEntity\(username:String\):Entity}
                    \item{addEntity\(newEntity:Entity\):Bool}
+                    Gibt true zurück wenn die Entity erstellt werden konnte.
+                    False bei fehler.
                    \item{deleteUser\(entity:Entity\):Bool}
+                    Gibt true zurück wenn die Entity gelöscht werden konnte.
+                    False bei fehler.
                    \item{checkCredentials\(userName:String, pwHash:Hash\):Bool}
+                   Gibt true zurück wenn Username und Passwort korrekt sind, sonst false.
                    \item{getUsersBySupervisor\(supervisor:Supervisor\):List}
                    \item{getAllUsers\(\): List}
                 \end{itemize}
@@ -65,10 +71,25 @@
                     \item{addTime\(timeRec:TimeRecord\)}
                     \item{lockTimeSheet\(\):bool}
                     \item{validateTimeSheet\(\):bool}
+                        Der Time Sheet wird auf verschiede Regularien überprüft:
+                        \begin{itemize}
+                            \item Allgemeiner Sanity Check: Sind die Zeiten überhaupt möglich?
+                            \item Verstoßen die Zeiten gegen Vertragliche Zeitbeschränkungen?
+                            \item Sind die eingetragenen Zeit konform mit gesetzlichen Bestimmungen?
+                        \end{itemize}
                 \end{itemize}
 
             \item{TimeSheetState}
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
+                Mögliche Zustände:
+                \begin{itemize}
+                    \item{unlocked}
+                        Der Time Sheet kann bearbeitet werden.
+                    \item{locked}
+                        der Time Sheet ist abgeben worden und es deshalb gegen bearbeitung gesperrt.
+                    \item{checked}
+                        Der Time Sheet wurde vom Supervisor überprüft.
+                \end{itemzie}
 
             \item{TimeRecord}
                 Datenhaltung, der Zeiterfassung.
@@ -125,16 +146,19 @@
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
                        \begin{itemize}
                            \item{checkRegulations():bool}
+                            Es werden erfasste Zeiten auf ihre konformität geprüft.
+                            Verfahren ähnlich zu \emph{validateTimeSheet()}.
                            \item{generateWarnings()}
+                            Erzeugt Messages über Verletzungen der Regularien.
                        \end{itemize}
 
                     \item{MainControl}
                         Kontroliert den Hauptablauf des Programms.
                         \begin{itemize}
-                             \item{login(username:String password:String,  stayLoggedIn: bool): bool}
-                             \item{logout(): bool}
                              \item{getEntity(sessionID:??): Entity}
                              \item{init():bool}
+                                Der Server dienst wird initialisiert.
+                                False wird zurückgegeben, wenn etwas falsch läuft und die initialisierung fehlschlägt
                         \end{itemize}
 
                     \item{TimeSheetControl}
@@ -240,6 +264,7 @@
             \item{Diagramm Magic}
             \begin{itemize}
                 \item{visualizeData(range: int)}
+                    Zeigt die daten aus der StatisticControl an.
             \end{itemize}
 
             \item{TimeElements}
