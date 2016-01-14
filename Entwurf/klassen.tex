@@ -6,41 +6,109 @@
         \begin{itemize}
             \item{Company}
                 Speichert Informationen über die Firma in der die Zeiterfassung betrieben wird.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Entity}
                 Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für Spezialisierte Benutzer bereit.
                 Folgende Spezialisierungen sind möglich:
                 \begin{itemize}
                     \item{Admin}
                         Stellt Daten für und über den Admin bereit.
+                    \begin{itemize}
+                        \item()
+                    \end{itemize}
+
                     \item{User}
                         Stellt Daten für und über den User bereit, darüber hinaus hat der User eine verbing zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
+                        \begin{itemize}
+                            \item()
+                        \end{itemize}
+
                     \item{Supervisor}
                         Erweiterung des User um Gruppen von Usern zu verwalten.
+                        \begin{itemize}
+                            \item()
+                        \end{itemize}
+
                 \end{itemize}
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{EntityCatalogue}
                 Listet alle vorhanden Entities auf. Enthält Methoden um Entities hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle einträge einzigartig sind.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Regulations}
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{TimeSheet}
                 Speichert Zeiterfassungen. Methoden zur Validierung und sicherstellung der unveränderlichkeit sind vorhanden.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{TimeSheetState}
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{MonthAndYear}
                 Klasse, die Zeitfunktionen für den Stundenzettel bereitstellt.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{TimeRecord}
                 Datenhaltung, der Zeiterfassung.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Session}
                 Daten die mit einer Login Session assoziert sind(User, ablaufdatum, ...) werden in dieser Klasse gespeichert.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Category}
                 Kategorie, die für die Zeiterfassung benötigt wird
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Categories}
                 Liste aller verfügbaren Kategorien.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Message}
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{HashThingy}
                 Stellt Passwort Hash funktionen bereit.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{TimeSheetToPdf}
                 Klasse, um Stundenzettel als .pdf zu exportieren.
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
         \end{itemize}
 
     \subsection{Control}
@@ -50,22 +118,59 @@
                 \begin{itemize}
                     \item{RegulationControl}
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
+                       \begin{itemize}
+                           \item()
+                       \end{itemize}
+
                     \item{MainControl}
                         Kontroliert den Hauptablauf des Programms.
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
+
                     \item{TimeSheetControl}
                         Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die abrarbeitung eines fertigen Stundenzettels geregelt.
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
+
                     \item{UserManagementControl}
                         Managed das hinzufügen, löschen und verändern von Benutzern
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
+
                     \item{LoginControl}
                         Überwacht das korrekte Einloggen von Benutzern.
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
+
                     \item{MessageControl}
                         Stellt Nachrichten zwischen Benutzern (und dem System) zu.
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
                     \item{StatisticControl}
                         Sammelt und generiert Statistiken über die erfassten Stundendaten.
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
                     \item{SessionControl}
                         Kontrolliert offene Sessions und terminiert diese nach ablauf eines gesetzen Zeitraums.
+                        \begin{itemize}
+                             \item()
+                        \end{itemize}
                 \end{itemize}
+                \begin{itemize}
+                     \item()
+                \end{itemize}
+
             \item{Timer}
+            \begin{itemize}
+                 \item()
+            \end{itemize}
+
         \end{itemize}
 
     \subsection{View}
@@ -74,10 +179,38 @@
             \item{View}
                 \begin{itemize}
                     \item{LoginView}
+                    \begin{itemize}
+                        \item()
+                    \end{itemize}
+
                     \item{TimeSheetView}
+                    \begin{itemize}
+                        \item()
+                    \end{itemize}
+
                     \item{UserSettingsView}
+                    \begin{itemize}
+                        \item()
+                    \end{itemize}
+
                     \item{MainView}
+                    \begin{itemize}
+                        \item()
+                    \end{itemize}
+
                 \end{itemize}
+                \begin{itemize}
+                    \item()
+                \end{itemize}
+
             \item{Diagramm Magic}
+            \begin{itemize}
+                \item()
+            \end{itemize}
+
             \item{TimeElements}
+            \begin{itemize}
+                \item()
+            \end{itemize}
+
         \end{itemize}
