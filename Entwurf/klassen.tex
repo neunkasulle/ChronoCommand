@@ -7,7 +7,7 @@
             \item{Company}
                 Speichert Informationen über die Firma in der die Zeiterfassung betrieben wird.
                 \begin{itemize}
-                    \item()
+                    \item{}
                 \end{itemize}
 
             \item{Entity}
@@ -17,96 +17,99 @@
                     \item{Admin}
                         Stellt Daten für und über den Admin bereit.
                     \begin{itemize}
-                        \item()
+                        \item{}
                     \end{itemize}
 
                     \item{User}
                         Stellt Daten für und über den User bereit, darüber hinaus hat der User eine verbing zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
                         \begin{itemize}
-                            \item()
+                            \item{}
                         \end{itemize}
 
                     \item{Supervisor}
                         Erweiterung des User um Gruppen von Usern zu verwalten.
                         \begin{itemize}
-                            \item()
+                            \item{}
                         \end{itemize}
 
                 \end{itemize}
                 \begin{itemize}
-                    \item()
+                    \item{entity\(username:String , email:String, password:Hash\)}
+                    \item{checkPassword\(password:Hash\):bool}
+                    \item{receiveMessage\(message:Message\)}
                 \end{itemize}
 
-            \item{EntityCatalogue}
+            \item{EntityDAO}
                 Listet alle vorhanden Entities auf. Enthält Methoden um Entities hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle einträge einzigartig sind.
                 \begin{itemize}
-                    \item()
+                   \item{findEntity\(username:String\):Entity}
+                   \item{addEntity\(newEntity:Entity\):Bool}
+                   \item{deleteUser\(entity:Entity\):Bool}
+                   \item{checkCredentials\(userName:String, pwHash:Hash\):Bool}
+                   \item{getUsersBySupervisor\(supervisor:Supervisor\):List}
+                   \item{getAllUsers\(\): List}
                 \end{itemize}
 
             \item{Regulations}
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
                 \begin{itemize}
-                    \item()
+                    \item{checkTimeSheet\(TimeSheet\):String}
                 \end{itemize}
 
             \item{TimeSheet}
                 Speichert Zeiterfassungen. Methoden zur Validierung und sicherstellung der unveränderlichkeit sind vorhanden.
                 \begin{itemize}
-                    \item()
+                    \item{getTimes\(\):TimeRecord\[\]}
+                    \item{addTime\(timeRec:TimeRecord\)}
+                    \item{lockTimeSheet\(\):bool}
+                    \item{validateTimeSheet\(\):bool}
                 \end{itemize}
 
             \item{TimeSheetState}
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
-                \begin{itemize}
-                    \item()
-                \end{itemize}
-
-            \item{MonthAndYear}
-                Klasse, die Zeitfunktionen für den Stundenzettel bereitstellt.
-                \begin{itemize}
-                    \item()
-                \end{itemize}
 
             \item{TimeRecord}
                 Datenhaltung, der Zeiterfassung.
                 \begin{itemize}
-                    \item()
+                   \item{timeRecord(timesheet: TimeSheetbeginn:int, end:int, category:String, description:String)}
                 \end{itemize}
 
             \item{Session}
                 Daten die mit einer Login Session assoziert sind(User, ablaufdatum, ...) werden in dieser Klasse gespeichert.
                 \begin{itemize}
-                    \item()
+                    \item{Session(entity:Entity, expire:Int)}
                 \end{itemize}
 
             \item{Category}
                 Kategorie, die für die Zeiterfassung benötigt wird
                 \begin{itemize}
-                    \item()
+                    \item{Category(name:String)}
                 \end{itemize}
 
             \item{Categories}
                 Liste aller verfügbaren Kategorien.
                 \begin{itemize}
-                    \item()
+                   \item{getAllCategories(): Category[]}
+                   \item{addCategory(newCategory: Category): bool}
                 \end{itemize}
 
             \item{Message}
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \begin{itemize}
-                    \item()
+                    \item{Message(from:Entity, to:Entity, message:String)}
                 \end{itemize}
 
             \item{HashThingy}
                 Stellt Passwort Hash funktionen bereit.
                 \begin{itemize}
-                    \item()
+                    \item{hash(password:String):hash}
                 \end{itemize}
 
             \item{TimeSheetToPdf}
                 Klasse, um Stundenzettel als .pdf zu exportieren.
                 \begin{itemize}
-                    \item()
+                    \item{createPdfFromTimeSheet(TimeSheet): PdfFile}
+                    \item{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
                 \end{itemize}
 
         \end{itemize}
@@ -119,56 +122,80 @@
                     \item{RegulationControl}
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
                        \begin{itemize}
-                           \item()
+                           \item{checkRegulations():bool}
+                           \item{generateWarnings()}
                        \end{itemize}
 
                     \item{MainControl}
                         Kontroliert den Hauptablauf des Programms.
                         \begin{itemize}
-                             \item()
+                             \item{login(username:String password:String,  stayLoggedIn: bool): bool}
+                             \item{logout(): bool}
+                             \item{getEntity(sessionID:??): Entity}
+                             \item{init():bool}
                         \end{itemize}
 
                     \item{TimeSheetControl}
                         Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die abrarbeitung eines fertigen Stundenzettels geregelt.
                         \begin{itemize}
-                             \item()
+                             \item{newTimeRecord():bool}
+                             \item{newTimeRecord(category:String, description:String):bool}
+                             \item{closeTimeRecord():bool}
+                             \item{closeTimeRecord(category:String, description:String):bool}
+                             \item{addTimeToSheet(time:Zeit)}
+                             \item{getSupervisedTimeSheets(month:int, year:int)}
+                             \item{lockTimeSheet(month:int, year:int):bool}
+                             \item{filtersChanged()}
+                             \item{printLockedTimeSheets(month:int, year:int)}
+                             \item{getTimeSheet(month:int, year:int):TimeSheet}
                         \end{itemize}
 
                     \item{UserManagementControl}
                         Managed das hinzufügen, löschen und verändern von Benutzern
                         \begin{itemize}
-                             \item()
+                             \item{addUser()}
+                             \item{createUser(userType:Role, supervisor: Supervisor)}
+                             \item{removeUser()}
+                             \item{editUser()}
                         \end{itemize}
 
                     \item{LoginControl}
                         Überwacht das korrekte Einloggen von Benutzern.
                         \begin{itemize}
-                             \item()
+                             \item{login(name:String, pwHash:Hash):bool}
+                             \item{lostPassword()}
                         \end{itemize}
 
                     \item{MessageControl}
                         Stellt Nachrichten zwischen Benutzern (und dem System) zu.
                         \begin{itemize}
-                             \item()
+                             \item{deliverMessage(message:Message):bool}
+                             \item{generateSystemMessages()}
+                             \item{sendMessage()}
                         \end{itemize}
+
                     \item{StatisticControl}
                         Sammelt und generiert Statistiken über die erfassten Stundendaten.
                         \begin{itemize}
-                             \item()
+                             \item{gatherData()}
+                             \item{filterData()}
                         \end{itemize}
+
                     \item{SessionControl}
                         Kontrolliert offene Sessions und terminiert diese nach ablauf eines gesetzen Zeitraums.
                         \begin{itemize}
-                             \item()
+                            \item{killSessions():bool}
+                            \item{timeEvent()}
+                            \item{sessionTimeout()}
                         \end{itemize}
                 \end{itemize}
                 \begin{itemize}
-                     \item()
+                     \item{}
                 \end{itemize}
 
             \item{Timer}
             \begin{itemize}
-                 \item()
+                 \item{}
             \end{itemize}
 
         \end{itemize}
@@ -180,37 +207,44 @@
                 \begin{itemize}
                     \item{LoginView}
                     \begin{itemize}
-                        \item()
+                        \item{loginPressed()}
+                        \item{showErrorMessage(errorCode:String)}
                     \end{itemize}
 
                     \item{TimeSheetView}
                     \begin{itemize}
-                        \item()
+                        \item{filtersChanged()}
+                        \item{showTimeSheet()}
                     \end{itemize}
 
                     \item{UserSettingsView}
                     \begin{itemize}
-                        \item()
+                        \item{filtersChanged()}
                     \end{itemize}
 
                     \item{MainView}
                     \begin{itemize}
-                        \item()
+                        \item{LoadView(sessionID:??)}
                     \end{itemize}
 
                 \end{itemize}
                 \begin{itemize}
-                    \item()
+                    \item{View(sessionID:??)}
+                    \item{getSessionID(): sessionID}
+                    \item{logoutClicked()}
+                    \item{menuClicked()}
                 \end{itemize}
 
             \item{Diagramm Magic}
             \begin{itemize}
-                \item()
+                \item{visualizeData(range: int)}
             \end{itemize}
 
             \item{TimeElements}
             \begin{itemize}
-                \item()
+                \item{start()}
+                \item{stop()}
+                \item{add(category:String, description:String)}
             \end{itemize}
 
         \end{itemize}
