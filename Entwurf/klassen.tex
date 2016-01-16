@@ -6,13 +6,8 @@
         \includegraphics[width=\linewidth,page=1]{Diagramms/class/model.pdf}\\
         \includegraphics[width=\linewidth,page=2]{Diagramms/class/model.pdf}\\
         \begin{itemize}
-            \item{Company}
-                Speichert Informationen über die Firma in der die Zeiterfassung betrieben wird.
-                \begin{itemize}
-                    \item{}
-                \end{itemize}
 
-            \item{Entity}
+            \item{User}
                 Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für Spezialisierte Benutzer bereit.
                 Folgende Spezialisierungen sind möglich:
                 \begin{itemize}
@@ -22,40 +17,40 @@
                         \item{}
                     \end{itemize}
 
-                    \item{User}
-                        Stellt Daten für und über den User bereit, darüber hinaus hat der User eine verbing zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
+                    \item{Proletarier}
+                        Stellt Daten für und über den Proletarier bereit, darüber hinaus hat der Proletarier eine Verbindung zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
                         \begin{itemize}
                             \item{}
                         \end{itemize}
 
                     \item{Supervisor}
-                        Erweiterung des User um Gruppen von Usern zu verwalten.
+                        Erweiterung des Proletarier um Gruppen von Usern zu verwalten.
                         \begin{itemize}
                             \item{}
                         \end{itemize}
 
                 \end{itemize}
                 \begin{itemize}
-                    \item{entity\(username:String , email:String, password:Hash\)}
+                    \item{User\(username:String , email:String, password:Hash\)}
                     \item{checkPassword\(password:Hash\):bool}
                         Gibt true zurück wenn das Passwort korrekt ist sonst false.
-                    \item{receiveMessage\(message:Message\)}
                 \end{itemize}
 
-            \item{EntityDAO}
-                Listet alle vorhanden Entities auf. Enthält Methoden um Entities hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle einträge einzigartig sind.
+            \item{UserDAO}
+                Listet alle vorhanden User auf. Enthält Methoden um User hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle Einträge einzigartig sind.
                 \begin{itemize}
-                   \item{findEntity\(username:String\):Entity}
-                   \item{addEntity\(newEntity:Entity\):Bool}
-                    Gibt true zurück wenn die Entity erstellt werden konnte.
+                   \item{findUser\(username:String\):User}
+                   \item{addUser\(newEntity:User\):Bool}
+                    Gibt true zurück wenn die User erstellt werden konnte.
                     False bei fehler.
-                   \item{deleteUser\(entity:Entity\):Bool}
-                    Gibt true zurück wenn die Entity gelöscht werden konnte.
+                   \item{deleteUser\(User:User\):Bool}
+                    Gibt true zurück wenn die User gelöscht werden konnte.
                     False bei fehler.
                    \item{checkCredentials\(userName:String, pwHash:Hash\):Bool}
                    Gibt true zurück wenn Username und Passwort korrekt sind, sonst false.
                    \item{getUsersBySupervisor\(supervisor:Supervisor\):List}
-                   \item{getAllUsers\(\): List}
+                   \item{getAllProletarier\(\): List}
+                   \item{checkUserDetails(userType:Role, name:String, email:String, password:String, supervisor:Supervisor, hoursPerMonth:int):bool}
                 \end{itemize}
 
             \item{Regulations}
@@ -64,19 +59,19 @@
                     \item{checkTimeSheet\(TimeSheet\):String}
                 \end{itemize}
 
+            \item{GermanLawRegulations}
+                Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
+                \begin{itemize}
+                    \item{checkTimeSheet\(TimeSheet\):String}
+                \end{itemize}
+
             \item{TimeSheet}
                 Speichert Zeiterfassungen. Methoden zur Validierung und sicherstellung der unveränderlichkeit sind vorhanden.
                 \begin{itemize}
-                    \item{getTimes\(\):TimeRecord\[\]}
-                    \item{addTime\(timeRec:TimeRecord\)}
-                    \item{lockTimeSheet\(\):bool}
-                    \item{validateTimeSheet\(\):bool}
-                        Der Time Sheet wird auf verschiede Regularien überprüft:
-                        \begin{itemize}
-                            \item Allgemeiner Sanity Check: Sind die Zeiten überhaupt möglich?
-                            \item Verstoßen die Zeiten gegen Vertragliche Zeitbeschränkungen?
-                            \item Sind die eingetragenen Zeit konform mit gesetzlichen Bestimmungen?
-                        \end{itemize}
+                    \item{addTime(timeRec:TimeRecord)}
+                    \item{setTimeSheetState(TimeSheetState):bool}
+                    \item{isLocked():bool}
+                    \item{checkHourLimit():bool}
                 \end{itemize}
 
             \item{TimeSheetState}
@@ -91,16 +86,34 @@
                         Der Time Sheet wurde vom Supervisor überprüft.
                 \end{itemzie}
 
+            \item{TimeSheetHandler}
+                \begin{itemize}
+                    \item{setTimeSheetState(TimeSheet, TimeSheetState):bool}
+                    \item{createPdfFromTimeSheet(TimeSheet): PdfFile}
+                    \item{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
+                \end{itemize}
+
+
+            \item{TimeSheetDAO}
+                Listet alle TimeSheets.
+                \begin{itemize}
+                    \item{getTimeSheet(month:int, year:int, proletarier:Proletarier):TimeSheet}
+                    \item{getTimeRecords(timesheet:TimeSheet):TimeRecord[]}
+                    \item{getTimeSheetHandler():TimeSheetHandler}
+                    \item{getAllUnlockedTimeSheets():List}
+                \end{itemize}
+
             \item{TimeRecord}
                 Datenhaltung, der Zeiterfassung.
                 \begin{itemize}
                    \item{timeRecord(timesheet: TimeSheetbeginn:int, end:int, category:String, description:String)}
+                   \item{checkTimes():bool}
                 \end{itemize}
 
             \item{Session}
-                Daten die mit einer Login Session assoziert sind(User, ablaufdatum, ...) werden in dieser Klasse gespeichert.
+                Daten die mit einer Login Session assoziert sind(Proletarier, ablaufdatum, ...) werden in dieser Klasse gespeichert.
                 \begin{itemize}
-                    \item{Session(entity:Entity, expire:Int)}
+                    \item{Session(User:User, expire:Int)}
                 \end{itemize}
 
             \item{Category}
@@ -109,7 +122,7 @@
                     \item{Category(name:String)}
                 \end{itemize}
 
-            \item{Categories}
+            \item{CategorieDAO}
                 Liste aller verfügbaren Kategorien.
                 \begin{itemize}
                    \item{getAllCategories(): Category[]}
@@ -119,21 +132,15 @@
             \item{Message}
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \begin{itemize}
-                    \item{Message(from:Entity, to:Entity, message:String)}
+                    \item{Message(from:User, to:User, message:String)}
                 \end{itemize}
 
-            \item{HashThingy}
-                Stellt Passwort Hash funktionen bereit.
+            \item{MessageDAO}
+                Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \begin{itemize}
-                    \item{hash(password:String):hash}
+                    \item{getMessages(user:User):Message[])}
                 \end{itemize}
 
-            \item{TimeSheetToPdf}
-                Klasse, um Stundenzettel als .pdf zu exportieren.
-                \begin{itemize}
-                    \item{createPdfFromTimeSheet(TimeSheet): PdfFile}
-                    \item{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
-                \end{itemize}
 
         \end{itemize}
 
@@ -155,7 +162,7 @@
                     \item{MainControl}
                         Kontroliert den Hauptablauf des Programms.
                         \begin{itemize}
-                             \item{getEntity(sessionID:??): Entity}
+                             \item{getEntity(sessionID:??): User}
                              \item{init():bool}
                                 Der Server dienst wird initialisiert.
                                 False wird zurückgegeben, wenn etwas falsch läuft und die initialisierung fehlschlägt
