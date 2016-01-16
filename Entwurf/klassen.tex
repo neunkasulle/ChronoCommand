@@ -1,4 +1,5 @@
 \section{Klassen}
+    TODO Bild eines vereinfachten Modells
 %    \includegraphics[width=\linewidth]{Diagramms/class/overview.png}\\
     TODO Bild des kompletten Klassendiagrams
     \newpage
@@ -6,235 +7,233 @@
         \includegraphics[width=\linewidth,page=1]{Diagramms/class/model.pdf}\\
         \includegraphics[width=\linewidth,page=2]{Diagramms/class/model.pdf}\\
         \begin{itemize}
-
-            \item{User}
+            \itm{User}
                 Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für Spezialisierte Benutzer bereit.
                 Folgende Spezialisierungen sind möglich:
                 \begin{itemize}
-                    \item{Admin}
+                    \itm{Admin}
                         Stellt Daten für und über den Admin bereit.
                     \begin{itemize}
-                        \item{}
+                        \itm{}
                     \end{itemize}
 
-                    \item{Proletarier}
+                    \itm{Proletarier}
                         Stellt Daten für und über den Proletarier bereit, darüber hinaus hat der Proletarier eine Verbindung zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
                         \begin{itemize}
-                            \item{}
+                            \itm{}
                         \end{itemize}
 
-                    \item{Supervisor}
+                    \itm{Supervisor}
                         Erweiterung des Proletarier um Gruppen von Usern zu verwalten.
                         \begin{itemize}
-                            \item{}
+                            \itm{}
                         \end{itemize}
 
                 \end{itemize}
                 \begin{itemize}
-                    \item{User\(username:String , email:String, password:Hash\)}
-                    \item{checkPassword\(password:Hash\):bool}
+                    \itm{User(username:String , email:String, password:Hash)}
+                    \itm{checkPassword(password:Hash):bool}
                         Gibt true zurück wenn das Passwort korrekt ist sonst false.
                 \end{itemize}
 
-            \item{UserDAO}
+            \itm{UserDAO}
                 Listet alle vorhanden User auf. Enthält Methoden um User hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle Einträge einzigartig sind.
                 \begin{itemize}
-                   \item{findUser\(username:String\):User}
-                   \item{addUser\(newEntity:User\):Bool}
+                   \itm{findUser(username:String):User}
+                   \itm{addUser(newEntity:User):Bool}
                     Gibt true zurück wenn die User erstellt werden konnte.
-                    False bei fehler.
-                   \item{deleteUser\(User:User\):Bool}
+                    False bei Fehler.
+                   \itm{deleteUser(User:User):Bool}
                     Gibt true zurück wenn die User gelöscht werden konnte.
-                    False bei fehler.
-                   \item{checkCredentials\(userName:String, pwHash:Hash\):Bool}
-                   Gibt true zurück wenn Username und Passwort korrekt sind, sonst false.
-                   \item{getUsersBySupervisor\(supervisor:Supervisor\):List}
-                   \item{getAllProletarier\(\): List}
-                   \item{checkUserDetails(userType:Role, name:String, email:String, password:String, supervisor:Supervisor, hoursPerMonth:int):bool}
+                    False bei Fehler.
+                   \itm{checkCredentials(userName:String, pwHash:Hash):Bool}
+                    Gibt true zurück wenn Username und Passwort korrekt sind, sonst false.
+                   \itm{getProletarierBySupervisor(supervisor:Supervisor):List}
+                   \itm{getAllProletarier(): List}
+                   \itm{checkUserDetails(userType:Role, name:String, email:String, password:String, supervisor:Supervisor, hoursPerMonth:int):bool}
                 \end{itemize}
 
-            \item{Regulations}
+            \itm{Regulations}
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
                 \begin{itemize}
-                    \item{checkTimeSheet\(TimeSheet\):String}
+                    \itm{checkTimeSheet(TimeSheet):String}
                 \end{itemize}
 
-            \item{GermanLawRegulations}
-                Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
+            \itm{GermanLawRegulations}
+                Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.\\
                 \begin{itemize}
-                    \item{checkTimeSheet\(TimeSheet\):String}
+                    \itm{checkTimeSheet(TimeSheet):String}
                 \end{itemize}
 
-            \item{TimeSheet}
+            \itm{TimeSheet}
                 Speichert Zeiterfassungen. Methoden zur Validierung und sicherstellung der unveränderlichkeit sind vorhanden.
                 \begin{itemize}
-                    \item{addTime(timeRec:TimeRecord)}
-                    \item{setTimeSheetState(TimeSheetState):bool}
-                    \item{isLocked():bool}
-                    \item{checkHourLimit():bool}
+                    \itm{addTime(timeRec:TimeRecord)}
+                    \itm{setTimeSheetState(TimeSheetState):bool}
+                    \itm{checkHourLimit():bool}
                 \end{itemize}
 
-            \item{TimeSheetState}
+            \itm{TimeSheetState}
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
                 Mögliche Zustände:
                 \begin{itemize}
-                    \item{unlocked}
+                    \itm{unlocked}
                         Der Time Sheet kann bearbeitet werden.
-                    \item{locked}
+                    \itm{locked}
                         der Time Sheet ist abgeben worden und es deshalb gegen bearbeitung gesperrt.
-                    \item{checked}
+                    \itm{checked}
                         Der Time Sheet wurde vom Supervisor überprüft.
-                \end{itemzie}
+                \end{itemize}
 
-            \item{TimeSheetHandler}
+            \itm{TimeSheetHandler}
                 \begin{itemize}
-                    \item{setTimeSheetState(TimeSheet, TimeSheetState):bool}
-                    \item{createPdfFromTimeSheet(TimeSheet): PdfFile}
-                    \item{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
+                    \itm{setTimeSheetState(TimeSheet, TimeSheetState):bool}
+                    \itm{createPdfFromTimeSheet(TimeSheet): PdfFile}
+                    \itm{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
                 \end{itemize}
 
 
-            \item{TimeSheetDAO}
+            \itm{TimeSheetDAO}
                 Listet alle TimeSheets.
                 \begin{itemize}
-                    \item{getTimeSheet(month:int, year:int, proletarier:Proletarier):TimeSheet}
-                    \item{getTimeRecords(timesheet:TimeSheet):TimeRecord[]}
-                    \item{getTimeSheetHandler():TimeSheetHandler}
-                    \item{getAllUnlockedTimeSheets():List}
+                    \itm{getTimeSheet(month:int, year:int, proletarier:Proletarier):TimeSheet}
+                    \itm{getTimeRecords(timesheet:TimeSheet):TimeRecord[]}
+                    \itm{getTimeSheetHandler():TimeSheetHandler}
+                    \itm{getAllUnlockedTimeSheets():List}
                 \end{itemize}
 
-            \item{TimeRecord}
+            \itm{TimeRecord}
                 Datenhaltung, der Zeiterfassung.
                 \begin{itemize}
-                   \item{timeRecord(timesheet: TimeSheetbeginn:int, end:int, category:String, description:String)}
-                   \item{checkTimes():bool}
+                   \itm{timeRecord(timesheet: TimeSheetbeginn:int, end:int, category:String, description:String)}
+                   \itm{checkTimes():bool}
                 \end{itemize}
 
-            \item{Session}
-                Daten die mit einer Login Session assoziert sind(Proletarier, ablaufdatum, ...) werden in dieser Klasse gespeichert.
+            \itm{Session}
+                Daten die mit einer Login Session assoziert sind(Proletarier, Ablaufdatum, ...) werden in dieser Klasse gespeichert.
                 \begin{itemize}
-                    \item{Session(User:User, expire:Int)}
+                    \itm{Session(User:User, expire:Int)}
                 \end{itemize}
 
-            \item{Category}
+            \itm{Category}
                 Kategorie, die für die Zeiterfassung benötigt wird
                 \begin{itemize}
-                    \item{Category(name:String)}
+                    \itm{Category(name:String)}
                 \end{itemize}
 
-            \item{CategorieDAO}
+            \itm{CategorieDAO}
                 Liste aller verfügbaren Kategorien.
                 \begin{itemize}
-                   \item{getAllCategories(): Category[]}
-                   \item{addCategory(newCategory: Category): bool}
+                   \itm{getAllCategories(): Category[]}
+                   \itm{addCategory(newCategory: Category): bool}
                 \end{itemize}
 
-            \item{Message}
+            \itm{Message}
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \begin{itemize}
-                    \item{Message(from:User, to:User, message:String)}
+                    \itm{Message(from:User, to:User, message:String)}
                 \end{itemize}
 
-            \item{MessageDAO}
+            \itm{MessageDAO}
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \begin{itemize}
-                    \item{getMessages(user:User):Message[])}
+                    \itm{getMessages(user:User):Message[]}
                 \end{itemize}
-
 
         \end{itemize}
 
     \subsection{Control}
         \includegraphics[width=\linewidth]{Diagramms/class/control.pdf}\\
         \begin{itemize}
-            \item{Control}
+            \itm{Control}
+            \item Jede von Control erbende Klasse implementiert das Einzelstück-Entwurfsmuster, da die Control-Klassen keinen Zustand benötigen.
                 \begin{itemize}
-                    \item{RegulationControl}
+                    \itm{RegulationControl}
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
                        \begin{itemize}
-                           \item{checkRegulations():bool}
+                           \itm{checkRegulations():bool}
                             Es werden erfasste Zeiten auf ihre konformität geprüft.
-                            \item{checkHolidays(timeSheets:List):Stack}
-                            \item{checkRestrictedTimes(timeSheets:List):Stack}
-                            \item{checkTimeRestrictions(timeSheets:List):Stack}
-                            \item{checkTimeLimits(timeSheets:List):Stack}
-                           \item{generateWarnings()}
+                            \itm{checkHolidays(timeSheets:List):Stack}
+                            \itm{checkRestrictedTimes(timeSheets:List):Stack}
+                            \itm{checkTimeRestrictions(timeSheets:List):Stack}
+                            \itm{checkTimeLimits(timeSheets:List):Stack}
+                           \itm{generateWarnings()}
                             Erzeugt Messages über Verletzungen der Regularien.
                        \end{itemize}
 
-                    \item{MainControl}
-                        Kontroliert den Hauptablauf des Programms.
+                    \itm{MainControl}
+                        Kontrolliert den Hauptablauf des Programms.
                         \begin{itemize}
-                             \item{getEntity(sessionID:??): User}
-                             \item{init():bool}
+                             \itm{getEntity(sessionID:??): User}
+                             \itm{init():bool}
                                 Der Server dienst wird initialisiert.
                                 False wird zurückgegeben, wenn etwas falsch läuft und die initialisierung fehlschlägt
                         \end{itemize}
 
-                    \item{TimeSheetControl}
-                        Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die abrarbeitung eines fertigen Stundenzettels geregelt.
+                    \itm{TimeSheetControl}
+                        Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die Abarbeitung eines fertigen Stundenzettels geregelt.
                         \begin{itemize}
-                             \item{newTimeRecord():bool}
-                             \item{newTimeRecord(category:String, description:String):bool}
-                             \item{closeTimeRecord():bool}
-                             \item{closeTimeRecord(category:String, description:String):bool}
-                             \item{addTimeToSheet(time:Zeit)}
-                             \item{getSupervisedTimeSheets(month:int, year:int)}
-                             \item{lockTimeSheet(month:int, year:int):bool}
-                             \item{filtersChanged()}
-                             \item{printLockedTimeSheets(month:int, year:int)}
-                             \item{getTimeSheet(month:int, year:int):TimeSheet}
+                             \itm{newTimeRecord():bool}
+                             \itm{newTimeRecord(category:String, description:String):bool}
+                             \itm{closeTimeRecord():bool}
+                             \itm{closeTimeRecord(category:String, description:String):bool}
+                             \itm{addTimeToSheet(time:Zeit)}
+                             \itm{getSupervisedTimeSheets(month:int, year:int)}
+                             \itm{lockTimeSheet(month:int, year:int):bool}
+                             \itm{filtersChanged()}
+                             \itm{printLockedTimeSheets(month:int, year:int)}
+                             \itm{getTimeSheet(month:int, year:int):TimeSheet}
                         \end{itemize}
 
-                    \item{UserManagementControl}
+                    \itm{UserManagementControl}
                         Managed das hinzufügen, löschen und verändern von Benutzern
                         \begin{itemize}
-                             \item{addUser()}
-                             \item{createUser(userType:Role, supervisor: Supervisor)}
-                             \item{removeUser()}
-                             \item{editUser()}
-                             \item{getUser(sessionID:int): User}
+                             \itm{addUser()}
+                             \itm{createUser(userType:Role, supervisor: Supervisor)}
+                             \itm{removeUser()}
+                             \itm{editUser()}
+                             \itm{getUser(sessionID:int): User}
                         \end{itemize}
 
-                    \item{LoginControl}
+                    \itm{LoginControl}
                         Überwacht das korrekte Einloggen von Benutzern.
                         \begin{itemize}
-                             \item{login(name:String, pwHash:Hash):bool}
-                             \item{lostPassword()}
-                             \item{hash():String}
+                             \itm{login(name:String, pwHash:Hash):bool}
+                             \itm{lostPassword()}
+                             \itm{hash():String}
                         \end{itemize}
 
-                    \item{MessageControl}
+                    \itm{MessageControl}
                         Stellt Nachrichten zwischen Benutzern (und dem System) zu.
                         \begin{itemize}
-                             \item{deliverMessage(message:Message):bool}
-                             \item{generateSystemMessages()}
-                             \item{sendMessage()}
-                             \item{sendMessageAsMail(message:Message):bool}
+                             \itm{deliverMessage(message:Message):bool}
+                             \itm{generateSystemMessages()}
+                             \itm{sendMessage()}
+                             \itm{sendMessageAsMail(message:Message):bool}
                         \end{itemize}
 
-                    \item{StatisticControl}
+                    \itm{StatisticControl}
                         Sammelt und generiert Statistiken über die erfassten Stundendaten.
                         \begin{itemize}
-                             \item{gatherData()}
-                             \item{filterData()}
+                             \itm{gatherData()}
+                             \itm{filterData()}
                         \end{itemize}
 
-                    \item{SessionControl}
+                    \itm{SessionControl}
                         Kontrolliert offene Sessions und terminiert diese nach ablauf eines gesetzen Zeitraums.
                         \begin{itemize}
-                            \item{killSessions():bool}
-                            \item{timeEvent()}
-                            \item{sessionTimeout()}
+                            \itm{killSessions():bool}
+                            \itm{timeEvent()}
+                            \itm{sessionTimeout()}
                         \end{itemize}
                 \end{itemize}
                 \begin{itemize}
-                     \item{}
+                     \itm{}
                 \end{itemize}
 
-            \item{Timer}
+            \itm{Timer}
             \begin{itemize}
-                 \item{}
+                 \itm{}
             \end{itemize}
 
         \end{itemize}
@@ -242,54 +241,65 @@
     \subsection{View}
     \includegraphics[width=\linewidth]{Diagramms/class/view.pdf}\\
         \begin{itemize}
-            \item{View}
+            \itm{View}
                 \begin{itemize}
 
-                    \item{InitialStartupView}
+                    \itm{InitialStartupView}
                     \begin{itemize}
+                        \itm{}
                     \end{itemize}
 
-                    \item{LoginView}
+                    \itm{LoginView}
                     \begin{itemize}
-                        \item{loginPressed()}
-                        \item{showErrorMessage(errorCode:String)}
+                        \itm{loginPressed()}
+                        \itm{showErrorMessage(errorCode:String)}
                     \end{itemize}
 
-                    \item{TimeSheetView}
+                    \itm{TimeSheetView}
                     \begin{itemize}
-                        \item{filtersChanged()}
-                        \item{showTimeSheet()}
+                        \itm{filtersChanged()}
+                        \itm{showTimeSheet()}
                     \end{itemize}
 
-                    \item{UserSettingsView}
+                    \itm{UserSettingsView}
                     \begin{itemize}
-                        \item{filtersChanged()}
+                        \itm{filtersChanged()}
                     \end{itemize}
 
-                    \item{MainView}
+                    \itm{MainView}
                     \begin{itemize}
-                        \item{LoadView(sessionID:int)}
+                        \itm{LoadView(sessionID:int)}
                     \end{itemize}
 
                 \end{itemize}
                 \begin{itemize}
-                    \item{View(sessionID:int)}
-                    \item{getSessionID(): sessionID}
-                    \item{logoutClicked()}
-                    \item{menuClicked()}
+                    \itm{View(sessionID:int)}
+                    \itm{getSessionID(): sessionID}
+                    \itm{logoutClicked()}
+                    \itm{menuClicked()}
                 \end{itemize}
 
-            \item{Diagramm Magic}
+            \itm{Diagramm Magic}
             \begin{itemize}
-                \item{visualizeData(range: int)}
-                    Zeigt die daten aus der StatisticControl an.
+                \itm{visualizeData(range: int)}
+                    Zeigt die Daten aus der StatisticControl an.
             \end{itemize}
 
-            \item{TimeElements}
+            \itm{TimeElements}
             \begin{itemize}
-                \item{start()}
-                \item{stop()}
-                \item{add(category:String, description:String)}
+                \itm{start()}
+                \itm{stop()}
+                \itm{add(category:String, description:String)}
             \end{itemize}
 
+        \end{itemize}
+
+    \subsection{Entwurfsmuster}
+        \begin{itemize}
+            \item Die Klasse GermanLawRegulations implementiert zusammen mit Regulations und RegulationControl das Strategie-Entwurfsmuster.
+                Dies macht es einfacher, Gesetze von anderen Ländern zu implementieren und zu benutzen.
+            \item Alle auf DAO endenden Klassen implementieren das Fabrik-Entwurfsmuster, um auf in der Datenbank abgelegte Klassen zuzugreifen.
+                Damit wird der Zugriff auf die Datenbank von den anderen Klassen abgekapselt.
+            \item Jede der von Control erbenden Klassen implementiert das Singleton-Entwurfsmuster, da die Klassen keine Zustände haben und nicht bei jeder Benutzung neu initialisiert werden müssen.
+            \item Jede der von View erbenden Klassen bildet zusammen mit View das Schablenenmethode-Entwurfsmuster, da das Vaadin-Framework dies so vorgibt.
         \end{itemize}
