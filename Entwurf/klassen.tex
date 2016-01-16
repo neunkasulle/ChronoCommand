@@ -1,39 +1,206 @@
 \section{Klassen}
     TODO Bild eines vereinfachten Modells
+
 %    \includegraphics[width=\linewidth]{Diagramms/class/overview.png}\\
-    TODO Bild des kompletten Klassendiagrams
+    TODO Bild des kompletten Klassendiagrams (ggf ans ende/in den anhang?)
     \newpage
     \subsection{Model}
         \includegraphics[width=\linewidth,page=1]{Diagramms/class/model.pdf}\\
         \includegraphics[width=\linewidth,page=2]{Diagramms/class/model.pdf}\\
         \begin{itemize}
             \itm{User}
-                Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für Spezialisierte Benutzer bereit.
-                Folgende Spezialisierungen sind möglich:
+                Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für spezialisierte Benutzer bereit.
+                Es gibt folgende Spezialisierungen: Administrator, Proletarier und Supervisor.
+
+                \emph{Attribute:}
                 \begin{itemize}
-                    \itm{Admin}
-                        Stellt Daten für und über den Admin bereit.
-                    \begin{itemize}
-                        \itm{}
-                    \end{itemize}
-
-                    \itm{Proletarier}
-                        Stellt Daten für und über den Proletarier bereit, darüber hinaus hat der Proletarier eine Verbindung zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
-                        \begin{itemize}
-                            \itm{}
-                        \end{itemize}
-
-                    \itm{Supervisor}
-                        Erweiterung des Proletarier um Gruppen von Usern zu verwalten.
-                        \begin{itemize}
-                            \itm{}
-                        \end{itemize}
-
+                    \itm{id:int}
+                        Autogenerierte, von der Datenbank vergebene ID.
+                        Kann nicht verändert werden.
+                    \itm{username:String}
+                        Benutzername der das Einloggen vereinfachen soll. TODO ist das der Fall?
+                        Kann nur vom User eingesehen und geändert werden.
+                    \itm{email:String}
+                        Eine Email-Adresse des Users.
+                        Wird genutzt um den User zu kontaktieren.
+                        Kann nur vom User oder einem Administrator eingesehen und geändert werden.
+                    \itm{passwordhash:String}
+                        Ein kryptographischer, gesalzener Hash des Passworts.
+                        Kann nur vom User oder einem Administrator geändert und von niemandem eingesehen werden.
+                    \itm{role:Role}
+                        Die Rolle des Users.
+                        Kann nur implizit vom Programm zwischen User und Supervisor geändert werden, je nachdem ob der User irgendwo als Supervisor eingetragen ist.
+                        Kann vom User und Administratoren eingesehen werden.
                 \end{itemize}
+                \emph{Methoden:}
                 \begin{itemize}
                     \itm{User(username:String , email:String, password:Hash)}
                     \itm{checkPassword(password:Hash):bool}
                         Gibt true zurück wenn das Passwort korrekt ist sonst false.
+                \end{itemize}
+
+            \itm{Administrator}
+                Stellt Daten für und über den Administrator bereit.
+                Der Administrator verwaltet die anderen User, kann jedoch selbst keinen Stundenzettel führen.
+                \begin{itemize}
+                    \itm{}
+                \end{itemize}
+
+            \itm{Proletarier}
+                Stellt Daten für und über den Proletarier bereit, darüber hinaus hat der Proletarier eine Verbindung zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
+
+                \emph{Attribute:}\\
+                Alle Attribute können nur vom Proletarier, dem entsprechenden Supervisor oder einem Administrator eingesehen werden.
+                \begin{itemize}
+                    \itm{fullName:String}
+                        Der volle Name der später auf dem Stundenzettel steht.
+                        Kann nur vom Proletarier oder einem Administrator geändert werden.
+                    \itm{supervisor:Supervisor}
+                        Der Supervisor des Proletariers.
+                        Kann nur von einem Administrator geändert werden.
+                    \itm{hoursPerMonth:int}
+                        Die Stunden die pro Monat gearbeitet werden müssen.
+                        Kann nur von einem Administrator geändert werden.
+                \end{itemize}
+
+            \itm{Supervisor}
+                Erweiterung des Proletarier um Gruppen von Usern zu verwalten.
+                Hat sich selbst als Supervisor.
+                \begin{itemize}
+                    \itm{}
+                \end{itemize}
+
+            \itm{TimeSheet}
+                Speichert Zeiterfassungen. Methoden zur Validierung und Sicherstellung der Unveränderlichkeit sind vorhanden.
+                
+                \emph{Attribute:}
+                \begin{itemize}
+                    \itm{id:int}
+                        Autogenerierte, von der Datenbank vergebene ID.
+                        Kann nicht verändert werden.
+                    \itm{proletarier:Proletarier}
+                        Gibt an, zu welchem Proletarier dieser Stundenzettel gehört.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{state:TimeSheetState}
+                        Gibt den aktuellen Status des Stundenzettels an.
+                        Mögliche Zustände sind: unlocked, locked, checked.
+                        Kann vom Proletarier oder dessen Supervisor von unlocked zu locked geändert werden.
+                        Kann nur vom zugehörigen Supervisor von locked zu unlocked oder checked verändert werden.
+                        Kann nur von Administratoren von checked in etwas anderes geändert werden.
+                    \itm{month:int}
+                        Gibt den Monat an, für den der Stundenzettel gilt.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{year:int}
+                        Gibt das Jahr an, für das der Stundenzettel gilt.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{hoursPerMonth:int}
+                        Gibt an, wieviele Stunden in diesem Monat gearbeitet werden müssen.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                \end{itemize}
+                \emph{Methoden:}
+                \begin{itemize}
+                    \itm{addTime(timeRec:TimeRecord)}
+                    \itm{setTimeSheetState(TimeSheetState):bool}
+                    \itm{checkHourLimit():bool}
+                \end{itemize}
+
+            \itm{TimeRecord}
+                Datenhaltung, der Zeiterfassung.
+                \emph{Attribute:}
+                \begin{itemize}
+                    \itm{id:int}
+                        Autogenerierte, von der Datenbank vergebene ID.
+                        Kann nicht verändert werden.
+                    \itm{timesheet:TimeSheet}
+                        Gibt an, zu welchem Stundenzettel diese Zeiterfassung gehört.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{beginn:int}
+                        Gibt an, zu welchem Zeitpunkt die Zeiterfassung gestartet wurde.
+                        Die Zeit wird als Unix time gespeichert und auf Minuten gerundet.
+                        Kann nur vom Proletarier verändert werden.
+                        Kann nur vom Proletarier, dem entsprechenden Supervisor und Administratoren eingesehen werden.
+                    \itm{end:int}
+                        Gibt an, zu welchem Zeitpunkt die Zeiterfassung beendet wurde.
+                        Die Zeit wird als Unix time gespeichert und auf Minuten gerundet.
+                        Kann nur vom Proletarier verändert werden.
+                        Kann nur vom Proletarier, dem entsprechenden Supervisor und Administratoren eingesehen werden.
+                    \itm{category:Category}
+                        Gibt an, in welche Kategorie die Tätigkeit fällt.
+                        Kann nur vom Proletarier verändert werden.
+                        Kann nur vom Proletarier, dem entsprechenden Supervisor und Administratoren eingesehen werden.
+                    \itm{description:String}
+                        Gibt eine kurze Beschreibung der Tätigkeit an.
+                        Kann nur vom Proletarier verändert werden.
+                        Kann nur vom Proletarier, dem entsprechenden Supervisor und Administratoren eingesehen werden.
+                \end{itemize}
+                \emph{Methoden:}
+                \begin{itemize}
+                   \itm{timeRecord(timesheet: TimeSheetbeginn:int, end:int, category:String, description:String)}
+                   \itm{checkTimes():bool}
+                \end{itemize}
+
+            \itm{TimeSheetHandler}
+                \emph{Attribute:}
+                \begin{itemize}
+                    \itm{warningEmailTemplate:String}
+                        Die Vorlage für die Email die verschickt wird, wenn Proletarier ihren Stundenzettel des letzten Monats noch nicht fertiggestellt haben.
+                        Kann nur von Administratoren eingesehen und geändert werden.
+                \end{itemize}
+                \emph{Methoden:}
+                \begin{itemize}
+                    \itm{setTimeSheetState(TimeSheet, TimeSheetState):bool}
+                    \itm{createPdfFromTimeSheet(TimeSheet): PdfFile}
+                    \itm{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
+                \end{itemize}
+
+            \itm{Category}
+                Kategorie, die für die Zeiterfassung benötigt wird
+                \emph{Attribute:}
+                \begin{itemize}
+                    \itm{id:int}
+                        Autogenerierte, von der Datenbank vergebene ID.
+                        Kann nicht verändert werden.
+                    \itm{name:String}
+                        Der Name einer Kategorie.
+                        Kann von allen eingesehen, jedoch nur von Administratoren geändert werden.
+                \end{itemize}
+                \emph{Methoden:}
+                \begin{itemize}
+                    \itm{Category(name:String)}
+                \end{itemize}
+
+            \itm{Message}
+                Nachrichten und damit verbundene Metadaten können mit dieser Klasse erfasst werden.
+                \emph{Attribute:}
+                \begin{itemize}
+                    \itm{id:int}
+                        Autogenerierte, von der Datenbank vergebene ID.
+                        Kann nicht verändert werden.
+                    \itm{sendTime:int}
+                        Die Uhrzeit zu der die Nachricht gesendet wurde.
+                        Die Zeit wird als Unix time gespeichert und auf Minuten gerundet.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{receiveTime:int}
+                        Die Uhrzeit zu der die Nachricht vom Empfänger gelesen wurde.
+                        Die Zeit wird als Unix time gespeichert und auf Minuten gerundet.
+                        Kann nur vom empfangenden Proletarier eingesehen und geändert werden.
+                    \itm{content:String}
+                        Der Inhalt der Nachricht.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{sender:User}
+                        Der User der die Nachricht schickt oder in dessen Namen die Nachricht geschickt wird.
+                        Dieses Feld kann leer sein, falls das System die Nachricht geschickt hat.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{recipient:User}
+                        Der Empfänger der Nachricht.
+                        Wird beim Erstellen gesetzt und kann nicht geändert werden.
+                    \itm{isRead:bool}
+                        Ob der Empfänger die Nachricht bereits gelesen hat.
+                        Kann nur vom empfangenden Proletarier eingesehen und geändert werden.
+                \end{itemize}
+                \emph{Methoden:}
+                \begin{itemize}
+                    \itm{Message(from:User, to:User, message:String)}
                 \end{itemize}
 
             \itm{UserDAO}
@@ -41,16 +208,38 @@
                 \begin{itemize}
                    \itm{findUser(username:String):User}
                    \itm{addUser(newEntity:User):Bool}
-                    Gibt true zurück wenn die User erstellt werden konnte.
-                    False bei Fehler.
+                       Gibt true zurück wenn die User erstellt werden konnte.
+                       False bei Fehler.
                    \itm{deleteUser(User:User):Bool}
-                    Gibt true zurück wenn die User gelöscht werden konnte.
-                    False bei Fehler.
+                       Gibt true zurück wenn die User gelöscht werden konnte.
+                       False bei Fehler.
                    \itm{checkCredentials(userName:String, pwHash:Hash):Bool}
-                    Gibt true zurück wenn Username und Passwort korrekt sind, sonst false.
+                       Gibt true zurück wenn Username und Passwort korrekt sind, sonst false.
                    \itm{getProletarierBySupervisor(supervisor:Supervisor):List}
                    \itm{getAllProletarier(): List}
                    \itm{checkUserDetails(userType:Role, name:String, email:String, password:String, supervisor:Supervisor, hoursPerMonth:int):bool}
+                \end{itemize}
+
+            \itm{TimeSheetDAO}
+                Listet alle TimeSheets.
+                \begin{itemize}
+                    \itm{getTimeSheet(month:int, year:int, proletarier:Proletarier):TimeSheet}
+                    \itm{getTimeRecords(timesheet:TimeSheet):TimeRecord[]}
+                    \itm{getTimeSheetHandler():TimeSheetHandler}
+                    \itm{getAllUnlockedTimeSheets():List}
+                \end{itemize}
+
+            \itm{CategorieDAO}
+                Liste aller verfügbaren Kategorien.
+                \begin{itemize}
+                   \itm{getAllCategories(): Category[]}
+                   \itm{addCategory(newCategory: Category): bool}
+                \end{itemize}
+
+            \itm{MessageDAO}
+                Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
+                \begin{itemize}
+                    \itm{getMessages(user:User):Message[]}
                 \end{itemize}
 
             \itm{Regulations}
@@ -65,14 +254,6 @@
                     \itm{checkTimeSheet(TimeSheet):String}
                 \end{itemize}
 
-            \itm{TimeSheet}
-                Speichert Zeiterfassungen. Methoden zur Validierung und sicherstellung der unveränderlichkeit sind vorhanden.
-                \begin{itemize}
-                    \itm{addTime(timeRec:TimeRecord)}
-                    \itm{setTimeSheetState(TimeSheetState):bool}
-                    \itm{checkHourLimit():bool}
-                \end{itemize}
-
             \itm{TimeSheetState}
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
                 Mögliche Zustände:
@@ -85,60 +266,12 @@
                         Der Time Sheet wurde vom Supervisor überprüft.
                 \end{itemize}
 
-            \itm{TimeSheetHandler}
-                \begin{itemize}
-                    \itm{setTimeSheetState(TimeSheet, TimeSheetState):bool}
-                    \itm{createPdfFromTimeSheet(TimeSheet): PdfFile}
-                    \itm{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
-                \end{itemize}
-
-
-            \itm{TimeSheetDAO}
-                Listet alle TimeSheets.
-                \begin{itemize}
-                    \itm{getTimeSheet(month:int, year:int, proletarier:Proletarier):TimeSheet}
-                    \itm{getTimeRecords(timesheet:TimeSheet):TimeRecord[]}
-                    \itm{getTimeSheetHandler():TimeSheetHandler}
-                    \itm{getAllUnlockedTimeSheets():List}
-                \end{itemize}
-
-            \itm{TimeRecord}
-                Datenhaltung, der Zeiterfassung.
-                \begin{itemize}
-                   \itm{timeRecord(timesheet: TimeSheetbeginn:int, end:int, category:String, description:String)}
-                   \itm{checkTimes():bool}
-                \end{itemize}
-
             \itm{Session}
                 Daten die mit einer Login Session assoziert sind(Proletarier, Ablaufdatum, ...) werden in dieser Klasse gespeichert.
                 \begin{itemize}
                     \itm{Session(User:User, expire:Int)}
                 \end{itemize}
 
-            \itm{Category}
-                Kategorie, die für die Zeiterfassung benötigt wird
-                \begin{itemize}
-                    \itm{Category(name:String)}
-                \end{itemize}
-
-            \itm{CategorieDAO}
-                Liste aller verfügbaren Kategorien.
-                \begin{itemize}
-                   \itm{getAllCategories(): Category[]}
-                   \itm{addCategory(newCategory: Category): bool}
-                \end{itemize}
-
-            \itm{Message}
-                Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
-                \begin{itemize}
-                    \itm{Message(from:User, to:User, message:String)}
-                \end{itemize}
-
-            \itm{MessageDAO}
-                Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
-                \begin{itemize}
-                    \itm{getMessages(user:User):Message[]}
-                \end{itemize}
 
         \end{itemize}
 
