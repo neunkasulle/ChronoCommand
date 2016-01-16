@@ -154,7 +154,10 @@
                        \begin{itemize}
                            \item{checkRegulations():bool}
                             Es werden erfasste Zeiten auf ihre konformität geprüft.
-                            Verfahren ähnlich zu \emph{validateTimeSheet()}.
+                            \item{checkHolidays(timeSheets:List):Stack}
+                            \item{checkRestrictedTimes(timeSheets:List):Stack}
+                            \item{checkTimeRestrictions(timeSheets:List):Stack}
+                            \item{checkTimeLimits(timeSheets:List):Stack}
                            \item{generateWarnings()}
                             Erzeugt Messages über Verletzungen der Regularien.
                        \end{itemize}
@@ -190,6 +193,7 @@
                              \item{createUser(userType:Role, supervisor: Supervisor)}
                              \item{removeUser()}
                              \item{editUser()}
+                             \item{getUser(sessionID:int): User}
                         \end{itemize}
 
                     \item{LoginControl}
@@ -197,6 +201,7 @@
                         \begin{itemize}
                              \item{login(name:String, pwHash:Hash):bool}
                              \item{lostPassword()}
+                             \item{hash():String}
                         \end{itemize}
 
                     \item{MessageControl}
@@ -205,6 +210,7 @@
                              \item{deliverMessage(message:Message):bool}
                              \item{generateSystemMessages()}
                              \item{sendMessage()}
+                             \item{sendMessageAsMail(message:Message):bool}
                         \end{itemize}
 
                     \item{StatisticControl}
