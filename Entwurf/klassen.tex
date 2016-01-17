@@ -42,9 +42,7 @@
             \itm{Administrator}
                 Stellt Daten für und über den Administrator bereit.
                 Der Administrator verwaltet die anderen User, kann jedoch selbst keinen Stundenzettel führen.
-                \begin{itemize}
-                    \itm{}
-                \end{itemize}
+
 
             \itm{Proletarier}
                 Stellt Daten für und über den Proletarier bereit, darüber hinaus hat der Proletarier eine Verbindung zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
@@ -66,9 +64,6 @@
             \itm{Supervisor}
                 Erweiterung des Proletarier um Gruppen von Usern zu verwalten.
                 Hat sich selbst als Supervisor.
-                \begin{itemize}
-                    \itm{}
-                \end{itemize}
 
             \itm{TimeSheet}
                 Speichert Zeiterfassungen. Methoden zur Validierung und Sicherstellung der Unveränderlichkeit sind vorhanden.
@@ -139,7 +134,7 @@
                    \itm{checkTimes():bool}
                 \end{itemize}
 
-            \itm{TimeSheetHandler}
+            \itm{TimeSheetExporter}
                 \emph{Attribute:}
                 \begin{itemize}
                     \itm{warningEmailTemplate:String}
@@ -205,6 +200,7 @@
 
             \itm{UserDAO}
                 Listet alle vorhanden User auf. Enthält Methoden um User hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle Einträge einzigartig sind.
+                \emph{Methoden:}
                 \begin{itemize}
                    \itm{findUser(username:String):User}
                    \itm{addUser(newEntity:User):Bool}
@@ -222,15 +218,18 @@
 
             \itm{TimeSheetDAO}
                 Listet alle TimeSheets.
+                \emph{Methoden:}
                 \begin{itemize}
                     \itm{getTimeSheet(month:int, year:int, proletarier:Proletarier):TimeSheet}
                     \itm{getTimeRecords(timesheet:TimeSheet):TimeRecord[]}
                     \itm{getTimeSheetHandler():TimeSheetHandler}
                     \itm{getAllUnlockedTimeSheets():List}
+                    \itm{addTimeSheet(timeSheet:TimeSheet):bool}
                 \end{itemize}
 
             \itm{CategorieDAO}
                 Liste aller verfügbaren Kategorien.
+                \emph{Methoden:}
                 \begin{itemize}
                    \itm{getAllCategories(): Category[]}
                    \itm{addCategory(newCategory: Category): bool}
@@ -238,21 +237,28 @@
 
             \itm{MessageDAO}
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
+                \emph{Methoden:}
                 \begin{itemize}
                     \itm{getMessages(user:User):Message[]}
+                    \itm{addMessage(message:Message):bool}
                 \end{itemize}
 
             \itm{Regulations}
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
+                \emph{Methoden:}
                 \begin{itemize}
-                    \itm{checkTimeSheet(TimeSheet):String}
+                    \itm{loadHolidays()}
+                    \itm{loadRestrictedTimes()}
+                    \itm{loadTimeRestrictions()}
                 \end{itemize}
 
             \itm{GermanLawRegulations}
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.\\
-                \begin{itemize}
-                    \itm{checkTimeSheet(TimeSheet):String}
-                \end{itemize}
+                \emph{Attribute:}
+                    \begin{itemize}
+                        \itm{listOfHolidays}
+                    \end{itemize}
+
 
             \itm{TimeSheetState}
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
