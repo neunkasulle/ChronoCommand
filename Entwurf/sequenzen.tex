@@ -28,32 +28,65 @@
 
     \newpage
     \subsection{Aktuellen Stundenzettel einsehen}
+        Ein Supervisor lässt sich den eigenen Stundenzettel des aktuellen Monats und die dazugehörigen Zeiterfassungen anzeigen.
+        Diese Aktion kann für einen beliebigen Monat durchgeführt werden, solange ein Stundenzettel dafür existiert.
+        Diese Aktion kann von Proletariern und Supervisorn durchgeführt werden.\\
 
         \includegraphics[width=\linewidth]{Diagramms/sequenzes/current_timesheet.pdf}
 
     \newpage
     \subsection{Stundenzettel abgeben}
+        Ein Proletarier gibt seinen fertigen Stundenzettel ab.
+        Dabei wird der Stundenzettel auf Fehler oder ähnliches überprüft und dann auf locked gesetzt.
+        Dabei wird der Betreuer per Nachricht darüber informiert, damit dieser den Stundenzettel überprüfen kann.
+        Diese Aktion kann von Proletariern und Supervisern ausgeführt werden.
+        Superviser können außerdem Stundenzettel der von ihnen betreuten Proletarier von locked auf unlocked bzw. checked setzen.\\
 
         \includegraphics[width=\linewidth]{Diagramms/sequenzes/send_in_timesheet.pdf}
 
     \newpage
     \subsection{Benutzer anlegen}
+        Ein neuer User wird angelegt.
+        Falls LDAP zur Authentifizierung genutzt wird, muss kein Passwort angegeben werden.
+        Falls ein Administrator angelegt wird, muss name, supervisor und hoursPerMonth nicht angegeben werden.
+        Falls ein Supervisor angelegt wird, muss supervisor nicht angegeben werden.
+        Diese Aktion kann nur von Administratoren ausgeführt werden.\\
 
         \includegraphics[width=\linewidth]{Diagramms/sequenzes/create_user.pdf}
 
     \newpage
-    \subsection{Nachrichten übermittelung}
+    \subsection{Nachrichten verschicken}
+        Eine Nachricht wird von einem User an einen anderen User verschickt.\\
 
         \includegraphics[width=\linewidth]{Diagramms/sequenzes/message_delivery.pdf}
 
     \newpage
-    \subsection{Admin druckt alle Stundenzettel}
+    \subsection{Administrator exportiert alle Stundenzettel}
+        Ein Administrator exportiert alle Stundenzettel eines Monats als ein zusammenhängendes pdf die den Status checked haben.
+        Administratoren können zudem alle Stundenzettel eines Monats unabhängig vom Status, einen oder alle Stundenzettel eines Proletariers exportieren.
+        Proletarier können einen oder alle ihre Stundenzettel exportieren.
+        Supervisor können von ihren betreuten Proletariern alle Stundenzettel eines Monats die checked sind oder unabhängig von ihrem status exportieren.
+        Zudem können sie einen oder alle Stundenzettel eines von ihnen betreuten Proletariers exportieren.\\
 
         \includegraphics[width=\linewidth]{Diagramms/sequenzes/admin_prints_timesheets.pdf}
 
     \newpage
-    \subsection{Prüfung eines Stundenzettels auf Rechtskonformität}
+    \subsection{Alle Stundenzettel mit Zustand unlocked prüfen}
+        Alle Stundenzettel mit dem Zustand unlocked werden auf inkonsistenzen geprüft, zum Beispiel ob der Proletarier gewarnt werden muss, dass der Stundenzettel abgegeben werden muss.\\
+
         \includegraphics[width=\linewidth]{Diagramms/sequenzes/check_inconsistencies.pdf}
 
+    \newpage
+    \subsection{Prüfung eines Stundenzettels auf Rechtskonformität}
+        Ein Stundenzettel wird auf Rechtskonformität geprüft.
+        Dies beinhaltet die folgenden gesetzlichen Regelungen:
+        \begin{itemize}
+            \item Die gesetzlich maximale Arbeitszeit wird nicht überschritten (§3 ArbZG).
+            \item Die gesetzliche Pausenzeiten werden eingehalten (§4 ArbZG).
+            \item Die Ruhezeiten wurden eingehalten (§5 ArbZG).
+            \item Es hat keine Nachtarbeit stattgefunden (§6 ArbZG).
+            \item Die Sonn- und Feiertagsruhe wurde eingehalten (§9 ArbZG).
+                Dabei werden nur die Feiertage in Baden-Württemberg beachtet.
+        \end{itemize}
 
-\newpage
+        \includegraphics[width=\linewidth]{Diagramms/sequenzes/check_german_law_regulations.pdf}
