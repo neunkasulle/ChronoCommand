@@ -286,6 +286,12 @@
         \begin{itemize}
             \itm{Control}
             \item Jede von Control erbende Klasse implementiert das Einzelstück-Entwurfsmuster, da die Control-Klassen keinen Zustand benötigen.
+                \emph{Methoden:}
+                \begin{itemize}
+                    \item{init():bool}
+                        Das Initialisierungsablauf jeder Klasse
+                \end{itemize}
+                \emph{Erbende Klassen:}
                 \begin{itemize}
                     \itm{RegulationControl}
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
@@ -296,17 +302,20 @@
                             \itm{checkRestrictedTimes(timeSheets:List):Stack}
                             \itm{checkTimeRestrictions(timeSheets:List):Stack}
                             \itm{checkTimeLimits(timeSheets:List):Stack}
-                           \itm{generateWarnings()}
+                            \itm{generateWarnings()}
                             Erzeugt Messages über Verletzungen der Regularien.
+                            \itm{readInRegulation(file:File):Regulations}
                        \end{itemize}
 
                     \itm{MainControl}
                         Kontrolliert den Hauptablauf des Programms.
                         \begin{itemize}
-                             \itm{getEntity(sessionID:??): User}
-                             \itm{init():bool}
-                                Der Server dienst wird initialisiert.
-                                False wird zurückgegeben, wenn etwas falsch läuft und die initialisierung fehlschlägt
+                            \itm{exceptionHandling()}
+                                Im Falle von kritischen Excepetions, wird der Dienst gepeichert und runtergefahren.
+                            \itm{startup()}
+                                Startroutine des Servers.
+                            \itm{shutdown()}
+                                Abschaltverhalten des Servers.
                         \end{itemize}
 
                     \itm{TimeSheetControl}
@@ -365,9 +374,6 @@
                             \itm{timeEvent()}
                             \itm{sessionTimeout()}
                         \end{itemize}
-                \end{itemize}
-                \begin{itemize}
-                     \itm{}
                 \end{itemize}
 
             \itm{Timer}
