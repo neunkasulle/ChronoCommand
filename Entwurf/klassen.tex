@@ -387,17 +387,15 @@
     \includegraphics[width=\linewidth]{Diagramms/class/view.pdf}\\
         \begin{itemize}
             \itm{View}
+                \emph{Erbende Klassen:}
                 \begin{itemize}
 
                     \itm{InitialStartupView}
-                    \begin{itemize}
-                        \itm{}
-                    \end{itemize}
 
                     \itm{LoginView}
                     \begin{itemize}
                         \itm{loginPressed()}
-                        \itm{showErrorMessage(errorCode:String)}
+                        \itm{}
                     \end{itemize}
 
                     \itm{TimeSheetView}
@@ -409,11 +407,23 @@
                     \itm{UserSettingsView}
                     \begin{itemize}
                         \itm{filtersChanged()}
+                        \itm{}
                     \end{itemize}
 
                     \itm{MainView}
                     \begin{itemize}
                         \itm{LoadView(sessionID:int)}
+                    \end{itemize}
+
+                    \itm{MessageView}
+                    \begin{itemize}
+                        \itm{clickSendMessage()}
+                        \itm{clickSaveDraft()}
+                    \end{itemize}
+
+                    \itm{CreateUserView}
+                    \begin{itemize}
+                        \itm{createUserClicked()}
                     \end{itemize}
 
                 \end{itemize}
@@ -422,6 +432,13 @@
                     \itm{getSessionID(): sessionID}
                     \itm{logoutClicked()}
                     \itm{menuClicked()}
+                    \itm{inboxClicked()}
+                    \itm{showErrorMessage(errorCode:String)}
+                    \itm{buttonClick(event:ClickEvent)}
+                    \itm{enter(event:ViewChangeEvent)}
+                    \itm{init(request:VaadinRequest)}
+                    \itm{beforeViewChange(event:ViewChangeEvent):bool}
+                    \itm{afterViewChange(event:ViewChangeEvent)}
                 \end{itemize}
 
             \itm{Diagramm Magic}
