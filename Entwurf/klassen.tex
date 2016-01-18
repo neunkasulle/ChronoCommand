@@ -364,6 +364,7 @@
 
     \subsection{Control}
         \includegraphics[width=\linewidth]{Diagramms/class/control.pdf}\\
+        \newpage
         \begin{itemize}
             \itm{\textbf{\Large{Control}}}
             \item Jede von Control erbende Klasse implementiert das Einzelstück-Entwurfsmuster, da die Control-Klassen keinen Zustand benötigen.
@@ -375,6 +376,11 @@
                 \emph{Erbende Klassen:}
                 \begin{itemize}
                     \itm{\textbf{\Large{RegulationControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlReg.pdf}
+                    \end{figure}
+                    \newline
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
                        \begin{itemize}
                            \itm{checkRegulations():bool}
@@ -388,7 +394,12 @@
                             \itm{readInRegulation(file:File):Regulations}
                        \end{itemize}
 
+                    \newpage
                     \itm{\textbf{\Large{ReminderControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlRem.pdf}
+                    \end{figure}
                         Überprüft in regelmäßigen abständen, ob Erinnerungen versendet werden müssen.
                         \emph{Methoden:}
                         \begin{itemize}
@@ -396,7 +407,12 @@
                             \itm{checkForOverdueTimeSheets()}
                         \end{itemize}
 
+                    
                     \itm{\textbf{\Large{MainControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlMain.pdf}
+                    \end{figure}
                         Kontrolliert den Hauptablauf des Programms.
                         \begin{itemize}
                             \itm{exceptionHandling()}
@@ -407,7 +423,12 @@
                                 Abschaltverhalten des Servers.
                         \end{itemize}
 
+                    \newpage
                     \itm{\textbf{\Large{TimeSheetControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlTimeSheet.pdf}
+                    \end{figure}
                         Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die Abarbeitung eines fertigen Stundenzettels geregelt.
                         \begin{itemize}
                              \itm{newTimeRecord():bool}
@@ -423,6 +444,10 @@
                         \end{itemize}
 
                     \itm{\textbf{\Large{UserManagementControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlUM.pdf}
+                    \end{figure}
                         Managed das hinzufügen, löschen und verändern von Benutzern
                         \begin{itemize}
                              \itm{addUser()}
@@ -433,6 +458,11 @@
                         \end{itemize}
 
                     \itm{\textbf{\Large{LoginControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlLogin.pdf}
+                    \end{figure}
+                    \newline
                         Überwacht das korrekte Einloggen von Benutzern.
                         \begin{itemize}
                              \itm{login(name:String, pwHash:Hash):bool}
@@ -441,6 +471,11 @@
                         \end{itemize}
 
                     \itm{\textbf{\Large{MessageControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlMessage.pdf}
+                    \end{figure}
+                    \newline
                         Stellt Nachrichten zwischen Benutzern (und dem System) zu.
                         \begin{itemize}
                              \itm{deliverMessage(message:Message):bool}
@@ -450,13 +485,23 @@
                         \end{itemize}
 
                     \itm{\textbf{\Large{StatisticControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlStat.pdf}
+                    \end{figure}
+                    \newline
                         Sammelt und generiert Statistiken über die erfassten Stundendaten.
                         \begin{itemize}
                              \itm{gatherData()}
                              \itm{filterData()}
                         \end{itemize}
 
+                    \newpage
                     \itm{\textbf{\Large{SessionControl}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlSession.pdf}
+                    \end{figure}
                         Kontrolliert offene Sessions und terminiert diese nach Ablauf eines gesetzen Zeitraums.
                         \begin{itemize}
                             \itm{killSessions():bool}
