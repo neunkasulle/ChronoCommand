@@ -383,6 +383,8 @@
                     \end{figure}
                     \newline
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
+                                                          \newline
+                    \emph{Methoden:}
                        \begin{itemize}
                            \itm{checkRegulations():bool}
                             Es werden erfasste Zeiten auf ihre konformität geprüft.
@@ -438,7 +440,10 @@
                     \centering
                     \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlTimeSheet.pdf}
                     \end{figure}
+                    \newline
                         Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die Abarbeitung eines fertigen Stundenzettels geregelt.
+                                                           \newline
+                    \emph{Methoden:}
                         \begin{itemize}
                              \itm{newTimeRecord():bool}
                              \itm{newTimeRecord(category:String, description:String):bool}
@@ -457,7 +462,10 @@
                     \centering
                     \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlUM.pdf}
                     \end{figure}
-                        Managed das hinzufügen, löschen und verändern von Benutzern
+                    \newline
+                        Managed das hinzufügen, löschen und verändern von Benutzern.
+                                                           \newline
+                    \emph{Methoden:}
                         \begin{itemize}
                              \itm{addUser()}
                              \itm{createUser(userType:Role, supervisor: Supervisor)}
@@ -473,12 +481,15 @@
                     \end{figure}
                     \newline
                         Überwacht das korrekte Einloggen von Benutzern.
+                                                           \newline
+                    \emph{Methoden:}
                         \begin{itemize}
                              \itm{login(name:String, pwHash:Hash):bool}
                              \itm{lostPassword()}
                              \itm{hash():String}
                         \end{itemize}
 
+                    \newline
                     \itm{\textbf{\Large{MessageControl}}}
                     \begin{figure}[htb]
                     \centering
@@ -486,6 +497,8 @@
                     \end{figure}
                     \newline
                         Stellt Nachrichten zwischen Benutzern (und dem System) zu.
+                    \newline
+                    \emph{Methoden:}
                         \begin{itemize}
                              \itm{deliverMessage(message:Message):bool}
                              \itm{generateSystemMessages()}
@@ -493,6 +506,7 @@
                              \itm{sendMessageAsMail(message:Message):bool}
                         \end{itemize}
 
+                    \newpage
                     \itm{\textbf{\Large{StatisticControl}}}
                     \begin{figure}[htb]
                     \centering
@@ -500,17 +514,20 @@
                     \end{figure}
                     \newline
                         Sammelt und generiert Statistiken über die erfassten Stundendaten.
+                                                           \newline
+                    \emph{Methoden:}
                         \begin{itemize}
                              \itm{gatherData()}
                              \itm{filterData()}
                         \end{itemize}
 
-                    \newpage
+                
                     \itm{\textbf{\Large{SessionControl}}}
                     \begin{figure}[htb]
                     \centering
                     \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlSession.pdf}
                     \end{figure}
+                    \newline
                         Kontrolliert offene Sessions und terminiert diese nach Ablauf eines gesetzen Zeitraums.
                         \begin{itemize}
                             \itm{killSessions():bool}
