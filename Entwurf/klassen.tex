@@ -367,7 +367,6 @@
         \newpage
         \begin{itemize}
             \itm{\textbf{\Large{Control}}}
-            \item Jede von Control erbende Klasse implementiert das Einzelstück-Entwurfsmuster, da die Control-Klassen keinen Zustand benötigen.
             \newline
                 \emph{Methoden:}
                 \begin{itemize}
@@ -387,13 +386,12 @@
                     \emph{Methoden:}
                        \begin{itemize}
                            \itm{checkRegulations():bool}
-                            Es werden erfasste Zeiten auf ihre konformität geprüft.
+                            Es werden erfasste Zeiten auf ihre Konformität geprüft.
                             \itm{checkHolidays(timeSheets:List):Stack}
                             Es werden geprüft, ob an Feiertagen gearbeitet wird.
                             \itm{checkRestrictedTimes(timeSheets:List):Stack}
-                            
+                            Überprüft ob zu nicht gestatteten Zeiten gearbeitet wurde.
                             \itm{checkTimeRestrictions(timeSheets:List):Stack}
-                            
                             \itm{checkTimeLimits(timeSheets:List):Stack}
                             \itm{generateWarnings()}
                             Erzeugt Messages über Verletzungen der Regularien.
@@ -407,7 +405,7 @@
                     \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlRem.pdf}
                     \end{figure}
                     \newline
-                        Überprüft in regelmäßigen abständen, ob Erinnerungen versendet werden müssen.
+                        Überprüft in regelmäßigen Abständen, ob Erinnerungen versendet werden müssen.
                         \newline
                         \emph{Methoden:}
                         \begin{itemize}
@@ -498,7 +496,6 @@
                              \itm{hash():String}
                         \end{itemize}
 
-                    \newline
                     \itm{\textbf{\Large{MessageControl}}}
                     \begin{figure}[htb]
                     \centering
