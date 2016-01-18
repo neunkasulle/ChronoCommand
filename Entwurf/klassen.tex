@@ -446,15 +446,24 @@
                     \emph{Methoden:}
                         \begin{itemize}
                              \itm{newTimeRecord():bool}
+                             Starte eine neue Zeiterfassung OHNE Angabe von Kategorien bzw. Tätigkeiten.
                              \itm{newTimeRecord(category:String, description:String):bool}
+                             Starte eine neue Zeiterfassung MIT Angabe von Kategorien bzw. Tätigkeiten.
                              \itm{closeTimeRecord():bool}
+                             Beende eine Zeiterfassung OHNE Angabe von Kategorien bzw. Tätigkeiten.
                              \itm{closeTimeRecord(category:String, description:String):bool}
+                             Beende eine Zeiterfassung MIT Angabe von Kategorien bzw. Tätigkeiten.
                              \itm{addTimeToSheet(time:Zeit)}
+                             Füge erfasste Zeit in Stundenzettel hinzu.
                              \itm{getSupervisedTimeSheets(month:int, year:int)}
+                             Listet Stundenzettel von einem bestimmten Monat von einem bestimmten Jahr.
                              \itm{lockTimeSheet(month:int, year:int):bool}
+                             Markiere Stundenzettel von einem beestimmten Monat von einem bestimmten Jahr als geprüft und mache sie schreibgeschützt.
                              \itm{filtersChanged()}
                              \itm{printLockedTimeSheets(month:int, year:int)}
+                             Drucke alle geprüfte Stundenzettel von einem bestimmten Monat von einem bestimmten Jahr aus.
                              \itm{getTimeSheet(month:int, year:int):TimeSheet}
+                             Listet alle Stundenzettel von einem bestimmten Monat von einem bestimmten Jahr.
                         \end{itemize}
 
                     \itm{\textbf{\Large{UserManagementControl}}}
