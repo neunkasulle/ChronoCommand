@@ -6,8 +6,14 @@
     \subsection{Model}
         \includegraphics[width=\linewidth,page=1]{Diagramms/class/model.pdf}\\
         \includegraphics[width=\linewidth,page=2]{Diagramms/class/model.pdf}\\
+        \newpage
         \begin{itemize}
-            \itm{User}
+            \itm{\textbf{\Large{User}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/User.pdf}
+                \end{figure}
+                \newline
                 Grundform eines Benutzers, stellt grundlegende Daten und Funktionen für spezialisierte Benutzer bereit.
                 Es gibt folgende Spezialisierungen: Administrator, Proletarier und Supervisor.
 
@@ -31,6 +37,7 @@
                         Kann nur implizit vom Programm zwischen User und Supervisor geändert werden, je nachdem ob der User irgendwo als Supervisor eingetragen ist und selbst einen Supervisor hat.
                         Kann vom User und Administratoren eingesehen werden.
                 \end{itemize}
+                \newpage
                 \emph{Methoden:}
                 \begin{itemize}
                     \itm{User(username:String , email:String, password:Hash)}
@@ -38,12 +45,17 @@
                         Gibt true zurück wenn das Passwort korrekt ist sonst false.
                 \end{itemize}
 
-            \itm{Administrator}
+            \itm{\textbf{\Large{Administrator}}}
                 Stellt Daten für und über den Administrator bereit.
                 Der Administrator verwaltet die anderen User, kann jedoch selbst keinen Stundenzettel führen.
 
 
-            \itm{Proletarier}
+            \itm{\textbf{\Large{Proletarier}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=4.5cm]{Diagramms/class/singleclass/Proletarier.pdf}
+                \end{figure}
+                \newline
                 Stellt Daten für und über den Proletarier bereit, darüber hinaus hat der Proletarier eine Verbindung zu dem mit ihm assozierten Zeiterfassungen und Stundenzetteln.
 
                 \emph{Attribute:}\\
@@ -60,11 +72,17 @@
                         Kann nur von einem Administrator geändert werden.
                 \end{itemize}
 
-            \itm{Supervisor}
+            \itm{\textbf{\Large{Supervisor}}}
                 Erweiterung des Proletarier um Gruppen von Usern zu verwalten.
                 Hat sich selbst als Supervisor.
-
-            \itm{TimeSheet}
+            
+            \newpage
+            \itm{\textbf{\Large{TimeSheet}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/TimeSheet.pdf}
+                \end{figure}
+                \newline
                 Speichert Zeiterfassungen. Methoden zur Validierung und Sicherstellung der Unveränderlichkeit sind vorhanden.
                 
                 \emph{Attribute:}
@@ -91,6 +109,7 @@
                         Gibt an, wieviele Stunden in diesem Monat gearbeitet werden müssen.
                         Wird beim Erstellen gesetzt und kann nicht geändert werden.
                 \end{itemize}
+                \newpage
                 \emph{Methoden:}
                 \begin{itemize}
                     \itm{addTime(timeRec:TimeRecord)}
@@ -98,7 +117,12 @@
                     \itm{checkHourLimit():bool}
                 \end{itemize}
 
-            \itm{TimeRecord}
+            \itm{\textbf{\Large{TimeRecord}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/TimeRecord.pdf}
+                \end{figure}
+                \newline
                 Datenhaltung, der Zeiterfassung.
                 \emph{Attribute:}
                 \begin{itemize}
@@ -133,7 +157,12 @@
                    \itm{checkTimes():bool}
                 \end{itemize}
 
-            \itm{TimeSheetExporter}
+            \itm{\textbf{\Large{TimeSheetExporter}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/TimeSheetExp.pdf}
+                \end{figure}
+                \newline
                 \emph{Attribute:}
                 \begin{itemize}
                     \itm{warningEmailTemplate:String}
@@ -147,7 +176,13 @@
                     \itm{createPdfFromAllTimeSheets(ListOfTimeSheets): PdfFile}
                 \end{itemize}
 
-            \itm{Category}
+            \newpage
+            \itm{\textbf{\Large{Category}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=4.5cm]{Diagramms/class/singleclass/Cat.pdf}
+                \end{figure}
+                \newline
                 Kategorie, die für die Zeiterfassung benötigt wird
                 \emph{Attribute:}
                 \begin{itemize}
@@ -163,7 +198,12 @@
                     \itm{Category(name:String)}
                 \end{itemize}
 
-            \itm{Message}
+            \itm{\textbf{\Large{Message}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/Message.pdf}
+                \end{figure}
+                \newline
                 Nachrichten und damit verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \emph{Attribute:}
                 \begin{itemize}
@@ -197,7 +237,12 @@
                     \itm{Message(from:User, to:User, message:String)}
                 \end{itemize}
 
-            \itm{UserDAO}
+            \itm{\textbf{\Large{UserDAO}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/UserDao.pdf}
+                \end{figure}
+                \newline
                 Listet alle vorhanden User auf. Enthält Methoden um User hinzuzufügen, zu löschen oder zu verändern. Stellt darüber hinaus sicher, dass die alle Einträge einzigartig sind.
                 \emph{Methoden:}
                 \begin{itemize}
@@ -215,7 +260,12 @@
                    \itm{checkUserDetails(userType:Role, name:String, email:String, password:String, supervisor:Supervisor, hoursPerMonth:int):bool}
                 \end{itemize}
 
-            \itm{TimeSheetDAO}
+            \itm{\textbf{\Large{TimeSheetDAO}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/TimeSheetDao.pdf}
+                \end{figure}
+                \newline
                 Listet alle TimeSheets.
                 \emph{Methoden:}
                 \begin{itemize}
@@ -225,8 +275,14 @@
                     \itm{getAllUnlockedTimeSheets():List}
                     \itm{addTimeSheet(timeSheet:TimeSheet):bool}
                 \end{itemize}
-
-            \itm{CategorieDAO}
+                
+            \newpage
+            \itm{\textbf{\Large{CategorieDAO}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/CatDao.pdf}
+                \end{figure}
+                \newline
                 Liste aller verfügbaren Kategorien.
                 \emph{Methoden:}
                 \begin{itemize}
@@ -234,7 +290,12 @@
                    \itm{addCategory(newCategory: Category): bool}
                 \end{itemize}
 
-            \itm{MessageDAO}
+            \itm{\textbf{\Large{MessageDAO}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/MessageDao.pdf}
+                \end{figure}
+                \newline
                 Nachrichten und damit Verbundene Metadaten können mit dieser Klasse erfasst werden.
                 \emph{Methoden:}
                 \begin{itemize}
@@ -242,7 +303,13 @@
                     \itm{addMessage(message:Message):bool}
                 \end{itemize}
 
-            \itm{Regulations}
+            \newpage
+            \itm{\textbf{\Large{Regulations}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/Reg.pdf}
+                \end{figure}
+                \newline
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.
                 \emph{Methoden:}
                 \begin{itemize}
@@ -251,15 +318,25 @@
                     \itm{loadTimeRestrictions()}
                 \end{itemize}
 
-            \itm{GermanLawRegulations}
+            \itm{\textbf{\Large{GermanLawRegulations}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/GermanReg.pdf}
+                \end{figure}
+                \newline
                 Lädt die gesetzlichen Regularien aus einer Datei und stellt diese für andere Klassen bereit.\\
                 \emph{Attribute:}
                     \begin{itemize}
                         \itm{listOfHolidays}
                     \end{itemize}
 
-
-            \itm{TimeSheetState}
+            \newpage
+            \itm{\textbf{\Large{TimeSheetState}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=2.5cm]{Diagramms/class/singleclass/TimeSheetState.pdf}
+                \end{figure}
+                \newline
                 Zustände, die beschreiben, ob ein Stundenzettel verändert werden darf, bzw bereits überprüft wurde.
                 Mögliche Zustände:
                 \begin{itemize}
@@ -271,7 +348,12 @@
                         Der Time Sheet wurde vom Supervisor überprüft.
                 \end{itemize}
 
-            \itm{Session}
+            \itm{\textbf{\Large{Session}}}
+                \begin{figure}[htb]
+                \centering
+                \includegraphics[width=6.5cm]{Diagramms/class/singleclass/Session.pdf}
+                \end{figure}
+                \newline
                 Daten die mit einer Login Session assoziert sind(Proletarier, Ablaufdatum, ...) werden in dieser Klasse gespeichert.
                 \begin{itemize}
                     \itm{Session(User:User, expire:Int)}
@@ -283,7 +365,7 @@
     \subsection{Control}
         \includegraphics[width=\linewidth]{Diagramms/class/control.pdf}\\
         \begin{itemize}
-            \itm{Control}
+            \itm{\textbf{\Large{Control}}}
             \item Jede von Control erbende Klasse implementiert das Einzelstück-Entwurfsmuster, da die Control-Klassen keinen Zustand benötigen.
                 \emph{Methoden:}
                 \begin{itemize}
@@ -292,7 +374,7 @@
                 \end{itemize}
                 \emph{Erbende Klassen:}
                 \begin{itemize}
-                    \itm{RegulationControl}
+                    \itm{\textbf{\Large{RegulationControl}}}
                        Überprüft Daten auf Gesetzeskonformität, leitet ebenfalls notwendige Schritte ein.
                        \begin{itemize}
                            \itm{checkRegulations():bool}
@@ -306,7 +388,7 @@
                             \itm{readInRegulation(file:File):Regulations}
                        \end{itemize}
 
-                    \itm{ReminderControl}
+                    \itm{\textbf{\Large{ReminderControl}}}
                         Überprüft in regelmäßigen abständen, ob Erinnerungen versendet werden müssen.
                         \emph{Methoden:}
                         \begin{itemize}
@@ -314,7 +396,7 @@
                             \itm{checkForOverdueTimeSheets()}
                         \end{itemize}
 
-                    \itm{MainControl}
+                    \itm{\textbf{\Large{MainControl}}}
                         Kontrolliert den Hauptablauf des Programms.
                         \begin{itemize}
                             \itm{exceptionHandling()}
@@ -325,7 +407,7 @@
                                 Abschaltverhalten des Servers.
                         \end{itemize}
 
-                    \itm{TimeSheetControl}
+                    \itm{\textbf{\Large{TimeSheetControl}}}
                         Regelt die Erstellung von Stundendaten für den Stundenzettel, darüber hinaus wird auch die Abarbeitung eines fertigen Stundenzettels geregelt.
                         \begin{itemize}
                              \itm{newTimeRecord():bool}
@@ -340,7 +422,7 @@
                              \itm{getTimeSheet(month:int, year:int):TimeSheet}
                         \end{itemize}
 
-                    \itm{UserManagementControl}
+                    \itm{\textbf{\Large{UserManagementControl}}}
                         Managed das hinzufügen, löschen und verändern von Benutzern
                         \begin{itemize}
                              \itm{addUser()}
@@ -350,7 +432,7 @@
                              \itm{getUser(sessionID:int): User}
                         \end{itemize}
 
-                    \itm{LoginControl}
+                    \itm{\textbf{\Large{LoginControl}}}
                         Überwacht das korrekte Einloggen von Benutzern.
                         \begin{itemize}
                              \itm{login(name:String, pwHash:Hash):bool}
@@ -358,7 +440,7 @@
                              \itm{hash():String}
                         \end{itemize}
 
-                    \itm{MessageControl}
+                    \itm{\textbf{\Large{MessageControl}}}
                         Stellt Nachrichten zwischen Benutzern (und dem System) zu.
                         \begin{itemize}
                              \itm{deliverMessage(message:Message):bool}
@@ -367,14 +449,14 @@
                              \itm{sendMessageAsMail(message:Message):bool}
                         \end{itemize}
 
-                    \itm{StatisticControl}
+                    \itm{\textbf{\Large{StatisticControl}}}
                         Sammelt und generiert Statistiken über die erfassten Stundendaten.
                         \begin{itemize}
                              \itm{gatherData()}
                              \itm{filterData()}
                         \end{itemize}
 
-                    \itm{SessionControl}
+                    \itm{\textbf{\Large{SessionControl}}}
                         Kontrolliert offene Sessions und terminiert diese nach Ablauf eines gesetzen Zeitraums.
                         \begin{itemize}
                             \itm{killSessions():bool}
@@ -383,7 +465,7 @@
                         \end{itemize}
                 \end{itemize}
 
-            \itm{Timer}
+            \itm{\textbf{\Large{Timer}}}
             \begin{itemize}
                  \itm{}
             \end{itemize}
@@ -393,42 +475,42 @@
     \subsection{View}
     \includegraphics[width=\linewidth]{Diagramms/class/view.pdf}\\
         \begin{itemize}
-            \itm{View}
+            \itm{\textbf{\Large{View}}}
                 \emph{Erbende Klassen:}
                 \begin{itemize}
 
-                    \itm{InitialStartupView}
+                    \itm{\textbf{\Large{InitialStartupView}}}
 
-                    \itm{LoginView}
+                    \itm{\textbf{\Large{LoginView}}}
                     \begin{itemize}
                         \itm{loginPressed()}
                         \itm{}
                     \end{itemize}
 
-                    \itm{TimeSheetView}
+                    \itm{\textbf{\Large{TimeSheetView}}}
                     \begin{itemize}
                         \itm{filtersChanged()}
                         \itm{showTimeSheet()}
                     \end{itemize}
 
-                    \itm{UserSettingsView}
+                    \itm{\textbf{\Large{UserSettingsView}}}
                     \begin{itemize}
                         \itm{filtersChanged()}
                         \itm{}
                     \end{itemize}
 
-                    \itm{MainView}
+                    \itm{\textbf{\Large{MainView}}}
                     \begin{itemize}
                         \itm{LoadView(sessionID:int)}
                     \end{itemize}
 
-                    \itm{MessageView}
+                    \itm{\textbf{\Large{MessageView}}}
                     \begin{itemize}
                         \itm{clickSendMessage()}
                         \itm{clickSaveDraft()}
                     \end{itemize}
 
-                    \itm{CreateUserView}
+                    \itm{\textbf{\Large{CreateUserView}}}
                     \begin{itemize}
                         \itm{createUserClicked()}
                     \end{itemize}
@@ -448,13 +530,14 @@
                     \itm{afterViewChange(event:ViewChangeEvent)}
                 \end{itemize}
 
-            \itm{Diagramm Magic}
+            \itm{\textbf{\Large{Diagramm Magic}}}
             \begin{itemize}
                 \itm{visualizeData(range: int)}
                     Zeigt die Daten aus der StatisticControl an.
             \end{itemize}
 
-            \itm{TimeElements}
+            \newline
+            \itm{\textbf{\Large{TimeElements}}}
             \begin{itemize}
                 \itm{start()}
                 \itm{stop()}
