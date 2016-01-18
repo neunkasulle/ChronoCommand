@@ -554,6 +554,7 @@
 
     \subsection{View}
     \includegraphics[width=\linewidth]{Diagramms/class/view.pdf}\\
+    \newpage
         \begin{itemize}
             \itm{\textbf{\Large{View}}}
                 \emph{Erbende Klassen:}
@@ -562,40 +563,76 @@
                     \itm{\textbf{\Large{InitialStartupView}}}
 
                     \itm{\textbf{\Large{LoginView}}}
+                                        \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewLogin.pdf}
+                    \end{figure}
+                    \newline
                     \begin{itemize}
                         \itm{loginPressed()}
                         \itm{forgotPasswordClicked()}
                     \end{itemize}
 
                     \itm{\textbf{\Large{TimeSheetView}}}
+                                                            \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewTS.pdf}
+                    \end{figure}
+                    \newline
                     \begin{itemize}
                         \itm{filtersChanged()}
                         \itm{showTimeSheet()}
                     \end{itemize}
 
                     \itm{\textbf{\Large{UserSettingsView}}}
+                                                            \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewUS.pdf}
+                    \end{figure}
+                    \newline
                     \begin{itemize}
                         \itm{filtersChanged()}
                         \itm{saveClicked():bool}
                     \end{itemize}
 
                     \itm{\textbf{\Large{MainView}}}
+                                                            \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewMain.pdf}
+                    \end{figure}
+                    \newline
                     \begin{itemize}
                         \itm{LoadView(sessionID:int)}
                     \end{itemize}
 
                     \itm{\textbf{\Large{MessageView}}}
+                                                            \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewMessage.pdf}
+                    \end{figure}
+                    \newline
                     \begin{itemize}
                         \itm{clickSendMessage()}
                         \itm{clickSaveDraft()}
                     \end{itemize}
 
                     \itm{\textbf{\Large{CreateUserView}}}
+                                                            \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewCU.pdf}
+                    \end{figure}
+                    \newline
                     \begin{itemize}
                         \itm{createUserClicked()}
                     \end{itemize}
 
                 \end{itemize}
+                \itm{\textbf{\Large{View<<abstract>>}}}
+                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewAbs.pdf}
+                    \end{figure}
+                    \newline
                 \begin{itemize}
                     \itm{View(sessionID:int)}
                     \itm{getSessionID(): sessionID}
@@ -611,13 +648,23 @@
                 \end{itemize}
 
             \itm{\textbf{\Large{Diagramm Magic}}}
+                                                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewDraM.pdf}
+                    \end{figure}
+                    \newline
             \begin{itemize}
                 \itm{visualizeData(range: int)}
                     Zeigt die Daten aus der StatisticControl an.
             \end{itemize}
 
-            \newline
+            \newpage
             \itm{\textbf{\Large{TimeElements}}}
+                                                    \begin{figure}[htb]
+                    \centering
+                    \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ViewTE.pdf}
+                    \end{figure}
+                    \newline
             \begin{itemize}
                 \itm{start()}
                 \itm{stop()}
