@@ -368,6 +368,7 @@
         \begin{itemize}
             \itm{\textbf{\Large{Control}}}
             \item Jede von Control erbende Klasse implementiert das Einzelstück-Entwurfsmuster, da die Control-Klassen keinen Zustand benötigen.
+            \newline
                 \emph{Methoden:}
                 \begin{itemize}
                     \item{init():bool}
@@ -386,8 +387,11 @@
                            \itm{checkRegulations():bool}
                             Es werden erfasste Zeiten auf ihre konformität geprüft.
                             \itm{checkHolidays(timeSheets:List):Stack}
+                            Es werden geprüft, ob an Feiertagen gearbeitet wird.
                             \itm{checkRestrictedTimes(timeSheets:List):Stack}
+                            
                             \itm{checkTimeRestrictions(timeSheets:List):Stack}
+                            
                             \itm{checkTimeLimits(timeSheets:List):Stack}
                             \itm{generateWarnings()}
                             Erzeugt Messages über Verletzungen der Regularien.
@@ -400,7 +404,9 @@
                     \centering
                     \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlRem.pdf}
                     \end{figure}
+                    \newline
                         Überprüft in regelmäßigen abständen, ob Erinnerungen versendet werden müssen.
+                        \newline
                         \emph{Methoden:}
                         \begin{itemize}
                             \itm{checkForWorkTimeRestrictions()}
@@ -413,7 +419,10 @@
                     \centering
                     \includegraphics[width=6.5cm]{Diagramms/class/singleclass/ControlMain.pdf}
                     \end{figure}
+                    \newline
                         Kontrolliert den Hauptablauf des Programms.
+                        \newline
+                        \emph{Methoden:}
                         \begin{itemize}
                             \itm{exceptionHandling()}
                                 Im Falle von kritischen Excepetions, wird der Dienst gepeichert und runtergefahren.
