@@ -1,7 +1,7 @@
 package com.github.neunkasulle.ChronoCommand.control;
 
-import model.Message;
-import model.Session;
+import com.github.neunkasulle.ChronoCommand.model.Message;
+import com.github.neunkasulle.ChronoCommand.model.Session;
 
 import java.util.Queue;
 

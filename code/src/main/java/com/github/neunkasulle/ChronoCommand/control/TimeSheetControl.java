@@ -1,7 +1,7 @@
 package com.github.neunkasulle.ChronoCommand.control;
 
-import model.Proletarier;
-import model.TimeSheet;
+import com.github.neunkasulle.ChronoCommand.model.Proletarier;
+import com.github.neunkasulle.ChronoCommand.model.TimeSheet;
 
 import java.io.File;
 import java.sql.Time;

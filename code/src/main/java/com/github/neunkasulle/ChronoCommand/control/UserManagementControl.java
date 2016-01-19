@@ -1,7 +1,7 @@
 package com.github.neunkasulle.ChronoCommand.control;
 
-import model.Session;
-import model.User;
+import com.github.neunkasulle.ChronoCommand.model.Session;
+import com.github.neunkasulle.ChronoCommand.model.User;
 
 /**
  * Created by Janze on 18.01.2016.

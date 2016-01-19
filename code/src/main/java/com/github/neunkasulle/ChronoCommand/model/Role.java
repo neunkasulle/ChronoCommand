@@ -6,5 +6,5 @@ package com.github.neunkasulle.ChronoCommand.model;
 public enum Role {
     ADMIN,
     PROLETARIER,
-    SUPERVISOR;
+    SUPERVISOR
 }

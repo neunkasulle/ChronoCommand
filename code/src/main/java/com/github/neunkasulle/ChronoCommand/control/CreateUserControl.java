@@ -1,7 +1,7 @@
 package com.github.neunkasulle.ChronoCommand.control;
 
-import model.Role;
-import model.Supervisor;
+import com.github.neunkasulle.ChronoCommand.model.Role;
+import com.github.neunkasulle.ChronoCommand.model.Supervisor;
 
 /**
  * Created by Janze on 18.01.2016.
