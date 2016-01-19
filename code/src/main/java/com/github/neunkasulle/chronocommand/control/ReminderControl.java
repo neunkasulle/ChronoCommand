@@ -1,4 +1,4 @@
-package com.github.neunkasulle.ChronoCommand.control;
+package com.github.neunkasulle.chronocommand.control;
 
 /**
  * Created by Janze on 18.01.2016.

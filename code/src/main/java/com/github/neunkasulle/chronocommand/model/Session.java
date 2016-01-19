@@ -1,4 +1,4 @@
-package com.github.neunkasulle.ChronoCommand.model;
+package com.github.neunkasulle.chronocommand.model;
 
 import java.util.Date;
 

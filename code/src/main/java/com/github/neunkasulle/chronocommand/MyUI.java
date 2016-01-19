@@ -1,4 +1,4 @@
-package com.github.neunkasulle.ChronoCommand;
+package com.github.neunkasulle.chronocommand;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  */
 @Theme("mytheme")
-@Widgetset("com.github.neunkasulle.ChronoCommand.MyAppWidgetset")
+@Widgetset("com.github.neunkasulle.chronocommand.MyAppWidgetset")
 public class MyUI extends UI {
 
     @Override

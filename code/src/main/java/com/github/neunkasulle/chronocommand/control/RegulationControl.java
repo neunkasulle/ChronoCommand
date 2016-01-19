@@ -1,7 +1,7 @@
-package com.github.neunkasulle.ChronoCommand.control;
+package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.ChronoCommand.model.TimeSheet;
-import com.github.neunkasulle.ChronoCommand.model.User;
+import com.github.neunkasulle.chronocommand.model.TimeSheet;
+import com.github.neunkasulle.chronocommand.model.User;
 
 import java.util.Deque;
 import java.util.LinkedList;
