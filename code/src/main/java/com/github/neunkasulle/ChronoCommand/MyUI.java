@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  */
 @Theme("mytheme")
-@Widgetset("com.github.neunkasulle.MyAppWidgetset")
+@Widgetset("com.github.neunkasulle.ChronoCommand.MyAppWidgetset")
 public class MyUI extends UI {
 
     @Override
