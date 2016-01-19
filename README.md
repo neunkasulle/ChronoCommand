@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/neunkasulle/ChronoCommand.svg?token=yZBtFaJzqBWEHzwiedhH&branch=master)](https://travis-ci.com/neunkasulle/ChronoCommand)
+
 # ChronoCommand
 Time tracking Tool with automatic "Punch Card" creation. 
 
