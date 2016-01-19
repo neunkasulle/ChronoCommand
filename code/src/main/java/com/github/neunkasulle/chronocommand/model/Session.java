@@ -11,6 +11,7 @@ public class Session {
     private User sessionUser;
 
     public Session(User user, Date expire) {
-
+        this.sessionUser = user;
+        this.expire = expire;
     }
 }

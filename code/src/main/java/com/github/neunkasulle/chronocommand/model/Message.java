@@ -15,7 +15,7 @@ public class Message {
     public Message(User from, User to, String message){
         this.sender = from;
         this.recipient = to;
-        this. content = message;
-
+        this.content = message;
+        this.isRead = false;
     }
 }

@@ -8,8 +8,7 @@ public class Proletarier extends User {
     Supervisor supervisor;
     int hoursPerMonth;
 
-    public Proletarier(String username, String email, String password, String fullName, Supervisor supervisor, int hoursPerMonth)
-    {
+    public Proletarier(String username, String email, String password, String fullName, Supervisor supervisor, int hoursPerMonth) {
         super(username, email, password);
         role = Role.PROLETARIER;
         this.fullName = fullName;
