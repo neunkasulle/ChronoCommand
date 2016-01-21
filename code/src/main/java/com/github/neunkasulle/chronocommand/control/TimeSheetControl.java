@@ -86,7 +86,6 @@ public class TimeSheetControl extends Control {
     }
 
     public void filtersChanged() {
-
     }
 
     public File printCheckedTimeSheets(Month month, Year year) {
