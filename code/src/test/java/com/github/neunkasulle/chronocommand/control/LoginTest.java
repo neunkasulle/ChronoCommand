@@ -1,4 +1,5 @@
-import com.github.neunkasulle.chronocommand.control.LoginControl;
+package com.github.neunkasulle.chronocommand.control;
+
 import com.github.neunkasulle.chronocommand.model.Administrator;
 import com.github.neunkasulle.chronocommand.model.User;
 import org.junit.Before;
