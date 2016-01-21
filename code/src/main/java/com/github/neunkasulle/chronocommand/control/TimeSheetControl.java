@@ -4,6 +4,7 @@ import com.github.neunkasulle.chronocommand.model.Proletarier;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
 import com.github.neunkasulle.chronocommand.model.TimeSheetState;
 import com.github.neunkasulle.chronocommand.model.User;
+import org.hibernate.cfg.NotYetImplementedException;
 
 import java.io.File;
 import java.sql.Time;
@@ -13,18 +14,21 @@ import java.util.List;
 
 /**
  * Created by Janze on 18.01.2016.
+ * Handles TimeSheet manipulation
  */
 public class TimeSheetControl extends Control {
 
     private static TimeSheetControl ourInstance = new TimeSheetControl();
 
+    private TimeSheetControl() {
+
+    }
+
     public static TimeSheetControl getInstance() {
         return ourInstance;
     }
 
-    private TimeSheetControl() {
 
-    }
 
     public boolean newTimeRecord() {
 
@@ -47,7 +51,7 @@ public class TimeSheetControl extends Control {
     }
 
     public void addTimeToSheet(Time time) {
-
+        throw new NotYetImplementedException();
     }
 
     public List<TimeSheet> getSupervisedTimeSheets(Month month, Year year) {
