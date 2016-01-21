@@ -22,6 +22,6 @@ public class UserTest {
 
     @Test
     public void testCheckPasswordWrong() throws Exception {
-        assertTrue(user.checkPassword("wrongpassword"));
+        assertFalse(user.checkPassword("wrongpassword"));
     }
 }
