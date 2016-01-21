@@ -6,7 +6,7 @@ import com.vaadin.server.VaadinRequest;
 /**
  * Created by Janze on 20.01.2016.
  */
-public class MainView extends View {
+public class MainView extends BaseView {
 
     public void init(VaadinRequest request) {
 

@@ -1,6 +1,7 @@
 package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.model.Session;
+import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
@@ -8,13 +9,13 @@ import com.vaadin.ui.Button;
 /**
  * Created by Janze on 20.01.2016.
  */
-public abstract class View {
+public abstract class BaseView implements View {
 
-    public View(Session session) {
+    public BaseView(Session session) {
 
     }
 
-    public View() {
+    public BaseView() {
 
     }
 
@@ -47,6 +48,7 @@ public abstract class View {
 
     }
 
+    @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
     }

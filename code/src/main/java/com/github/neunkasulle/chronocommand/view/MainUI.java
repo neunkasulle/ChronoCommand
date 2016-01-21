@@ -1,4 +1,4 @@
-package com.github.neunkasulle.chronocommand;
+package com.github.neunkasulle.chronocommand.view;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -18,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Theme("mytheme")
 @Widgetset("com.github.neunkasulle.chronocommand.MyAppWidgetset")
-public class MyUI extends UI {
+public class MainUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -41,7 +41,7 @@ public class MyUI extends UI {
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+    @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
     }
 }
