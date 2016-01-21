@@ -5,6 +5,16 @@ package com.github.neunkasulle.chronocommand.control;
  */
 public class SessionControl extends Control {
 
+    private static SessionControl ourInstance = new SessionControl();
+
+    public static SessionControl getInstance() {
+        return ourInstance;
+    }
+
+    private SessionControl() {
+
+    }
+
     private int numberOfSessions;
 
     private boolean killSessions() {

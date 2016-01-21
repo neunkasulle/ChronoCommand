@@ -5,6 +5,17 @@ package com.github.neunkasulle.chronocommand.control;
  */
 public class LoginControl extends Control {
 
+
+    private static LoginControl ourInstance = new LoginControl();
+
+    public static LoginControl getInstance() {
+        return ourInstance;
+    }
+
+    private LoginControl() {
+
+    }
+
     public boolean login(String name, String hashedPw) {
 
         return false;

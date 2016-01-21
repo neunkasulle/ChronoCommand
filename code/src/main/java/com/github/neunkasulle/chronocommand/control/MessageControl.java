@@ -11,6 +11,16 @@ import java.util.Queue;
 public class MessageControl {
     private Queue<Message> messageQueue;
 
+    private static MessageControl ourInstance = new MessageControl();
+
+    public static MessageControl getInstance() {
+        return ourInstance;
+    }
+
+    private MessageControl() {
+
+    }
+
     private boolean deliverMessage(Message message) {
 
         return false;

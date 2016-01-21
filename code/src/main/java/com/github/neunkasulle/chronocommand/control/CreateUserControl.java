@@ -8,6 +8,17 @@ import com.github.neunkasulle.chronocommand.model.Supervisor;
  */
 public class CreateUserControl extends Control {
 
+
+    private static CreateUserControl ourInstance = new CreateUserControl();
+
+    public static CreateUserControl getInstance() {
+        return ourInstance;
+    }
+
+    private CreateUserControl() {
+
+    }
+
     public boolean createUser(Role userType, String name, String email, String password, Supervisor supervisor, int hoursPerMonth) {
 
         return false;

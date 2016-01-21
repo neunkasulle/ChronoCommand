@@ -8,6 +8,16 @@ import com.github.neunkasulle.chronocommand.model.User;
  */
 public class UserManagementControl extends  Control {
 
+    private static UserManagementControl ourInstance = new UserManagementControl();
+
+    public static UserManagementControl getInstance() {
+        return ourInstance;
+    }
+
+    private UserManagementControl() {
+
+    }
+
     public void addUser(User user) {
 
     }

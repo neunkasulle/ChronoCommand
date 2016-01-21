@@ -5,6 +5,16 @@ package com.github.neunkasulle.chronocommand.control;
  */
 public class ReminderControl extends Control {
 
+    private static ReminderControl ourInstance = new ReminderControl();
+
+    public static ReminderControl getInstance() {
+        return ourInstance;
+    }
+
+    private ReminderControl() {
+
+    }
+
     public void checkForWorkTimeRestrictions() {
 
     }

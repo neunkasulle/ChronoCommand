@@ -12,6 +12,16 @@ import java.util.LinkedList;
 public class RegulationControl extends Control {
     Deque<User> warnedUsers;
 
+    private static RegulationControl ourInstance = new RegulationControl();
+
+    public static RegulationControl getInstance() {
+        return ourInstance;
+    }
+
+    private RegulationControl() {
+
+    }
+
     public void checkTimeSheets(LinkedList<TimeSheet> timesheets) {
 
     }

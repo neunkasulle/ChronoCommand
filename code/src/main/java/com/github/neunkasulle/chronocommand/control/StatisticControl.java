@@ -5,6 +5,16 @@ package com.github.neunkasulle.chronocommand.control;
  */
 public class StatisticControl extends Control {
 
+    private static StatisticControl ourInstance = new StatisticControl();
+
+    public static StatisticControl getInstance() {
+        return ourInstance;
+    }
+
+    private StatisticControl() {
+
+    }
+
     public void gatherData() {
 
     }

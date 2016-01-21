@@ -5,6 +5,16 @@ package com.github.neunkasulle.chronocommand.control;
  */
 public class MainControl extends Control {
 
+    private static MainControl ourInstance = new MainControl();
+
+    public static MainControl getInstance() {
+        return ourInstance;
+    }
+
+    private MainControl() {
+
+    }
+
     private void exceptionHandling() {
 
     }

@@ -14,6 +14,16 @@ import java.util.List;
  */
 public class TimeSheetControl extends Control {
 
+    private static TimeSheetControl ourInstance = new TimeSheetControl();
+
+    public static TimeSheetControl getInstance() {
+        return ourInstance;
+    }
+
+    private TimeSheetControl() {
+
+    }
+
     public boolean newTimeRecord() {
 
         return false;
