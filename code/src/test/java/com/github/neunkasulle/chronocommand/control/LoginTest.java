@@ -8,7 +8,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by Janze on 21.01.2016.
+ * Created by Jan on 21.01.2016.
+ * Test for the Login Infrastrukture
  */
 public class LoginTest {
     User user;
@@ -16,28 +17,29 @@ public class LoginTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new Administrator("blabla", "bla@example.com", "testtest123");
-        loginControl = new LoginControl();
+        user = new Administrator("root", "bla@example.com", "testtest123");
+        loginControl = LoginControl.getInstance();
     }
 
     @Test
     public void testLoginCorrect() throws Exception {
-        assertTrue(loginControl.login("blabla", loginControl.hash("testtest123")));
+        assertTrue(loginControl.login("root", loginControl.hash("testtest123")));
     }
 
     @Test
     public void testLoginInCorrect() throws Exception {
-        assertFalse(loginControl.login("blabla", loginControl.hash("123")));
+        assertFalse(loginControl.login("root", loginControl.hash("123")));
+        assertFalse(loginControl.login("rooot", loginControl.hash("testtest123")));
     }
 
     @Test
     public void testDeterministicHash() throws  Exception {
-        assertTrue(loginControl.hash("1234") == loginControl.hash("1234"));
+        assertTrue(loginControl.hash("1234").equals(loginControl.hash("1234")));
     }
 
     @Test
     public void testNonTrivialHash() {
-        assertFalse(loginControl.hash("1234") == "1234");
+        assertFalse(loginControl.hash("1234").equals("1234"));
     }
 
 }
