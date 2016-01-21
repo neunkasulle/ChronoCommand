@@ -2,6 +2,8 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.Proletarier;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
+import com.github.neunkasulle.chronocommand.model.TimeSheetState;
+import com.github.neunkasulle.chronocommand.model.User;
 
 import java.io.File;
 import java.sql.Time;
@@ -55,7 +57,22 @@ public class TimeSheetControl extends Control {
 
     public boolean lockTimeSheet(TimeSheet timeSheet) {
 
-        return false;
+        User user = UserManagementControl.getInstance().getUser(null);
+        //TODO HOW THE HELL DO I GET THE SESSION FROM HERE!?
+
+        boolean correct = timeSheet.setTimeSheetState(TimeSheetState.LOCKED); //TODO WHAT THE ...
+        //FIXME HOW TO VALIDATE TIMESHEET AT THIS POINT!?
+
+
+        if(!correct) {
+            return false;
+        }
+
+        MessageControl.getInstance().sendMessage(null, timeSheet.getProletarier().getSupervisor().toString()
+                , "Stundenzettel agegeben"); //TODO STILL SESSION ID!?
+            //TODO .toString() is kind of shitty here
+
+        return correct;
     }
 
     public boolean unlockTimeSheet(TimeSheet timeSheet) {

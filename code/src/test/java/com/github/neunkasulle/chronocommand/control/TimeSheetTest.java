@@ -14,7 +14,7 @@ public class TimeSheetTest {
 
     @Before
     public void setUp() throws Exception {
-        timeSheetControl = new TimeSheetControl();
+        timeSheetControl = TimeSheetControl.getInstance();
 
     }
 

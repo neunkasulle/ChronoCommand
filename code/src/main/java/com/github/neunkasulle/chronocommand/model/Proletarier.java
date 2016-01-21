@@ -15,4 +15,8 @@ public class Proletarier extends User {
         this.supervisor = supervisor;
         this.hoursPerMonth = hoursPerMonth;
     }
+
+    public Supervisor getSupervisor() {
+        return supervisor;
+    }
 }

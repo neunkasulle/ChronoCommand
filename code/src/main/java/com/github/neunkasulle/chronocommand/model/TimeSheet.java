@@ -26,4 +26,8 @@ public class TimeSheet {
     public boolean setTimeSheetState(TimeSheetState state) {
         return false;
     }
+
+    public Proletarier getProletarier() {
+        return proletarier;
+    }
 }
