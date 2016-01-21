@@ -198,6 +198,8 @@
 				<version>${jetty.plugin.version}</version>
 				<configuration>
 				    <scanIntervalSeconds>2</scanIntervalSeconds>
+					<stopKey/>
+					<stopPort/>
 				</configuration>
 			</plugin>
 		</plugins>
