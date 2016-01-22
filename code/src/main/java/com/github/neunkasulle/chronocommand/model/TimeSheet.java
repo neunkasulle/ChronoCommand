@@ -27,7 +27,5 @@ public class TimeSheet {
         return false;
     }
 
-    public Proletarier getProletarier() {
-        return proletarier;
-    }
+    public Proletarier getProletarier() { return proletarier; }
 }
