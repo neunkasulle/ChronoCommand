@@ -1,7 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.UserDAO;
+
 import org.hibernate.cfg.NotYetImplementedException;
-import org.hibernate.internal.SessionImpl;
 
 
 /**
@@ -34,11 +35,11 @@ public class MainControl extends Control {
         throw new NotYetImplementedException();
     }
 
-    private void startup() {
+    public void startup() {
         throw new NotYetImplementedException();
     }
 
-    private void shutdown() {
+    public void shutdown() {
         throw new NotYetImplementedException();
     }
 }
