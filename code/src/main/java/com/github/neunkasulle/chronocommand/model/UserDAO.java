@@ -1,11 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.PasswordMatcher;
-import org.apache.shiro.realm.Realm;
+
 
 /**
  * Created by jannis on 19.01.16.
@@ -14,6 +9,10 @@ public class UserDAO{
 
 
     public User findUser(String username) {
+
+        String query = "from User u where u.username = :username";
+        //TODO team menber who has to do hibernate: make this work
+        //return (User) getSession().createQuery(query).setString("username", username).uniqueResult();
         throw new UnsupportedOperationException();
     }
 

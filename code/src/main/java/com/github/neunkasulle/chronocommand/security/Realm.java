@@ -37,7 +37,6 @@ import org.apache.shiro.subject.PrincipalCollection;
  * <p>But we've decided to make the calls to the database using a UserDAO, since a DAO would be used in other areas
  * of a 'real' application in addition to here. We felt it better to use that same DAO to show code re-use.</p>
  */
-@Component
 public class Realm extends AuthorizingRealm {
 
     protected UserDAO userDAO = null;
@@ -47,21 +46,21 @@ public class Realm extends AuthorizingRealm {
         setCredentialsMatcher(new HashedCredentialsMatcher("SHA-512"));
     }
 
-    @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         User user = userDAO.findUser(token.getUsername());
         if( user != null ) {
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
         } else {
-            return null;
+            throw new AuthenticationException();
         }
     }
-
+    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long userId = (Long) principals.fromRealm(getName()).iterator().next();
         User user = userDAO.getUser(userId);
