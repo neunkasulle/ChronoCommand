@@ -20,8 +20,11 @@ package com.github.neunkasulle.chronocommand.security;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.sun.crypto.provider.KeyGeneratorCore;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.Sha256CredentialsMatcher;
+import org.apache.shiro.authc.credential.Sha512CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -45,7 +48,7 @@ public class Realm extends AuthorizingRealm {
 
     public Realm() {
         setName("SampleRealm"); //This name must match the name in the User class's getPrincipals() method
-        setCredentialsMatcher(new Sha256CredentialsMatcher());
+        setCredentialsMatcher(new HashedCredentialsMatcher("SHA-512"));
     }
 
     @Autowired
@@ -57,27 +60,27 @@ public class Realm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         User user = userDAO.findUser(token.getUsername());
         if( user != null ) {
-            return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), getName());
+            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
         } else {
             return null;
         }
     }
-
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long userId = (Long) principals.fromRealm(getName()).iterator().next();
-        User user = userDAO.getUser(userId);
+        User user = userDAO.findUser(principals.getName());
         if( user != null ) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            for( Role role : user.getRoles() ) {
-                info.addRole(role.getName());
-                info.addStringPermissions( role.getPermissions() );
-            }
+            Role role = user.getRole();
+            info.addRole(role.getName());
+            info.addStringPermissions( role.getPermissions() );
             return info;
-        } else {
+            }
+
             return null;
         }
-    }
 
 }
+
+
 

@@ -10,8 +10,8 @@ import org.apache.shiro.realm.Realm;
 /**
  * Created by jannis on 19.01.16.
  */
-public class UserDAO implements Realm{
-    String realmName = "AuthProv";
+public class UserDAO{
+
 
     public User findUser(String username) {
         throw new UnsupportedOperationException();
@@ -39,36 +39,5 @@ public class UserDAO implements Realm{
         throw new UnsupportedOperationException();
     }
 
-
-    @Override
-    public AuthenticationInfo getAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-
-        User user = findUser(authenticationToken.getPrincipal().toString());
-
-        if(user == null) {
-            throw new AuthenticationException();
-        }
-
-        return user.getAuthInfo();
-    }
-
-    @Override
-    public String getName() {
-        return realmName;
-    }
-
-    @Override
-    public boolean supports(AuthenticationToken authenticationToken) {
-        CredentialsMatcher credentialsMatcher = new PasswordMatcher();
-
-       User user = findUser(authenticationToken.getPrincipal().toString());
-
-        if(user != null) {
-            return credentialsMatcher.doCredentialsMatch(authenticationToken, user.getAuthInfo());
-        }
-
-        return false;
-
-    }
 
 }
