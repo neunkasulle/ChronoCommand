@@ -1,5 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.UserDAO;
+
 import org.hibernate.cfg.NotYetImplementedException;
 
 /**
@@ -7,10 +9,19 @@ import org.hibernate.cfg.NotYetImplementedException;
  * Controling startup and shutdown
  */
 public class MainControl extends Control {
+    UserDAO userDAO;
+    com.github.neunkasulle.chronocommand.security.Realm realm;
 
     private static MainControl ourInstance = new MainControl();
 
     private MainControl() {
+
+
+        userDAO = new UserDAO();
+        realm = new com.github.neunkasulle.chronocommand.security.Realm();
+
+        realm.setUserDAO(userDAO);
+
     }
 
     public static MainControl getInstance() {
@@ -24,7 +35,6 @@ public class MainControl extends Control {
     }
 
     private void startup() {
-        //TODO link Realm with user DAO
         throw new NotYetImplementedException();
     }
 

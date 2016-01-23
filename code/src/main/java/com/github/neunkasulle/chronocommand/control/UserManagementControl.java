@@ -13,7 +13,6 @@ public class UserManagementControl extends  Control {
     private static UserManagementControl ourInstance = new UserManagementControl();
 
     private UserManagementControl() {
-        
 
     }
 
