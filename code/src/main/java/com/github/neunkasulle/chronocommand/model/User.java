@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.cfg.NotYetImplementedException;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -84,5 +85,9 @@ public abstract class User {
 
     public void setRoles(Set<Role> roles) {
         this.role = role;
+    }
+
+    public boolean getMailFlag() {
+        throw new NotYetImplementedException();
     }
 }

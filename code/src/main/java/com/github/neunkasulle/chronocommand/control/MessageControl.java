@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.Message;
 import com.github.neunkasulle.chronocommand.model.Session;
+import com.github.neunkasulle.chronocommand.model.User;
 import org.hibernate.cfg.NotYetImplementedException;
 
 import java.util.Queue;
@@ -25,14 +26,20 @@ public class MessageControl {
 
 
 
-    private boolean deliverMessage(Message message) {
+    private boolean deliverMessage(Message message, User receiver) {
+        //TODO real implementation
+
+        if(SessionControl.getInstance().getSession(receiver) != null) {
+
+        }
 
         return false;
+
     }
 
     private boolean sendMessageAsMail(Message message) {
 
-        return false;
+        throw new NotYetImplementedException();
     }
 
     public void generateSystemMessages() {
@@ -40,6 +47,20 @@ public class MessageControl {
     }
 
     public void sendMessage(Session session, String receiver, String messageText) {
-        throw new NotYetImplementedException();
+        UserManagementControl userManagementControl = UserManagementControl.getInstance();
+
+        User sendigUser = userManagementControl.getUser(session);
+        User receivingUser = userManagementControl.findUser(receiver);
+
+        Message message = new Message(sendigUser, receivingUser, messageText);
+
+        if(!deliverMessage(message, receivingUser)) {
+            //If user Offline store message and try later;
+            messageQueue.add(message);
+        }
+
+        if(receivingUser.getMailFlag()) {
+            sendMessageAsMail(message);
+        }
     }
 }

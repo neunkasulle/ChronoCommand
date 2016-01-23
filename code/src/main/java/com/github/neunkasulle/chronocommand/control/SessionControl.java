@@ -1,5 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.Session;
+import com.github.neunkasulle.chronocommand.model.User;
 import org.hibernate.cfg.NotYetImplementedException;
 
 /**
@@ -28,6 +30,10 @@ public class SessionControl extends Control {
     }
 
     private void sessionTimeout() {
+        throw new NotYetImplementedException();
+    }
+
+    public Session getSession(User user) {
         throw new NotYetImplementedException();
     }
 

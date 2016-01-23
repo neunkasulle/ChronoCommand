@@ -13,6 +13,7 @@ public class UserManagementControl extends  Control {
     private static UserManagementControl ourInstance = new UserManagementControl();
 
     private UserManagementControl() {
+        
 
     }
 
@@ -31,6 +32,10 @@ public class UserManagementControl extends  Control {
     }
 
     public void editUser() {
+        throw new NotYetImplementedException();
+    }
+
+    public User findUser(String username) {
         throw new NotYetImplementedException();
     }
 
