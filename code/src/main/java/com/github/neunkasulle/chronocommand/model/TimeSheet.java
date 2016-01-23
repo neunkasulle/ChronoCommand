@@ -5,13 +5,13 @@ package com.github.neunkasulle.chronocommand.model;
  */
 public class TimeSheet {
     int id;
-    Proletarier proletarier;
+    User proletarier;
     TimeSheetState state;
     int month;
     int year;
     int hoursPerMonth;
 
-    public TimeSheet(Proletarier proletarier, int month, int year, int hoursPerMonth) {
+    public TimeSheet(User proletarier, int month, int year, int hoursPerMonth) {
         this.proletarier = proletarier;
         this.month = month;
         this.year = year;
@@ -27,5 +27,5 @@ public class TimeSheet {
         return false;
     }
 
-    public Proletarier getProletarier() { return proletarier; }
+    public User getProletarier() { return proletarier; }
 }

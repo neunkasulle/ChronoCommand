@@ -1,6 +1,5 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.Administrator;
 import com.github.neunkasulle.chronocommand.model.User;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -18,8 +17,8 @@ public class LoginTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new Administrator("root", "bla@example.com", "testtest123");
-        loginControl = LoginControl.getInstance();
+        //user = new User("root", "bla@example.com", "testtest123");
+        //loginControl = LoginControl.getInstance();
     }
 
     @Ignore

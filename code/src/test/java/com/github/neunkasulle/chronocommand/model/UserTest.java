@@ -11,7 +11,7 @@ public class UserTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new Administrator("blabla", "bla@example.com", "testtest123");
+       // user = new Administrator("blabla", "bla@example.com", "testtest123");
     }
 
     @Ignore

@@ -30,16 +30,16 @@ public class UserDAO{
         throw new UnsupportedOperationException();
     }
 
-    public Proletarier[] getProletarierBySupervisor(Supervisor supervisor) {
+    public User[] getProletarierBySupervisor(User supervisor) {
         throw new UnsupportedOperationException();
     }
 
-    public Proletarier[] getAllProletarier() {
+    public User[] getAllProletarier() {
         throw new UnsupportedOperationException();
     }
 
     public boolean checkUserDetails(Role userRole, String name, String email,
-                                    String password, Supervisor supervisor,
+                                    String password, User supervisor,
                                     int hoursPerMonth) {
         throw new UnsupportedOperationException();
     }

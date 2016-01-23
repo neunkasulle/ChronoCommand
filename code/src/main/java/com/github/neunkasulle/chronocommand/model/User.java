@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
-public abstract class User {
+public class User {
     private Long id;
     private String username;
     private String email;

@@ -10,14 +10,14 @@ import static org.junit.Assert.*;
  */
 public class TimeSheetTest {
     TimeSheet timeSheet;
-    Proletarier proletTest;
-    Supervisor supervisor;
+    User proletTest;
+    User supervisor;
     TimeRecord timeRecord;
 
     @Before
     public void setUp() throws Exception {
-        proletTest = new Proletarier("tester", "tester@chrono.command", "pw", "tester", supervisor, 40);
-        timeSheet = new TimeSheet(proletTest, 1, 1, 40);
+        //proletTest = new User("tester", "tester@chrono.command", "pw", "tester", supervisor, 40);
+        //timeSheet = new TimeSheet(proletTest, 1, 1, 40);
     }
 
     @Ignore

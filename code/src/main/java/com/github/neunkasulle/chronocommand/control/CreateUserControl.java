@@ -1,8 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.Role;
-import com.github.neunkasulle.chronocommand.model.Supervisor;
-import org.hibernate.cfg.NotYetImplementedException;
+import com.github.neunkasulle.chronocommand.model.User;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -22,7 +21,7 @@ public class CreateUserControl extends Control {
     }
 
 
-    public boolean createUser(Role userType, String name, String email, String password, Supervisor supervisor, int hoursPerMonth) {
+    public boolean createUser(Role userType, String name, String email, String password, User supervisor, int hoursPerMonth) {
 
         return false;
     }

@@ -4,7 +4,7 @@ package com.github.neunkasulle.chronocommand.model;
  * Created by jannis on 19.01.16.
  */
 public class TimeSheetDAO {
-    public TimeSheet getTimeSheet(int month, int year, Proletarier proletarier) {
+    public TimeSheet getTimeSheet(int month, int year, User proletarier) {
         throw new UnsupportedOperationException();
     }
 

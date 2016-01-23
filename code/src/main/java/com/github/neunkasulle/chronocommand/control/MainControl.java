@@ -1,7 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.UserDAO;
 import org.hibernate.cfg.NotYetImplementedException;
-import org.hibernate.internal.SessionImpl;
 
 
 /**

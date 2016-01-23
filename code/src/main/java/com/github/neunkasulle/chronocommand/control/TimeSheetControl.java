@@ -1,6 +1,5 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.Proletarier;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
 import com.github.neunkasulle.chronocommand.model.TimeSheetState;
 import com.github.neunkasulle.chronocommand.model.User;
@@ -72,11 +71,7 @@ public class TimeSheetControl extends Control {
             return false;
         }
 
-        MessageControl.getInstance().sendMessage(null, timeSheet.getProletarier().getSupervisor().toString()
-                , "Stundenzettel agegeben"); //TODO STILL SESSION ID!?
-            //TODO .toString() is kind of shitty here
-
-        return correct;
+        throw new NotYetImplementedException();
     }
 
     public boolean unlockTimeSheet(TimeSheet timeSheet) {
@@ -107,7 +102,7 @@ public class TimeSheetControl extends Control {
         return null;
     }
 
-    public File printAllTimeSheets(Proletarier proletarier) {
+    public File printAllTimeSheets(User proletarier) {
 
         return null;
     }
