@@ -27,7 +27,8 @@ public class GermanLawRegulations extends Regulations {
     private String checkNightWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
         for (TimeRecord timeRecord: timeRecords) {
-            if (!timeSheet.proletarier.nightWork) {
+            //FIXME
+            if (false) {
                 if (timeRecord.beginning <= 6 || timeRecord.beginning >= 23) {
 
                     result += "Nachtarbeit nicht erlaubt";
@@ -40,7 +41,6 @@ public class GermanLawRegulations extends Regulations {
             }
         }
         return result;
-
     }
 
     /**
@@ -68,7 +68,8 @@ public class GermanLawRegulations extends Regulations {
     private String checkSundayWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
         for (TimeRecord timeRecord: timeRecords) {
-            if (!timeSheet.proletarier.sundayWork) {
+            //FIXME
+            if (false) {
                 if (timeRecord.beginning == 1 /* onsunday */) {
                     result += "Sonn- und Feiertagsarbeit nicht erlaubt";
                 }
