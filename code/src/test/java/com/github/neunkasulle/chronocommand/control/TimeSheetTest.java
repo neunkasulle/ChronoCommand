@@ -1,6 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -18,16 +19,19 @@ public class TimeSheetTest {
 
     }
 
+    @Ignore
     @Test
     public void testNewTimeRecordBlank() throws Exception {
         assertTrue(timeSheetControl.newTimeRecord());
     }
 
+    @Ignore
     @Test
     public void testNewTimeRecord1() throws Exception {
         assertTrue(timeSheetControl.newTimeRecord("Test", "did stuff"));
     }
 
+    @Ignore
     @Test
     public void testCloseTimeRecordBlankCorrect() throws Exception {
         timeSheetControl.newTimeRecord();
@@ -39,6 +43,7 @@ public class TimeSheetTest {
         assertFalse(timeSheetControl.closeTimeRecord());
     }
 
+    @Ignore
     @Test
     public void testCloseTimeRecordCorrect() throws Exception {
         timeSheetControl.newTimeRecord("Test", "did stuff");
