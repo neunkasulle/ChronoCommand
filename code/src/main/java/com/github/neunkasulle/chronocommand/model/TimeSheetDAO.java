@@ -12,6 +12,10 @@ public class TimeSheetDAO {
         throw new UnsupportedOperationException();
     }
 
+    public TimeRecord[] getTimeRecordsByDay(TimeSheet timeSheet, int dayOfMonth) {
+        throw new UnsupportedOperationException();
+    }
+
     public TimeSheetHandler getTimeSheetHandler() {
         throw new UnsupportedOperationException();
     }

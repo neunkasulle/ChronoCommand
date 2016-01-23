@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Dav on 22.01.2016.
  */
-public class testTimeRecord {
+public class TimeRecordTest {
     TimeRecord timeRecord;
 
     @Before

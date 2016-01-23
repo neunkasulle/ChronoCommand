@@ -1,5 +1,12 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.PasswordMatcher;
+import org.apache.shiro.realm.Realm;
+
 /**
  * Created by Janze on 16.01.2016.
  */
@@ -7,7 +14,7 @@ public abstract class User {
     int id;
     String username;
     String email;
-    String passwordhash;
+    AuthenticationInfo authInfo;
     Role role;
 
     public User(String username, String email, String password)
@@ -17,8 +24,9 @@ public abstract class User {
         // TODO set password
     }
 
-    public boolean checkPassword(String password)
-    {
-        return false;
+    public AuthenticationInfo getAuthInfo() {
+        return authInfo;
     }
+
+
 }
