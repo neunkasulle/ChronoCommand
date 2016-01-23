@@ -17,6 +17,12 @@ public class UserDAO{
         throw new UnsupportedOperationException();
     }
 
+    public User getUser(Long userId) {
+        //return (User) getSession().get(User.class, userId);
+        throw new UnsupportedOperationException();
+        //TODO FInd unser by ID
+    }
+
     public boolean addUser(User newuser) {
         throw new UnsupportedOperationException();
     }

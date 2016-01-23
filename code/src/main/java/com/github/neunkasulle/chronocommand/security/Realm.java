@@ -20,15 +20,11 @@ package com.github.neunkasulle.chronocommand.security;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
-import com.sun.crypto.provider.KeyGeneratorCore;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.authc.credential.Sha256CredentialsMatcher;
-import org.apache.shiro.authc.credential.Sha512CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-
 import org.apache.shiro.subject.PrincipalCollection;
 
 
@@ -68,17 +64,18 @@ public class Realm extends AuthorizingRealm {
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long userId = (Long) principals.fromRealm(getName()).iterator().next();
-        User user = userDAO.findUser(principals.getName());
+        User user = userDAO.getUser(userId);
         if( user != null ) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            Role role = user.getRole();
-            info.addRole(role.getName());
-            info.addStringPermissions( role.getPermissions() );
-            return info;
+            for( Role role : user.getRoles() ) {
+                info.addRole(role.getName());
+                info.addStringPermissions( role.getPermissions() );
             }
-
+            return info;
+        } else {
             return null;
         }
+    }
 
 }
 

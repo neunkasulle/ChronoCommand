@@ -11,7 +11,7 @@ public class MainControl extends Control {
     private static MainControl ourInstance = new MainControl();
 
     private MainControl() {
-
+        //TODO link Realm with user DAO
     }
 
     public static MainControl getInstance() {
