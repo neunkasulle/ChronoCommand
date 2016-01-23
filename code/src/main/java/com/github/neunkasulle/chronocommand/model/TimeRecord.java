@@ -6,6 +6,8 @@ package com.github.neunkasulle.chronocommand.model;
 public class TimeRecord {
     int id;
     TimeSheet timeSheet;
+    //int beginningPause;
+    // int endPause;
     int beginning;
     int end;
     Category category;

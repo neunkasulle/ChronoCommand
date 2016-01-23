@@ -7,6 +7,11 @@ public class Proletarier extends User {
     String fullName;
     Supervisor supervisor;
     int hoursPerMonth;
+    boolean nightWork;
+    boolean longHours;
+    boolean sundayWork;  //auch Feiertage gemein, aber englischer begriff doof
+    boolean overtimeWork;  // überstunden und stunden schieben
+
 
     public Proletarier(String username, String email, String password, String fullName, Supervisor supervisor, int hoursPerMonth) {
         super(username, email, password);
