@@ -6,8 +6,9 @@ package com.github.neunkasulle.chronocommand.model;
 public class Administrator extends User {
     public Administrator(String username, String email, String password)
     {
-        super(username, email, password);
-        role = Role.ADMIN;
+        /*super(username, email, password);
+        role = Role.ADMIN;*/
+        assert false;
     }
 
 }

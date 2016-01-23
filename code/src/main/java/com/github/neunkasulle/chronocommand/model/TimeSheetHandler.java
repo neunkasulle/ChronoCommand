@@ -7,11 +7,11 @@ package com.github.neunkasulle.chronocommand.model;
 public class TimeSheetHandler {
     String warningEmailTemplate;
 
-    public boolean setTimeSheetState(TimeSheet timeSheet, TimeSheetState state) {
+    /*public boolean setTimeSheetState(TimeSheet timeSheet, TimeSheetState state) {
         return false;
-    }
+    }*/
 
-    public void   createPdfFromTimeSheet(TimeSheet timeSheet){ //TODO find suitable pdf gen lib
+    public void createPdfFromTimeSheet(TimeSheet timeSheet){ //TODO find suitable pdf gen lib
 
     }
 

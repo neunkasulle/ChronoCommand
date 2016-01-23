@@ -12,10 +12,10 @@ public class Proletarier extends User {
     boolean sundayWork;  //auch Feiertage gemein, aber englischer begriff doof
     boolean overtimeWork;  // überstunden und stunden schieben
 
-
     public Proletarier(String username, String email, String password, String fullName, Supervisor supervisor, int requiredHoursPerMonth) {
-       // super(username, email, password);
-       // role = Role.PROLETARIER;
+        /*super(username, email, password);
+        role = Role.PROLETARIER;*/
+        assert false;
         this.fullName = fullName;
         this.supervisor = supervisor;
         this.requiredHoursPerMonth = requiredHoursPerMonth;
