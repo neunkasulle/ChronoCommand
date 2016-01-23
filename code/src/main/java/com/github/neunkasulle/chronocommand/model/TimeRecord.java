@@ -21,6 +21,14 @@ public class TimeRecord {
         this.description = description;
     }
 
+    public int getBeginning() {
+        return beginning;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
     public boolean checkTimes() {
         return false;
     }

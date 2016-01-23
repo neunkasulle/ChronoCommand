@@ -1,6 +1,10 @@
 package com.github.neunkasulle.chronocommand.model;
 
 
+import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+
+import java.time.LocalDate;
+
 /**
  * nicht überprüft werden Ruhezeiteinhaltungen, da es bis jz keine sinnvolle möglichkeit gibt
  * das zu überprüfen.
@@ -81,18 +85,48 @@ public class GermanLawRegulations extends Regulations {
     }
 
     /**
-     * überprüfen, dass nciht mehr als 8h (10h) am tag gearbeitet werden.
-     * @param timeRecords
+     * überprüfen, dass eine person nicht mehr als 8 (10) h am Tag
+     * arbeitet
      * @param timeSheet
      * @return
      */
-    private String checkWorkHours(TimeRecord[] timeRecords, TimeSheet timeSheet) {
+    private String checkWorkHours (TimeSheet timeSheet) {
+        TimeSheetDAO timeSheetDAO = new TimeSheetDAO();
         String result = "";
+        for (int n = 1; n <= getNumberOfDays(timeSheet); n++) {
+
+            TimeRecord[] timeRecords = timeSheetDAO.getTimeRecordsByDay(timeSheet, n);
+            int hoursPerDay = 0;
+            for (TimeRecord timeRecord : timeRecords ) {
+                hoursPerDay += timeRecord.end - timeRecord.beginning;
+            }
+            if (!timeSheet.proletarier.longHours) {
+                if (hoursPerDay > 8) {
+                    result += "Maximale Arbeitszeit überschritten";
+                }
+            }
+            else
+                if (hoursPerDay >10) {
+                    result += "Maximale Arbeitszeit überschritten";
+                }
+        }
         return result;
     }
 
     /**
-     * überprüfen, dass nicht mehr als die vertraglcih festgelegte zeit im monat
+     * anzahl der Tage im aktuellen Monat berechne
+     * @param timeSheet
+     * @return,
+     * noch falsch plaziert, muss in ne andere klasse. weiß noch nicht welche
+     * ich denke, dass das leider mit switch case machen muss ^^
+     */
+    private int getNumberOfDays(TimeSheet timeSheet) {
+        int days = LocalDate.of(timeSheet.year, timeSheet.month, 1).lengthOfMonth();
+        return days;
+    }
+
+    /**
+     * überprüfen, dass nicht mehr als die vertraglcih festgelegte zeit pro monat
      * gearbeitet wird.
      * @param timeRecords
      * @param timeSheet
@@ -100,6 +134,9 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkMonthHours(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
+        if ( timeSheet.currentHours > timeSheet.requiredHoursPerMonth) {
+            result += "Maximale Arbeitszeit für diesen Monat erreicht";
+        }
         return result;
     }
 

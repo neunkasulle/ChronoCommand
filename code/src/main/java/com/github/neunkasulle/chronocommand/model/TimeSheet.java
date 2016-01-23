@@ -7,20 +7,25 @@ public class TimeSheet {
     int id;
     Proletarier proletarier;
     TimeSheetState state;
-    int month;
+    int month; // 1-12
     int year;
-    int hoursPerMonth;
+    int requiredHoursPerMonth;
+    int currentHours;
 
     public TimeSheet(Proletarier proletarier, int month, int year, int hoursPerMonth) {
         this.proletarier = proletarier;
         this.month = month;
         this.year = year;
-        this.hoursPerMonth = hoursPerMonth;
+        this.requiredHoursPerMonth = hoursPerMonth;
         state = TimeSheetState.UNLOCKED;
     }
 
     public void addTime(TimeRecord timeRecord) {
 
+    }
+
+    public void setCurrentHours(int hours) {
+        currentHours = hours;
     }
 
     public boolean setTimeSheetState(TimeSheetState state) {
