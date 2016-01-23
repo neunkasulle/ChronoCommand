@@ -3,7 +3,6 @@ package com.github.neunkasulle.chronocommand.model;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.CollectionOfElements;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -65,7 +64,7 @@ public class Role {
         this.description = description;
     }
 
-    @CollectionOfElements
+    @ElementCollection
     @JoinTable(name = "roles_permissions")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public Set<String> getPermissions() {

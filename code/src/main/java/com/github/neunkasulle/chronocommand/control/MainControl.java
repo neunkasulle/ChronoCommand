@@ -11,7 +11,6 @@ public class MainControl extends Control {
     private static MainControl ourInstance = new MainControl();
 
     private MainControl() {
-        //TODO link Realm with user DAO
     }
 
     public static MainControl getInstance() {
@@ -25,6 +24,7 @@ public class MainControl extends Control {
     }
 
     private void startup() {
+        //TODO link Realm with user DAO
         throw new NotYetImplementedException();
     }
 
