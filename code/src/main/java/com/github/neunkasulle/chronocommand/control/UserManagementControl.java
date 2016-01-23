@@ -2,8 +2,6 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.Session;
 import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
-import org.apache.shiro.realm.Realm;
 import org.hibernate.cfg.NotYetImplementedException;
 
 /**
