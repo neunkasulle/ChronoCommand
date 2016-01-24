@@ -9,8 +9,7 @@ import org.hibernate.cfg.NotYetImplementedException;
  * Controling startup and shutdown
  */
 public class MainControl extends Control {
-    UserDAO userDAO;
-    com.github.neunkasulle.chronocommand.security.Realm realm;
+
 
     private static MainControl ourInstance = new MainControl();
 

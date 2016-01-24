@@ -23,6 +23,7 @@ public class User {
     protected String email;
     protected String password;
     protected Set<Role> role;
+    protected boolean mailFlag;
 
     @Id
     @GeneratedValue
@@ -88,6 +89,10 @@ public class User {
     }
 
     public boolean getMailFlag() {
-        throw new NotYetImplementedException();
+        return mailFlag;
+    }
+
+    public void setMailFlag(boolean mailFlag) {
+        this.mailFlag = mailFlag;
     }
 }
