@@ -34,11 +34,11 @@ public class MainControl extends Control {
         throw new NotYetImplementedException();
     }
 
-    private void startup() {
+    public void startup() {
         throw new NotYetImplementedException();
     }
 
-    private void shutdown() {
+    public void shutdown() {
         throw new NotYetImplementedException();
     }
 }

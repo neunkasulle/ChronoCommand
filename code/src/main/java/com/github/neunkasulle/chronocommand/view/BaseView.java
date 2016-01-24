@@ -28,7 +28,7 @@ public abstract class BaseView implements View {
 
     }
 
-    public void menuClciked() {
+    public void menuClicked() {
 
     }
 

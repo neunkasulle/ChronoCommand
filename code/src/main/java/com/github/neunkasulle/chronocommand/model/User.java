@@ -19,10 +19,10 @@ import java.util.Set;
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
     private Long id;
-    private String username;
-    private String email;
-    private String password;
-    private Set<Role> role;
+    protected String username;
+    protected String email;
+    protected String password;
+    protected Set<Role> role;
 
     @Id
     @GeneratedValue

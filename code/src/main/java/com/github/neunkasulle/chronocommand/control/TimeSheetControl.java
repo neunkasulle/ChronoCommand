@@ -1,8 +1,6 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.TimeSheet;
-import com.github.neunkasulle.chronocommand.model.TimeSheetState;
-import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.model.*;
 import org.hibernate.cfg.NotYetImplementedException;
 
 import java.io.File;
@@ -111,6 +109,15 @@ public class TimeSheetControl extends Control {
 
 
         return null;
+    }
+    private int getCurrentHours(TimeRecord[] timeRecords) {
+        int currentHours = 0;
+        for ( TimeRecord timeRecord : timeRecords) {
+            currentHours += timeRecord.getEnd() - timeRecord.getBeginning();
+        }
+
+        return currentHours;
+
     }
 
 }

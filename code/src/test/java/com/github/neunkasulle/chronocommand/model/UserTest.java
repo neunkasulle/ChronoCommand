@@ -20,6 +20,7 @@ public class UserTest {
         //assertTrue(user.checkPassword("testtest123"));
     }
 
+    @Ignore
     @Test
     public void testCheckPasswordWrong() throws Exception {
         //assertFalse(user.checkPassword("wrongpassword"));
