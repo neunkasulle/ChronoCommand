@@ -11,18 +11,13 @@ import com.vaadin.ui.Label;
  */
 public class MainView extends HorizontalLayout implements View, ViewChangeListener {
 
-    public MainView() {
-        Label label = new Label("You made it to the main page!");
-        addComponent(label);
-    }
-
     public void init(VaadinRequest request) {
-
     }
 
     @Override
     public void enter(ViewChangeEvent event) {
-
+        Label label = new Label("You made it to the main page!");
+        addComponent(label);
     }
 
     public boolean beforeViewChange(ViewChangeListener.ViewChangeEvent event) {

@@ -6,21 +6,16 @@ import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * Created by Janze on 20.01.2016.
  */
-public class LoginView extends LoginForm implements View, ViewChangeListener {
+public class LoginView extends LoginForm implements View {
     protected CheckBox rememberMe;
     protected Label authenticationFailed;
-
-    public LoginView() {
-        addLoginListener(this::loginClicked);
-        setSizeFull();
-    }
+    protected PasswordField passwordField;
 
     @Override
     protected Component createContent(TextField usernameField, PasswordField passwordField, Button loginButton) {
@@ -37,6 +32,7 @@ public class LoginView extends LoginForm implements View, ViewChangeListener {
         layout.addComponent(usernameField);
         layout.setComponentAlignment(usernameField, Alignment.MIDDLE_CENTER);
 
+        this.passwordField = passwordField;
         passwordField.setCaption("Password");
         layout.addComponent(passwordField);
         layout.setComponentAlignment(passwordField, Alignment.MIDDLE_CENTER);
@@ -68,12 +64,13 @@ public class LoginView extends LoginForm implements View, ViewChangeListener {
         Logger logger = LoggerFactory.getLogger(LoginView.class);
         logger.info("User: {} Password: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue()});
 
-        boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword());
+        boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue());
         if (result) {
             authenticationFailed.setVisible(false);
             getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
         } else {
             authenticationFailed.setVisible(true);
+            passwordField.clear();
         }
     }
 
@@ -82,14 +79,7 @@ public class LoginView extends LoginForm implements View, ViewChangeListener {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-    }
-
-    @Override
-    public boolean beforeViewChange(ViewChangeListener.ViewChangeEvent event) {
-        return true;
-    }
-
-    @Override
-    public void afterViewChange(ViewChangeEvent event) {
+        addLoginListener(this::loginClicked);
+        setSizeFull();
     }
 }
