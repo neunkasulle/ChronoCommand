@@ -2,7 +2,7 @@ package com.github.neunkasulle.chronocommand.control;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
+
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
