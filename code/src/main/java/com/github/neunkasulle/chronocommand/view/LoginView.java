@@ -1,15 +1,95 @@
 package com.github.neunkasulle.chronocommand.view;
 
+import com.ejt.vaadin.loginform.LoginForm;
+import com.github.neunkasulle.chronocommand.control.LoginControl;
+import com.vaadin.external.org.slf4j.Logger;
+import com.vaadin.external.org.slf4j.LoggerFactory;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+
 /**
  * Created by Janze on 20.01.2016.
  */
-public class LoginView extends BaseView {
+public class LoginView extends LoginForm implements View, ViewChangeListener {
+    protected CheckBox rememberMe;
+    protected Label authenticationFailed;
 
-    public void loginClicked() {
-
+    public LoginView() {
+        addLoginListener(this::loginClicked);
+        setSizeFull();
     }
 
-    public void forgotPasswordClicked() {
+    @Override
+    protected Component createContent(TextField usernameField, PasswordField passwordField, Button loginButton) {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
 
+        Label label = new Label("Please log in");
+        label.setStyleName(ValoTheme.LABEL_H1);
+        label.setSizeUndefined();
+        layout.addComponent(label);
+        layout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+
+        usernameField.setCaption("Username");
+        layout.addComponent(usernameField);
+        layout.setComponentAlignment(usernameField, Alignment.MIDDLE_CENTER);
+
+        passwordField.setCaption("Password");
+        layout.addComponent(passwordField);
+        layout.setComponentAlignment(passwordField, Alignment.MIDDLE_CENTER);
+
+        rememberMe = new CheckBox("Remember me");
+        layout.addComponent(rememberMe);
+        layout.setComponentAlignment(rememberMe, Alignment.MIDDLE_CENTER);
+
+        layout.addComponent(loginButton);
+        layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
+
+        authenticationFailed = new Label("Username or password incorrect");
+        authenticationFailed.setStyleName(ValoTheme.LABEL_FAILURE);
+        authenticationFailed.setSizeUndefined();
+        authenticationFailed.setVisible(false);
+        layout.addComponent(authenticationFailed);
+        layout.setComponentAlignment(authenticationFailed, Alignment.MIDDLE_CENTER);
+
+        Button forgotPassword = new Button("Forgot password");
+        forgotPassword.setStyleName(ValoTheme.BUTTON_LINK);
+        forgotPassword.addClickListener(this::forgotPasswordClicked);
+        layout.addComponent(forgotPassword);
+        layout.setComponentAlignment(forgotPassword, Alignment.MIDDLE_CENTER);
+
+        return layout;
+    }
+
+    public void loginClicked(LoginEvent loginEvent) {
+        Logger logger = LoggerFactory.getLogger(LoginView.class);
+        logger.info("User: {} Password: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue()});
+
+        boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword());
+        if (result) {
+            authenticationFailed.setVisible(false);
+            getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
+        } else {
+            authenticationFailed.setVisible(true);
+        }
+    }
+
+    public void forgotPasswordClicked(Button.ClickEvent clickEvent) {
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    }
+
+    @Override
+    public boolean beforeViewChange(ViewChangeListener.ViewChangeEvent event) {
+        return true;
+    }
+
+    @Override
+    public void afterViewChange(ViewChangeEvent event) {
     }
 }
