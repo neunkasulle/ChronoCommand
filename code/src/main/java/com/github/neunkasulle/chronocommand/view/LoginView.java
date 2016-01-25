@@ -68,7 +68,8 @@ public class LoginView extends LoginForm implements View, ViewChangeListener {
         Logger logger = LoggerFactory.getLogger(LoginView.class);
         logger.info("User: {} Password: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue()});
 
-        boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword());
+        //TODO INSET REMEMBER ME FEATURE BELOW
+        boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), false);
         if (result) {
             authenticationFailed.setVisible(false);
             getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
