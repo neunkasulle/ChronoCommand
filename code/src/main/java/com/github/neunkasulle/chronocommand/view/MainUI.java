@@ -5,7 +5,9 @@ import com.ejt.vaadin.loginform.LoginForm;
 import com.github.neunkasulle.chronocommand.control.MainControl;
 
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -22,7 +24,7 @@ import com.vaadin.ui.*;
  */
 @Theme("chronocommand")
 @Widgetset("com.github.neunkasulle.chronocommand.ChronoCommandWidgetset")
-public class MainUI extends UI {
+public class MainUI extends UI implements ViewChangeListener {
     public static final String LOGINVIEW = "login";
     public static final String MAINVIEW = "main";
     Navigator navigator;
@@ -35,9 +37,15 @@ public class MainUI extends UI {
         getPage().setTitle("ChronoCommand");
 
         navigator = new Navigator(this, this);
+        navigator.addViewChangeListener(this);
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.addView(MAINVIEW, MainView.class);
-        navigator.navigateTo(LOGINVIEW);
+        navigator.setErrorView(ErrorView.class);
+        if (!SecurityUtils.getSubject().isAuthenticated()) {
+            navigator.navigateTo(LOGINVIEW);
+        }
+
+        VaadinSession session = getSession();
 
         /*DefaultVerticalLoginForm loginForm = new DefaultVerticalLoginForm();
         loginForm.addLoginListener(loginEvent -> {
@@ -63,6 +71,16 @@ public class MainUI extends UI {
         content.addComponents(name, button);
         content.setMargin(true);
         content.setSpacing(true);*/
+    }
+
+    @Override
+    public boolean beforeViewChange(ViewChangeEvent event) {
+        return true;
+    }
+
+    @Override
+    public void afterViewChange(ViewChangeEvent event) {
+
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)
