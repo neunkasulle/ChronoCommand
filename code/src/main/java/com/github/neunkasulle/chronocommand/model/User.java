@@ -24,6 +24,7 @@ public class User {
     protected String password;
     protected Set<Role> role;
     protected boolean mailFlag;
+    public boolean longHours; // FIXME remove this
 
     @Id
     @GeneratedValue

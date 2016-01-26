@@ -24,14 +24,14 @@ public class LoginTest {
     @Ignore
     @Test
     public void testLoginCorrect() throws Exception {
-        assertTrue(loginControl.login("root", loginControl.hash("testtest123")));
+        assertTrue(loginControl.login("root", loginControl.hash("testtest123"), false));
     }
 
     @Ignore
     @Test
     public void testLoginIncorrect() throws Exception {
-        assertFalse(loginControl.login("root", loginControl.hash("123")));
-        assertFalse(loginControl.login("rooot", loginControl.hash("testtest123")));
+        assertFalse(loginControl.login("root", loginControl.hash("123"), false));
+        assertFalse(loginControl.login("rooot", loginControl.hash("testtest123"), false));
     }
 
     @Ignore

@@ -30,12 +30,11 @@ public class LoginControl extends Control {
 
 
     public boolean login(String username, String password, boolean rememberMe) {
-
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         try {
             SecurityUtils.getSubject().login(token);
         } catch (AuthenticationException e) {
-            log.info(Marker.ANY_MARKER, "Failed Login", e);
+            log.info("Failed Login");
             return false;
         }
 
