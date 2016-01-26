@@ -14,13 +14,7 @@ public class MainControl extends Control {
     private static MainControl ourInstance = new MainControl();
 
     private MainControl() {
-
-
-        userDAO = new UserDAO();
         realm = new com.github.neunkasulle.chronocommand.security.Realm();
-
-        realm.setUserDAO(userDAO);
-
     }
 
     public static MainControl getInstance() {

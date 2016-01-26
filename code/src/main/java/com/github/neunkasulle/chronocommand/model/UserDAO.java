@@ -6,7 +6,13 @@ package com.github.neunkasulle.chronocommand.model;
  * Created by jannis on 19.01.16.
  */
 public class UserDAO{
+    private static final UserDAO instance = new UserDAO();
 
+    private UserDAO() {}
+
+    public static UserDAO getInstance() {
+        return instance;
+    }
 
     public User findUser(String username) {
 

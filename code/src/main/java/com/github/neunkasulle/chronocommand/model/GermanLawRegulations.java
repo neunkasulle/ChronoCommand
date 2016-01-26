@@ -13,9 +13,7 @@ public class GermanLawRegulations extends Regulations {
 
     @Override
     public String checkTimeSheet(TimeSheet timeSheet) {
-        TimeSheetDAO timeSheetDAO = new TimeSheetDAO();
-        TimeRecord[] timeRecords = timeSheetDAO.getTimeRecords(timeSheet);
-
+        TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
         return super.checkTimeSheet(timeSheet);
     }
@@ -90,11 +88,10 @@ public class GermanLawRegulations extends Regulations {
      * @return
      */
     private String checkWorkHours (TimeSheet timeSheet) {
-        TimeSheetDAO timeSheetDAO = new TimeSheetDAO();
         String result = "";
         for (int n = 1; n <= getNumberOfDays(timeSheet); n++) {
 
-            TimeRecord[] timeRecords = timeSheetDAO.getTimeRecordsByDay(timeSheet, n);
+            TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
             int hoursPerDay = 0;
             for (TimeRecord timeRecord : timeRecords ) {
                 hoursPerDay += timeRecord.end - timeRecord.beginning;

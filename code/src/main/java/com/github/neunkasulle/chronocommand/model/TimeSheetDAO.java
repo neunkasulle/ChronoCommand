@@ -4,6 +4,14 @@ package com.github.neunkasulle.chronocommand.model;
  * Created by jannis on 19.01.16.
  */
 public class TimeSheetDAO {
+    private static final TimeSheetDAO instance = new TimeSheetDAO();
+
+    private TimeSheetDAO() {}
+
+    public static TimeSheetDAO getInstance() {
+        return instance;
+    }
+
     public TimeSheet getTimeSheet(int month, int year, User proletarier) {
         throw new UnsupportedOperationException();
     }

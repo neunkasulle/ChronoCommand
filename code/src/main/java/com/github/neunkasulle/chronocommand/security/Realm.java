@@ -39,21 +39,15 @@ import org.apache.shiro.subject.PrincipalCollection;
  */
 public class Realm extends AuthorizingRealm {
 
-    protected UserDAO userDAO = null;
-
     public Realm() {
         setName("SampleRealm"); //This name must match the name in the User class's getPrincipals() method
         setCredentialsMatcher(new HashedCredentialsMatcher("SHA-512"));
     }
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        User user = userDAO.findUser(token.getUsername());
+        User user = UserDAO.getInstance().findUser(token.getUsername());
         if( user != null ) {
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
         } else {
@@ -63,7 +57,7 @@ public class Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long userId = (Long) principals.fromRealm(getName()).iterator().next();
-        User user = userDAO.getUser(userId);
+        User user = UserDAO.getInstance().getUser(userId);
         if( user != null ) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             for( Role role : user.getRoles() ) {
