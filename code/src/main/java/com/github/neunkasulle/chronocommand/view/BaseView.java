@@ -5,11 +5,12 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CustomComponent;
 
 /**
  * Created by Janze on 20.01.2016.
  */
-public abstract class BaseView implements View {
+public abstract class BaseView extends CustomComponent implements View {
 
     public BaseView(Session session) {
 
@@ -45,11 +46,6 @@ public abstract class BaseView implements View {
     }
 
     public void buttonClick(Button.ClickEvent event) {
-
-    }
-
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
 
     }
 

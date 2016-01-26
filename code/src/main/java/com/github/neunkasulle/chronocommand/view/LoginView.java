@@ -6,7 +6,6 @@ import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -14,7 +13,10 @@ import com.vaadin.ui.themes.ValoTheme;
  * Created by Janze on 20.01.2016.
  */
 public class LoginView extends LoginForm implements View {
+    private Logger log = LoggerFactory.getLogger(LoginView.class);
+
     protected CheckBox rememberMe;
+    protected Label authInfoMissing;
     protected Label authenticationFailed;
     protected PasswordField passwordField;
 
@@ -45,6 +47,13 @@ public class LoginView extends LoginForm implements View {
         layout.addComponent(loginButton);
         layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
 
+        authInfoMissing = new Label("Please provide username and password!");
+        authInfoMissing.setStyleName(ValoTheme.LABEL_FAILURE);
+        authInfoMissing.setSizeUndefined();
+        authInfoMissing.setVisible(false);
+        layout.addComponent(authInfoMissing);
+        layout.setComponentAlignment(authInfoMissing, Alignment.MIDDLE_CENTER);
+
         authenticationFailed = new Label("Username or password incorrect");
         authenticationFailed.setStyleName(ValoTheme.LABEL_FAILURE);
         authenticationFailed.setSizeUndefined();
@@ -58,12 +67,52 @@ public class LoginView extends LoginForm implements View {
         layout.addComponent(forgotPassword);
         layout.setComponentAlignment(forgotPassword, Alignment.MIDDLE_CENTER);
 
+        // DEBUG
+        HorizontalLayout links = new HorizontalLayout();
+        layout.addComponent(links);
+
+        Button main = new Button("Main");
+        main.addClickListener(event -> {
+            getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
+        });
+        links.addComponent(main);
+
+        Button createUser = new Button("Create User");
+        createUser.addClickListener(event -> {
+            getUI().getNavigator().navigateTo(MainUI.CREATEUSERVIEW);
+        });
+        links.addComponent(createUser);
+
+        Button timesheet = new Button("Timesheet");
+        timesheet.addClickListener(event -> {
+            getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
+        });
+        links.addComponent(timesheet);
+
+        Button messages = new Button("Messages");
+        messages.addClickListener(event -> {
+            getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
+        });
+        links.addComponent(messages);
+
+        Button settings = new Button("Usersettings");
+        settings.addClickListener(event -> {
+            getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
+        });
+        links.addComponent(settings);
+
         return layout;
     }
 
     public void loginClicked(LoginEvent loginEvent) {
-        Logger logger = LoggerFactory.getLogger(LoginView.class);
-        logger.info("User: {} Password: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue()});
+        log.info("User: {} Password: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue()});
+
+        if (loginEvent.getUserName().isEmpty() || loginEvent.getPassword().isEmpty()) {
+            authenticationFailed.setVisible(false);
+            authInfoMissing.setVisible(true);
+            return;
+        }
+        authInfoMissing.setVisible(false);
 
         boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue());
         if (result) {
@@ -76,6 +125,7 @@ public class LoginView extends LoginForm implements View {
     }
 
     public void forgotPasswordClicked(Button.ClickEvent clickEvent) {
+        log.info("User clicked on \"Forgot password\"");
     }
 
     @Override

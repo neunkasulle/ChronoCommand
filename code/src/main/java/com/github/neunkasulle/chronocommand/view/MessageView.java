@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.MessageControl;
 import com.github.neunkasulle.chronocommand.model.Message;
+import com.vaadin.navigator.ViewChangeListener;
 import org.hibernate.cfg.NotYetImplementedException;
 
 /**
@@ -10,9 +11,9 @@ import org.hibernate.cfg.NotYetImplementedException;
 public class MessageView extends BaseView {
     MessageControl messageControl;
 
-    public MessageView(MessageControl messageControl) {
+    /*public MessageView(MessageControl messageControl) {
         this.messageControl = messageControl;
-    }
+    }*/
 
     public void clickSendMessage() {
         messageControl.sendMessage(this.getSessionID(), getReceiverField(), getMessageField());
@@ -28,5 +29,9 @@ public class MessageView extends BaseView {
 
     private String getReceiverField() {
         throw new NotYetImplementedException();
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 }

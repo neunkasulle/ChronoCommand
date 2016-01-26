@@ -1,13 +1,11 @@
 package com.github.neunkasulle.chronocommand.view;
 
-import com.ejt.vaadin.loginform.*;
-import com.ejt.vaadin.loginform.LoginForm;
-import com.github.neunkasulle.chronocommand.control.MainControl;
-
+import com.github.neunkasulle.chronocommand.model.TimeSheet;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -27,6 +25,10 @@ import com.vaadin.ui.*;
 public class MainUI extends UI implements ViewChangeListener {
     public static final String LOGINVIEW = "login";
     public static final String MAINVIEW = "main";
+    public static final String CREATEUSERVIEW = "createuser";
+    public static final String TIMESHEETVIEW = "timesheet";
+    public static final String MESSAGEVIEW = "messages";
+    public static final String SETTINGSVIEW = "settings";
     Navigator navigator;
 
     @Override
@@ -40,21 +42,16 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addViewChangeListener(this);
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.addView(MAINVIEW, MainView.class);
+        navigator.addView(CREATEUSERVIEW, CreateUserView.class);
+        navigator.addView(TIMESHEETVIEW, TimeSheetView.class);
+        navigator.addView(MESSAGEVIEW, MessageView.class);
+        navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);
-        if (!SecurityUtils.getSubject().isAuthenticated()) {
+        /*if (!SecurityUtils.getSubject().isAuthenticated()) {
             navigator.navigateTo(LOGINVIEW);
-        }
+        }*/
 
-        VaadinSession session = getSession();
-
-        /*DefaultVerticalLoginForm loginForm = new DefaultVerticalLoginForm();
-        loginForm.addLoginListener(loginEvent -> {
-            Logger loginLogger = LoggerFactory.getLogger(LoginView.class);
-            loginLogger.info("User: {} Password: {}", loginEvent.getUserName(), loginEvent.getPassword());
-        });
-        setContent(loginForm);*/
-
-        /*final VerticalLayout content = new VerticalLayout();
+        /*VerticalLayout content = new VerticalLayout();
         content.setSizeFull();
         setContent(content);
 
@@ -67,7 +64,7 @@ public class MainUI extends UI implements ViewChangeListener {
                     + ", it works!"));
             Notification.show("Wow", "You pressed!", Notification.Type.WARNING_MESSAGE);
         });
-        
+
         content.addComponents(name, button);
         content.setMargin(true);
         content.setSpacing(true);*/
@@ -75,6 +72,21 @@ public class MainUI extends UI implements ViewChangeListener {
 
     @Override
     public boolean beforeViewChange(ViewChangeEvent event) {
+        /*Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isRemembered() && LOGINVIEW.equals(event.getViewName())) {
+            event.getNavigator().navigateTo(MAINVIEW);
+            return false;
+        }
+        if (!currentUser.isRemembered() && !LOGINVIEW.equals(event.getViewName())) {
+            event.getNavigator().navigateTo(LOGINVIEW);
+            return false;
+        }*/
+
+        if ("".equals(event.getViewName())) {
+            event.getNavigator().navigateTo(LOGINVIEW); // FIXME MAINVIEW
+            return false;
+        }
+
         return true;
     }
 
