@@ -38,7 +38,7 @@ public class GermanLawRegulations extends Regulations {
                     result += "Nachtarbeit nicht erlaubt";
                 } else if (timeRecord.end > 1) {
                     result += "Nachtarbeit nicht erlaubt";
-
+                 // FIXME ergibt dieses if Sinn?
                 } else if (timeRecord.beginning < 4) {
                     result += "Nachtarbeit nicht erlaubt";
                 }
