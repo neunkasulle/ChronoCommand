@@ -1,6 +1,6 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import org.quartz.Scheduler;
+//import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
@@ -13,6 +13,7 @@ import static org.quartz.DateBuilder.*;
  * Created by Dav on 26.01.2016.
  */
 public class Scheduler {
+    /*
     //instantiating the scheduler
     SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
     Scheduler sched = schedFact.getScheduler();
@@ -36,4 +37,5 @@ public class Scheduler {
     //do something here?
 
     sched.shutdown(true);//kill the scheduler after every job is executed
+    */
 }
