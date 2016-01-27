@@ -9,9 +9,6 @@ import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.DateBuilder.*;
 
-import java.util.Date;
-import java.lang.Thread;
-
 /**
  * Created by Dav on 26.01.2016.
  */
@@ -21,17 +18,14 @@ public class Scheduler {
     Scheduler sched = schedFact.getScheduler();
 
     //this defines the job the scheduler shall do
-    // define the job and tie it to our HelloJob class
-    JobDetail explode = newJob(Bomb.class) //create a new job class
+    JobDetail explode = newJob(Bomb.class)
             .withIdentity("job1", "group1")
             .build();
 
     //this is the trigger
-    // compute a time that is on the next round minute
-    Date runTime = evenMinuteDate(new Date());
     Trigger trigger = newTrigger()
             .withIdentity("trigger1", "group1")
-            .startAt(runTime)
+            .startAt(dateOf(6, 6, 6)) //start today at 06:06:06
             .build();
 
     // Tell quartz to schedule the job using our trigger
@@ -39,7 +33,7 @@ public class Scheduler {
 
     sched.start();
 
-    Thread.sleep(90L * 1000L); //get some time before the job is triggered
+    //do something here?
 
     sched.shutdown(true);//kill the scheduler after every job is executed
 }
