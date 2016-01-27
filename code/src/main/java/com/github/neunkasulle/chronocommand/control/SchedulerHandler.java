@@ -1,9 +1,10 @@
 package com.github.neunkasulle.chronocommand.control;
 
-//import org.quartz.Scheduler;
+import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
+import org.quartz.impl.StdSchedulerFactory;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
@@ -11,15 +12,16 @@ import static org.quartz.DateBuilder.*;
 
 /**
  * Created by Dav on 26.01.2016.
+ * Name can be changed everytime
  */
-public class Scheduler {
-    /*
+public class SchedulerHandler {
+/*
     //instantiating the scheduler
-    SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+    SchedulerFactory schedFact = new StdSchedulerFactory();
     Scheduler sched = schedFact.getScheduler();
 
     //this defines the job the scheduler shall do
-    JobDetail explode = newJob(Bomb.class)
+    JobDetail jobA = newJob(SimpleJob.class)
             .withIdentity("job1", "group1")
             .build();
 
@@ -30,12 +32,12 @@ public class Scheduler {
             .build();
 
     // Tell quartz to schedule the job using our trigger
-    sched.scheduleJob(explode, trigger);
+    sched.scheduleJob(jobA, trigger);
 
-    sched.start();
+    //sched.start();
 
     //do something here?
 
-    sched.shutdown(true);//kill the scheduler after every job is executed
-    */
+    //sched.shutdown(true);//kill the scheduler after every job is executed
+*/
 }
