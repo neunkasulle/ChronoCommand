@@ -31,10 +31,13 @@ public class GermanLawRegulations extends Regulations {
         for (TimeRecord timeRecord: timeRecords) {
             LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
             LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
-            if (false) {
-                if (beginning.isBefore(LocalDateTime.of(beginning.getYear(), beginning.getMonth(), beginning.getDayOfMonth(),6 ,0)) || beginning.isAfter(LocalDateTime.of(beginning.getYear(), beginning.getMonth(), beginning.getDayOfMonth(),23,0))) {
+            if (false) { //why?
+                if (beginning.isBefore(LocalDateTime.of(beginning.getYear(), beginning.getMonth(),
+                        beginning.getDayOfMonth(),6 ,0)) || beginning.isAfter(LocalDateTime.of(beginning.getYear(),
+                        beginning.getMonth(), beginning.getDayOfMonth(),23,0))) {
                     result += "Nachtarbeit nicht erlaubt";
-                } else if (end.isAfter(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),1 ,0)) && end.isBefore(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),6 ,0))  ) {
+                } else if (end.isAfter(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),1 ,0))
+                        && end.isBefore(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),6 ,0))) {
                     result += "Nachtarbeit nicht erlaubt";
                 }
             }
@@ -51,8 +54,10 @@ public class GermanLawRegulations extends Regulations {
     private String checkForPauses(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
 
+        int maxWorkingWithoutBreak = 6*60*60; // 6 Hours in seconds
+
         for (TimeRecord timeRecord: timeRecords) {
-            if (timeRecord.end - timeRecord.beginning >= 6*60*60) {
+            if (timeRecord.end - timeRecord.beginning >= maxWorkingWithoutBreak) {
                 result += "Nach 6h Arbeiten muss eine Pause eingelegt werden";
             }
         }
@@ -88,6 +93,9 @@ public class GermanLawRegulations extends Regulations {
      * @return
      */
     private String checkWorkHours (TimeSheet timeSheet) {
+        int maxWorkingHours = 8*60*60; // 8 Hours in seconds
+        int maxOvertime = 10*60*60; // 2 Hours in seconds
+
         String result = "";
         for (int n = 1; n <= getNumberOfDaysInMonth(timeSheet); n++) {
 
@@ -97,12 +105,12 @@ public class GermanLawRegulations extends Regulations {
                 secondsPerDay += timeRecord.end - timeRecord.beginning;
             }
             if (!timeSheet.proletarier.longHours) {
-                if (secondsPerDay > 8*60*60) {
+                if (secondsPerDay > maxWorkingHours) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
             }
             else
-                if (secondsPerDay >10*60*60) {
+                if (secondsPerDay > maxWorkingHours + maxOvertime) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
         }
@@ -117,8 +125,7 @@ public class GermanLawRegulations extends Regulations {
      * ich denke, dass das leider mit switch case machen muss ^^
      */
     private int getNumberOfDaysInMonth(TimeSheet timeSheet) {
-        int days = LocalDate.of(timeSheet.year, timeSheet.month, 1).lengthOfMonth();
-        return days;
+        return LocalDate.of(timeSheet.year, timeSheet.month, 1).lengthOfMonth();
     }
 
     /**

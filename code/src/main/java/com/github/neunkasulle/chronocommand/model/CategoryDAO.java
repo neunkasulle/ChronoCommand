@@ -16,7 +16,8 @@ public class CategoryDAO {
 
     public Category[] getAllCategories() {
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
-        session.
+
+        return null;
     }
 
     public boolean newCategory(Category newCategory) {
