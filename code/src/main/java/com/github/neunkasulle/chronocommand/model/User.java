@@ -18,16 +18,32 @@ import java.util.Set;
 @Table(name="users")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
-    private Long id;
-    protected String username;
-    protected String email;
-    protected String password;
-    protected Set<Role> role;
-    protected boolean mailFlag;
-    public boolean longHours; // FIXME remove this
-
     @Id
     @GeneratedValue
+    private Long id;
+
+    @Basic(optional=false)
+    @Column(length=100)
+    @org.hibernate.annotations.Index(name="idx_users_username")
+    protected String username;
+
+    @Basic(optional=false)
+    @org.hibernate.annotations.Index(name="idx_users_email")
+    protected String email;
+
+    @Basic(optional=false)
+    @Column(length=255)
+    protected String password;
+
+    @ManyToMany
+    @JoinTable(name="users_roles")
+    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+    protected Set<Role> role;
+
+    @Basic(optional=false)
+    protected boolean mailFlag;
+
+
     public Long getId() {
         return id;
     }
@@ -41,9 +57,7 @@ public class User {
      *
      * @return the username associated with this user account;
      */
-    @Basic(optional=false)
-    @Column(length=100)
-    @org.hibernate.annotations.Index(name="idx_users_username")
+
     public String getUsername() {
         return username;
     }
@@ -52,8 +66,7 @@ public class User {
         this.username = username;
     }
 
-    @Basic(optional=false)
-    @org.hibernate.annotations.Index(name="idx_users_email")
+
     public String getEmail() {
         return email;
     }
@@ -67,8 +80,7 @@ public class User {
      *
      * @return this user's password
      */
-    @Basic(optional=false)
-    @Column(length=255)
+
     public String getPassword() {
         return password;
     }
@@ -78,9 +90,7 @@ public class User {
     }
 
 
-    @ManyToMany
-    @JoinTable(name="users_roles")
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+
     public Set<Role> getRoles() {
         return role;
     }

@@ -17,12 +17,22 @@ import java.util.Set;
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Role {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @Basic(optional = false)
+    @Column(length = 100)
+    @Index(name = "idx_roles_name")
     private String name;
 
+    @Basic(optional = false)
+    @Column(length = 255)
     private String description;
 
+    @ElementCollection
+    @JoinTable(name = "roles_permissions")
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<String> permissions;
 
     protected Role() {
@@ -33,8 +43,7 @@ public class Role {
     }
 
 
-    @Id
-    @GeneratedValue
+
     public Long getId() {
         return id;
     }
@@ -43,9 +52,7 @@ public class Role {
         this.id = id;
     }
 
-    @Basic(optional = false)
-    @Column(length = 100)
-    @Index(name = "idx_roles_name")
+
     public String getName() {
         return name;
     }
@@ -54,8 +61,7 @@ public class Role {
         this.name = name;
     }
 
-    @Basic(optional = false)
-    @Column(length = 255)
+
     public String getDescription() {
         return description;
     }
@@ -64,9 +70,7 @@ public class Role {
         this.description = description;
     }
 
-    @ElementCollection
-    @JoinTable(name = "roles_permissions")
-    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
     public Set<String> getPermissions() {
         return permissions;
     }
