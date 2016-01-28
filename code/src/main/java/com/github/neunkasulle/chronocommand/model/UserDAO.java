@@ -1,6 +1,7 @@
 package com.github.neunkasulle.chronocommand.model;
 
 
+import java.util.List;
 
 /**
  * Created by jannis on 19.01.16.
@@ -40,15 +41,18 @@ public class UserDAO{
         throw new UnsupportedOperationException();
     }
 
-    public User[] getAllProletarier() {
-        throw new UnsupportedOperationException();
-    }
-
     public boolean checkUserDetails(Role userRole, String name, String email,
                                     String password, User supervisor,
                                     int hoursPerMonth) {
         throw new UnsupportedOperationException();
     }
 
+    public List<User> getAllUsers() {
+        List<User> users = null;
+
+        //TODO HIBERNATE: Query for all users here
+
+        return users;
+    }
 
 }

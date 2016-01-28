@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Janze on 16.01.2016.
@@ -17,8 +18,10 @@ public class TimeSheet {
     @GeneratedValue
     int id;
 
-    @Basic(optional = false)
-    User proletarier;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
     @Basic(optional = false)
     TimeSheetState state;
@@ -34,8 +37,12 @@ public class TimeSheet {
 
     int currentHours;
 
+    public TimeSheet() {
+
+    }
+
     public TimeSheet(User proletarier, int month, int year, int hoursPerMonth) {
-        this.proletarier = proletarier;
+        this.user = proletarier;
         this.month = month;
         this.year = year;
         this.requiredHoursPerMonth = hoursPerMonth;
@@ -51,8 +58,16 @@ public class TimeSheet {
     }
 
     public boolean setTimeSheetState(TimeSheetState state) {
-        return false;
+        this.state = state;
+
+        return true;
     }
 
-    public User getProletarier() { return proletarier; }
+    public User getUser() {
+        return user;
+    }
+
+    public TimeSheetState getState() {
+        return state;
+    }
 }

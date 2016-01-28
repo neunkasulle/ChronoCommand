@@ -3,7 +3,9 @@ package com.github.neunkasulle.chronocommand.model;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Janze on 16.01.2016.
@@ -11,11 +13,17 @@ import java.io.IOException;
 public class TimeSheetHandler {
     String warningEmailTemplate;
 
-    /*public boolean setTimeSheetState(TimeSheet timeSheet, TimeSheetState state) {
-        return false;
-    }*/
+    private static final TimeSheetHandler instance = new TimeSheetHandler();
 
-    public void createPdfFromTimeSheet(TimeSheet timeSheet) { //TODO fill timesheet with content
+    private TimeSheetHandler() {
+
+    }
+
+    public static TimeSheetHandler getInstance() {
+        return instance;
+    }
+
+    public File createPdfFromTimeSheet(TimeSheet timeSheet) { //TODO fill timesheet with content
         //new document
         PDDocument newTimesheet = new PDDocument();
         //new page
@@ -31,12 +39,20 @@ public class TimeSheetHandler {
                 // TODO handle exception
             }
         }
+
+        return null;
     }
 
-    public void   createPdfFromAllTimeSheet(TimeSheet timeSheet){
+    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets){
+        File file = null;
 
-        //TODO Iteration
-        createPdfFromTimeSheet(null);
+        for (TimeSheet timesheet :
+            timeSheets) {
+                File tmp =  createPdfFromTimeSheet(timesheet);
+                //TODO Ammend to file
+        }
+
+        return file;
     }
 
 

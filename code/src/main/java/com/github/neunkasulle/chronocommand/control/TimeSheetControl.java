@@ -52,42 +52,55 @@ public class TimeSheetControl extends Control {
     }
 
     public List<TimeSheet> getSupervisedTimeSheets(Month month, Year year) {
-
+        //not needed for now
         return null;
     }
 
     public boolean lockTimeSheet(TimeSheet timeSheet) {
 
-        User user = UserManagementControl.getInstance().getUser(null);
-        //TODO HOW THE HELL DO I GET THE SESSION FROM HERE!?
-
-        boolean correct = timeSheet.setTimeSheetState(TimeSheetState.LOCKED); //TODO WHAT THE ...
-        //FIXME HOW TO VALIDATE TIMESHEET AT THIS POINT!?
+        timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
 
 
-        if(!correct) {
-            return false;
-        }
-
-        throw new NotYetImplementedException();
+        //TODO perform some checks here and return false if they fail
+        return true;
     }
 
     public boolean unlockTimeSheet(TimeSheet timeSheet) {
 
-        return false;
+        timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
+
+        //TODO permission from validated to unlocked
+        return true;
     }
 
     public boolean approveTimeSheet(TimeSheet timeSheet) {
 
-        return false;
+        timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
+
+        //TODO Permissions checks and stuff?
+        return true;
     }
 
     public void filtersChanged() {
+        //not needed for now
     }
 
     public File printCheckedTimeSheets(Month month, Year year) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        return null;
+        List<TimeSheet> unfilteredTimeSheets = timeSheetDAO.getAllTimeSheets(month, year);
+        List<TimeSheet> filteredTimeSheets = null;
+
+        for(TimeSheet timeSheet: unfilteredTimeSheets) {
+            if(timeSheet.getState() == TimeSheetState.CHECKED) {
+                filteredTimeSheets.add(timeSheet);
+            }
+        }
+
+        File file = timeSheetHandler.createPdfFromAllTimeSheets(filteredTimeSheets);
+
+        return file;
     }
 
     public File printAllTimeSheets(Month month, Year year) {

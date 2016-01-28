@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,13 +36,17 @@ public class User {
     @Column(length=255)
     protected String password;
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(name="users_roles")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     protected Set<Role> role;
 
     @Basic(optional=false)
     protected boolean mailFlag;
+
+    @ManyToOne
+    @JoinTable(name="user")
+    User supervisor;
 
 
     public Long getId() {
@@ -106,4 +111,6 @@ public class User {
     public void setMailFlag(boolean mailFlag) {
         this.mailFlag = mailFlag;
     }
+
+
 }
