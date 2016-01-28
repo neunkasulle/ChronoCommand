@@ -16,7 +16,7 @@ import static org.quartz.DateBuilder.*;
  * Name can be changed everytime
  */
 public class SchedulerHandler {
-
+    //TODO call this method once on startup
     public void scheduleAll() throws SchedulerException {
 
         //instantiating the scheduler
@@ -25,12 +25,12 @@ public class SchedulerHandler {
 
         //this defines the job the scheduler shall do
         JobDetail jobA = newJob(SimpleJob.class)
-                .withIdentity("job1", "group1")
+                .withIdentity("job1", "group1") //name, group
                 .build();
 
         //this is the trigger
         Trigger trigger = newTrigger()
-                .withIdentity("trigger1", "group1")
+                .withIdentity("trigger1", "group1") //name, group
                 .startAt(dateOf(6, 6, 6)) //start today at 06:06:06
                 .build();
 
