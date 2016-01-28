@@ -1,5 +1,7 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.hibernate.*;
+
 /**
  * Created by jannis on 19.01.16.
  */
@@ -13,7 +15,8 @@ public class CategoryDAO {
     }
 
     public Category[] getAllCategories() {
-        throw new UnsupportedOperationException();
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        session.
     }
 
     public boolean newCategory(Category newCategory) {

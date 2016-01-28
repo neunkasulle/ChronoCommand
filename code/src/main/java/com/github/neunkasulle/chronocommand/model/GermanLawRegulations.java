@@ -1,9 +1,7 @@
 package com.github.neunkasulle.chronocommand.model;
 
 
-import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-
-import java.time.LocalDate;
+import java.time.*;
 
 /**
  * nicht überprüft werden Ruhezeiteinhaltungen, da es bis jz keine sinnvolle möglichkeit gibt
@@ -11,6 +9,8 @@ import java.time.LocalDate;
  */
 public class GermanLawRegulations extends Regulations {
 
+   // private LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
+   // private LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
     @Override
     public String checkTimeSheet(TimeSheet timeSheet) {
         TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
@@ -29,13 +29,12 @@ public class GermanLawRegulations extends Regulations {
     private String checkNightWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
         for (TimeRecord timeRecord: timeRecords) {
-            //FIXME
+            LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
+            LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
             if (false) {
-                if (timeRecord.beginning <= 6 || timeRecord.beginning >= 23) {
+                if (beginning.isBefore(LocalDateTime.of(beginning.getYear(), beginning.getMonth(), beginning.getDayOfMonth(),6 ,0)) || beginning.isAfter(LocalDateTime.of(beginning.getYear(), beginning.getMonth(), beginning.getDayOfMonth(),23,0))) {
                     result += "Nachtarbeit nicht erlaubt";
-                } else if (timeRecord.end > 1) {
-                    result += "Nachtarbeit nicht erlaubt";
-                } else if (timeRecord.beginning < 4) {
+                } else if (end.isAfter(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),1 ,0)) && end.isBefore(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),6 ,0))  ) {
                     result += "Nachtarbeit nicht erlaubt";
                 }
             }
@@ -51,8 +50,9 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkForPauses(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
+
         for (TimeRecord timeRecord: timeRecords) {
-            if (timeRecord.end - timeRecord.beginning >= 6) {
+            if (timeRecord.end - timeRecord.beginning >= 6*60*60) {
                 result += "Nach 6h Arbeiten muss eine Pause eingelegt werden";
             }
         }
@@ -68,15 +68,15 @@ public class GermanLawRegulations extends Regulations {
     private String checkSundayWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
         for (TimeRecord timeRecord: timeRecords) {
-            //FIXME
-            if (false) {
-                if (timeRecord.beginning == 1 /* onsunday */) {
-                    result += "Sonn- und Feiertagsarbeit nicht erlaubt";
-                }
-                else if (timeRecord.end == 1 /*onsunday*/) {
-                    result += "Sonn- und Feiertagsarbeit nicht erlaubt";
-                }
+            LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
+            LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
+            if (beginning.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
             }
+            else if (end.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+            }
+            //TODO: Feiertage einlesen und hier dann überprüfen lassen
         }
         return result;
     }
@@ -89,20 +89,20 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkWorkHours (TimeSheet timeSheet) {
         String result = "";
-        for (int n = 1; n <= getNumberOfDays(timeSheet); n++) {
+        for (int n = 1; n <= getNumberOfDaysInMonth(timeSheet); n++) {
 
             TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
-            int hoursPerDay = 0;
+            int secondsPerDay = 0;
             for (TimeRecord timeRecord : timeRecords ) {
-                hoursPerDay += timeRecord.end - timeRecord.beginning;
+                secondsPerDay += timeRecord.end - timeRecord.beginning;
             }
             if (!timeSheet.proletarier.longHours) {
-                if (hoursPerDay > 8) {
+                if (secondsPerDay > 8*60*60) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
             }
             else
-                if (hoursPerDay >10) {
+                if (secondsPerDay >10*60*60) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
         }
@@ -116,7 +116,7 @@ public class GermanLawRegulations extends Regulations {
      * noch falsch plaziert, muss in ne andere klasse. weiß noch nicht welche
      * ich denke, dass das leider mit switch case machen muss ^^
      */
-    private int getNumberOfDays(TimeSheet timeSheet) {
+    private int getNumberOfDaysInMonth(TimeSheet timeSheet) {
         int days = LocalDate.of(timeSheet.year, timeSheet.month, 1).lengthOfMonth();
         return days;
     }
