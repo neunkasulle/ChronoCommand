@@ -31,6 +31,8 @@
 
 @mixin chronocommand {
   @include valo;
-
+  * {
+    color: blue;
+  }
   // Insert your own theme rules here
 }
