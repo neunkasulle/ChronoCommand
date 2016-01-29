@@ -5,6 +5,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
+import org.apache.shiro.SecurityUtils;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class ControllPanel extends VerticalLayout {
 
         final Button logoutButton = new Button(new ThemeResource("img/logout13.png"));
         logoutButton .addClickListener(e -> {
-            //TODO How to logout ?????
+            SecurityUtils.getSubject().logout();
             getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
         });
         logoutButton.setStyleName(BaseTheme.BUTTON_LINK);

@@ -1,7 +1,6 @@
 package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.view.comp.ControllPanel;
-import com.ibm.icu.impl.CalendarAstronomer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
