@@ -22,6 +22,10 @@ public class DAOHelper {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
+    public void shutdown() {
+        sessionFactory.close();
+    }
+
     public SessionFactory getSessionFactory(){
         return sessionFactory;
     }

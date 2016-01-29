@@ -1,12 +1,18 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import com.vaadin.external.org.slf4j.Logger;
+import com.vaadin.external.org.slf4j.LoggerFactory;
 import org.hibernate.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jannis on 19.01.16.
  */
 public class CategoryDAO {
     private static final CategoryDAO instance = new CategoryDAO();
+    private Logger log = LoggerFactory.getLogger(CategoryDAO.class);
 
     private CategoryDAO() {}
 
@@ -14,13 +20,29 @@ public class CategoryDAO {
         return instance;
     }
 
-    public Category[] getAllCategories() {
+    public List<Category> getAllCategories() {
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria all = session.createCriteria(Category.class);
 
-        return null;
+        List<Category> categories = new ArrayList<>(all.list().size());
+        for (Object obj : all.list()) {
+            if (obj instanceof Category) {
+                categories.add((Category) obj);
+            } else {
+                log.error("Element not instance of Category: {}", obj.toString());
+            }
+        }
+
+        return categories;
     }
 
     public boolean newCategory(Category newCategory) {
-        throw new UnsupportedOperationException();
+        log.info("Saving category {}", newCategory.getName());
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(newCategory);
+        tx.commit();
+        session.flush();
+        return true;
     }
 }

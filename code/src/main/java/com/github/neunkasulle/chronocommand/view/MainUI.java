@@ -1,6 +1,6 @@
 package com.github.neunkasulle.chronocommand.view;
 
-import com.github.neunkasulle.chronocommand.model.TimeSheet;
+import com.github.neunkasulle.chronocommand.control.MainControl;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
@@ -106,12 +106,12 @@ public class MainUI extends UI implements ViewChangeListener {
             Logger logger = LoggerFactory.getLogger(MainUI.class);
             logger.info("Starting up ChronoCommand servlet");
 
-            //MainControl.getInstance().startup();
+            MainControl.getInstance().startup();
         }
 
         @Override
         public void serviceDestroy(ServiceDestroyEvent event) {
-            //MainControl.getInstance().shutdown();
+            MainControl.getInstance().shutdown();
         }
     }
 }

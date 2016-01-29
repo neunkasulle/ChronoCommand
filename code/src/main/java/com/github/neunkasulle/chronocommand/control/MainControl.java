@@ -1,6 +1,9 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.github.neunkasulle.chronocommand.model.Category;
+import com.github.neunkasulle.chronocommand.model.CategoryDAO;
+import com.github.neunkasulle.chronocommand.model.DAOHelper;
 import org.hibernate.cfg.NotYetImplementedException;
 
 
@@ -28,10 +31,17 @@ public class MainControl extends Control {
     }
 
     public void startup() {
-        throw new NotYetImplementedException();
+        DAOHelper.getInstance().startup();
+
+        CategoryDAO.getInstance().newCategory(new Category("ChronoCommand"));
+        CategoryDAO.getInstance().newCategory(new Category("Procrastination"));
+
+        // TODO initiate anything that needs initiating
     }
 
     public void shutdown() {
-        throw new NotYetImplementedException();
+        DAOHelper.getInstance().shutdown();
+
+        // TODO initiate anything that needs initiating
     }
 }
