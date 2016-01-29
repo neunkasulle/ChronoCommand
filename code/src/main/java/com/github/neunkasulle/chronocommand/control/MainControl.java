@@ -1,6 +1,5 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.UserDAO;
 import com.github.neunkasulle.chronocommand.model.Category;
 import com.github.neunkasulle.chronocommand.model.CategoryDAO;
 import com.github.neunkasulle.chronocommand.model.DAOHelper;
@@ -33,8 +32,8 @@ public class MainControl extends Control {
     public void startup() {
         DAOHelper.getInstance().startup();
 
-        CategoryDAO.getInstance().newCategory(new Category("ChronoCommand"));
-        CategoryDAO.getInstance().newCategory(new Category("Procrastination"));
+        CategoryDAO.getInstance().saveCategory(new Category("Programming"));
+        CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
 
         // TODO initiate anything that needs initiating
     }

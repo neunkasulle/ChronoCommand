@@ -126,12 +126,15 @@ public class TimeSheetControl extends Control {
 
     }
 
+    public List<Category> getAllCategories() {
+        return CategoryDAO.getInstance().getAllCategories();
+    }
+
     public List<TimeSheet> getTimeSheet(Month month, Year year) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-
-
         return timeSheetDAO.getAllTimeSheets(month, year);
     }
+
     private int getCurrentHours(TimeRecord[] timeRecords) {
         int currentHours = 0;
         for ( TimeRecord timeRecord : timeRecords) {

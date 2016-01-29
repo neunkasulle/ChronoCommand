@@ -36,11 +36,11 @@ public class CategoryDAO {
         return categories;
     }
 
-    public boolean newCategory(Category newCategory) {
-        log.info("Saving category {}", newCategory.getName());
+    public boolean saveCategory(Category category) {
+        log.info("Saving category {}", category.getName());
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(newCategory);
+        session.saveOrUpdate(category);
         tx.commit();
         session.flush();
         return true;
