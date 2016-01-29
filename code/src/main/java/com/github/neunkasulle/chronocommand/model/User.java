@@ -33,7 +33,7 @@ public class User {
     @Column(length=255)
     protected String password;
 
-    @ManyToOne
+    @OneToMany
     @JoinTable(name="users_roles")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     protected Set<Role> roles;
