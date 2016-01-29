@@ -1,15 +1,12 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import org.quartz.SchedulerFactory;
+import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.JobDetail;
-import org.quartz.Trigger;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 
 import java.util.Date;
 
 import static org.quartz.JobBuilder.*;
+import static org.quartz.SimpleScheduleBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.DateBuilder.*;
 
@@ -47,7 +44,9 @@ public class SchedulerHandler {
 
         Trigger trigger = newTrigger()
                 .withIdentity("evenMinute", "testGroup")
-                //.withSchedule(simple)
+                .withSchedule(simpleSchedule()
+                    .withIntervalInSeconds(3)
+                    .withRepeatCount(3))
                 .startAt(futureDate(10, IntervalUnit.SECOND))
                 .build();
 
