@@ -104,7 +104,7 @@ public class GermanLawRegulations extends Regulations {
             for (TimeRecord timeRecord : timeRecords ) {
                 secondsPerDay += timeRecord.end - timeRecord.beginning;
             }
-            if (!timeSheet.proletarier.longHours) {
+            if (!timeSheet.user.isPermitted("longHours")) {
                 if (secondsPerDay > maxWorkingHours) {
                     result += "Maximale Arbeitszeit überschritten";
                 }

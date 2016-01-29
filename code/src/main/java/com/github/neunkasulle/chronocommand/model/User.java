@@ -2,13 +2,10 @@ package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.cfg.NotYetImplementedException;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.Table;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,7 +36,7 @@ public class User {
     @ManyToOne
     @JoinTable(name="users_roles")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-    protected Set<Role> role;
+    protected Set<Role> roles;
 
     @Basic(optional=false)
     protected boolean mailFlag;
@@ -97,11 +94,21 @@ public class User {
 
 
     public Set<Role> getRoles() {
-        return role;
+        return roles;
     }
 
     public void setRoles(Set<Role> roles) {
-        this.role = role;
+        this.roles = this.roles;
+    }
+
+    public boolean isPermitted(String roleName) {
+        for (Role role : roles) {
+            if (role.getPermissions().contains(roleName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean getMailFlag() {
