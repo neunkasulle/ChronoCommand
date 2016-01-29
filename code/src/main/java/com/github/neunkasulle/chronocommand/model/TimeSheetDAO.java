@@ -1,5 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import java.sql.Time;
 import java.time.Month;
 import java.time.MonthDay;
 import java.time.Year;
@@ -56,5 +57,12 @@ public class TimeSheetDAO {
              timeSheets.add(getTimeSheet(month, year, user));
         }
         return timeSheets;
+    }
+
+    public List<TimeSheet> getTimeSheetsFromUser(User user) {
+
+        //TODO HIBERNATE: INSERT QUERY HERE
+
+        return null;
     }
 }

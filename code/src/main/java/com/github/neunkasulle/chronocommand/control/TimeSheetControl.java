@@ -98,30 +98,39 @@ public class TimeSheetControl extends Control {
             }
         }
 
-        File file = timeSheetHandler.createPdfFromAllTimeSheets(filteredTimeSheets);
-
-        return file;
+        return timeSheetHandler.createPdfFromAllTimeSheets(filteredTimeSheets);
     }
 
-    public File printAllTimeSheets(Month month, Year year) {
+    public File printAllTimeSheets(Month month, Year year) throws NullPointerException {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        return null;
+        List<TimeSheet> timeSheets =timeSheetDAO.getAllTimeSheets(month, year);
+
+        return timeSheetHandler.createPdfFromAllTimeSheets(timeSheets);
     }
 
     public File printTimeSheet(TimeSheet timeSheet) {
+        TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        return null;
+        return timeSheetHandler.createPdfFromTimeSheet(timeSheet);
     }
 
-    public File printAllTimeSheets(User proletarier) {
+    public File printAllTimeSheets(User user) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        return null;
+        List<TimeSheet> timeSheets = timeSheetDAO.getTimeSheetsFromUser(user);
+
+        return timeSheetHandler.createPdfFromAllTimeSheets(timeSheets);
+
     }
 
-    public TimeSheet getTimeSheet(Month month, Year year) {
+    public List<TimeSheet> getTimeSheet(Month month, Year year) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
 
 
-        return null;
+        return timeSheetDAO.getAllTimeSheets(month, year);
     }
     private int getCurrentHours(TimeRecord[] timeRecords) {
         int currentHours = 0;
@@ -130,7 +139,6 @@ public class TimeSheetControl extends Control {
         }
 
         return currentHours;
-
     }
 
 }
