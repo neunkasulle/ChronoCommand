@@ -55,4 +55,12 @@ public class UserDAO{
         return users;
     }
 
+    public User findUserByMail(String email) {
+        User user = null;
+
+        //TODO HIBERNATE: query to find spezific user ident by email
+
+        return user;
+    }
+
 }

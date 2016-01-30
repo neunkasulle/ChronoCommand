@@ -1,5 +1,8 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.apache.shiro.codec.Hex;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -45,6 +48,23 @@ public class User {
     @JoinTable(name="user")
     User supervisor;
 
+    @Basic
+    int hoursPerMonth;
+
+
+    public User() {
+
+    }
+
+    public User(Role userType, String name, String email, String password, User supervisor, int hoursPerMonth) {
+
+        this.roles.add(userType);
+        this.username = name;
+        this.email = email;
+        this.password = new Sha512Hash(password,new SecureRandomNumberGenerator().nextBytes(), 1024).toString();
+        this.supervisor = supervisor;
+        this.hoursPerMonth = hoursPerMonth;
+    }
 
     public Long getId() {
         return id;
