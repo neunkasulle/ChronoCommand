@@ -64,7 +64,11 @@ public class TimeSheetDAO {
         return null;
     }
 
+    public TimeRecord getLatestTimeRecord(User user) {
+        TimeRecord timeRecord = new TimeRecord();
 
+        //TODO HIBERNATE: Get latest time record
 
-
+        return timeRecord;
+    }
 }

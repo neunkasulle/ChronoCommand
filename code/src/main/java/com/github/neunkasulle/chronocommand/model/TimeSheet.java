@@ -5,10 +5,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.Month;
-import java.util.List;
+
 
 /**
  * Created by Janze on 16.01.2016.
+ *
  */
 @Entity
 @Table(name="timeSheet")

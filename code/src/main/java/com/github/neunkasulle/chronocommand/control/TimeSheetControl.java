@@ -63,12 +63,34 @@ public class TimeSheetControl extends Control {
         return true;
     }
 
-    public boolean closeTimeRecord() {
+    public boolean closeTimeRecord(User user) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
+        if(timeRecord.getCategory() == null) {
+            return false;
+        }
 
-        return false;
+        timeRecord.setEnd(LocalDateTime.now());
+
+        return true;
     }
 
-    public boolean closeTimeRecord(String category, String description) {
+    public boolean closeTimeRecord(String cat, String description, User user) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
+
+        if(timeRecord.getCategory() != null) {
+            return false;
+        }
+
+        Category category = CategoryDAO.getInstance().findCategoryByString(cat);
+        if(category == null) {
+            return false;
+        }
+
+        timeRecord.setCategory(category);
+        timeRecord.setDescription(description);
+        timeRecord.setEnd(LocalDateTime.now());
 
         return false;
     }
@@ -168,7 +190,7 @@ public class TimeSheetControl extends Control {
     private int getCurrentHours(TimeRecord[] timeRecords) {
         int currentHours = 0;
         for ( TimeRecord timeRecord : timeRecords) {
-            //FIXME
+            //FIXME Maybe with: https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html#until-java.time.temporal.Temporal-java.time.temporal.TemporalUnit-
             //currentHours += timeRecord.getEnd(). - timeRecord.getBeginning();
         }
 

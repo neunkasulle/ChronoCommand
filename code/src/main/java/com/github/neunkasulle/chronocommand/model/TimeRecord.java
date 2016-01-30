@@ -21,6 +21,10 @@ public class TimeRecord {
         this.description = description;
     }
 
+    public TimeRecord() {
+
+    }
+
     public LocalDateTime getBeginning() {
         return beginning;
     }
@@ -31,5 +35,25 @@ public class TimeRecord {
 
     public boolean checkTimes() {
         return false;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 }

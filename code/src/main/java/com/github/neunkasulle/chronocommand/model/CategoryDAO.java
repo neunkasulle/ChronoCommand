@@ -9,12 +9,15 @@ import java.util.List;
 
 /**
  * Created by jannis on 19.01.16.
+ *
  */
 public class CategoryDAO {
     private static final CategoryDAO instance = new CategoryDAO();
-    private Logger log = LoggerFactory.getLogger(CategoryDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
 
-    private CategoryDAO() {}
+    private CategoryDAO() {
+
+    }
 
     public static CategoryDAO getInstance() {
         return instance;
@@ -29,7 +32,7 @@ public class CategoryDAO {
             if (obj instanceof Category) {
                 categories.add((Category) obj);
             } else {
-                log.error("Element not instance of Category: {}", obj.toString());
+                LOGGER.error("Element not instance of Category: {}", obj.toString());
             }
         }
 
@@ -37,7 +40,7 @@ public class CategoryDAO {
     }
 
     public boolean saveCategory(Category category) {
-        log.info("Saving category {}", category.getName());
+        LOGGER.info("Saving category {}", category.getName());
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         session.saveOrUpdate(category);
@@ -53,4 +56,5 @@ public class CategoryDAO {
 
         return category;
     }
+
 }
