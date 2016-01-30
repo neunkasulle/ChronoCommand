@@ -31,7 +31,7 @@ public class TimeSheetControl extends Control {
 
 
 
-    public boolean newTimeRecord(User user) {
+    public void newTimeRecord(User user) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
@@ -40,17 +40,16 @@ public class TimeSheetControl extends Control {
             timeSheetDAO.addTimeSheet(timeSheet);
         }
         timeSheet.addTime(new TimeRecord(LocalDateTime.now(),LocalDateTime.now(), null, null));
-        return true;
     }
 
-    public boolean newTimeRecord(String cat, String description, User user) {
+    public void newTimeRecord(String cat, String description, User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
         Category category = CategoryDAO.getInstance().findCategoryByString(cat);
 
         if(category == null) {
-            return false; // Not category found with this string cat
+            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
         }
 
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
@@ -60,47 +59,43 @@ public class TimeSheetControl extends Control {
 
         timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
 
-        return true;
     }
 
-    public boolean closeTimeRecord(User user) {
+    public void closeTimeRecord(User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
         if(timeRecord.getCategory() == null) {
-            return false;
+            throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
         timeRecord.setEnd(LocalDateTime.now());
-
-        return true;
     }
 
-    public boolean closeTimeRecord(String cat, String description, User user) {
+    public void closeTimeRecord(String cat, String description, User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
         if(timeRecord.getCategory() != null) {
-            return false;
+            throw new ChronoCommandException(Reason.CATEGORYALREADYSPECIFIED);
         }
 
         Category category = CategoryDAO.getInstance().findCategoryByString(cat);
         if(category == null) {
-            return false;
+            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
         }
 
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
         timeRecord.setEnd(LocalDateTime.now());
-
-        return false;
     }
 
-    public boolean addTimeToSheet(LocalDateTime beginn, LocalDateTime end, String cat, String description, User user) {
+    public void addTimeToSheet(LocalDateTime beginn, LocalDateTime end, String cat, String description, User user)
+    throws  ChronoCommandException{
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
         Category category = CategoryDAO.getInstance().findCategoryByString(cat);
         if(category == null) {
-            return false;
+            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
         }
 
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
@@ -110,7 +105,6 @@ public class TimeSheetControl extends Control {
 
         timeSheet.addTime(new TimeRecord(beginn, end, category, description));
 
-        return true;
     }
 
     public List<TimeSheet> getSupervisedTimeSheets(Month month, int year) {
