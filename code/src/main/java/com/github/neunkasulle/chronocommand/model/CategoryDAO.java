@@ -5,6 +5,7 @@ import com.vaadin.external.org.slf4j.LoggerFactory;
 import org.hibernate.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public class CategoryDAO {
         Category category = null;
 
 
+        //TODO HIBERNATE query for categorie with catAsString
 
         return category;
     }
