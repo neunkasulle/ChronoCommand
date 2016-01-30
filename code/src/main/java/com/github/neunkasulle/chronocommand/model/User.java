@@ -16,7 +16,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name="users")
+@Table(name="cc_users")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
     @Id
@@ -36,16 +36,19 @@ public class User {
     @Column(length=255)
     protected String password;
 
-    @OneToMany
-    @JoinTable(name="users_roles")
+    @ManyToMany
+    @JoinTable(name="cc_users_roles")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     protected Set<Role> roles;
 
     @Basic(optional=false)
     protected boolean mailFlag;
 
+    @Basic(optional=false)
+    protected boolean isDisabled = false;
+
     @ManyToOne
-    @JoinTable(name="user")
+    @JoinColumn(name="supervisor_id")
     User supervisor;
 
     @Basic
@@ -70,16 +73,11 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     /**
      * Returns the username associated with this user account;
      *
      * @return the username associated with this user account;
      */
-
     public String getUsername() {
         return username;
     }
@@ -135,9 +133,23 @@ public class User {
         return mailFlag;
     }
 
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisable(boolean disable) {
+        isDisabled = disable;
+    }
+
     public void setMailFlag(boolean mailFlag) {
         this.mailFlag = mailFlag;
     }
 
+    public User getSupervisor() {
+        return supervisor;
+    }
 
+    public void setSupervisor(User newSupervisor) {
+        supervisor = newSupervisor;
+    }
 }

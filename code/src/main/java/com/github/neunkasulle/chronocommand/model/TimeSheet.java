@@ -12,7 +12,7 @@ import java.time.Month;
  *
  */
 @Entity
-@Table(name="timeSheet")
+@Table(name="cc_timesheets")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class TimeSheet {
 
@@ -20,8 +20,7 @@ public class TimeSheet {
     @GeneratedValue
     int id;
 
-
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     User user;
 
