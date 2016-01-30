@@ -1,5 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.Reason;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 
@@ -14,7 +16,7 @@ import org.slf4j.Marker;
  * login handling
  */
 public class LoginControl extends Control {
-    private static final transient Logger log = LoggerFactory.getLogger(LoginControl.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(LoginControl.class);
     private static LoginControl ourInstance = new LoginControl();
 
     private LoginControl() {
@@ -29,16 +31,15 @@ public class LoginControl extends Control {
 
 
 
-    public boolean login(String username, String password, boolean rememberMe) {
+    public void login(String username, String password, boolean rememberMe) throws ChronoCommandException {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         try {
             SecurityUtils.getSubject().login(token);
         } catch (AuthenticationException e) {
-            log.info("Failed Login");
-            return false;
+            LOGGER.info("Failed Login");
+            throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
 
-        return true;
     }
 
     public void lostPassword() {
@@ -50,8 +51,4 @@ public class LoginControl extends Control {
         SecurityUtils.getSubject().logout();
     }
 
-    public String hash(String password) {
-
-        return null;
-    }
 }
