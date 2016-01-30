@@ -13,7 +13,7 @@ import java.util.Set;
  * Created by Janze on 16.01.2016.
  */
 @Entity
-@Table(name="roles")
+@Table(name="cc_roles")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Role {
 
@@ -31,8 +31,8 @@ public class Role {
     private String description;
 
     @ElementCollection
-    @JoinTable(name = "roles_permissions")
-    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(name = "cc_roles_permissions")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<String> permissions;
 
     protected Role() {
@@ -42,8 +42,6 @@ public class Role {
         this.name = name;
     }
 
-
-
     public Long getId() {
         return id;
     }
@@ -51,7 +49,6 @@ public class Role {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -69,7 +66,6 @@ public class Role {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public Set<String> getPermissions() {
         return permissions;
