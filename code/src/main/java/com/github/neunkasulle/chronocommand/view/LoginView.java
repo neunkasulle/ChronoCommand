@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.ejt.vaadin.loginform.LoginForm;
 import com.github.neunkasulle.chronocommand.control.LoginControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.navigator.View;
@@ -121,11 +122,11 @@ public class LoginView extends LoginForm implements View {
         }
         authInfoMissing.setVisible(false);
 
-        boolean result = LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue());
-        if (result || loginEvent.getUserName().equals("dummy")) {
+        try {
+            LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue());
             authenticationFailed.setVisible(false);
             getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
-        } else {
+        } catch(ChronoCommandException e) {
             authenticationFailed.setVisible(true);
             passwordField.clear();
         }
