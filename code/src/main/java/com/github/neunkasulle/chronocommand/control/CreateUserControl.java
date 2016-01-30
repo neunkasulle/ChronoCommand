@@ -33,7 +33,7 @@ public class CreateUserControl extends Control {
             return false; // email is currently in use
         }
 
-        userDAO.addUser(new User(userType, name, email, password, supervisor, hoursPerMonth));
+        userDAO.saveUser(new User(userType, name, email, password, supervisor, hoursPerMonth));
 
         return true;
     }
