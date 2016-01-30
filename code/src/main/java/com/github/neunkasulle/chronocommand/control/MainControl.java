@@ -3,6 +3,8 @@ package com.github.neunkasulle.chronocommand.control;
 import com.github.neunkasulle.chronocommand.model.Category;
 import com.github.neunkasulle.chronocommand.model.CategoryDAO;
 import com.github.neunkasulle.chronocommand.model.DAOHelper;
+import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.github.neunkasulle.chronocommand.model.User;
 import org.hibernate.cfg.NotYetImplementedException;
 
 
@@ -32,10 +34,24 @@ public class MainControl extends Control {
     public void startup() {
         DAOHelper.getInstance().startup();
 
+        // TODO initiate anything that needs initiating
+
+        // DEBUG fill database with data
         CategoryDAO.getInstance().saveCategory(new Category("Programming"));
         CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
 
-        // TODO initiate anything that needs initiating
+        User tom = new User();
+        tom.setEmail("tom@chronocommand.eu");
+        tom.setPassword("cat");
+        tom.setUsername("tom");
+        UserDAO.getInstance().saveUser(tom);
+
+        User matt = new User();
+        matt.setEmail("matt@example.com");
+        matt.setPassword("matt");
+        matt.setUsername("matt");
+        matt.setSupervisor(tom);
+        UserDAO.getInstance().saveUser(matt);
     }
 
     public void shutdown() {
