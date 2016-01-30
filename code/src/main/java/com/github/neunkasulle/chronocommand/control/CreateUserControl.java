@@ -1,8 +1,6 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.Role;
-import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.github.neunkasulle.chronocommand.model.*;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -22,15 +20,16 @@ public class CreateUserControl extends Control {
     }
 
 
-    public boolean createUser(Role userType, String name, String email, String password, User supervisor, int hoursPerMonth) {
+    public boolean createUser(Role userType, String name, String email, String password, User supervisor,
+                              int hoursPerMonth) throws ChronoCommandException {
         UserDAO userDAO = UserDAO.getInstance();
 
         if(userDAO.findUser(name) != null) {
-            return false; //user with this name exists
+            throw new ChronoCommandException(Reason.USERALREADYEXISTS);
         }
 
         if (userDAO.findUserByMail(email) != null) {
-            return false; // email is currently in use
+            throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
         }
 
         userDAO.saveUser(new User(userType, name, email, password, supervisor, hoursPerMonth));
@@ -38,7 +37,4 @@ public class CreateUserControl extends Control {
         return true;
     }
 
-    private void showErrorMessage(String errorCode) {
-
-    }
 }
