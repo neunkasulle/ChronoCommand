@@ -5,9 +5,13 @@ import org.hibernate.cfg.NotYetImplementedException;
 
 import java.io.File;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Year;
+import java.util.LinkedList;
 import java.util.List;
+
+import java.time.LocalDate;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -27,14 +31,36 @@ public class TimeSheetControl extends Control {
 
 
 
-    public boolean newTimeRecord() {
+    public boolean newTimeRecord(User user) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
-        return false;
+        if(timeSheet == null){  //No Time sheet yet, we need to build a new one
+            timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
+            timeSheetDAO.addTimeSheet(timeSheet);
+        }
+        timeSheet.addTime(new TimeRecord(LocalDateTime.now(),LocalDateTime.now(), null, null));
+        return true;
     }
 
-    public boolean newTimeRecord(String category, String description) {
+    public boolean newTimeRecord(String cat, String description, User user) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
-        return false;
+        Category category = CategoryDAO.getInstance().findCategoryByString(cat);
+
+        if(category == null) {
+            return false; // Not category found with this string cat
+        }
+
+        if(timeSheet == null){  //No Time sheet yet, we need to build a new one
+            timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
+            timeSheetDAO.addTimeSheet(timeSheet);
+        }
+
+        timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
+
+        return true;
     }
 
     public boolean closeTimeRecord() {
@@ -51,7 +77,7 @@ public class TimeSheetControl extends Control {
         throw new NotYetImplementedException();
     }
 
-    public List<TimeSheet> getSupervisedTimeSheets(Month month, Year year) {
+    public List<TimeSheet> getSupervisedTimeSheets(Month month, int year) {
         //not needed for now
         return null;
     }
@@ -85,23 +111,24 @@ public class TimeSheetControl extends Control {
         //not needed for now
     }
 
-    public File printCheckedTimeSheets(Month month, Year year) {
+    public File printCheckedTimeSheets(Month month, int year) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
         List<TimeSheet> unfilteredTimeSheets = timeSheetDAO.getAllTimeSheets(month, year);
-        List<TimeSheet> filteredTimeSheets = null;
+        List<TimeSheet> filteredTimeSheets = new LinkedList<>();
 
         for(TimeSheet timeSheet: unfilteredTimeSheets) {
-            if(timeSheet.getState() == TimeSheetState.CHECKED) {
-                filteredTimeSheets.add(timeSheet);
+            if(timeSheet.getState() == TimeSheetState.CHECKED){
+
+                    filteredTimeSheets.add(timeSheet);
             }
         }
 
         return timeSheetHandler.createPdfFromAllTimeSheets(filteredTimeSheets);
     }
 
-    public File printAllTimeSheets(Month month, Year year) throws NullPointerException {
+    public File printAllTimeSheets(Month month, int year) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
@@ -126,19 +153,23 @@ public class TimeSheetControl extends Control {
 
     }
 
+
     public List<Category> getAllCategories() {
         return CategoryDAO.getInstance().getAllCategories();
     }
 
-    public List<TimeSheet> getTimeSheet(Month month, Year year) {
+    public List<TimeSheet> getTimeSheet(Month month, int year) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+
+
         return timeSheetDAO.getAllTimeSheets(month, year);
     }
 
     private int getCurrentHours(TimeRecord[] timeRecords) {
         int currentHours = 0;
         for ( TimeRecord timeRecord : timeRecords) {
-            currentHours += timeRecord.getEnd() - timeRecord.getBeginning();
+            //FIXME
+            //currentHours += timeRecord.getEnd(). - timeRecord.getBeginning();
         }
 
         return currentHours;

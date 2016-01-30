@@ -1,31 +1,31 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by Janze on 16.01.2016.
  */
 public class TimeRecord {
     int id;
-    TimeSheet timeSheet;
     //int beginningPause;
     // int endPause;
-    int beginning;
-    int end;
+    LocalDateTime beginning;
+    LocalDateTime end;
     Category category;
     String description;
 
-    public TimeRecord(TimeSheet timeSheet, int beginn, int end, Category category, String description) {
-        this.timeSheet = timeSheet;
+    public TimeRecord(LocalDateTime beginn, LocalDateTime end, Category category, String description) {
         this.beginning = beginn;
         this.end = end;
         this.category = category;
         this.description = description;
     }
 
-    public int getBeginning() {
+    public LocalDateTime getBeginning() {
         return beginning;
     }
 
-    public int getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 

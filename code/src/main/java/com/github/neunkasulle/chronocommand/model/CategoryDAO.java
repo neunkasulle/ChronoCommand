@@ -45,4 +45,12 @@ public class CategoryDAO {
         session.flush();
         return true;
     }
+
+    public Category findCategoryByString(String catAsString) {
+        Category category = null;
+
+
+
+        return category;
+    }
 }

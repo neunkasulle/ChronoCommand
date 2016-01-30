@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class TimeSheet {
     TimeSheetState state;
 
     @Basic(optional = false)
-    int month; // 1-12
+    Month month;
 
     @Basic(optional = false)
     int year;
@@ -41,11 +42,12 @@ public class TimeSheet {
 
     }
 
-    public TimeSheet(User proletarier, int month, int year, int hoursPerMonth) {
+    public TimeSheet(User proletarier, Month month, int year) {
         this.user = proletarier;
         this.month = month;
         this.year = year;
-        this.requiredHoursPerMonth = hoursPerMonth;
+        //TODO Get it from DB
+        //this.requiredHoursPerMonth = hoursPerMonth;
         state = TimeSheetState.UNLOCKED;
     }
 

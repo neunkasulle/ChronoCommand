@@ -1,9 +1,7 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import java.sql.Time;
 import java.time.Month;
-import java.time.MonthDay;
-import java.time.Year;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,10 +16,10 @@ public class TimeSheetDAO {
         return instance;
     }
 
-    public TimeSheet getTimeSheet(Month month, Year year, User user) {
+    public TimeSheet getTimeSheet(Month month, int year, User user) {
         TimeSheet timeSheet = null;
 
-        //TODO HIBERNATE QUERY SPEZIFIK TIME SHEET
+        //TODO HIBERNATE QUERY SPECIFIC TIME SHEET
 
         return timeSheet;
     }
@@ -46,11 +44,11 @@ public class TimeSheetDAO {
         throw new UnsupportedOperationException();
     }
 
-    public List<TimeSheet> getAllTimeSheets(Month month, Year year) {
+    public List<TimeSheet> getAllTimeSheets(Month month, int year) {
         UserDAO userDAO = UserDAO.getInstance();
         List<User> users = userDAO.getAllUsers();
 
-        List<TimeSheet> timeSheets = null;
+        List<TimeSheet> timeSheets = new LinkedList<>();
 
         for(User user: users) {
 
@@ -65,4 +63,8 @@ public class TimeSheetDAO {
 
         return null;
     }
+
+
+
+
 }
