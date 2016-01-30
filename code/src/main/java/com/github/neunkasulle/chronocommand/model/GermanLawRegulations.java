@@ -29,17 +29,15 @@ public class GermanLawRegulations extends Regulations {
     private String checkNightWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
         for (TimeRecord timeRecord: timeRecords) {
-            LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
-            LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
-            if (false) { //why?
-                if (beginning.isBefore(LocalDateTime.of(beginning.getYear(), beginning.getMonth(),
-                        beginning.getDayOfMonth(),6 ,0)) || beginning.isAfter(LocalDateTime.of(beginning.getYear(),
-                        beginning.getMonth(), beginning.getDayOfMonth(),23,0))) {
-                    result += "Nachtarbeit nicht erlaubt";
-                } else if (end.isAfter(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),1 ,0))
-                        && end.isBefore(LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(),6 ,0))) {
-                    result += "Nachtarbeit nicht erlaubt";
-                }
+            /*LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
+            LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);*/
+            if (timeRecord.beginning.isBefore(LocalDateTime.of(timeRecord.beginning.getYear(), timeRecord.beginning.getMonth(),
+                    timeRecord.beginning.getDayOfMonth(), 6, 0)) || timeRecord.beginning.isAfter(LocalDateTime.of(timeRecord.beginning.getYear(),
+                    timeRecord.beginning.getMonth(), timeRecord.beginning.getDayOfMonth(), 23, 0))) {
+                result += "Nachtarbeit nicht erlaubt";
+            } else if (timeRecord.end.isAfter(LocalDateTime.of(timeRecord.end.getYear(), timeRecord.end.getMonth(), timeRecord.end.getDayOfMonth(), 1, 0))
+                    && timeRecord.end.isBefore(LocalDateTime.of(timeRecord.end.getYear(), timeRecord.end.getMonth(), timeRecord.end.getDayOfMonth(), 6, 0))) {
+                result += "Nachtarbeit nicht erlaubt";
             }
         }
         return result;
@@ -56,8 +54,8 @@ public class GermanLawRegulations extends Regulations {
 
         int maxWorkingWithoutBreak = 6*60*60; // 6 Hours in seconds
 
-        for (TimeRecord timeRecord: timeRecords) {
-            if (timeRecord.end - timeRecord.beginning >= maxWorkingWithoutBreak) {
+        for (TimeRecord timeRecord : timeRecords) {
+            if (timeRecord.end.toEpochSecond(ZoneOffset.UTC) - timeRecord.beginning.toEpochSecond(ZoneOffset.UTC) >= maxWorkingWithoutBreak) {
                 result += "Nach 6h Arbeiten muss eine Pause eingelegt werden";
             }
         }
@@ -72,13 +70,11 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkSundayWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
-        for (TimeRecord timeRecord: timeRecords) {
-            LocalDateTime beginning = LocalDateTime.ofEpochSecond(timeRecord.beginning, 0, ZoneOffset.UTC);
-            LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
-            if (beginning.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        for (TimeRecord timeRecord : timeRecords) {
+            if (timeRecord.beginning.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 result += "Sonn- und Feiertagsarbeit nicht erlaubt";
             }
-            else if (end.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            else if (timeRecord.end.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 result += "Sonn- und Feiertagsarbeit nicht erlaubt";
             }
             //TODO: Feiertage einlesen und hier dann überprüfen lassen
@@ -102,7 +98,7 @@ public class GermanLawRegulations extends Regulations {
             TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
             int secondsPerDay = 0;
             for (TimeRecord timeRecord : timeRecords ) {
-                secondsPerDay += timeRecord.end - timeRecord.beginning;
+                //secondsPerDay += timeRecord.end - timeRecord.beginning;
             }
             if (!timeSheet.user.isPermitted("longHours")) {
                 if (secondsPerDay > maxWorkingHours) {

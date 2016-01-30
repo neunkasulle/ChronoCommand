@@ -13,8 +13,8 @@ public class TimeRecordTest {
     @Before
     public void setUp() throws Exception {
         //may change null to objects
-        TimeSheet sheet = new TimeSheet(null, 1, 1, 40);
-        timeRecord = new TimeRecord(sheet, 1, 2, null, "testSheet");
+        /*TimeSheet sheet = new TimeSheet(null, 1, 1, 40);
+        timeRecord = new TimeRecord(sheet, 1, 2, null, "testSheet");*/
     }
 
     @Test
