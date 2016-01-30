@@ -95,8 +95,22 @@ public class TimeSheetControl extends Control {
         return false;
     }
 
-    public void addTimeToSheet(Time time) {
-        throw new NotYetImplementedException();
+    public boolean addTimeToSheet(LocalDateTime beginn, LocalDateTime end, String cat, String description, User user) {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
+        Category category = CategoryDAO.getInstance().findCategoryByString(cat);
+        if(category == null) {
+            return false;
+        }
+
+        if(timeSheet == null){  //No Time sheet yet, we need to build a new one
+            timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
+            timeSheetDAO.addTimeSheet(timeSheet);
+        }
+
+        timeSheet.addTime(new TimeRecord(beginn, end, category, description));
+
+        return true;
     }
 
     public List<TimeSheet> getSupervisedTimeSheets(Month month, int year) {
@@ -172,7 +186,6 @@ public class TimeSheetControl extends Control {
         List<TimeSheet> timeSheets = timeSheetDAO.getTimeSheetsFromUser(user);
 
         return timeSheetHandler.createPdfFromAllTimeSheets(timeSheets);
-
     }
 
 
