@@ -147,8 +147,7 @@ public class TimeSheetControl extends Control {
 
         for(TimeSheet timeSheet: unfilteredTimeSheets) {
             if(timeSheet.getState() == TimeSheetState.CHECKED){
-
-                    filteredTimeSheets.add(timeSheet);
+                filteredTimeSheets.add(timeSheet);
             }
         }
 
@@ -159,7 +158,7 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        List<TimeSheet> timeSheets =timeSheetDAO.getAllTimeSheets(month, year);
+        List<TimeSheet> timeSheets = timeSheetDAO.getAllTimeSheets(month, year);
 
         return timeSheetHandler.createPdfFromAllTimeSheets(timeSheets);
     }
