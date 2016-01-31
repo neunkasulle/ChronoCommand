@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * Created by Janze on 16.01.2016.
+ * Session Class for managing user sessions
  */
 public class Session {
     private int sessionID;

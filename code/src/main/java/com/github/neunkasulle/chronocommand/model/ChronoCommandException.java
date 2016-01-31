@@ -4,6 +4,7 @@ import java.security.PrivilegedActionException;
 
 /**
  * Created by Janze on 30.01.2016.
+ * Custum Exception for internal errors inside ChronoCommand
  */
 public class ChronoCommandException extends Exception {
 

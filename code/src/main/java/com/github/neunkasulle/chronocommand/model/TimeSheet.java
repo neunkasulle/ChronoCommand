@@ -46,8 +46,8 @@ public class TimeSheet {
 
     }
 
-    public TimeSheet(User proletarier, Month month, int year) {
-        this.user = proletarier;
+    public TimeSheet(User user, Month month, int year) {
+        this.user = user;
         this.month = month;
         this.year = year;
         this.requiredHoursPerMonth = this.user.getHoursPerMonth();
