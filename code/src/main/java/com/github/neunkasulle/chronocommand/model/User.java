@@ -65,7 +65,7 @@ public class User {
         this.roles.add(userType);
         this.username = name;
         this.email = email;
-        this.password = new Sha512Hash(password,new SecureRandomNumberGenerator().nextBytes(), 1024).toString();
+        this.password = new Sha512Hash(password, null, 1024).toHex();
         this.supervisor = supervisor;
         this.hoursPerMonth = hoursPerMonth;
     }
