@@ -34,7 +34,7 @@ public class User {
     protected String email;
 
     @Basic(optional=false)
-    @Column(length=255)
+    @Column(length=511)
     protected Sha512Hash password;
 
     @ManyToMany
