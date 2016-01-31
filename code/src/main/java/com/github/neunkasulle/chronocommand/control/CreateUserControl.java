@@ -1,7 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
-import com.sun.istack.internal.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * Created by Janze on 18.01.2016.
