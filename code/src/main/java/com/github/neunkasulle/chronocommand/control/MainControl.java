@@ -41,7 +41,7 @@ public class MainControl extends Control {
 
         // TODO initiate anything that needs initiating
 
-        Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:resources/shiro.ini");
+        Factory<SecurityManager> factory = new IniSecurityManagerFactory("resources/shiro.ini");
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
 

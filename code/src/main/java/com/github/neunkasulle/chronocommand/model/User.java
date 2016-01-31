@@ -35,7 +35,7 @@ public class User {
 
     @Basic(optional=false)
     @Column(length=255)
-    protected String password;
+    protected Sha512Hash password;
 
     @ManyToMany
     @JoinTable(name="cc_users_roles")
@@ -65,7 +65,7 @@ public class User {
         this.roles.add(userType);
         this.username = name;
         this.email = email;
-        this.password = new Sha512Hash(password, null, 1024).toHex();
+        this.password = new Sha512Hash(password, null, 1024);
         this.supervisor = supervisor;
         this.hoursPerMonth = hoursPerMonth;
     }
@@ -102,12 +102,12 @@ public class User {
      * @return this user's password
      */
 
-    public String getPassword() {
+    public Sha512Hash getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new Sha512Hash(password, null, 1024);
     }
 
 
