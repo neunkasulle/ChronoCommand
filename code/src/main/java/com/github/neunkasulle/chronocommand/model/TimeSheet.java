@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.Month;
+import java.util.List;
 
 
 /**
@@ -35,6 +36,9 @@ public class TimeSheet {
 
     @Basic(optional = false)
     int requiredHoursPerMonth;
+
+    @OneToMany
+    List<TimeRecord> timeRecords;
 
     int currentHours;
 
@@ -67,4 +71,12 @@ public class TimeSheet {
     public TimeSheetState getState() {
         return state;
     }
+
+    public void addTime(TimeRecord timeRecord) {
+        timeRecords.add(timeRecord);
+    }
+
+
+
+
 }
