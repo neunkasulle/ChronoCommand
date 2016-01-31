@@ -13,5 +13,6 @@ public class CreateUserView extends BaseView {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+        super.enter(event);
     }
 }

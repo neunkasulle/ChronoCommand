@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CategoryDAO {
     private static final CategoryDAO instance = new CategoryDAO();
-    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
 
     private CategoryDAO() {
 
@@ -42,6 +42,11 @@ public class CategoryDAO {
     }
 
     public boolean saveCategory(Category category) {
+        if (findCategoryByString(category.getName()) != null) {
+            LOGGER.warn("Category with the same name already exists.");
+            return false;
+        }
+
         LOGGER.info("Saving category {}", category.getName());
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

@@ -28,7 +28,7 @@ public class CreateUserControl extends Control {
             throw new ChronoCommandException(Reason.USERALREADYEXISTS);
         }
 
-        if (userDAO.findUserByMail(email) != null) {
+        if (userDAO.findUserByEmail(email) != null) {
             throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
         }
 
