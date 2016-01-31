@@ -34,8 +34,17 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                  /* Other actions  */
 
-                extraPane.addComponent(new Label("neue Zeiterfassung"));
-                extraPane.addComponent(new Label("Stundenzettel abgeben"));
+                final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
+                newTimeRecordButton.addClickListener(e -> {
+                    extraPane.getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
+                });
+                extraPane.addComponent(newTimeRecordButton);
+
+                final Button submitTimeRecordButton = new Button("Stundenzetten abschicken");
+                submitTimeRecordButton.addClickListener(e -> {
+                    //TODO: Implement submission
+                });
+                extraPane.addComponent(submitTimeRecordButton);
             }
         }, SUPERVISOR("Supervisor") {
             @Override
@@ -57,11 +66,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         public static RoleAction valueOf(final Role role) {
             for (final RoleAction roleAction : RoleAction.values()) {
-                if(roleAction.name == role.getName()) {
+                if (roleAction.name == role.getName()) {
                     return roleAction;
                 }
             }
-            throw new IllegalArgumentException("Unknown role: "+ role.getId() + " " + role.getName());
+            throw new IllegalArgumentException("Unknown role: " + role.getId() + " " + role.getName());
         }
 
         public abstract void fillRoleSpecificContent(final Layout extraPane);
@@ -159,8 +168,14 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         final HorizontalLayout userInfo = new HorizontalLayout();
         userInfo.setSizeFull();
-        userInfo.addComponent(new Label("Musterman"));
-        //role.getName();
+        final Button userSettingsButton = new Button("Musterman");
+        userSettingsButton.setStyleName(BaseTheme.BUTTON_LINK);
+        userSettingsButton.addClickListener(e -> {
+            getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
+        });
+        userInfo.addComponent(userSettingsButton);
+
+        //TODO: use role.getName() or something like that here
         userInfo.addComponent(new Label("HIWI"));
         controlPanel.addComponent(userInfo);
 
@@ -188,6 +203,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
         logoutButton.addClickListener(e -> {
             //TODO: Is this correct?
             // /SecurityUtils.getSubject().logout();
+            getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
             this.logoutClicked();
         });
         logoutButton.setStyleName(BaseTheme.BUTTON_LINK);

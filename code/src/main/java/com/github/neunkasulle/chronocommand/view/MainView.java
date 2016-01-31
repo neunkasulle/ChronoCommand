@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class MainView extends BaseView {
 
-    private Grid contactList = new Grid();
     private BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
 
     @Override
@@ -56,6 +55,7 @@ public class MainView extends BaseView {
 
         /* Table */
 
+        final Grid contactList = new Grid();
         contentPane.addComponent(contactList);
         beanItemContainer.addNestedContainerProperty("category.name");
         final GeneratedPropertyContainer gpcontainer = new GeneratedPropertyContainer(beanItemContainer);
@@ -92,13 +92,15 @@ public class MainView extends BaseView {
         contactList.removeColumn("end");
         contactList.removeColumn("category");
 
+        //Ordering & column names
+
         contactList.setColumnOrder("beginningTime", "endTime","category.name", "description");
         contactList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
         contactList.getDefaultHeaderRow().getCell("description").setHtml("Tätigkeit");
         refreshContacts();
     }
 
-    void refreshContacts() {
+    private void refreshContacts() {
         final List<TimeRecord> records =  Arrays.asList(
                 new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,9,0), new Category("Dummy1"), "Did Dummy work"),
                 new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,12,0), new Category("Dummy2"), "Did even more dummy work"));
