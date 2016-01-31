@@ -50,10 +50,10 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name="supervisor_id")
-    User supervisor;
+    private User supervisor;
 
     @Basic
-    int hoursPerMonth;
+    private int hoursPerMonth;
 
 
     public User() {
@@ -152,5 +152,13 @@ public class User {
 
     public void setSupervisor(User newSupervisor) {
         supervisor = newSupervisor;
+    }
+
+    public int getHoursPerMonth() {
+        return hoursPerMonth;
+    }
+
+    public void setHoursPerMonth(int hoursPerMonth) {
+        this.hoursPerMonth = hoursPerMonth;
     }
 }

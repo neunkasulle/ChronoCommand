@@ -6,5 +6,5 @@ package com.github.neunkasulle.chronocommand.model;
 public enum TimeSheetState {
     UNLOCKED,
     LOCKED,
-    CHECKED;
+    CHECKED
 }

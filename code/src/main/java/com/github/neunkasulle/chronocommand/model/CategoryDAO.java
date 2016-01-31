@@ -3,6 +3,7 @@ package com.github.neunkasulle.chronocommand.model;
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -51,12 +52,14 @@ public class CategoryDAO {
     }
 
     public Category findCategoryByString(String catAsString) {
-        Category category = null;
-
-
-        //TODO HIBERNATE query for categorie with catAsString
-
-        return category;
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Category.class).add(Restrictions.eq("name", catAsString));
+        Object obj = criteria.uniqueResult();
+        if (obj instanceof Category) {
+            return (Category) obj;
+        } else {
+            return null;
+        }
     }
 
 }

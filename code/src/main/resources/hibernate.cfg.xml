@@ -22,6 +22,7 @@
         <mapping class="com.github.neunkasulle.chronocommand.model.User"/>
         <mapping class="com.github.neunkasulle.chronocommand.model.Role"/>
         <mapping class="com.github.neunkasulle.chronocommand.model.TimeSheet"/>
+        <mapping class="com.github.neunkasulle.chronocommand.model.TimeRecord"/>
         <mapping class="com.github.neunkasulle.chronocommand.model.Category"/>
         <mapping class="com.github.neunkasulle.chronocommand.model.Message"/>
     </session-factory>

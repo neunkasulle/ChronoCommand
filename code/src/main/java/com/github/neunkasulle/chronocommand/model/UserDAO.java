@@ -1,8 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -70,11 +68,6 @@ public class UserDAO{
         }
     }
 
-    public boolean deleteUser(User user) {
-        // FIXME I don't think we need this since we only disable users
-        throw new UnsupportedOperationException();
-    }
-
     public List<User> getProletarierBySupervisor(User supervisor) {
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
@@ -99,10 +92,29 @@ public class UserDAO{
         return new ArrayList<>();
     }
 
-    public boolean checkUserDetails(Role userRole, String name, String email,
-                                    String password, User supervisor,
-                                    int hoursPerMonth) {
-        throw new UnsupportedOperationException();
+    public boolean checkUserDetails(Role userRole, String name, String email, User supervisor, int hoursPerMonth) {
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        if (session.get(Role.class, userRole.getId()) == null ) {
+            return false;
+        }
+        Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("name", name));
+        if (criteria.list().size() > 0) {
+            return false;
+        }
+        if ( !email.contains("@") || !email.contains(".") ) {
+            return false;
+        }
+        criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
+        if (criteria.list().size() > 0) {
+            return false;
+        }
+        if (session.get(User.class, supervisor.getId()) == null) {
+            return false;
+        }
+        if ( hoursPerMonth < 0 || hoursPerMonth > 80) {
+            return false;
+        }
+        return true;
     }
 
     public List<User> getAllUsers() {
@@ -128,11 +140,10 @@ public class UserDAO{
     }
 
     public User findUserByMail(String email) {
-        User user = null;
-
-        //TODO HIBERNATE: query to find spezific user ident by email
-
-        return user;
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
+        Object obj = criteria.uniqueResult();
+        return (User) obj;
     }
 
 }

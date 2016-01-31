@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "cc_categories")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column
@@ -21,7 +21,6 @@ public class Category {
         this.name = name;
     }
 
-    @Column
     public String getName() {
         return name;
     }
