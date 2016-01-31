@@ -1,4 +1,4 @@
-package com.github.neunkasulle.chronocommand.model;
+package com.github.neunkasulle.chronocommand.view;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.PropertyValueGenerator;

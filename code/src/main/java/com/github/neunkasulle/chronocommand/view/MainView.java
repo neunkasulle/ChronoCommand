@@ -1,7 +1,6 @@
 package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.model.Category;
-import com.github.neunkasulle.chronocommand.model.LocalDateTimeToLocalTimeStringConverter;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
