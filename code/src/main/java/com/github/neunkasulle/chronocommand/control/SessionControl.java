@@ -9,6 +9,7 @@ import org.hibernate.cfg.NotYetImplementedException;
  * Handles User sessions
  */
 public class SessionControl extends Control {
+
     private int numberOfSessions;
     private static SessionControl ourInstance = new SessionControl();
 
@@ -16,23 +17,42 @@ public class SessionControl extends Control {
 
     }
 
+    /**
+     * Gets the one Instance of the SessionControl.
+     * @return The one SessionControl instance.
+     */
     public static SessionControl getInstance() {
         return ourInstance;
     }
 
+    /**
+     * Deletes one user Session
+     * @return true when the session could be killed
+     */
     private boolean killSessions() {
 
         return false;
     }
 
+    /**
+     * Invoked by a timer to perform chronjob like actions
+     */
     public void timeEvent() {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * When the TTL of a Session is reched this method gets invoked
+     */
     private void sessionTimeout() {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * Returns the session of a specific user
+     * @param user The user which session is needed
+     * @return the session of this user
+     */
     public Session getSession(User user) {
         throw new NotYetImplementedException();
     }

@@ -26,16 +26,25 @@ public class MainControl extends Control {
 
     }
 
+    /**
+     * Gets the one Instance of the MainControl.
+     * @return The one MainControl instance.
+     */
     public static MainControl getInstance() {
         return ourInstance;
     }
 
-
-
+    /**
+     * Handles Exceptions which are not handled on invocation.
+     * When application crashed critical, it will save and shut down.
+     */
     private void exceptionHandling() {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * Initializes the application with all the needed
+     */
     public void startup() {
         DAOHelper.getInstance().startup();
 
@@ -63,9 +72,13 @@ public class MainControl extends Control {
         UserDAO.getInstance().saveUser(matt);
     }
 
+
+    /**
+     * Saves necessary data before shutting down
+     */
     public void shutdown() {
         DAOHelper.getInstance().shutdown();
-
+        System.exit(0);
         // TODO initiate anything that needs initiating
     }
 }
