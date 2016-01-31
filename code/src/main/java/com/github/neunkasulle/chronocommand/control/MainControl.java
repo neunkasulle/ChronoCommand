@@ -5,6 +5,11 @@ import com.github.neunkasulle.chronocommand.model.CategoryDAO;
 import com.github.neunkasulle.chronocommand.model.DAOHelper;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
 import com.github.neunkasulle.chronocommand.model.User;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.config.IniSecurityManagerFactory;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.util.Factory;
 import org.hibernate.cfg.NotYetImplementedException;
 
 
@@ -18,7 +23,7 @@ public class MainControl extends Control {
     private static MainControl ourInstance = new MainControl();
 
     private MainControl() {
-        realm = new com.github.neunkasulle.chronocommand.security.Realm();
+
     }
 
     public static MainControl getInstance() {
@@ -35,6 +40,10 @@ public class MainControl extends Control {
         DAOHelper.getInstance().startup();
 
         // TODO initiate anything that needs initiating
+
+        Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:resources/shiro.ini");
+        SecurityManager securityManager = factory.getInstance();
+        SecurityUtils.setSecurityManager(securityManager);
 
         // DEBUG fill database with data
         CategoryDAO.getInstance().saveCategory(new Category("Programming"));

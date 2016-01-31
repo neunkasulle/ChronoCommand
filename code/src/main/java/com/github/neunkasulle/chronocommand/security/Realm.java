@@ -45,7 +45,7 @@ public class Realm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         User user = UserDAO.getInstance().findUser(token.getUsername());
         if( user != null ) {

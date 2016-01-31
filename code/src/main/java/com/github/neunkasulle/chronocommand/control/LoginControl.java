@@ -9,7 +9,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -36,7 +35,7 @@ public class LoginControl extends Control {
         try {
             SecurityUtils.getSubject().login(token);
         } catch (AuthenticationException e) {
-            LOGGER.info("Failed Login");
+            LOGGER.info("Failed Login", e);
             throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
 
