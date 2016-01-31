@@ -9,6 +9,7 @@ import org.hibernate.annotations.Cache;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -49,10 +50,10 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name="supervisor_id")
-    User supervisor;
+    private User supervisor;
 
     @Basic
-    int hoursPerMonth;
+    private int hoursPerMonth;
 
 
     public User() {
@@ -60,7 +61,7 @@ public class User {
     }
 
     public User(Role userType, String name, String email, String password, User supervisor, int hoursPerMonth) {
-
+        this.roles = new HashSet<>();
         this.roles.add(userType);
         this.username = name;
         this.email = email;
@@ -116,7 +117,7 @@ public class User {
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roles = this.roles;
+        this.roles = roles;
     }
 
     public boolean isPermitted(String roleName) {
@@ -151,5 +152,13 @@ public class User {
 
     public void setSupervisor(User newSupervisor) {
         supervisor = newSupervisor;
+    }
+
+    public int getHoursPerMonth() {
+        return hoursPerMonth;
+    }
+
+    public void setHoursPerMonth(int hoursPerMonth) {
+        this.hoursPerMonth = hoursPerMonth;
     }
 }

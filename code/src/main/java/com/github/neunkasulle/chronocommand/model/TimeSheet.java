@@ -46,13 +46,8 @@ public class TimeSheet {
         this.user = proletarier;
         this.month = month;
         this.year = year;
-        //TODO Get it from DB
-        //this.requiredHoursPerMonth = hoursPerMonth;
+        this.requiredHoursPerMonth = this.user.getHoursPerMonth();
         state = TimeSheetState.UNLOCKED;
-    }
-
-    public void addTime(TimeRecord timeRecord) {
-
     }
 
     public void setCurrentHours(int hours) {

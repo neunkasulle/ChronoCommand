@@ -1,6 +1,14 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.hibernate.*;
+import org.hibernate.Session;
+import org.hibernate.cfg.CreateKeySecondPass;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,31 +25,61 @@ public class TimeSheetDAO {
     }
 
     public TimeSheet getTimeSheet(Month month, int year, User user) {
-        TimeSheet timeSheet = null;
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeSheet.class);
+        criteria.add(Restrictions.eq("month", month)).add(Restrictions.eq("year", year)).add(Restrictions.eq("user", user));
+        Object obj = criteria.uniqueResult();
+        if (obj instanceof TimeSheet) {
+            return (TimeSheet) obj;
+        } else {
+            return null;
+        }
 
-        //TODO HIBERNATE QUERY SPECIFIC TIME SHEET
-
-        return timeSheet;
     }
 
-    public TimeRecord[] getTimeRecords(TimeSheet timeSheet) {
-        throw new UnsupportedOperationException();
+    public List<TimeRecord> getTimeRecords(TimeSheet timeSheet) {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeRecord.class).add(Restrictions.eq("timesheet", timeSheet ));
+        List<TimeRecord> timeRecordList = new ArrayList<>();
+        for (Object obj : criteria.list()) {
+            if (obj instanceof TimeRecord) {
+                timeRecordList.add((TimeRecord) obj);
+            }
+        }
+        return timeRecordList;
     }
 
-    public TimeRecord[] getTimeRecordsByDay(TimeSheet timeSheet, int dayOfMonth) {
-        throw new UnsupportedOperationException();
+    public List<TimeRecord> getTimeRecordsByDay(TimeSheet timeSheet, int dayOfMonth) {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeRecord.class);
+        LocalDateTime day = LocalDateTime.of(timeSheet.year, timeSheet.month, dayOfMonth, 0,0);
+        LocalDateTime nextDay = day.plusDays(1);
+        criteria.add(Restrictions.ge("beginning", day)).add(Restrictions.lt("beginning", nextDay));
+        List<TimeRecord> list = new ArrayList<>();
+        for (Object obj : criteria.list()) {
+            list.add((TimeRecord) obj);
+        }
+        return list;
     }
 
-    public TimeSheetHandler getTimeSheetHandler() {
-        throw new UnsupportedOperationException();
+    public List<TimeSheet> getAllUnlockedTimeSheets() {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeSheet.class).add(Restrictions.eq("state", TimeSheetState.UNLOCKED));
+        List<TimeSheet> list = new ArrayList<>();
+        for (Object obj : criteria.list()) {
+            list.add((TimeSheet) obj);
+        }
+        return list;
     }
 
-    public TimeSheet[] getAllUnlockedTimeSheets() {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean addTimeSheet(TimeSheet timeSheet) {
-        throw new UnsupportedOperationException();
+    public boolean saveTimeSheet(TimeSheet timeSheet) {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(timeSheet);
+        tx.commit();
+        session.flush();
+        boolean red = true; // das ist nur da, damit intellij nicht wegen code dublikaten rummotz!
+        return red;
     }
 
     public List<TimeSheet> getAllTimeSheets(Month month, int year) {
@@ -58,17 +96,24 @@ public class TimeSheetDAO {
     }
 
     public List<TimeSheet> getTimeSheetsFromUser(User user) {
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeSheet.class).add(Restrictions.eq("user", user));
+        List<TimeSheet> list = new ArrayList<>();
+        for (Object obj : criteria.list()) {
+            list.add((TimeSheet) obj);
+        }
 
-        //TODO HIBERNATE: INSERT QUERY HERE
-
-        return null;
+        return list;
     }
 
     public TimeRecord getLatestTimeRecord(User user) {
-        TimeRecord timeRecord = new TimeRecord();
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeRecord.class).add(Restrictions.eq("user", user)).addOrder(Order.desc("beginning"));
+        if ( criteria.list().size() == 0) {
+            return null;
+        }
 
-        //TODO HIBERNATE: Get latest time record
-
-        return timeRecord;
+        Object obj = criteria.list().get(0);
+        return (TimeRecord) obj;
     }
 }

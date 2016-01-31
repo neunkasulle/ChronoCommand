@@ -34,7 +34,7 @@ public class TimeSheetControl extends Control {
 
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
-            timeSheetDAO.addTimeSheet(timeSheet);
+            timeSheetDAO.saveTimeSheet(timeSheet);
         }
         timeSheet.addTime(new TimeRecord(LocalDateTime.now(),LocalDateTime.now(), null, null));
     }
@@ -51,7 +51,7 @@ public class TimeSheetControl extends Control {
 
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
-            timeSheetDAO.addTimeSheet(timeSheet);
+            timeSheetDAO.saveTimeSheet(timeSheet);
         }
 
         timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
@@ -97,7 +97,7 @@ public class TimeSheetControl extends Control {
 
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
-            timeSheetDAO.addTimeSheet(timeSheet);
+            timeSheetDAO.saveTimeSheet(timeSheet);
         }
 
         timeSheet.addTime(new TimeRecord(beginn, end, category, description));
@@ -147,8 +147,7 @@ public class TimeSheetControl extends Control {
 
         for(TimeSheet timeSheet: unfilteredTimeSheets) {
             if(timeSheet.getState() == TimeSheetState.CHECKED){
-
-                    filteredTimeSheets.add(timeSheet);
+                filteredTimeSheets.add(timeSheet);
             }
         }
 
@@ -159,7 +158,7 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        List<TimeSheet> timeSheets =timeSheetDAO.getAllTimeSheets(month, year);
+        List<TimeSheet> timeSheets = timeSheetDAO.getAllTimeSheets(month, year);
 
         return timeSheetHandler.createPdfFromAllTimeSheets(timeSheets);
     }

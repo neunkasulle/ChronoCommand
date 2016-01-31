@@ -1,17 +1,28 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * Created by Janze on 16.01.2016.
  */
+@Entity
+@Table(name = "cc_timerecords")
 public class TimeRecord {
+    @Id
+    @GeneratedValue
     int id;
-    //int beginningPause;
-    // int endPause;
+    @Column
     LocalDateTime beginning;
+
+    @Column
     LocalDateTime end;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     Category category;
+
+    @Column
     String description;
 
     public TimeRecord(LocalDateTime beginn, LocalDateTime end, Category category, String description) {
@@ -23,6 +34,11 @@ public class TimeRecord {
 
     public TimeRecord() {
 
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     public LocalDateTime getBeginning() {

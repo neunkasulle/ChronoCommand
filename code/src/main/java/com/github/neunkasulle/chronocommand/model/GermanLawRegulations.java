@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.model;
 
 
 import java.time.*;
+import java.util.List;
 
 /**
  * nicht überprüft werden Ruhezeiteinhaltungen, da es bis jz keine sinnvolle möglichkeit gibt
@@ -13,7 +14,7 @@ public class GermanLawRegulations extends Regulations {
    // private LocalDateTime end = LocalDateTime.ofEpochSecond(timeRecord.end, 0, ZoneOffset.UTC);
     @Override
     public String checkTimeSheet(TimeSheet timeSheet) {
-        TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
+        List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
         return super.checkTimeSheet(timeSheet);
     }
@@ -95,7 +96,7 @@ public class GermanLawRegulations extends Regulations {
         String result = "";
         for (int n = 1; n <= getNumberOfDaysInMonth(timeSheet); n++) {
 
-            TimeRecord[] timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
+            List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
             int secondsPerDay = 0;
             for (TimeRecord timeRecord : timeRecords ) {
                 //secondsPerDay += timeRecord.end - timeRecord.beginning;

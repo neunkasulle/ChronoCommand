@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,33 +19,31 @@ public class LoginTest {
 
     @Before
     public void setUp() throws Exception {
-        //user = new User("root", "bla@example.com", "testtest123");
-        //loginControl = LoginControl.getInstance();
+        user = new User(new Role("user"), "root", "bla@example.com", "testtest123", null, 0);
+        loginControl = LoginControl.getInstance();
     }
 
     @Ignore
     @Test
     public void testLoginCorrect() throws Exception {
-        assertTrue(loginControl.login("root", loginControl.hash("testtest123"), false));
+        loginControl.login("root", "testtest123", false);
     }
 
     @Ignore
-    @Test
-    public void testLoginIncorrect() throws Exception {
-        assertFalse(loginControl.login("root", loginControl.hash("123"), false));
-        assertFalse(loginControl.login("rooot", loginControl.hash("testtest123"), false));
+    @Test(expected = ChronoCommandException.class)
+    public void testLoginIncorrectPassword() throws Exception {
+        loginControl.login("root", "123", false);
     }
 
     @Ignore
-    @Test
-    public void testDeterministicHash() throws  Exception {
-        assertTrue(loginControl.hash("1234").equals(loginControl.hash("1234")));
+    @Test(expected = ChronoCommandException.class)
+    public void testLoginIncorrectUsername() throws Exception {
+        loginControl.login("rooot", "testtest123", false);
     }
 
-    @Ignore
     @Test
     public void testNonTrivialHash() {
-        assertFalse(loginControl.hash("1234").equals("1234"));
+        assertNotEquals("testtest123", user.getPassword());
     }
 
 }
