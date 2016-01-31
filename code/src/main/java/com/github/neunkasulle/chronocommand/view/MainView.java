@@ -1,13 +1,20 @@
 package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.model.Category;
+import com.github.neunkasulle.chronocommand.model.LocalDateTimeToLocalTimeStringConverter;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.GeneratedPropertyContainer;
+import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -15,6 +22,7 @@ import java.util.Arrays;
 public class MainView extends BaseView {
 
     private Grid contactList = new Grid();
+    private BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
 
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
@@ -50,36 +58,54 @@ public class MainView extends BaseView {
         /* Table */
 
         contentPane.addComponent(contactList);
-        final BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
-        prepareContainer(beanItemContainer);
-        contactList.setContainerDataSource(beanItemContainer);
-        //those columns only contains the int values
-        contactList.removeColumn("beginning");
-        contactList.removeColumn("end");
-        //don't want to call toString() method of category object
-        contactList.removeColumn("category");
-        contactList.setColumnOrder("beginningTime", "endTime", "category.name", "description", "duration");
+        beanItemContainer.addNestedContainerProperty("category.name");
+        final GeneratedPropertyContainer gpcontainer = new GeneratedPropertyContainer(beanItemContainer);
+        contactList.setContainerDataSource(gpcontainer);
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
         contactList.setSizeFull();
-        contactList.getDefaultHeaderRow().getCell("beginningTime").setHtml("Begin");
-        contactList.getDefaultHeaderRow().getCell("endTime").setHtml("Ende");
+
+        //Add generated columns
+        gpcontainer.addGeneratedProperty("beginningTime",
+                new LocalDateTimeToLocalTimeStringConverter("beginning"));
+        gpcontainer.addGeneratedProperty("endTime",
+                new LocalDateTimeToLocalTimeStringConverter("end"));
+        gpcontainer.addGeneratedProperty("duration", new PropertyValueGenerator<String>() {
+            @Override
+            public String getValue(final Item item, final Object itemId,
+                                   final Object propertyId) {
+                final LocalDateTime beginning = (LocalDateTime)
+                        item.getItemProperty("beginning").getValue();
+                final LocalDateTime end = (LocalDateTime)
+                        item.getItemProperty("end").getValue();
+                final long diff = ChronoUnit.SECONDS.between(beginning, end);
+                return LocalDateTime.ofEpochSecond(diff, 0, ZoneOffset.UTC).toLocalTime().toString();
+            }
+
+            @Override
+            public Class<String> getType() {
+                return String.class;
+            }
+        });
+
+        //Remove unused columns
+        contactList.removeColumn("id");
+        contactList.removeColumn("beginning");
+        contactList.removeColumn("end");
+        contactList.removeColumn("category");
+
+        contactList.setColumnOrder("beginningTime", "endTime","category.name", "description");
         contactList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
         contactList.getDefaultHeaderRow().getCell("description").setHtml("Tätigkeit");
-        contactList.getDefaultHeaderRow().getCell("duration").setHtml("Dauer");
         refreshContacts();
     }
 
     void refreshContacts() {
-        final BeanItemContainer<TimeRecord> container = new BeanItemContainer<>(
-                TimeRecord.class, Arrays.asList(
+        final List<TimeRecord> records =  Arrays.asList(
                 new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,9,0), new Category("Dummy1"), "Did Dummy work"),
-                new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,12,0), new Category("Dummy2"), "Did even more dummy work")));
-        prepareContainer(container);
-        contactList.setContainerDataSource(container);
+                new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,12,0), new Category("Dummy2"), "Did even more dummy work"));
+        this.beanItemContainer.removeAllItems();
+        this.beanItemContainer.addAll(records);
     }
 
-    private void prepareContainer(BeanItemContainer<TimeRecord> timeRecordBeanItemContainer) {
-        timeRecordBeanItemContainer.addNestedContainerProperty("category.name");
-    }
 
 }
