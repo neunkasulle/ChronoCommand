@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CategoryDAO {
     private static final CategoryDAO instance = new CategoryDAO();
-    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
 
     private CategoryDAO() {
 
@@ -53,7 +53,12 @@ public class CategoryDAO {
      * Adds a new category to the DB
      * @param category the category which is to be added
      */
-    public void saveCategory(Category category) {
+    public void saveCategory(Category category) throws ChronoCommandException {
+        if (findCategoryByString(category.getName()) != null) {
+            LOGGER.warn("Category with the same name already exists.");
+            throw new ChronoCommandException(Reason.CATEGORYALREADYSPECIFIED);
+        }
+
         LOGGER.info("Saving category {}", category.getName());
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

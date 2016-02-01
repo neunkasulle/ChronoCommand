@@ -19,7 +19,7 @@ public class LoginTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new User(new Role("user"), "root", "bla@example.com", "testtest123", null, 0);
+        user = new User(new Role("user"), "root", "bla@example.com", "testtest123", "bla van blubb", null, 0);
         loginControl = LoginControl.getInstance();
     }
 

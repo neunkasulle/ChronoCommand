@@ -1,6 +1,9 @@
 package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.model.Role;
+import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+import com.github.neunkasulle.chronocommand.model.Category;
+import com.github.neunkasulle.chronocommand.model.CategoryDAO;
 import com.github.neunkasulle.chronocommand.model.Session;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -13,6 +16,9 @@ import com.vaadin.ui.themes.BaseTheme;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import com.vaadin.ui.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -91,7 +97,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         public static RoleAction valueOf(final Role role) {
             for (final RoleAction roleAction : RoleAction.values()) {
-                if (roleAction.name == role.getName()) {
+                if (roleAction.name.equals(role.getName())) {
                     return roleAction;
                 }
             }
@@ -124,11 +130,9 @@ public abstract class BaseView extends HorizontalLayout implements View {
     }
 
     public BaseView(Session session) {
-
     }
 
     public BaseView() {
-
     }
 
     public Session getSessionID() {
@@ -272,6 +276,4 @@ public abstract class BaseView extends HorizontalLayout implements View {
         //RoleAction.valueOf(new Role("Supervisor")).fillRoleSpecificContent(extraContent);
 
     }
-
-
 }

@@ -14,5 +14,6 @@ public class CreateUserView extends BaseView {
 
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
+        super.enter(event);
     }
 }

@@ -12,19 +12,20 @@ import java.time.LocalDateTime;
 public class TimeRecord {
     @Id
     @GeneratedValue
-    int id;
-    @Column
-    LocalDateTime beginning;
+    private Long id;
+
+    @Basic(optional=false)
+    private LocalDateTime beginning;
 
     @Column
-    LocalDateTime end;
+    private LocalDateTime end;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category category;
+    @JoinColumn(name="category_id")
+    private Category category;
 
-    @Column
-    String description;
+    @Basic
+    private String description;
 
     /**
      * Constructs a new time record.
@@ -33,8 +34,8 @@ public class TimeRecord {
      * @param category the category in which this record can be sorted
      * @param description a short description of this recorded time
      */
-    public TimeRecord(LocalDateTime beginn, LocalDateTime end, Category category, String description) {
-        this.beginning = beginn;
+    public TimeRecord(LocalDateTime begin, LocalDateTime end, Category category, String description) {
+        this.beginning = begin;
         this.end = end;
         this.category = category;
         this.description = description;
@@ -48,7 +49,7 @@ public class TimeRecord {
      * Gets the internal DB id
      * @return the internal DB id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

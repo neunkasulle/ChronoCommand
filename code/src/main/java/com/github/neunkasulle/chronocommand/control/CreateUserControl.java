@@ -34,19 +34,19 @@ public class CreateUserControl extends Control {
      * @param hoursPerMonth Numbers the new user has to work to fulfill his contract.
      * @throws ChronoCommandException If there are Errors with the user creation.
      */
-    public void createUser(Role userType, String name, String email, String password, @Nullable User supervisor,
-                              int hoursPerMonth) throws ChronoCommandException {
+    public void createUser(Role userType, String name, String email, String password, String fullname,
+                                @Nullable User supervisor, int hoursPerMonth) throws ChronoCommandException {
         UserDAO userDAO = UserDAO.getInstance();
 
         if(userDAO.findUser(name) != null) {
             throw new ChronoCommandException(Reason.USERALREADYEXISTS);
         }
 
-        if (userDAO.findUserByMail(email) != null) {
+        if (userDAO.findUserByEmail(email) != null) {
             throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
         }
 
-        userDAO.saveUser(new User(userType, name, email, password, supervisor, hoursPerMonth));
+        userDAO.saveUser(new User(userType, name, email, password, fullname, supervisor, hoursPerMonth));
     }
 
 }

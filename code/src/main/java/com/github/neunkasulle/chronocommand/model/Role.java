@@ -27,7 +27,7 @@ public class Role {
     @Index(name = "idx_roles_name")
     private String name;
 
-    @Basic(optional = false)
+    @Basic//(optional = false)
     @Column(length = 255)
     private String description;
 

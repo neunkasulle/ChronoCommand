@@ -7,6 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +60,16 @@ public class LoginControl extends Control {
     /**
      * logs out the an active user
      */
-    public void logout(User user) {
+    public void logout() {
         SecurityUtils.getSubject().logout();
+    }
+
+    /**
+     * checks if user is logged in or remembered
+     */
+    public boolean isLoggedIn() {
+        Subject subject = SecurityUtils.getSubject();
+        return subject.isRemembered() || subject.isAuthenticated();
     }
 
 }

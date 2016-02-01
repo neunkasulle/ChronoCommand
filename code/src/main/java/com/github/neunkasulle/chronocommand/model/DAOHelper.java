@@ -24,7 +24,7 @@ public class DAOHelper {
     }
 
     public void shutdown() {
-        sessionFactory.close();
+        //sessionFactory.close();
     }
 
     public SessionFactory getSessionFactory(){

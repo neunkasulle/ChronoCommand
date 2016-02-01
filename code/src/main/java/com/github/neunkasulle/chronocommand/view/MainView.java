@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.model.Category;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
+import com.github.neunkasulle.chronocommand.model.TimeSheetDAO;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;

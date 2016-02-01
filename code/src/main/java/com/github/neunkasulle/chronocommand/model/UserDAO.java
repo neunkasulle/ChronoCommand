@@ -139,11 +139,23 @@ public class UserDAO{
         return new ArrayList<>();
     }
 
-    public User findUserByMail(String email) {
+    public User findUserByEmail(String email) {
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
         Object obj = criteria.uniqueResult();
         return (User) obj;
+    }
+
+    public Role getRoleByName(String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void saveRole(Role role) {
+        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(role);
+        tx.commit();
+        session.flush();
     }
 
 }
