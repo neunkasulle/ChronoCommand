@@ -92,7 +92,6 @@ public class MainView extends BaseView {
         contactList.removeColumn("end");
         contactList.removeColumn("category");
 
-        //Ordering & column names
 
         contactList.setColumnOrder("beginningTime", "endTime","category.name", "description");
         contactList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
