@@ -5,11 +5,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
-
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 
 /**
@@ -28,6 +25,11 @@ public class TimeSheetHandler {
         return instance;
     }
 
+    /**
+     * creates a printable timesheet pdf
+     * @param timeSheet a timesheet
+     * @return a pdf
+     */
     public File createPdfFromTimeSheet(TimeSheet timeSheet) { //TODO fill timesheet with content
         /*
         //new document
@@ -62,52 +64,44 @@ public class TimeSheetHandler {
         }
         try {
             PDFont font = PDType1Font.HELVETICA;
+            PDFont fontBold = PDType1Font.HELVETICA_BOLD;
 
             page = pdfTimeSheet.getPage(0);
             PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
             contents.beginText();
             //fill name etc
             contents.setFont(font, 12);
-            contents.newLineAtOffset(300, 710);
+            contents.newLineAtOffset(278, 742);
             contents.showText("David Kuhmann");//name
-            contents.newLineAtOffset(160, 28);
-            contents.showText("01");//month
-            contents.newLineAtOffset(50, 0);
+            contents.newLineAtOffset(185, 22);
+            contents.showText("01 ");//month
+            contents.setFont(fontBold, 12);
+            contents.showText("/ ");
+            contents.setFont(font, 12);
             contents.showText("2016");//year
-            contents.newLineAtOffset(-18, -96);
+            contents.newLineAtOffset(0, -64);
             contents.showText("9,45");//money
             contents.endText();
 
-            //fill timesheet
+            //Tätigkeit bulk
             contents.beginText();
             contents.setFont(font, 10);
-            contents.newLineAtOffset(55, 570);
-            contents.showText("Stundenzettel ausfüllen");//
-            contents.newLineAtOffset(150, 0);
-            contents.showText("01.02.2016");//date
-            contents.newLineAtOffset(90, 0);
-            contents.showText("11:30");//start
-            contents.newLineAtOffset(70, 0);
-            contents.showText("15:30");//end
-            contents.newLineAtOffset(75, 0);
-            contents.showText("00:00");//pause
-            contents.newLineAtOffset(80, 0);
-            contents.showText("04:00");//total time
+            contents.newLineAtOffset(60, 637);
+            contents.showText("Stundenzettel ausgefüllt");//Tätigkeit
             contents.endText();
+            //Kategorie bulk
             contents.beginText();
-            contents.setFont(font, 10);
-            contents.newLineAtOffset(55, 555);
-            contents.showText("Stundenzettel ausfüllen");//
-            contents.newLineAtOffset(150, 0);
-            contents.showText("01.02.2016");//date
-            contents.newLineAtOffset(90, 0);
-            contents.showText("11:30");//start
-            contents.newLineAtOffset(70, 0);
-            contents.showText("15:30");//end
-            contents.newLineAtOffset(75, 0);
-            contents.showText("00:00");//pause
-            contents.newLineAtOffset(80, 0);
-            contents.showText("04:00");//total time
+            contents.newLineAtOffset(197, 637);
+            contents.showText("Tutorium");//Kategorie
+            contents.endText();
+            //Time bulk, may need no extra offset calculation
+            contents.beginText();
+            contents.newLineAtOffset(300, 637);
+            contents.showText("01.02.16 11:30");//start
+            contents.newLineAtOffset(82, 0);
+            contents.showText("01.02.16 15:30");//end
+            contents.newLineAtOffset(100, 0);
+            contents.showText("04:00h");//total time
             contents.endText();
 
             contents.close();
@@ -124,6 +118,11 @@ public class TimeSheetHandler {
         return null;
     }
 
+    /**
+     * creates one pdf with all given timesheets
+     * @param timeSheets list of timesheets
+     * @return one pdf with all timesheets
+     */
     public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets){
         File file = null;
 
