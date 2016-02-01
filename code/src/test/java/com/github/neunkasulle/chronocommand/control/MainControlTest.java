@@ -87,6 +87,24 @@ public class MainControlTest {
 
     @Test
     public void testRightTimeRecordAdd() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        try {
+            timeSheetControl.newTimeRecord("Programming", "testing", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assert false;
+        }
+        try {
+            timeSheetControl.newTimeRecord(userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord("Programming", "testing", userDAO.findUser("tom"));
+             //       LocalDateTime.now(), );
+        }
+        catch (ChronoCommandException e) {
+            assert false;
+        }
+        assert true;
 
     }
 
