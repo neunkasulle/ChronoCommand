@@ -24,6 +24,13 @@ public class TimeSheetHandler {
     }
 
     public File createPdfFromTimeSheet(TimeSheet timeSheet) { //TODO fill timesheet with content
+
+        try {
+            //PDDocument pdfTimeSheet = PDDocument.load("Stundenzettel.pdf");
+        } catch (Exception e) {
+            System.err.println("PDF not found");
+        }
+        /*
         //new document
         PDDocument newTimesheet = new PDDocument();
         //new page
@@ -36,18 +43,17 @@ public class TimeSheetHandler {
             try {
                 newTimesheet.close(); //most important part!
             } catch (IOException e) {
-                // TODO handle exception
+                System.err.println("Something went wrong.");
             }
         }
-
+        */
         return null;
     }
 
     public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets){
         File file = null;
 
-        for (TimeSheet timesheet :
-            timeSheets) {
+        for (TimeSheet timesheet : timeSheets) {
                 File tmp =  createPdfFromTimeSheet(timesheet);
                 //TODO Ammend to file
         }

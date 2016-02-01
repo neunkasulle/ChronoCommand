@@ -42,10 +42,12 @@ public class SessionControl extends Control {
     }
 
     /**
-     * When the TTL of a Session is reched this method gets invoked
+     * When the TTL of a Session is reached this method gets invoked
      */
     private void sessionTimeout() {
-        throw new NotYetImplementedException();
+        LoginControl loginControl = LoginControl.getInstance();
+        User user = null;
+        loginControl.logout(user);
     }
 
     /**

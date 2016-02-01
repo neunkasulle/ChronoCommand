@@ -7,9 +7,17 @@ import java.util.Date;
  * Session Class for managing user sessions
  */
 public class Session {
-    private int sessionID;
+    private int sessionID; //TODO generate ID?
     private Date expire;
     private User sessionUser;
+
+    public User getSessionUser() {
+        return sessionUser;
+    }
+
+    public Date getExpire() {
+        return expire;
+    }
 
     public Session(User user, Date expire) {
         this.sessionUser = user;

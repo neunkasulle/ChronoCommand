@@ -56,7 +56,10 @@ public class MessageControl {
     /**
      * Messages from the System itself will be generated
      */
-    public void generateSystemMessages() {
+    public void generateSystemMessages(User user) {
+        String message = "The System says.";
+        Message sysMessage = new Message(null, user ,message);
+
         throw new NotYetImplementedException();
     }
 
@@ -76,7 +79,7 @@ public class MessageControl {
 
         if(!deliverMessage(message, receivingUser)) {
             //If user Offline store message and try later;
-            messageQueue.add(message);
+            messageQueue.add(message); //TODO messageQueue Job implementiern
         }
 
         if(receivingUser.getMailFlag()) {
