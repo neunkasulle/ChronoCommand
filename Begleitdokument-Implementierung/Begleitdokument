@@ -1,1 +1,76 @@
-% TODO
+\documentclass[hidelinks]{scrartcl}
+
+\usepackage[ngerman]{babel}
+\usepackage{fontspec}
+
+% some useful packages
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+%\usepackage{hyperref}
+%wird eh durch error durch default ersetzt -> auskommeentiert
+%\hypersetup{%
+%	pdfborder={0 0 0}
+%}
+\usepackage{titlesec}
+
+\newcommand{\sectionbreak}{\clearpage}
+
+\input{commands}
+
+\setmainfont{SourceSerifPro-Regular.otf}[
+    BoldFont		=	SourceSerifPro-Bold.otf,
+    ItalicFont		=	EBGaramond08-Italic.otf,
+    Numbers = Lining]
+
+\begin{document}
+	\setlength{\parindent}{0pt}
+
+	\begin{titlepage}
+
+		%Title
+		\begin{center}
+			\huge \bfseries ChronoCommand \\
+			\large  Webbasierte Zeiterfassung
+		\end{center}
+
+		%Subtitle
+		\begin{center}
+				\large Begleitdokument zur Implementierung\\
+		\end{center}
+
+		%Authors
+		\begin{center}
+			Jannis Friedmann \\
+			David Kuhmann \\
+			Maria Schmid \\
+			Xiaoming Wang \\
+			Jan Zenkner \\
+
+		\end{center}
+
+		%Date
+		\begin{center}
+			\large \today
+		\end{center}
+	
+		\vfill
+	\end{titlepage}
+	\thispagestyle{empty}
+
+	\pagenumbering{roman}
+
+	\clearpage
+	\pagestyle{empty}
+	\tableofcontents
+
+	\clearpage
+	\pagestyle{plain}
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+
+
+
+\end{document}
