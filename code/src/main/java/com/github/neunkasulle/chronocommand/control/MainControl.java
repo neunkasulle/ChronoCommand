@@ -59,11 +59,10 @@ public class MainControl extends Control {
         Role role = new Role("user");
         UserDAO.getInstance().saveRole(role);
 
-        User tom = new User(role, "tom", "tom@chronocommand.eu", "cat", "Tom", null, 5);
+        User tom = new User(role, "tom", "Tom", "tom@chronocommand.eu", "cat", null, 5);
         UserDAO.getInstance().saveUser(tom);
 
-        User matt = new User(role, "matt", "matt@example.com", "matt", "Matt", tom, 10);
-
+        User matt = new User(role, "matt", "Matt", "matt@example.com", "matt", tom, 10);
         UserDAO.getInstance().saveUser(matt);
     }
 
@@ -73,7 +72,7 @@ public class MainControl extends Control {
      */
     public void shutdown() {
         DAOHelper.getInstance().shutdown();
-        System.exit(0);
+
         // TODO initiate anything that needs initiating
     }
 }

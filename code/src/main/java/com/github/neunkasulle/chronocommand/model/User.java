@@ -65,10 +65,11 @@ public class User {
 
     }
 
-    public User(Role userType, String name, String email, String password, User supervisor, int hoursPerMonth) {
+    public User(Role userType, String username, String realName, String email, String password, User supervisor, int hoursPerMonth) {
         this.roles = new HashSet<>();
         this.roles.add(userType);
-        this.username = name;
+        this.username = username;
+        this.realName = realName;
         this.email = email;
         this.password = new Sha512Hash(password, null, 1024);
         this.supervisor = supervisor;
