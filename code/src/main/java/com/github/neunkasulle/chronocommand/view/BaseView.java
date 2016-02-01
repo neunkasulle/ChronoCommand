@@ -19,7 +19,10 @@ import java.util.Locale;
  */
 public abstract class BaseView extends HorizontalLayout implements View {
 
+    //It would not work wenn the supervisor himself also does SZ
+
     private enum RoleAction {
+
         PROLETARIER("Proletarier") {
             @Override
             public void fillRoleSpecificContent(final Layout extraPane) {
@@ -55,7 +58,29 @@ public abstract class BaseView extends HorizontalLayout implements View {
             @Override
             public void fillRoleSpecificContent(final Layout extraPane) {
                 //TODO: fill me!
+                final HorizontalLayout adminToSupervisorPane = new HorizontalLayout();
+                adminToSupervisorPane.setSizeFull();
+                extraPane.addComponent(adminToSupervisorPane);
+                adminToSupervisorPane.addComponent(new Label("Zu Betreuersicht wechseln:"));
+
+                final ComboBox supervisorSelection = new ComboBox(null, Arrays.asList("Betreuer1", "Betreuer2"));
+                supervisorSelection.setSizeFull();
+                supervisorSelection.setInputPrompt("Betreuer auswählen");
+                extraPane.addComponent(supervisorSelection);
+
+
+                final HorizontalLayout accountManagementPane = new HorizontalLayout();
+                accountManagementPane.setSizeFull();
+                extraPane.addComponent(accountManagementPane);
+                accountManagementPane.addComponent(new Label("Account Verwalten:"));
+
+                final ComboBox accountManagementSelection = new ComboBox(null, Arrays.asList("Neuen Account zulegen", "Account löschen","Account bearbeiten"));
+                accountManagementSelection.setSizeFull();
+                accountManagementSelection.setInputPrompt("Operation auswählen");
+                extraPane.addComponent(accountManagementSelection);
+
             }
+
         };
 
         private final String name;
@@ -79,6 +104,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
     private static final String CONTROL_PANEL_WIDTH = "300px";
 
+    //Hier the ContactList ist from Vaadin Demo Adress book
     private Grid contactList = new Grid();
 
     @Override
@@ -158,6 +184,8 @@ public abstract class BaseView extends HorizontalLayout implements View {
         controlPanelTemp.setWidth(null);
 
         final VerticalLayout controlPanel = new VerticalLayout();
+        controlPanel.addStyleName("container");
+        controlPanel.setSpacing(true);
         controlPanelTemp.addComponent(controlPanel);
 
         controlPanel.setId("controll-panel");
@@ -225,18 +253,23 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         // Creates a new combobox using an existing container
         final ComboBox letterSelection = new ComboBox(null, Arrays.asList("02.01.2016", "01.01.2016"));
+        letterSelection.setSizeFull();
         letterSelection.setInputPrompt("Bitte Stundenzettel auswählen");
         letterSelection.setNullSelectionAllowed(false);
         controlPanel.addComponent(letterSelection);
 
         final VerticalLayout extraContent = new VerticalLayout();
+        extraContent.addStyleName("container");
+        extraContent.setSpacing(true);
         controlPanelTemp.addComponent(extraContent);
 
         extraContent.addStyleName("container");
         extraContent.setWidth(CONTROL_PANEL_WIDTH);
 
-        //TODO: DUmmy code, use real role here!
-        RoleAction.valueOf(new Role("Proletarier")).fillRoleSpecificContent(extraContent);
+        //TODO: Dummy code, use real role here!
+        //RoleAction.valueOf(new Role("Proletarier")).fillRoleSpecificContent(extraContent);
+        RoleAction.valueOf(new Role("Admin")).fillRoleSpecificContent(extraContent);
+        //RoleAction.valueOf(new Role("Supervisor")).fillRoleSpecificContent(extraContent);
 
     }
 
