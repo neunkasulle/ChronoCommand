@@ -30,6 +30,11 @@ public class User {
     protected String username;
 
     @Basic(optional=false)
+    @Column(length=250)
+    @org.hibernate.annotations.Index(name="idx_users_username")
+    protected String realName;
+
+    @Basic(optional=false)
     @org.hibernate.annotations.Index(name="idx_users_email")
     protected String email;
 
