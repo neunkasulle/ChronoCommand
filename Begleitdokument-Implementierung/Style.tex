@@ -66,22 +66,22 @@
 \newcounter{weeknum}
 
 %% Titelinformationen
-\title[GBI in der \theweeknum. Woche]{Grundbegriffe der Informatik \\ Automaten}
+\title[Präsentation zur Implementierungsphase]
 %\subtitle{Gehalten in den Tutorien Nr. 1, Nr. 12, Nr. 14 und Nr. 29}
-\author[Schmid]{\href{mailto:tutorium@minituex.eu}{Maria Schmid}} %\href{mailto:dominik.doerner@student.kit.edu}{Dominik Doerner} und \href{mailto:allenouyue@hotmail.com}{Yue Ou}}
+\author[Schmid, Friedmann]{\href{mailto:m-pse@minituex.eu}{Maria Schmid}{\href{mailto:jannis@sycoso.eu}{Jannis Friedmann}} %\href{mailto:dominik.doerner@student.kit.edu}{Dominik Doerner} und \href{mailto:allenouyue@hotmail.com}{Yue Ou}}
 \institute{KIT - Karlsruher Institut für Technologie}
 
 %% Titel einfügen
 \newcommand{\titleframe}{\frame{\titlepage}}
 
 %% Alles starten mit \starttut{X}
-\newcommand{\starttut}[1]{\part{Tutorium Nr. #1}\setcounter{weeknum}{#1}\titleframe\frame{\frametitle{Inhaltsverzeichnis}\tableofcontents} \AtBeginSection[]{%
+%\newcommand{\starttut}[1]{\part{Tutorium Nr. #1}\setcounter{weeknum}{#1}\titleframe\frame{\frametitle{Inhaltsverzeichnis}\tableofcontents} \AtBeginSection[]{%
 \begin{frame}
 	\tableofcontents[currentsection]
 \end{frame}\addtocounter{framenumber}{-1}}}
 
 %% Kontakt einfügen
-\newcommand{\contact}{\begin{center}Kontakt via E-Mail an \href{mailto:tutorium@minituex.eu}{Maria Schmid}} %\href{mailto:dominik.doerner@student.kit.edu}{Dominik Doerner} oder \href{mailto:allenouyue@hotmail.com}{Yue Ou}\end{center}}
+\newcommand{\contact}{\begin{center}Kontakt via E-Mail an \href{mailto:m-pse@minituex.eu}{Maria Schmid}\href{mailto:jannis@sycoso.eu}{Jannis Friedmann}} %\href{mailto:dominik.doerner@student.kit.edu}{Dominik Doerner} oder \href{mailto:allenouyue@hotmail.com}{Yue Ou}\end{center}}
 
 %% Letzte Seite mit Bild []
 \newcommand{\lastframe}[3]{\part{end}\frame[plain]{\begin{figure}[H]\centering\includegraphics[scale=#1]{#2}\caption{ \url{#3} }\end{figure} \contact}}
