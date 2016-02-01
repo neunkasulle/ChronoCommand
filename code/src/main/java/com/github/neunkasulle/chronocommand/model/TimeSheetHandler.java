@@ -2,9 +2,14 @@ package com.github.neunkasulle.chronocommand.model;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
+
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.util.List;
 
 /**
@@ -24,12 +29,6 @@ public class TimeSheetHandler {
     }
 
     public File createPdfFromTimeSheet(TimeSheet timeSheet) { //TODO fill timesheet with content
-
-        try {
-            //PDDocument pdfTimeSheet = PDDocument.load("Stundenzettel.pdf");
-        } catch (Exception e) {
-            System.err.println("PDF not found");
-        }
         /*
         //new document
         PDDocument newTimesheet = new PDDocument();
@@ -50,6 +49,81 @@ public class TimeSheetHandler {
         return null;
     }
 
+    public File createPdfFromTimeSheet() {
+        PDDocument pdfTimeSheet = null;
+        File file = null;
+        PDPage page = null;
+        try {
+            file = new File("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Stundenzettel.pdf");
+            pdfTimeSheet = PDDocument.load(file);
+        } catch (Exception e) {
+
+            System.err.println("Loading error.");
+        }
+        try {
+            PDFont font = PDType1Font.HELVETICA;
+
+            page = pdfTimeSheet.getPage(0);
+            PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
+            contents.beginText();
+            //fill name etc
+            contents.setFont(font, 12);
+            contents.newLineAtOffset(300, 710);
+            contents.showText("David Kuhmann");//name
+            contents.newLineAtOffset(160, 28);
+            contents.showText("01");//month
+            contents.newLineAtOffset(50, 0);
+            contents.showText("2016");//year
+            contents.newLineAtOffset(-18, -96);
+            contents.showText("9,45");//money
+            contents.endText();
+
+            //fill timesheet
+            contents.beginText();
+            contents.setFont(font, 10);
+            contents.newLineAtOffset(55, 570);
+            contents.showText("Stundenzettel ausfüllen");//
+            contents.newLineAtOffset(150, 0);
+            contents.showText("01.02.2016");//date
+            contents.newLineAtOffset(90, 0);
+            contents.showText("11:30");//start
+            contents.newLineAtOffset(70, 0);
+            contents.showText("15:30");//end
+            contents.newLineAtOffset(75, 0);
+            contents.showText("00:00");//pause
+            contents.newLineAtOffset(80, 0);
+            contents.showText("04:00");//total time
+            contents.endText();
+            contents.beginText();
+            contents.setFont(font, 10);
+            contents.newLineAtOffset(55, 555);
+            contents.showText("Stundenzettel ausfüllen");//
+            contents.newLineAtOffset(150, 0);
+            contents.showText("01.02.2016");//date
+            contents.newLineAtOffset(90, 0);
+            contents.showText("11:30");//start
+            contents.newLineAtOffset(70, 0);
+            contents.showText("15:30");//end
+            contents.newLineAtOffset(75, 0);
+            contents.showText("00:00");//pause
+            contents.newLineAtOffset(80, 0);
+            contents.showText("04:00");//total time
+            contents.endText();
+
+            contents.close();
+            pdfTimeSheet.save("C:\\Users\\Dav\\Downloads\\Study.pdf");
+
+        } catch (Exception e) {
+            System.err.println("Content not loaded.");
+        }
+        try {
+            pdfTimeSheet.close();
+        } catch (Exception e) {
+            System.err.println("It's fucked up. Nobody can save you.");
+        }
+        return null;
+    }
+
     public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets){
         File file = null;
 
@@ -61,6 +135,11 @@ public class TimeSheetHandler {
         return file;
     }
 
+    public static void main(String[] args) {
+        TimeSheetHandler handler = TimeSheetHandler.getInstance();
+        handler.createPdfFromTimeSheet();
 
+        System.exit(0);
+    }
 
 }
