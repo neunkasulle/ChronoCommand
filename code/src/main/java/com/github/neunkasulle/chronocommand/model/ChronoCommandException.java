@@ -7,10 +7,11 @@ import java.security.PrivilegedActionException;
  * Custum Exception for internal errors inside ChronoCommand
  */
 public class ChronoCommandException extends Exception {
-
+    Reason reason;
 
     public ChronoCommandException(Reason reason) {
         super();
+        this.reason = reason;
     }
     /**
      * Constructs a new exception with {@code null} as its detail message.
@@ -85,5 +86,9 @@ public class ChronoCommandException extends Exception {
      */
     protected ChronoCommandException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
+    }
+
+    public Reason getReason() {
+        return reason;
     }
 }

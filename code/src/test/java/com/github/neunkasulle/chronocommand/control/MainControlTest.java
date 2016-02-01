@@ -1,11 +1,14 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.Reason;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -45,16 +48,40 @@ public class MainControlTest {
 
     @Test
     public void testLogin() {
+        LoginControl loginControl = LoginControl.getInstance();
+        try {
+            loginControl.login("tom", "cat", true);
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+
+        assertTrue(loginControl.isLoggedIn());
 
     }
 
     @Test(expected = ChronoCommandException.class)
     public void testFailingLogin() {
-
+        LoginControl loginControl = LoginControl.getInstance();
+        try {
+            loginControl.login("tom", "cat", true);
+        }
+        catch (ChronoCommandException e) {
+            assertTrue(e.getReason() == Reason.BADCREDENTIALS);
+        }
     }
 
     @Test(expected = ChronoCommandException.class)
     public void testFailingCategory() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        try {
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), "FUU","BAR" , userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assert(e.getReason() == Reason.CATEGORYNOTFOUND);
+        }
 
     }
 
