@@ -1,10 +1,6 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.Category;
-import com.github.neunkasulle.chronocommand.model.CategoryDAO;
-import com.github.neunkasulle.chronocommand.model.DAOHelper;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
-import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.model.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.DefaultSecurityManager;
@@ -26,16 +22,25 @@ public class MainControl extends Control {
 
     }
 
+    /**
+     * Gets the one Instance of the MainControl.
+     * @return The one MainControl instance.
+     */
     public static MainControl getInstance() {
         return ourInstance;
     }
 
-
-
+    /**
+     * Handles Exceptions which are not handled on invocation.
+     * When application crashed critical, it will save and shut down.
+     */
     private void exceptionHandling() {
         throw new NotYetImplementedException(); //TODO
     }
 
+    /**
+     * Initializes the application with all the needed
+     */
     public void startup() {
         DAOHelper.getInstance().startup();
 
@@ -46,23 +51,25 @@ public class MainControl extends Control {
         SecurityUtils.setSecurityManager(securityManager);
 
         // DEBUG fill database with data
-        CategoryDAO.getInstance().saveCategory(new Category("Programming"));
-        CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
+        try {
+            CategoryDAO.getInstance().saveCategory(new Category("Programming"));
+            CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
+        } catch(ChronoCommandException e) {}
 
-        User tom = new User();
-        tom.setEmail("tom@chronocommand.eu");
-        tom.setPassword("cat");
-        tom.setUsername("tom");
+        Role role = new Role("user");
+        UserDAO.getInstance().saveRole(role);
+
+        User tom = new User(role, "tom", "Tom", "tom@chronocommand.eu", "cat", null, 5);
         UserDAO.getInstance().saveUser(tom);
 
-        User matt = new User();
-        matt.setEmail("matt@example.com");
-        matt.setPassword("matt");
-        matt.setUsername("matt");
-        matt.setSupervisor(tom);
+        User matt = new User(role, "matt", "Matt", "matt@example.com", "matt", tom, 10);
         UserDAO.getInstance().saveUser(matt);
     }
 
+
+    /**
+     * Saves necessary data before shutting down
+     */
     public void shutdown() {
         DAOHelper.getInstance().shutdown();
 

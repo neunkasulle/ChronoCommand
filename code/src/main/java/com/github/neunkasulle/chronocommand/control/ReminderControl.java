@@ -14,16 +14,24 @@ public class ReminderControl extends Control {
 
     }
 
+    /**
+     * Gets the one Instance of the ReminderControl.
+     * @return The one ReminderControl instance.
+     */
     public static ReminderControl getInstance() {
         return ourInstance;
     }
 
-
-
+    /**
+     * Checks if there are violations in working time and sends out reminders
+     */
     public void checkForWorkTimeRestrictions() {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * checks if timeSheets are overdue and sends out reminders
+     */
     public void checkForOverdueTimeSheets() {
         throw new NotYetImplementedException();
     }

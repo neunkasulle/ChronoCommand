@@ -29,7 +29,8 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String TIMESHEETVIEW = "timesheet";
     public static final String MESSAGEVIEW = "messages";
     public static final String SETTINGSVIEW = "settings";
-    Navigator navigator;
+    private Navigator navigator;
+    private Label header;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -38,7 +39,19 @@ public class MainUI extends UI implements ViewChangeListener {
 
         getPage().setTitle("ChronoCommand");
 
-        navigator = new Navigator(this, this);
+        VerticalLayout baseLayout = new VerticalLayout();
+        setContent(baseLayout);
+
+        header = new Label("You have a header!");
+        header.setSizeUndefined();
+        baseLayout.addComponent(header);
+        baseLayout.setComponentAlignment(header, Alignment.TOP_CENTER);
+
+        MainView mainView = new MainView();
+        baseLayout.addComponent(mainView);
+        baseLayout.setComponentAlignment(mainView, Alignment.TOP_CENTER);
+
+        navigator = new Navigator(this, mainView);
         navigator.addViewChangeListener(this);
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.addView(MAINVIEW, MainView.class);
@@ -92,7 +105,14 @@ public class MainUI extends UI implements ViewChangeListener {
 
     @Override
     public void afterViewChange(ViewChangeEvent event) {
-
+        Logger logger = LoggerFactory.getLogger(MainUI.class);
+        Subject subject = SecurityUtils.getSubject();
+        logger.info("Subject: {} remember {} authenticated {}", subject, subject.isRemembered(), subject.isAuthenticated());
+        if (subject.isRemembered() || subject.isAuthenticated()) {
+            header.setValue("Whoo, you're logged in!");
+        } else {
+            header.setValue("You're logged out.");
+        }
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)
@@ -114,4 +134,5 @@ public class MainUI extends UI implements ViewChangeListener {
             MainControl.getInstance().shutdown();
         }
     }
+
 }

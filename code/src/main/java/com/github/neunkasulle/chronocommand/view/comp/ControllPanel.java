@@ -1,11 +1,12 @@
 package com.github.neunkasulle.chronocommand.view.comp;
 
+import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.view.MainUI;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
-import org.apache.shiro.SecurityUtils;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -50,8 +51,9 @@ public class ControllPanel extends VerticalLayout {
 
         final Button logoutButton = new Button(new ThemeResource("img/logout13.png"));
         logoutButton .addClickListener(e -> {
-            SecurityUtils.getSubject().logout();
+            LoginControl.getInstance().logout();
             getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
+            Page.getCurrent().reload();
         });
         logoutButton.setStyleName(BaseTheme.BUTTON_LINK);
         naviBar.addComponent(logoutButton);

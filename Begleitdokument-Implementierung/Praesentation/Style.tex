@@ -1,0 +1,122 @@
+%% Einrichtungen für Beamer-Klasse
+\documentclass{beamer}
+%\mode<presentation>
+%{
+%	\usetheme{Warsaw}
+%	\usecolortheme{whale}
+%	\useinnertheme{rectangles}
+%	\usefonttheme{structurebold}
+%	\useoutertheme{smoothbars}
+%}
+%\setbeamercovered{transparent}
+
+% Abschalten der kleinen Navigationsleiste am unteren Rand
+%\beamertemplatenavigationsymbolsempty   
+
+% Seitenzahl in Fußnote
+%\setbeamertemplate{footline}[frame number] 
+
+% Komisches Einblenden deaktivieren
+%\setbeamercovered{invisible}
+
+% KIT-Stil
+\usepackage{Stylestuff/beamerthemekit}
+
+%% Deutsche Silbentrennung und Beschriftungen
+\usepackage[ngerman]{babel}
+
+%% UTF-8-Encoding
+\usepackage[utf8]{inputenc}
+
+%% Bibliotheken für viele mathematische Symbole
+\usepackage{amsmath, amsfonts, amssymb}
+
+%% Anzeigetiefe für Inhaltsverzeichnis: 1 Stufe
+\setcounter{tocdepth}{1}
+
+%% Schönere Schriften
+\usepackage[TS1,T1]{fontenc}
+
+%% Tabellen
+\usepackage{array}
+\usepackage{multicol}
+
+%% Bibliothek für Graphiken
+\usepackage{graphicx}
+
+%% der wird sowieso in jeder Datei gesetzt
+%%\graphicspath{{../figures/}}
+
+%% Hyperlinks
+\usepackage{hyperref}
+
+\usepackage{lmodern}
+\usepackage{colortbl}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{listings}
+\usepackage{forloop}
+%\usepackage{algorithmic} % PseudoCode package 
+
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+
+%%%%%%%%%%%% INHALT %%%%%%%%%%%%%%%%
+
+%% Wochennummer
+\newcounter{weeknum}
+
+%% Titelinformationen
+\title[Präsentation zur Implementierungsphase]
+%\subtitle{Gehalten in den Tutorien Nr. 1, Nr. 12, Nr. 14 und Nr. 29}
+\author[Schmid, Friedmann]{\href{mailto:m-pse@minituex.eu}{Maria Schmid}{\href{mailto:jannis@sycoso.eu}{Jannis Friedmann}} %\href{mailto:dominik.doerner@student.kit.edu}{Dominik Doerner} und \href{mailto:allenouyue@hotmail.com}{Yue Ou}}
+\institute{KIT - Karlsruher Institut für Technologie}
+
+%% Titel einfügen
+\newcommand{\titleframe}{\frame{\titlepage}}
+
+%% Alles starten mit \starttut{X}
+%\newcommand{\starttut}[1]{\part{Tutorium Nr. #1}\setcounter{weeknum}{#1}\titleframe\frame{\frametitle{Inhaltsverzeichnis}\tableofcontents} \AtBeginSection[]{%
+\begin{frame}
+	\tableofcontents[currentsection]
+\end{frame}\addtocounter{framenumber}{-1}}}
+
+%% Kontakt einfügen
+\newcommand{\contact}{\begin{center}Kontakt via E-Mail an \href{mailto:m-pse@minituex.eu}{Maria Schmid}\href{mailto:jannis@sycoso.eu}{Jannis Friedmann}} %\href{mailto:dominik.doerner@student.kit.edu}{Dominik Doerner} oder \href{mailto:allenouyue@hotmail.com}{Yue Ou}\end{center}}
+
+%% Letzte Seite mit Bild []
+\newcommand{\lastframe}[3]{\part{end}\frame[plain]{\begin{figure}[H]\centering\includegraphics[scale=#1]{#2}\caption{ \url{#3} }\end{figure} \contact}}
+
+%% Frage für Frage und Antwort Spiel
+%\newcommand{\frage}[2]{
+%\begin{frame}
+%	\frametitle{Was bleibt?}
+%		\textit{#1}
+%		\newline
+%		\hspace*{2em} \only<2>{#2}
+%\end{frame}		
+%}
+
+%% Wörter
+\newcommand{\code}[1]{$\mathbf{#1}$}
+
+%% Sterne
+
+\newcounter{starsc}
+\newcommand{\stars}[1]{
+	\hfill
+	\begin{minipage}{100px}
+		\forloop{starsc}{0}{\value{starsc} < #1}%
+		{%
+			\includegraphics[scale=0.05]{star-full.pdf} \hspace*{1px}
+		}%
+		\forloop{starsc}{\value{starsc}}{\value{starsc} < 5}%
+		{%
+			\includegraphics[scale=0.05]{star-empty.pdf} \hspace*{1px}
+		}
+		\vspace*{2px}
+	\end{minipage}
+}
+
+%% Verbatim
+\usepackage{moreverb}
+

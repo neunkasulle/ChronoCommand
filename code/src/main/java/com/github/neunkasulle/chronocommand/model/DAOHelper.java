@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  * Created by Maria on 28.01.2016.
+ * DAO helper class
  */
 public class DAOHelper {
 
@@ -23,7 +24,7 @@ public class DAOHelper {
     }
 
     public void shutdown() {
-        sessionFactory.close();
+        //sessionFactory.close();
     }
 
     public SessionFactory getSessionFactory(){

@@ -20,34 +20,23 @@ public class RegulationControl extends Control {
 
     }
 
+    /**
+     * Gets the one Instance of the RegulationControl.
+     *
+     * @return The one RegulationControl instance.
+     */
     public static RegulationControl getInstance() {
         return ourInstance;
     }
 
 
-
+    /**
+     * Checks timeSheets for incossitencies and rule violations
+     *
+     * @param timesheets TimeSheets which are to be checked
+     */
     public void checkTimeSheets(List<TimeSheet> timesheets) {
         throw new NotYetImplementedException();
     }
-    private Deque<User> checkHolidays(List<TimeSheet> timesheets) {
 
-        return null;
-    }
-    private Deque<User> checkRestrictedTimes(List<TimeSheet> timesheets){
-
-        return null;
-    }
-    private Deque<User> checkTimeRestrictions(List<TimeSheet> timesheets) {
-
-        return null;
-    }
-
-    private Deque<User> checkTimeLimits(List<TimeSheet> timeSheets) {
-
-        return null;
-    }
-
-    private void generateWarnings(Deque<User> users) {
-        throw new NotYetImplementedException();
-    }
 }

@@ -30,6 +30,11 @@ public class User {
     protected String username;
 
     @Basic(optional=false)
+    @Column(length=250)
+    @org.hibernate.annotations.Index(name="idx_users_username")
+    protected String realName;
+
+    @Basic(optional=false)
     @org.hibernate.annotations.Index(name="idx_users_email")
     protected String email;
 
@@ -60,10 +65,11 @@ public class User {
 
     }
 
-    public User(Role userType, String name, String email, String password, User supervisor, int hoursPerMonth) {
+    public User(Role userType, String username, String realName, String email, String password, User supervisor, int hoursPerMonth) {
         this.roles = new HashSet<>();
         this.roles.add(userType);
-        this.username = name;
+        this.username = username;
+        this.realName = realName;
         this.email = email;
         this.password = new Sha512Hash(password, null, 1024);
         this.supervisor = supervisor;
@@ -109,7 +115,6 @@ public class User {
     public void setPassword(String password) {
         this.password = new Sha512Hash(password, null, 1024);
     }
-
 
 
     public Set<Role> getRoles() {
