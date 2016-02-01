@@ -59,6 +59,38 @@ public abstract class BaseView extends HorizontalLayout implements View {
             @Override
             public void fillRoleSpecificContent(final Layout extraPane) {
                 //TODO: fill me!
+                /* Betreuer */
+
+                final HorizontalLayout supervisorPane = new HorizontalLayout();
+                supervisorPane.setSizeFull();
+                extraPane.addComponent(supervisorPane);
+
+                supervisorPane.addComponent(new Label("Betreuer"));
+                supervisorPane.addComponent(new Label("Betreuer1"));
+
+                final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
+                newTimeRecordButton.addClickListener(e -> {
+                    extraPane.getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
+                });
+                extraPane.addComponent(newTimeRecordButton);
+                newTimeRecordButton.setSizeFull();
+
+                final Button submitTimeRecordButton = new Button("Stundenzetten abschicken");
+                submitTimeRecordButton.addClickListener(e -> {
+                    //TODO: Implement submission
+                });
+                extraPane.addComponent(submitTimeRecordButton);
+                submitTimeRecordButton.setSizeFull();
+
+
+                final Button listOfMyProletarierButton = new Button("Meine HIWIs anzeigen");
+                listOfMyProletarierButton.setSizeFull();
+                listOfMyProletarierButton.addClickListener(e ->{
+                    //TODO: Get the list of all his HIWIs and show it in the Grid.
+                });
+                extraPane.addComponent(listOfMyProletarierButton);
+                listOfMyProletarierButton.setSizeFull();
+
             }
         }, ADMIN("Admin") {
             @Override
@@ -84,6 +116,22 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 accountManagementSelection.setSizeFull();
                 accountManagementSelection.setInputPrompt("Operation auswählen");
                 extraPane.addComponent(accountManagementSelection);
+
+                final Button listOfAllProletarierButton = new Button("Alle HIWIs anzeigen");
+                listOfAllProletarierButton.setSizeFull();
+                listOfAllProletarierButton.addClickListener(e ->{
+                    //TODO: Get the list of all HIWIs and show it in the Grid.
+                });
+                extraPane.addComponent(listOfAllProletarierButton);
+                listOfAllProletarierButton.setSizeFull();
+
+                final Button listOfAllSupervisorButton = new Button("Alle Betreuer anzeigen");
+                listOfAllSupervisorButton.setSizeFull();
+                listOfAllSupervisorButton.addClickListener(e ->{
+                    //TODO: Get the list of all HIWIs and show it in the Grid.
+                });
+                extraPane.addComponent(listOfAllSupervisorButton);
+                listOfAllSupervisorButton.setSizeFull();
 
             }
 
@@ -256,11 +304,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
         /* Combo box */
 
         // Creates a new combobox using an existing container
-        final ComboBox letterSelection = new ComboBox(null, Arrays.asList("02.01.2016", "01.01.2016"));
-        letterSelection.setSizeFull();
-        letterSelection.setInputPrompt("Bitte Stundenzettel auswählen");
-        letterSelection.setNullSelectionAllowed(false);
-        controlPanel.addComponent(letterSelection);
+        final ComboBox timeRecordSelection = new ComboBox(null, Arrays.asList("02.01.2016", "01.01.2016"));
+        timeRecordSelection.setSizeFull();
+        timeRecordSelection.setInputPrompt("Bitte Stundenzettel auswählen");
+        timeRecordSelection.setNullSelectionAllowed(false);
+        controlPanel.addComponent(timeRecordSelection);
 
         final VerticalLayout extraContent = new VerticalLayout();
         extraContent.addStyleName("container");
