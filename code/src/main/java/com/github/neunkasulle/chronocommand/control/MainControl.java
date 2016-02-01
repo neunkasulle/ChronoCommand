@@ -33,7 +33,7 @@ public class MainControl extends Control {
 
 
     private void exceptionHandling() {
-        throw new NotYetImplementedException();
+        throw new NotYetImplementedException(); //TODO
     }
 
     public void startup() {
