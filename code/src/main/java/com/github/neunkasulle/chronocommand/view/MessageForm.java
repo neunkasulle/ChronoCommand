@@ -14,21 +14,24 @@ import java.util.function.Consumer;
  */
 public class MessageForm extends FormLayout {
 
-    private Button save = new Button("Save", this::save);
-    private Button cancel = new Button("Cancel", this::cancel);
     private TextField content = new TextField("Nachricht");
+    private Button save = new Button("Save");
+    private Button cancel = new Button("Cancel");
 
-    private final Consumer<Message> saveOperation;
-    private final Consumer<Button.ClickEvent> cancelOperation;
+    private Message object;
+    private BeanFieldGroup<Message> formFieldBindings;
 
-    private Message message;
+    public Message getCurrentFormObject() {
+        return this.object;
+    }
 
-    // Easily bind forms to beans and manage validation and buffering
-   private BeanFieldGroup<Message> formFieldBindings;
+    public BeanFieldGroup<Message> getFormFieldBinding() {
+        return this.formFieldBindings;
+    }
 
-    public MessageForm(final Consumer<Message> saveOperation, final Consumer<Button.ClickEvent> cancelOperation) {
-        this.saveOperation = saveOperation;
-        this.cancelOperation = cancelOperation;
+    public MessageForm(final Button.ClickListener saveOperation, final Button.ClickListener cancelOperation) {
+        this.save.addClickListener(saveOperation);
+        this.cancel.addClickListener(cancelOperation);
 
         save.setStyleName(ValoTheme.BUTTON_PRIMARY);
         save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
@@ -40,43 +43,17 @@ public class MessageForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-        addComponents(actions, content);
-    }
-
-    /* Use any JVM language.
-     *
-     * Vaadin supports all languages supported by Java Virtual Machine 1.6+.
-     * This allows you to program user interface in Java 8, Scala, Groovy or any other
-     * language you choose.
-     * The new languages give you very powerful tools for organizing your code
-     * as you choose. For example, you can implement the listener methods in your
-     * compositions or in separate controller classes and receive
-     * to various Vaadin component events, like button clicks. Or keep it simple
-     * and compact with Lambda expressions.
-     */
-    public void save(final Button.ClickEvent event) {
-        try {
-            // Commit the fields from UI to DAO
-            formFieldBindings.commit();
-
-            // Submit changes to higher level view
-            this.saveOperation.accept(message);
-        } catch (FieldGroup.CommitException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    public void cancel(final Button.ClickEvent event) {
-        this.cancelOperation.accept(event);
+        addComponents(content, actions);
     }
 
     void edit(Message message) {
-        this.message  = message;
-        if(message != null) {
+        this.object = message;
+        if (message != null) {
             // Bind the properties of the contact POJO to fiels in this form
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(message, this);
             content.focus();
         }
         setVisible(message != null);
     }
+
 }

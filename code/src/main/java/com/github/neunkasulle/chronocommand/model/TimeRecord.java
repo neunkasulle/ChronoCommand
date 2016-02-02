@@ -14,14 +14,14 @@ public class TimeRecord {
     @GeneratedValue
     private Long id;
 
-    @Basic(optional=false)
+    @Basic(optional = false)
     private LocalDateTime beginning;
 
     @Column
     private LocalDateTime end;
 
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Basic
@@ -29,9 +29,10 @@ public class TimeRecord {
 
     /**
      * Constructs a new time record.
-     * @param begin The beginning of the time record
-     * @param end The end of the time record
-     * @param category the category in which this record can be sorted
+     *
+     * @param begin       The beginning of the time record
+     * @param end         The end of the time record
+     * @param category    the category in which this record can be sorted
      * @param description a short description of this recorded time
      */
     public TimeRecord(LocalDateTime begin, LocalDateTime end, Category category, String description) {
@@ -47,6 +48,7 @@ public class TimeRecord {
 
     /**
      * Gets the internal DB id
+     *
      * @return the internal DB id
      */
     public Long getId() {
@@ -55,6 +57,7 @@ public class TimeRecord {
 
     /**
      * Gets the beginning time of a record
+     *
      * @return the beginning time
      */
     public LocalDateTime getBeginning() {
@@ -62,7 +65,40 @@ public class TimeRecord {
     }
 
     /**
-     *  Gets the ending time of a time record
+     * Returns the beginning hour only
+     * @return the beginning hour
+     */
+    public int getBeginningHour() {
+        return this.beginning.getHour();
+    }
+
+    /**
+     * Updates the beginning hour
+     * @param hour the nre hour
+     */
+    public void setBeginningHour(final int hour) {
+        this.beginning = this.beginning.minusHours(this.beginning.getHour()).plusHours(hour);
+    }
+
+    /**
+     * Returns the beginning minute only
+     * @return the beginning minute
+     */
+    public int getBeginningMinute() {
+        return this.beginning.getMinute();
+    }
+
+    /**
+     * Updates the beginning hour
+     * @param minute the new minute
+     */
+    public void setBeginningMinute(final int minute) {
+        this.beginning = this.beginning.minusMinutes(this.beginning.getMinute()).plusMinutes(minute);
+    }
+
+    /**
+     * Gets the ending time of a time record
+     *
      * @return the ending time
      */
     public LocalDateTime getEnd() {
@@ -70,7 +106,40 @@ public class TimeRecord {
     }
 
     /**
+     * Returns the end hour only
+     * @return the end hour
+     */
+    public int getEndHour() {
+        return this.end.getHour();
+    }
+
+    /**
+     * Updates the end hour
+     * @param hour the nre hour
+     */
+    public void setEndHour(final int hour) {
+        this.end = this.end.minusHours(this.end.getHour()).plusHours(hour);
+    }
+
+    /**
+     * Returns the end minute only
+     * @return the end minute
+     */
+    public int getEndMinute() {
+        return this.end.getMinute();
+    }
+
+    /**
+     * Updates the end hour
+     * @param minute the new minute
+     */
+    public void setEndMinute(final int minute) {
+        this.end = this.end.minusMinutes(this.end.getMinute()).plusMinutes(minute);
+    }
+
+    /**
      * Small sanity checks for the time record
+     *
      * @return false, if something is bogus with the times
      */
     public boolean checkTimes() {
@@ -79,6 +148,7 @@ public class TimeRecord {
 
     /**
      * Gets the category of the time record
+     *
      * @return the category of the time record
      */
     public Category getCategory() {
@@ -87,6 +157,7 @@ public class TimeRecord {
 
     /**
      * Sets the category of the time record, old category will be purged
+     *
      * @param category the new category for this time record
      */
     public void setCategory(Category category) {
@@ -95,6 +166,7 @@ public class TimeRecord {
 
     /**
      * Gets the small description of the time record
+     *
      * @return description of the time record
      */
     public String getDescription() {
@@ -103,6 +175,7 @@ public class TimeRecord {
 
     /**
      * Sets the description of the time record, old description will be pruged
+     *
      * @param description the new description for a time record
      */
     public void setDescription(String description) {
@@ -111,6 +184,7 @@ public class TimeRecord {
 
     /**
      * Sets a new end time for this time record
+     *
      * @param end the new end time
      */
     public void setEnd(LocalDateTime end) {

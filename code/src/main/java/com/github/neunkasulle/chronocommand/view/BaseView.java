@@ -319,8 +319,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
         extraContent.setWidth(CONTROL_PANEL_WIDTH);
 
         //TODO: Dummy code, use real role here!
-        //RoleAction.valueOf(new Role("Proletarier")).fillRoleSpecificContent(extraContent);
         RoleAction.valueOf(new Role("Admin")).fillRoleSpecificContent(extraContent);
+
+        /*for (final Role role : user.getRoles()) {
+            RoleAction.valueOf(role).fillRoleSpecificContent(extraContent);
+        }*/
         //RoleAction.valueOf(new Role("Supervisor")).fillRoleSpecificContent(extraContent);
 
     }

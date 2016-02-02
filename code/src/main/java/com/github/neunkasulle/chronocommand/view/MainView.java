@@ -2,9 +2,10 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.Category;
+import com.github.neunkasulle.chronocommand.model.Message;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
-import com.github.neunkasulle.chronocommand.model.TimeSheetDAO;
 import com.vaadin.data.Item;
+import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
@@ -24,6 +25,25 @@ public class MainView extends BaseView {
 
     private BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
 
+    private final Grid recordList = new Grid();
+
+    private final TimeRecordForm form = new TimeRecordForm(e -> {
+        try {
+            // Commit the fields from UI to DAO
+            this.form.getFormFieldBinding().commit();
+
+            //TODO: DO other stuff
+        } catch (FieldGroup.CommitException ex) {
+            throw new IllegalArgumentException(ex);
+        }
+    }, e -> {
+        //TODO: Delete it
+        refreshContacts();
+    }, e -> {
+        this.recordList.select(null);
+        refreshContacts();
+    });
+
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
@@ -32,8 +52,6 @@ public class MainView extends BaseView {
         final HorizontalLayout headLine = new HorizontalLayout();
         contentPane.addComponent(headLine);
         headLine.setSpacing(true);
-
-        /* Table */
 
         final ComboBox categorySelection = new ComboBox();
         categorySelection.setInputPrompt("Kategorie");
@@ -61,15 +79,22 @@ public class MainView extends BaseView {
         final Button stopButton = new Button("Stoppen");
         headLine.addComponent(stopButton);
 
-        /* Table */
+        /* Form & able */
 
-        final Grid contactList = new Grid();
-        contentPane.addComponent(contactList);
+        final HorizontalLayout formContent = new HorizontalLayout();
+        formContent.setSizeFull();
+        contentPane.addComponent(formContent);
+
+        /* Actual table */
+
+        formContent.addComponent(recordList);
         beanItemContainer.addNestedContainerProperty("category.name");
         final GeneratedPropertyContainer gpcontainer = new GeneratedPropertyContainer(beanItemContainer);
-        contactList.setContainerDataSource(gpcontainer);
-        contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        contactList.setSizeFull();
+        recordList.setContainerDataSource(gpcontainer);
+        recordList.setSelectionMode(Grid.SelectionMode.SINGLE);
+        recordList.addSelectionListener(e
+                -> form.edit((TimeRecord) recordList.getSelectedRow()));
+        recordList.setSizeFull();
 
         //Add generated columns
         gpcontainer.addGeneratedProperty("beginningTime",
@@ -95,24 +120,31 @@ public class MainView extends BaseView {
         });
 
         //Remove unused columns
-        contactList.removeColumn("id");
-        contactList.removeColumn("beginning");
-        contactList.removeColumn("end");
-        contactList.removeColumn("category");
+        recordList.removeColumn("id");
+        recordList.removeColumn("beginning");
+        recordList.removeColumn("end");
+        recordList.removeColumn("category");
 
+        recordList.setColumnOrder("beginningTime", "endTime", "category.name", "description");
+        recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
+        recordList.getDefaultHeaderRow().getCell("description").setHtml("Tätigkeit");
 
-        contactList.setColumnOrder("beginningTime", "endTime","category.name", "description");
-        contactList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
-        contactList.getDefaultHeaderRow().getCell("description").setHtml("Tätigkeit");
+        // The action form
+
+        formContent.addComponent(form);
+
+        // Updae fortable
+
         refreshContacts();
     }
 
     private void refreshContacts() {
-        final List<TimeRecord> records =  Arrays.asList(
-                new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,9,0), new Category("Dummy1"), "Did Dummy work"),
-                new TimeRecord(LocalDateTime.of(2016,1,1,8,0) , LocalDateTime.of(2016,1,1,12,0), new Category("Dummy2"), "Did even more dummy work"));
+        final List<TimeRecord> records = Arrays.asList(
+                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 9, 0), new Category("Dummy1"), "Did Dummy work"),
+                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 12, 0), new Category("Dummy2"), "Did even more dummy work"));
         this.beanItemContainer.removeAllItems();
         this.beanItemContainer.addAll(records);
+        this.form.setVisible(false);
     }
 
 
