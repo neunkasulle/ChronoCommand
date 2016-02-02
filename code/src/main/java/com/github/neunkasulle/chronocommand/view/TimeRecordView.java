@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by Janze on 20.01.2016.
  */
-public class MainView extends BaseView {
+public class TimeRecordView extends BaseView {
 
     private BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
 

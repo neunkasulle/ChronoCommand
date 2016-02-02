@@ -6,8 +6,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -26,7 +24,7 @@ import com.vaadin.ui.*;
 @Widgetset("com.github.neunkasulle.chronocommand.ChronoCommandWidgetset")
 public class MainUI extends UI implements ViewChangeListener {
     public static final String LOGINVIEW = "login";
-    public static final String MAINVIEW = "main";
+    public static final String TIMERECORDVIEW = "main";
     public static final String CREATEUSERVIEW = "createuser";
     public static final String TIMESHEETVIEW = "timesheet";
     public static final String MESSAGEVIEW = "messages";
@@ -50,14 +48,14 @@ public class MainUI extends UI implements ViewChangeListener {
         baseLayout.addComponent(header);
         baseLayout.setComponentAlignment(header, Alignment.TOP_CENTER);
 
-        MainView mainView = new MainView();
-        baseLayout.addComponent(mainView);
-        baseLayout.setComponentAlignment(mainView, Alignment.TOP_CENTER);
+        TimeRecordView timeRecordView = new TimeRecordView();
+        baseLayout.addComponent(timeRecordView);
+        baseLayout.setComponentAlignment(timeRecordView, Alignment.TOP_CENTER);
 
-        navigator = new Navigator(this, mainView);
+        navigator = new Navigator(this, timeRecordView);
         navigator.addViewChangeListener(this);
         navigator.addView(LOGINVIEW, new LoginView());
-        navigator.addView(MAINVIEW, MainView.class);
+        navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);
         navigator.addView(TIMESHEETVIEW, TimeSheetView.class);
         navigator.addView(MESSAGEVIEW, MessageView.class);
@@ -90,7 +88,7 @@ public class MainUI extends UI implements ViewChangeListener {
     public boolean beforeViewChange(ViewChangeEvent event) {
         /*Subject currentUser = SecurityUtils.getSubject();
         if (LoginControl.getInstance().isLoggedIn() && LOGINVIEW.equals(event.getViewName())) {
-            event.getNavigator().navigateTo(MAINVIEW);
+            event.getNavigator().navigateTo(TIMERECORDVIEW);
             return false;
         }
         if (!LoginControl.getInstance().isLoggedIn() && !LOGINVIEW.equals(event.getViewName())) {
@@ -99,7 +97,7 @@ public class MainUI extends UI implements ViewChangeListener {
         }*/
 
         if ("".equals(event.getViewName())) {
-            event.getNavigator().navigateTo(LOGINVIEW); // FIXME MAINVIEW
+            event.getNavigator().navigateTo(LOGINVIEW); // FIXME TIMERECORDVIEW
             return false;
         }
 

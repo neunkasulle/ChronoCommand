@@ -7,13 +7,8 @@ import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -81,7 +76,7 @@ public class LoginView extends LoginForm implements View {
 
         Button main = new Button("Main");
         main.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
+            getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
         });
         links.addComponent(main);
 
@@ -127,7 +122,7 @@ public class LoginView extends LoginForm implements View {
         try {
             LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue());
             authenticationFailed.setVisible(false);
-            getUI().getNavigator().navigateTo(MainUI.MAINVIEW);
+            getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
         } catch(ChronoCommandException e) {
             authenticationFailed.setVisible(true);
             passwordField.clear();
