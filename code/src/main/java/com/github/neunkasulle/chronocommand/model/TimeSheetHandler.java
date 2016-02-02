@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class TimeSheetHandler {
 
             System.err.println("Loading error.");
         }
+        int yOff = 0;
         try {
             PDFont font = PDType1Font.HELVETICA;
             PDFont fontBold = PDType1Font.HELVETICA_BOLD;
@@ -86,36 +88,48 @@ public class TimeSheetHandler {
             contents.endText();
 
             //Tätigkeit bulk
-            contents.beginText();
-            contents.setFont(font, 10);
-            contents.newLineAtOffset(60, 637);
-            contents.showText("Stundenzettel ausgefüllt");//Tätigkeit
-            contents.endText();
-            //Kategorie bulk
-            contents.beginText();
-            contents.newLineAtOffset(197, 637);
-            contents.showText("Tutorium");//Kategorie
-            contents.endText();
-            //Time bulk, may need no extra offset calculation
-            contents.beginText();
-            contents.newLineAtOffset(300, 637);
-            contents.showText("01.02.16 11:30");//start
-            contents.newLineAtOffset(82, 0);
-            contents.showText("01.02.16 15:30");//end
-            contents.newLineAtOffset(100, 0);
-            contents.showText("04:00h");//total time
-            contents.endText();
+            yOff = 637;
+            for (int i = 0; i < 5; i++) {
+                contents.beginText();
+                contents.setFont(font, 10);
+                contents.newLineAtOffset( 60, yOff);
+                contents.showText("Stundenzettel bearbeitet");
+                contents.endText();
+                yOff = yOff - 17;
+            }
 
+            //Kategorie bulk
+            yOff = 637;
+            for (int i = 0; i < 5; i++) {
+                contents.beginText();
+                contents.newLineAtOffset(197, yOff);
+                contents.showText("Tutorium");//Kategorie
+                contents.endText();
+                yOff = yOff - 17;
+            }
+            //Time bulk, may need no extra offset calculation
+            yOff = 637;
+            for (int i = 0; i < 3; i++) {
+                contents.beginText();
+                contents.newLineAtOffset(300, yOff);
+                contents.showText("01.02.16 11:30");//start
+                contents.newLineAtOffset(82, 0);
+                contents.showText("01.02.16 15:30");//end
+                contents.newLineAtOffset(100, 0);
+                contents.showText("01:30h");//total time
+                contents.endText();
+                yOff -= 17;
+            }
             contents.close();
             pdfTimeSheet.save("C:\\Users\\Dav\\Downloads\\Study.pdf");
 
         } catch (Exception e) {
-            System.err.println("Content not loaded.");
+            System.err.println("problem in content section");
         }
         try {
             pdfTimeSheet.close();
         } catch (Exception e) {
-            System.err.println("It's fucked up. Nobody can save you.");
+            System.err.println("close() went wrong");
         }
         return null;
     }
@@ -137,9 +151,10 @@ public class TimeSheetHandler {
     }
 
     public static void main(String[] args) {
-        MainControl.getInstance().startup();
+        //MainControl.getInstance().startup();
         TimeSheetHandler handler = TimeSheetHandler.getInstance();
-        handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
+        //handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
+        handler.createPdfFromTimeSheet();
 
         System.exit(0);
     }
