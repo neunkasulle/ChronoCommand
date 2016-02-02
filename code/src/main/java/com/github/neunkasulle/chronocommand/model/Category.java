@@ -44,6 +44,14 @@ public class Category {
     }
 
     /**
+     * setName implementation for category
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * toString implematation for category
      * @return string of the category DB value
      */

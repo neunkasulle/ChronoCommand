@@ -116,4 +116,14 @@ public class TimeSheetDAO {
         Object obj = criteria.list().get(0);
         return (TimeRecord) obj;
     }
+
+    public TimeSheetHandler getTimeSheetHandler() throws ChronoCommandException {
+        Session  session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Object obj = session.createCriteria(TimeSheetHandler.class).uniqueResult();
+        if (obj instanceof TimeSheetHandler) {
+            return (TimeSheetHandler) obj;
+        }
+        throw new ChronoCommandException();
+
+    }
 }

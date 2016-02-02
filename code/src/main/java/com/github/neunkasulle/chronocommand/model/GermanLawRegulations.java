@@ -79,6 +79,8 @@ public class GermanLawRegulations extends Regulations {
         return result;
     }
 
+    //TODO Feiertage
+
     /**
      * überprüfen, dass eine person nicht mehr als 8 (10) h am Tag
      * arbeitet
