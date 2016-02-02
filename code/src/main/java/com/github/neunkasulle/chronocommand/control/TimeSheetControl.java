@@ -111,6 +111,7 @@ public class TimeSheetControl extends Control {
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
         timeRecord.setEnd(LocalDateTime.now());
+        TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
     }
 
     /**
@@ -269,7 +270,6 @@ public class TimeSheetControl extends Control {
      */
     public List<TimeSheet> getTimeSheet(Month month, int year) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-
 
         return timeSheetDAO.getAllTimeSheets(month, year);
     }
