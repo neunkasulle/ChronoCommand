@@ -199,4 +199,11 @@ public class TimeRecord {
     public TimeSheet getTimeSheet() {
         return timeSheet;
     }
+
+    public String getTotalTime() {
+        int hour = this.getEndHour() - this.getBeginningHour();
+        int min = this.getEndMinute() - this.getBeginningMinute();
+        String totTime = hour + " " + min;
+        return totTime;
+    }
 }
