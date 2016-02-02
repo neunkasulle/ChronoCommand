@@ -42,7 +42,8 @@ public class TimeSheetControl extends Control {
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
-        timeSheet.addTime(new TimeRecord(LocalDateTime.now(),LocalDateTime.now(), null, null));
+        //timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), null, null));
+        timeSheetDAO.saveTimeRecord(new TimeRecord(LocalDateTime.now(), null, null, null, timeSheet));
     }
 
     /**
@@ -67,8 +68,8 @@ public class TimeSheetControl extends Control {
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
 
-        timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
-
+        //timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
+        timeSheetDAO.saveTimeRecord(new TimeRecord(LocalDateTime.now(), null, category, description, timeSheet));
     }
 
     /**
@@ -84,6 +85,7 @@ public class TimeSheetControl extends Control {
         }
 
         timeRecord.setEnd(LocalDateTime.now());
+        timeSheetDAO.saveTimeRecord(timeRecord);
     }
 
     /**
@@ -134,8 +136,8 @@ public class TimeSheetControl extends Control {
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
 
-        timeSheet.addTime(new TimeRecord(beginn, end, category, description));
-
+        //timeSheet.addTime(new TimeRecord(beginn, end, category, description));
+        timeSheetDAO.saveTimeRecord(new TimeRecord(beginn, end, category, description, timeSheet));
     }
 
     /**

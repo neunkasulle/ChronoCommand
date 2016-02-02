@@ -61,18 +61,19 @@ public class MainControlTest {
     }
 
     @Test(expected = ChronoCommandException.class)
-    public void testFailingLogin() {
+    public void testFailingLogin() throws Exception {
         LoginControl loginControl = LoginControl.getInstance();
         try {
-            loginControl.login("tom", "cat", true);
+            loginControl.login("tom", "dog", true);
         }
         catch (ChronoCommandException e) {
             assertTrue(e.getReason() == Reason.BADCREDENTIALS);
+            throw e;
         }
     }
 
     @Test(expected = ChronoCommandException.class)
-    public void testFailingCategory() {
+    public void testFailingCategory() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
 
@@ -81,6 +82,7 @@ public class MainControlTest {
         }
         catch (ChronoCommandException e) {
             assert(e.getReason() == Reason.CATEGORYNOTFOUND);
+            throw e;
         }
 
     }
@@ -109,7 +111,7 @@ public class MainControlTest {
     }
 
     @Test(expected = ChronoCommandException.class)
-    public void testFalseTimeRecordAdd() {
+    public void testFalseTimeRecordAdd() throws Exception {
 
     }
 
