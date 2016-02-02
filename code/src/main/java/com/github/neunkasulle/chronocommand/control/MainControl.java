@@ -69,6 +69,7 @@ public class MainControl extends Control {
         UserDAO.getInstance().saveUser(matt);
 
         TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
+        TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
 
         Category prog = CategoryDAO.getInstance().findCategoryByString("Programming");
         String taet = "codework for PSE";
@@ -76,9 +77,10 @@ public class MainControl extends Control {
         LocalDateTime date2 = LocalDateTime.of(2016, 1, 1, 15, 30);
         TimeRecord timeRecTom = new TimeRecord( date1, date2, prog, taet, tomTimeSheet);
 
-        //tomTimeSheet.addTime(timeRecTom);
-        TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
+
+        TimeRecord timeRecTom2 = new TimeRecord( LocalDateTime.of(2016, 2, 2, 8, 0), LocalDateTime.of(2016, 2, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Programmieren"), "testing", tomTimeSheet);
+        TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
     }
 
 

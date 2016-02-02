@@ -5,6 +5,8 @@ import com.github.neunkasulle.chronocommand.model.*;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -111,6 +113,7 @@ public class TimeSheetControl extends Control {
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
         timeRecord.setEnd(LocalDateTime.now());
+        TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
     }
 
     /**
@@ -270,7 +273,6 @@ public class TimeSheetControl extends Control {
     public List<TimeSheet> getTimeSheet(Month month, int year) {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
 
-
         return timeSheetDAO.getAllTimeSheets(month, year);
     }
 
@@ -279,14 +281,13 @@ public class TimeSheetControl extends Control {
      * @param timeRecords A number of time records to sum up
      * @return the Number of working hours
      */
-    private int getCurrentHours(TimeRecord[] timeRecords) {
-        int currentHours = 0;
-        for ( TimeRecord timeRecord : timeRecords) {
-            //FIXME Maybe with: https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html#until-java.time.temporal.Temporal-java.time.temporal.TemporalUnit-
-            //currentHours += timeRecord.getEnd(). - timeRecord.getBeginning();
+    private int getCurrentMinutes(TimeRecord[] timeRecords) {
+        int currentMinutes = 0;
+        for (TimeRecord timeRecord : timeRecords) {
+            currentMinutes += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd());
         }
 
-        return currentHours;
+        return currentMinutes;
     }
 
 }
