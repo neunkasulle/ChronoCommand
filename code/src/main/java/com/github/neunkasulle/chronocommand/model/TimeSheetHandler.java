@@ -1,5 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import com.github.neunkasulle.chronocommand.control.MainControl;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -7,6 +8,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -135,8 +137,9 @@ public class TimeSheetHandler {
     }
 
     public static void main(String[] args) {
+        MainControl.getInstance().startup();
         TimeSheetHandler handler = TimeSheetHandler.getInstance();
-        handler.createPdfFromTimeSheet();
+        handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
 
         System.exit(0);
     }

@@ -75,8 +75,5 @@ public class TimeSheet {
     public void addTime(TimeRecord timeRecord) {
         timeRecords.add(timeRecord);
     }
-
-
-
-
+    
 }

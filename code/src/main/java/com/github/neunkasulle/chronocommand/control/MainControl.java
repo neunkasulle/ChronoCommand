@@ -8,6 +8,9 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.util.Factory;
 import org.hibernate.cfg.NotYetImplementedException;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 
 /**
  * Created by Janze on 18.01.2016.
@@ -64,6 +67,16 @@ public class MainControl extends Control {
 
         User matt = new User(role, "matt", "Matt", "matt@example.com", "matt", tom, 10);
         UserDAO.getInstance().saveUser(matt);
+
+        TimeSheet tomTimeSheet = new TimeSheet(tom, Month.JANUARY, 2016);
+
+        Category prog = CategoryDAO.getInstance().findCategoryByString("Programming");
+        String taet = "codework for PSE";
+        LocalDateTime date1 = LocalDateTime.of(2016, 1, 1, 11, 30);
+        LocalDateTime date2 = LocalDateTime.of(2016, 1, 1, 15, 30);
+        TimeRecord timeRecTom = new TimeRecord( date1, date2, prog, taet);
+        tomTimeSheet.addTime(timeRecTom);
+        TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
     }
 
 
