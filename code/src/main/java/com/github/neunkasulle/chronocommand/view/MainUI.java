@@ -1,9 +1,11 @@
 package com.github.neunkasulle.chronocommand.view;
 
+import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.MainControl;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
@@ -42,8 +44,9 @@ public class MainUI extends UI implements ViewChangeListener {
         VerticalLayout baseLayout = new VerticalLayout();
         setContent(baseLayout);
 
-        header = new Label("You have a header!");
+        header = new Label("ChronoCommand");
         header.setSizeUndefined();
+        header.addStyleName(ValoTheme.LABEL_H1);
         baseLayout.addComponent(header);
         baseLayout.setComponentAlignment(header, Alignment.TOP_CENTER);
 
@@ -60,7 +63,7 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(MESSAGEVIEW, MessageView.class);
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);
-        /*if (!SecurityUtils.getSubject().isAuthenticated()) {
+        /*if (!LoginControl.getInstance().isLoggedIn()) {
             navigator.navigateTo(LOGINVIEW);
         }*/
 
@@ -86,11 +89,11 @@ public class MainUI extends UI implements ViewChangeListener {
     @Override
     public boolean beforeViewChange(ViewChangeEvent event) {
         /*Subject currentUser = SecurityUtils.getSubject();
-        if (currentUser.isRemembered() && LOGINVIEW.equals(event.getViewName())) {
+        if (LoginControl.getInstance().isLoggedIn() && LOGINVIEW.equals(event.getViewName())) {
             event.getNavigator().navigateTo(MAINVIEW);
             return false;
         }
-        if (!currentUser.isRemembered() && !LOGINVIEW.equals(event.getViewName())) {
+        if (!LoginControl.getInstance().isLoggedIn() && !LOGINVIEW.equals(event.getViewName())) {
             event.getNavigator().navigateTo(LOGINVIEW);
             return false;
         }*/
@@ -105,14 +108,6 @@ public class MainUI extends UI implements ViewChangeListener {
 
     @Override
     public void afterViewChange(ViewChangeEvent event) {
-        Logger logger = LoggerFactory.getLogger(MainUI.class);
-        Subject subject = SecurityUtils.getSubject();
-        logger.info("Subject: {} remember {} authenticated {}", subject, subject.isRemembered(), subject.isAuthenticated());
-        if (subject.isRemembered() || subject.isAuthenticated()) {
-            header.setValue("Whoo, you're logged in!");
-        } else {
-            header.setValue("You're logged out.");
-        }
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)

@@ -1,5 +1,6 @@
 package com.github.neunkasulle.chronocommand.view;
 
+import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.Category;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
 import com.github.neunkasulle.chronocommand.model.TimeSheetDAO;
@@ -30,29 +31,35 @@ public class MainView extends BaseView {
 
         final HorizontalLayout headLine = new HorizontalLayout();
         contentPane.addComponent(headLine);
+        headLine.setSpacing(true);
 
         /* Table */
 
-        //TODO: No back-end connection!
-        final ComboBox categorySelection = new ComboBox(null, Arrays.asList("Kategorie1", "Kategorie2"));
-        categorySelection.setInputPrompt("Kategorie auswählen");
+        final ComboBox categorySelection = new ComboBox();
+        categorySelection.setInputPrompt("Kategorie");
+        List<Category> categoryList = TimeSheetControl.getInstance().getAllCategories();
+        for (Category category : categoryList) {
+            categorySelection.addItem(category.getName());
+        }
         headLine.addComponent(categorySelection);
         headLine.setComponentAlignment(categorySelection, Alignment.TOP_LEFT);
 
-        //TODO: No back-end connection!
-        final ComboBox activitySelection = new ComboBox(null, Arrays.asList("Tätigkeit1", "Tätigkeit2"));
-        activitySelection.setInputPrompt("Tätigkeit auswählen");
+        final TextField activitySelection = new TextField();
+        activitySelection.setInputPrompt("Tätigkeit");
         headLine.addComponent(activitySelection);
         headLine.setComponentAlignment(activitySelection, Alignment.TOP_CENTER);
 
         //TODO: No back-end connection!
-        final HorizontalLayout timeButtons = new HorizontalLayout();
+        /*final HorizontalLayout timeButtons = new HorizontalLayout();
+        timeButtons.setSpacing(true);
         headLine.addComponent(timeButtons);
-        headLine.setComponentAlignment(timeButtons, Alignment.TOP_RIGHT);
+        headLine.setComponentAlignment(timeButtons, Alignment.TOP_RIGHT);*/
 
-        timeButtons.addComponent(new Button("Starten"));
-        timeButtons.addComponent(new Button("Stopen"));
-        timeButtons.addComponent(new Button("Speichern"));
+        final Button startButton = new Button("Starten");
+        headLine.addComponent(startButton);
+
+        final Button stopButton = new Button("Stoppen");
+        headLine.addComponent(stopButton);
 
         /* Table */
 
