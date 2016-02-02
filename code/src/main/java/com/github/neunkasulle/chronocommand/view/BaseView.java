@@ -1,5 +1,6 @@
 package com.github.neunkasulle.chronocommand.view;
 
+import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.Category;
@@ -281,8 +282,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         final Button logoutButton = new Button(new ThemeResource("img/logout13.png"));
         logoutButton.addClickListener(e -> {
-            //TODO: Is this correct?
-            // /SecurityUtils.getSubject().logout();
+            LoginControl.getInstance().logout();
             getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
             this.logoutClicked();
         });
