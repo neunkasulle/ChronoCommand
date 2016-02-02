@@ -1,0 +1,8 @@
+model
+  category 
+  categoryDAO
+    addCategory -> saveCategory, void
+    ++findCategoryByString(String: string): Category
+  ++DAOHelper
+  GermanLawRegulations
+    
