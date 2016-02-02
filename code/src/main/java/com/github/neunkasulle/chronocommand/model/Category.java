@@ -29,6 +29,13 @@ public class Category {
     }
 
     /**
+     * @return unique id of the category set by the database
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
      * Gets the name of the category
      * @return the name of the category
      */
@@ -43,5 +50,20 @@ public class Category {
     @Override
     public String toString() {
         return super.toString() + " " + id + " " + name;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode() ^ name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Category) {
+            Category other = (Category) o;
+            return other.getId().equals(id) && other.getName().equals(name);
+        } else {
+            return false;
+        }
     }
 }
