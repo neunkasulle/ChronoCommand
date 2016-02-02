@@ -35,7 +35,7 @@ public class MainControl extends Control {
      * When application crashed critical, it will save and shut down.
      */
     private void exceptionHandling() {
-        throw new NotYetImplementedException();
+        throw new NotYetImplementedException(); //TODO
     }
 
     /**

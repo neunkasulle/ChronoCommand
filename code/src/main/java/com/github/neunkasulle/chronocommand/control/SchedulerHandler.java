@@ -43,7 +43,7 @@ public class SchedulerHandler {
                 .build();
 
         Trigger trigger = newTrigger()
-                .withIdentity("evenMinute", "testGroup")
+                .withIdentity("intervalTrigger", "testGroup")
                 .withSchedule(simpleSchedule()
                     .withIntervalInSeconds(3)
                     .withRepeatCount(3))
@@ -60,7 +60,7 @@ public class SchedulerHandler {
     private void shutdownSched(Scheduler sched) throws SchedulerException {
         sched.shutdown(true);//kill the scheduler after every job is executed
     }
-    /*
+
     public static void main(String[] args) {
 
         try {
@@ -73,5 +73,5 @@ public class SchedulerHandler {
 
        //exit programm manually
     }
-    */
+
 }

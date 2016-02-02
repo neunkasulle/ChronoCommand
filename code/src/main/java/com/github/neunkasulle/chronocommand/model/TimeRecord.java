@@ -29,7 +29,7 @@ public class TimeRecord {
 
     /**
      * Constructs a new time record.
-     * @param beginn The beginning of the time record
+     * @param begin The beginning of the time record
      * @param end The end of the time record
      * @param category the category in which this record can be sorted
      * @param description a short description of this recorded time
