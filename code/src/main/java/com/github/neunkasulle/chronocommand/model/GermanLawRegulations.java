@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.model;
 
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -49,10 +50,10 @@ public class GermanLawRegulations extends Regulations {
     private String checkForPauses(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
 
-        int maxWorkingWithoutBreak = 6*60*60; // 6 Hours in seconds
+        int maxWorkingWithoutBreak = 6*60; // 6 Hours in minutes
 
         for (TimeRecord timeRecord : timeRecords) {
-            if (timeRecord.getEnd().toEpochSecond(ZoneOffset.UTC) - timeRecord.getBeginning().toEpochSecond(ZoneOffset.UTC) >= maxWorkingWithoutBreak) {
+            if (ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd()) >= maxWorkingWithoutBreak) {
                 result += "Nach 6h Arbeiten muss eine Pause eingelegt werden";
             }
         }
@@ -88,24 +89,24 @@ public class GermanLawRegulations extends Regulations {
      * @return
      */
     private String checkWorkHours (TimeSheet timeSheet) {
-        int maxWorkingHours = 8*60*60; // 8 Hours in seconds
-        int maxOvertime = 10*60*60; // 2 Hours in seconds
+        int maxWorkingHours = 8*60; // 8 Hours in minutes
+        int maxOvertime = 10*60; // 2 Hours in minutes
 
         String result = "";
         for (int n = 1; n <= getNumberOfDaysInMonth(timeSheet); n++) {
 
             List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
-            int secondsPerDay = 0;
+            int minutesPerDay = 0;
             for (TimeRecord timeRecord : timeRecords ) {
-                secondsPerDay += timeRecord.getEnd().toEpochSecond(ZoneOffset.UTC) - timeRecord.getBeginning().toEpochSecond(ZoneOffset.UTC);
+                minutesPerDay += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd());
             }
             if (!timeSheet.user.isPermitted("longHours")) {
-                if (secondsPerDay > maxWorkingHours) {
+                if (minutesPerDay > maxWorkingHours) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
             }
             else
-                if (secondsPerDay > maxWorkingHours + maxOvertime) {
+                if (minutesPerDay > maxWorkingHours + maxOvertime) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
         }
@@ -132,8 +133,8 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkMonthHours(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
-        if ( timeSheet.currentHours > timeSheet.requiredHoursPerMonth) {
-            result += "Maximale Arbeitszeit für diesen Monat erreicht";
+        if ( timeSheet.currentMinutesThisMonth > timeSheet.requiredHoursPerMonth * 60) {
+            result += "Maximale Arbeitszeit für diesen Monat überschritten";
         }
         return result;
     }

@@ -5,8 +5,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.Month;
-import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -41,7 +39,7 @@ public class TimeSheet {
     /*@OneToMany
     List<TimeRecord> timeRecords;*/
 
-    int currentHours;
+    int currentMinutesThisMonth;
 
     public TimeSheet() {}
 
@@ -58,8 +56,8 @@ public class TimeSheet {
         return id;
     }
 
-    public void setCurrentHours(int hours) {
-        currentHours = hours;
+    public void setCurrentMinutesThisMonth(int hours) {
+        currentMinutesThisMonth = hours;
     }
 
     public boolean setTimeSheetState(TimeSheetState state) {
