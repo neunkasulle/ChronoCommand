@@ -1,8 +1,54 @@
 model
+  --Administrator
+  --Supervisor
+  --Proletarier
   category 
   categoryDAO
     addCategory -> saveCategory, void
     ++findCategoryByString(String: string): Category
   ++DAOHelper
+    ++startup
+    ++shutdown
+    ++getSessionFactory:SessionFactory
+  (ChonoCommandException)
   GermanLawRegulations
+    checkMaxArbeitszeit ->  checkWorkHours
+    checkPausezeit -> checkForPause
+    --checkRuhezeit
+    checkNachtarbeit -> checkNightWork
+    checkFeiertagsruhe -> checkSundayWork
+  Message
+    --isDraft
+  MessageDAO
+    addMessage -> saveMessage
+  Regulations
+    --loadHolidays (kommt in GermanLawRegulations)
+    --loadRestrictedTimes
+    --loadTimeRestrictions
+  Role
+    Enum -> class
+    [ +id:Long{readonly}, +name:String, +description:String, +permission:Set<String> |]
+  Session
+    (maybe deleted cause shiro)
+  TimeRecord
+    maybe --timeSheet
+    maybe --checkTimes
+  TimeSheet
+    hoursPerMonth -> requiredHoursPerMonth
+    ++currentHours
+    ++timeRecords
+    --checkHourLimit (ist in GermanLawRegulations)
+   TimeSheetDAO
+    getTimeSheet(...) -> (month:Month,year:int, user:User) 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
