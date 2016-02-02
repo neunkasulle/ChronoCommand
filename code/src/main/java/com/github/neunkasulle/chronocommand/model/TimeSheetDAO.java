@@ -39,7 +39,7 @@ public class TimeSheetDAO {
 
     public List<TimeRecord> getTimeRecords(TimeSheet timeSheet) {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(TimeRecord.class).add(Restrictions.eq("timesheet", timeSheet ));
+        Criteria criteria = session.createCriteria(TimeRecord.class).add(Restrictions.eq("timeSheet", timeSheet ));
         List<TimeRecord> timeRecordList = new ArrayList<>();
         for (Object obj : criteria.list()) {
             if (obj instanceof TimeRecord) {
