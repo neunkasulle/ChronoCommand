@@ -44,15 +44,15 @@ public class MessageView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
+        final TextField filter = new TextField();
+        contentPane.addComponent(filter);
+        filter.setSizeFull();
+
         final HorizontalLayout formContent = new HorizontalLayout();
         formContent.setSizeFull();
         contentPane.addComponent(formContent);
 
          /* Table */
-
-        final TextField filter = new TextField();
-        formContent.addComponent(filter);
-        filter.setSizeFull();
 
         formContent.addComponent(messagetList);
         beanItemContainer.addNestedContainerProperty("sender.username");

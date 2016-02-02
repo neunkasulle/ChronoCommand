@@ -14,8 +14,12 @@ import java.util.function.Consumer;
  */
 public class MessageForm extends FormLayout {
 
-    private TextField content = new TextField("Nachricht");
-    private Button save = new Button("Save");
+    private TextArea content = new TextArea("Nachricht");
+
+    private RichTextArea messageInputArea = new RichTextArea();
+
+
+    private Button answer = new Button("Antworten");
     private Button cancel = new Button("Cancel");
 
     private Message object;
@@ -30,20 +34,20 @@ public class MessageForm extends FormLayout {
     }
 
     public MessageForm(final Button.ClickListener saveOperation, final Button.ClickListener cancelOperation) {
-        this.save.addClickListener(saveOperation);
+        this.answer.addClickListener(saveOperation);
         this.cancel.addClickListener(cancelOperation);
 
-        save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-        save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        answer.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        answer.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         setVisible(false);
 
         setSizeUndefined();
         setMargin(true);
 
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        HorizontalLayout actions = new HorizontalLayout(answer, cancel);
         actions.setSpacing(true);
 
-        addComponents(content, actions);
+        addComponents(content, messageInputArea, actions);
     }
 
     void edit(Message message) {
