@@ -33,11 +33,11 @@ public class MessageView extends BaseView {
             // Commit the fields from UI to DAO
             this.form.getFormFieldBinding().commit();
 
-           //TODO: DO other stuff
+            //TODO: DO other stuff
         } catch (FieldGroup.CommitException ex) {
             throw new IllegalArgumentException(ex);
         }
-    },e -> {
+    }, e -> {
         messagetList.select(null);
         refreshContacts();
     });
@@ -45,9 +45,33 @@ public class MessageView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
+
+        /* Headline */
+
+        final Label header = new Label("Nachrichten verwalten");
+        header.setId("page-header");
+        header.setSizeFull();
+        contentPane.addComponent(header);
+
+        /*Command head line */
+
+        final HorizontalLayout headerContent = new HorizontalLayout();
+        headerContent.setSizeFull();
+        headerContent.setSpacing(true);
+        contentPane.addComponent(headerContent);
+
         final TextField filter = new TextField();
-        contentPane.addComponent(filter);
-        filter.setSizeFull();
+        headerContent.addComponent(filter);
+
+        final Button newMessage = new Button("Neue Nachricht");
+        newMessage.addClickListener(e -> {
+            //TODO: nonnull stuff:
+            final Message m = new Message(null ,null,"");
+            form.create(m);
+        });
+        headerContent.addComponent(newMessage);
+
+        /* Table & Form */
 
         final HorizontalLayout formContent = new HorizontalLayout();
         formContent.setSizeFull();

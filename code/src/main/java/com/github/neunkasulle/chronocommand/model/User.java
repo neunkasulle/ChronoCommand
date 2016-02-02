@@ -93,6 +93,18 @@ public class User {
         this.username = username;
     }
 
+    /**
+     * Returns the username associated with this user account;
+     *
+     * @return the username associated with this user account;
+     */
+    public String getRealname() {
+        return realName;
+    }
+
+    public void setRealname(final String realname) {
+        this.realName = realname;
+    }
 
     public String getEmail() {
         return email;

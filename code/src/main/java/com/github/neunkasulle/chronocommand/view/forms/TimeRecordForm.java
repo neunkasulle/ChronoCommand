@@ -78,12 +78,7 @@ public class TimeRecordForm extends FormLayout {
     public void edit(TimeRecord record) {
         this.object = record;
         if (record != null) {
-            // Bind the properties of the contact POJO to fiels in this form
-            try {
-                formFieldBindings = BeanFieldGroup.bindFieldsBuffered(record, this);
-            } catch (Exception e) {
-                beginningHour.setValue(e.getCause().getMessage());
-            }
+            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(record, this);
             beginningHour.focus();
         }
         setVisible(record != null);

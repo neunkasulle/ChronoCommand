@@ -17,9 +17,9 @@ public class CreateUserView extends BaseView {
 
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
+
         final VerticalLayout siteInfo = new VerticalLayout();
         siteInfo.setSizeFull();
-
 
         siteInfo.addComponent(new Label("Neuen Account anlegen:"));
         contentPane.addComponent(siteInfo);

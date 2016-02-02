@@ -47,6 +47,11 @@ public class TimeRecordView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
+        final Label header = new Label("Zeit erfassen");
+        header.setId("page-header");
+        header.setSizeFull();
+        contentPane.addComponent(header);
+
         /* Headline */
 
         final HorizontalLayout headLine = new HorizontalLayout();

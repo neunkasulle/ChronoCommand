@@ -19,6 +19,7 @@ public class UserSettingsView extends BaseView {
 
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
+
         final VerticalLayout siteInfo = new VerticalLayout();
         siteInfo.setSizeFull();
 

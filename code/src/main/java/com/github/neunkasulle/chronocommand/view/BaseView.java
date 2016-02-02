@@ -80,7 +80,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button listOfMyProletarierButton = new Button("Meine HIWIs anzeigen");
                 listOfMyProletarierButton.setSizeFull();
-                listOfMyProletarierButton.addClickListener(e ->{
+                listOfMyProletarierButton.addClickListener(e -> {
                     //TODO: Get the list of all his HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfMyProletarierButton);
@@ -98,6 +98,10 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final ComboBox supervisorSelection = new ComboBox(null, Arrays.asList("Betreuer1", "Betreuer2"));
                 supervisorSelection.setSizeFull();
+                supervisorSelection.addValueChangeListener(e -> {
+                    //TODO : Do sonething usefoll here
+                    extraPane.getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
+                });
                 supervisorSelection.setInputPrompt("Betreuer auswählen");
                 extraPane.addComponent(supervisorSelection);
 
@@ -107,14 +111,14 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 extraPane.addComponent(accountManagementPane);
                 accountManagementPane.addComponent(new Label("Account Verwalten:"));
 
-                final ComboBox accountManagementSelection = new ComboBox(null, Arrays.asList("Neuen Account zulegen", "Account löschen","Account bearbeiten"));
+                final ComboBox accountManagementSelection = new ComboBox(null, Arrays.asList("Neuen Account zulegen", "Account löschen", "Account bearbeiten"));
                 accountManagementSelection.setSizeFull();
                 accountManagementSelection.setInputPrompt("Operation auswählen");
                 extraPane.addComponent(accountManagementSelection);
 
                 final Button listOfAllProletarierButton = new Button("Alle HIWIs anzeigen");
                 listOfAllProletarierButton.setSizeFull();
-                listOfAllProletarierButton.addClickListener(e ->{
+                listOfAllProletarierButton.addClickListener(e -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfAllProletarierButton);
@@ -122,7 +126,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button listOfAllSupervisorButton = new Button("Alle Betreuer anzeigen");
                 listOfAllSupervisorButton.setSizeFull();
-                listOfAllSupervisorButton.addClickListener(e ->{
+                listOfAllSupervisorButton.addClickListener(e -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfAllSupervisorButton);

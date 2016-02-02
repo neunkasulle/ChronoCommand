@@ -28,6 +28,7 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String ADMINVIEW = "admin";
     public static final String CREATEUSERVIEW = "createuser";
     public static final String TIMESHEETVIEW = "timesheet";
+    public static final String EMPLOYEEVIEW = "employee";
     public static final String MESSAGEVIEW = "messages";
     public static final String SETTINGSVIEW = "settings";
     private Navigator navigator;
@@ -56,6 +57,7 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator = new Navigator(this, timeRecordView);
         navigator.addViewChangeListener(this);
         navigator.addView(LOGINVIEW, new LoginView());
+        navigator.addView(EMPLOYEEVIEW, new SupervisorView());
         navigator.addView(ADMINVIEW, new AdminView());
         navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);
@@ -63,7 +65,7 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(MESSAGEVIEW, MessageView.class);
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);
-        /*if (!LoginControl.getInstance().isLoggedIn()) {
+        /*if (!LoginControl.getInstance().isLoggedIn()) {\
             navigator.navigateTo(LOGINVIEW);
         }*/
 

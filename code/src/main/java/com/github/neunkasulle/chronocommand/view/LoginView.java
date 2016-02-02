@@ -74,17 +74,23 @@ public class LoginView extends LoginForm implements View {
         HorizontalLayout links = new HorizontalLayout();
         layout.addComponent(links);
 
-        Button timeRecord = new Button("Main");
+        Button timeRecord = new Button("TimeRecord");
         timeRecord.addClickListener(event -> {
             getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
         });
         links.addComponent(timeRecord);
 
-        Button admin = new Button("Main");
-        timeRecord.addClickListener(event -> {
+        Button admin = new Button("Admin");
+        admin.addClickListener(event -> {
             getUI().getNavigator().navigateTo(MainUI.ADMINVIEW);
         });
         links.addComponent(admin);
+
+        Button employees = new Button("Employees");
+        employees.addClickListener(event -> {
+            getUI().getNavigator().navigateTo(MainUI.EMPLOYEEVIEW);
+        });
+        links.addComponent(employees);
 
         Button createUser = new Button("Create User");
         createUser.addClickListener(event -> {

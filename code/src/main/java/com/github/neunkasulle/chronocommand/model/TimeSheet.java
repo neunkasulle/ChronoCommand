@@ -56,6 +56,10 @@ public class TimeSheet {
         return id;
     }
 
+    public int getCurrentMinutesThisMonth() {
+        return currentMinutesThisMonth;
+    }
+
     public void setCurrentMinutesThisMonth(int hours) {
         currentMinutesThisMonth = hours;
     }
@@ -72,6 +76,18 @@ public class TimeSheet {
 
     public TimeSheetState getState() {
         return state;
+    }
+
+    public Month getMonth() {
+        return this.month;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    public int getRequiredHoursPerMonth() {
+        return this.requiredHoursPerMonth;
     }
 
     /*public void addTime(TimeRecord timeRecord) {

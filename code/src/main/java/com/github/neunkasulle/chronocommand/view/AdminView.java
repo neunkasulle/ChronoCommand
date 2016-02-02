@@ -1,46 +1,48 @@
 package com.github.neunkasulle.chronocommand.view;
 
-import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.model.Category;
-import com.github.neunkasulle.chronocommand.model.TimeRecord;
-import com.github.neunkasulle.chronocommand.view.BaseView;
-import com.github.neunkasulle.chronocommand.view.LocalDateTimeToLocalTimeStringConverter;
-import com.github.neunkasulle.chronocommand.view.forms.TimeRecordForm;
+import com.github.neunkasulle.chronocommand.model.Role;
+import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.view.forms.AdminCtrlForm;
 import com.vaadin.data.Item;
-import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.vaadin.dialogs.ConfirmDialog;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Janze on 20.01.2016.
  */
 public class AdminView extends BaseView {
 
-    private BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
+    private BeanItemContainer<User> beanItemContainer = new BeanItemContainer<>(User.class);
 
     private final Grid recordList = new Grid();
 
-    private final TimeRecordForm form = new TimeRecordForm(e -> {
-        try {
-            // Commit the fields from UI to DAO
-            this.form.getFormFieldBinding().commit();
-
-            //TODO: DO other stuff
-        } catch (FieldGroup.CommitException ex) {
-            throw new IllegalArgumentException(ex);
-        }
+    private final AdminCtrlForm form = new AdminCtrlForm(e -> {
+        getUI().getNavigator().navigateTo(MainUI.EMPLOYEEVIEW);
     }, e -> {
-        //TODO: Delete it
-        refreshContacts();
+        getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
+    }, e -> {
+        ConfirmDialog.show(getUI(), "Möchten sie den Benutzer wirklich löschen?",
+                dialog -> {
+                    if (dialog.isConfirmed()) {
+                        // Confirmed to continue TODO
+                    } else {
+                        recordList.select(null);
+                        refreshContacts();
+                    }
+                }
+        );
+    }, e -> {
+        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
+    }, e -> {
+        getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
     }, e -> {
         this.recordList.select(null);
         refreshContacts();
@@ -49,39 +51,16 @@ public class AdminView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
-        /* Headline */
+        final Label header = new Label("Globale Benutzerverwaltung");
+        header.setId("page-header");
+        header.setSizeFull();
+        contentPane.addComponent(header);
 
-        final HorizontalLayout headLine = new HorizontalLayout();
-        contentPane.addComponent(headLine);
-        headLine.setSpacing(true);
+        final TextField filter = new TextField();
+        contentPane.addComponent(filter);
+        filter.setSizeFull();
 
-        final ComboBox categorySelection = new ComboBox();
-        categorySelection.setInputPrompt("Kategorie");
-        List<Category> categoryList = TimeSheetControl.getInstance().getAllCategories();
-        for (Category category : categoryList) {
-            categorySelection.addItem(category.getName());
-        }
-        headLine.addComponent(categorySelection);
-        headLine.setComponentAlignment(categorySelection, Alignment.TOP_LEFT);
-
-        final TextField activitySelection = new TextField();
-        activitySelection.setInputPrompt("Tätigkeit");
-        headLine.addComponent(activitySelection);
-        headLine.setComponentAlignment(activitySelection, Alignment.TOP_CENTER);
-
-        //TODO: No back-end connection!
-        /*final HorizontalLayout timeButtons = new HorizontalLayout();
-        timeButtons.setSpacing(true);
-        headLine.addComponent(timeButtons);
-        headLine.setComponentAlignment(timeButtons, Alignment.TOP_RIGHT);*/
-
-        final Button startButton = new Button("Starten");
-        headLine.addComponent(startButton);
-
-        final Button stopButton = new Button("Stoppen");
-        headLine.addComponent(stopButton);
-
-        /* Form & able */
+        /* Form & table */
 
         final HorizontalLayout formContent = new HorizontalLayout();
         formContent.setSizeFull();
@@ -90,29 +69,30 @@ public class AdminView extends BaseView {
         /* Actual table */
 
         formContent.addComponent(recordList);
-        beanItemContainer.addNestedContainerProperty("category.name");
+        beanItemContainer.addNestedContainerProperty("supervisor.realname");
         final GeneratedPropertyContainer gpcontainer = new GeneratedPropertyContainer(beanItemContainer);
         recordList.setContainerDataSource(gpcontainer);
         recordList.setSelectionMode(Grid.SelectionMode.SINGLE);
         recordList.addSelectionListener(e
-                -> form.edit((TimeRecord) recordList.getSelectedRow()));
+                -> form.edit((User) recordList.getSelectedRow()));
         recordList.setSizeFull();
 
         //Add generated columns
-        gpcontainer.addGeneratedProperty("beginningTime",
-                new LocalDateTimeToLocalTimeStringConverter("beginning"));
-        gpcontainer.addGeneratedProperty("endTime",
-                new LocalDateTimeToLocalTimeStringConverter("end"));
-        gpcontainer.addGeneratedProperty("duration", new PropertyValueGenerator<String>() {
+        gpcontainer.addGeneratedProperty("roleSumary", new PropertyValueGenerator<String>() {
             @Override
             public String getValue(final Item item, final Object itemId,
                                    final Object propertyId) {
-                final LocalDateTime beginning = (LocalDateTime)
-                        item.getItemProperty("beginning").getValue();
-                final LocalDateTime end = (LocalDateTime)
-                        item.getItemProperty("end").getValue();
-                final long diff = ChronoUnit.SECONDS.between(beginning, end);
-                return LocalDateTime.ofEpochSecond(diff, 0, ZoneOffset.UTC).toLocalTime().toString();
+                @SuppressWarnings("unchecked")
+                final Set<Role> roles = (Set<Role>)
+                        item.getItemProperty("roles").getValue();
+                final StringBuilder ruleStr = new StringBuilder();
+
+                for (final Role role : roles) {
+                    ruleStr.append(role.getName());
+                    ruleStr.append(" ");
+                }
+
+                return ruleStr.toString();
             }
 
             @Override
@@ -123,13 +103,19 @@ public class AdminView extends BaseView {
 
         //Remove unused columns
         recordList.removeColumn("id");
-        recordList.removeColumn("beginning");
-        recordList.removeColumn("end");
-        recordList.removeColumn("category");
+        recordList.removeColumn("password");
+        recordList.removeColumn("roles");
+        recordList.removeColumn("mailFlag");
+        recordList.removeColumn("disabled");
+        recordList.removeColumn("supervisor");
 
-        recordList.setColumnOrder("beginningTime", "endTime", "category.name", "description");
-        recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
-        recordList.getDefaultHeaderRow().getCell("description").setHtml("Tätigkeit");
+        recordList.setColumnOrder("username", "realname", "supervisor.realname", "email", "roleSumary", "hoursPerMonth");
+        recordList.getDefaultHeaderRow().getCell("username").setHtml("Benutzername");
+        recordList.getDefaultHeaderRow().getCell("realname").setHtml("Name");
+        recordList.getDefaultHeaderRow().getCell("supervisor.realname").setHtml("Betreuer");
+        recordList.getDefaultHeaderRow().getCell("email").setHtml("E-Mail");
+        recordList.getDefaultHeaderRow().getCell("roleSumary").setHtml("Rollen");
+        recordList.getDefaultHeaderRow().getCell("hoursPerMonth").setHtml("Stunden / Woche");
 
         // The action form
 
@@ -141,13 +127,17 @@ public class AdminView extends BaseView {
     }
 
     private void refreshContacts() {
-        final List<TimeRecord> records = Arrays.asList(
-                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 9, 0), new Category("Dummy1"), "Did Dummy work", null),
-                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 12, 0), new Category("Dummy2"), "Did even more dummy work", null));
+        final User admin = new User(new Role("Admin"), "Admin", "Admin", "admin@kit.edu", "asdf", null, 40);
+        final User supervisor1 = new User(new Role("Supervisor"), "SUP1", "Peter Lustig", "lustig@kit.edu", "asdf", null, 40);
+        final User supervisor2 = new User(new Role("Supervisor"), "SUP2", "Hans Peter", "peter@kit.edu", "asdf", null, 40);
+        final User hiwi1 = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi1", "hiwi1@kit.edu", "asdf", supervisor1, 40);
+        final User hiwi2 = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi2", "hiwi2@kit.edu", "asdf", supervisor1, 40);
+        final User hiwi3 = new User(new Role("Proletarier"), "HIWI3", "Ein Hiwi3", "hiwi3@kit.edu", "asdf", supervisor2, 40);
+
+        final List<User> records = Arrays.asList(admin, supervisor1, supervisor2, hiwi1, hiwi2, hiwi3);
         this.beanItemContainer.removeAllItems();
         this.beanItemContainer.addAll(records);
         this.form.setVisible(false);
     }
-
 
 }
