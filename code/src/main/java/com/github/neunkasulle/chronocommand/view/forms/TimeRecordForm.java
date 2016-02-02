@@ -1,4 +1,4 @@
-package com.github.neunkasulle.chronocommand.view;
+package com.github.neunkasulle.chronocommand.view.forms;
 
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.Category;
@@ -75,7 +75,7 @@ public class TimeRecordForm extends FormLayout {
         addComponents(begin, end, categoryName, description, actions1, actions2);
     }
 
-    void edit(TimeRecord record) {
+    public void edit(TimeRecord record) {
         this.object = record;
         if (record != null) {
             // Bind the properties of the contact POJO to fiels in this form

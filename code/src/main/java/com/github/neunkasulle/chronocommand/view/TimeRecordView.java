@@ -2,8 +2,8 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.Category;
-import com.github.neunkasulle.chronocommand.model.Message;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
+import com.github.neunkasulle.chronocommand.view.forms.TimeRecordForm;
 import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;

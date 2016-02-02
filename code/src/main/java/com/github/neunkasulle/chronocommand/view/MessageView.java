@@ -3,6 +3,7 @@ package com.github.neunkasulle.chronocommand.view;
 import com.github.neunkasulle.chronocommand.control.MessageControl;
 import com.github.neunkasulle.chronocommand.model.Message;
 import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.view.forms.MessageForm;
 import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
@@ -27,7 +28,7 @@ public class MessageView extends BaseView {
 
     private final Grid messagetList = new Grid();
 
-    private final MessageForm form = new MessageForm( e -> {
+    private final MessageForm form = new MessageForm(e -> {
         try {
             // Commit the fields from UI to DAO
             this.form.getFormFieldBinding().commit();

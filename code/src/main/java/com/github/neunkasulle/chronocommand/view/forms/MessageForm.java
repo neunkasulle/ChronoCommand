@@ -1,4 +1,4 @@
-package com.github.neunkasulle.chronocommand.view;
+package com.github.neunkasulle.chronocommand.view.forms;
 
 import com.github.neunkasulle.chronocommand.model.Message;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -50,7 +50,7 @@ public class MessageForm extends FormLayout {
         addComponents(content, messageInputArea, actions);
     }
 
-    void edit(Message message) {
+    public void edit(Message message) {
         this.object = message;
         if (message != null) {
             // Bind the properties of the contact POJO to fiels in this form
