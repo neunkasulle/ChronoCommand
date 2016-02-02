@@ -80,11 +80,12 @@ public class MainControl extends Control {
         LocalDateTime date1 = LocalDateTime.of(2016, 1, 1, 11, 30);
         LocalDateTime date2 = LocalDateTime.of(2016, 1, 1, 15, 30);
         TimeRecord timeRecTom = new TimeRecord( date1, date2, null, taet, tomTimeSheet);
-
-        TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
-
         TimeRecord timeRecTom2 = new TimeRecord( LocalDateTime.of(2016, 2, 2, 8, 0), LocalDateTime.of(2016, 2, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Programmieren"), "testing", tomTimeSheet);
-        TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
+
+        try {
+            TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
+            TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
+        } catch (ChronoCommandException e) {}
     }
 
 

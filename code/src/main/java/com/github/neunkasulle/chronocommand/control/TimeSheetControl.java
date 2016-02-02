@@ -6,7 +6,6 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class TimeSheetControl extends Control {
      * creates a new TimeRecord. And a new Time Sheet when there is no time sheet this month
      * @param user The user which the time record belongs to
      */
-    public void newTimeRecord(User user) {
+    public TimeRecord newTimeRecord(User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
@@ -45,33 +44,39 @@ public class TimeSheetControl extends Control {
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
         //timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), null, null));
-        timeSheetDAO.saveTimeRecord(new TimeRecord(LocalDateTime.now(), null, null, null, timeSheet));
+        TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, null, null, timeSheet);
+        timeSheetDAO.saveTimeRecord(timeRecord);
+
+        return timeRecord;
     }
 
     /**
      * creates a new TimeRecord. And a new Time Sheet when there is no time sheet this month
-     * @param cat the category of the work performed in this time.
+     * @param category the category of the work performed in this time.
      * @param description description of the work performed.
      * @param user The user which the time record belongs to
      * @throws ChronoCommandException When there is something wrong with e.g. the category
      */
-    public void newTimeRecord(String cat, String description, User user) throws ChronoCommandException {
+    public TimeRecord newTimeRecord(Category category, String description, User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
-        Category category = CategoryDAO.getInstance().findCategoryByString(cat);
+        //Category category = CategoryDAO.getInstance().findCategoryByString(cat);
 
-        if(category == null) {
+        /*if(category == null) {
             throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
-        }
+        }*/
 
-        if(timeSheet == null){  //No Time sheet yet, we need to build a new one
+        if(timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
 
         //timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
-        timeSheetDAO.saveTimeRecord(new TimeRecord(LocalDateTime.now(), null, category, description, timeSheet));
+        TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, category, description, timeSheet);
+        timeSheetDAO.saveTimeRecord(timeRecord);
+
+        return timeRecord;
     }
 
     /**
@@ -79,7 +84,7 @@ public class TimeSheetControl extends Control {
      * @param user The user which the time record belongs to
      * @throws ChronoCommandException ChronoCommandException When there is something wrong with e.g. the category
      */
-    public void closeTimeRecord(User user) throws ChronoCommandException {
+    public TimeRecord closeTimeRecord(User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
         if(timeRecord.getCategory() == null) {
@@ -88,32 +93,44 @@ public class TimeSheetControl extends Control {
 
         timeRecord.setEnd(LocalDateTime.now());
         timeSheetDAO.saveTimeRecord(timeRecord);
+
+        return timeRecord;
     }
 
     /**
      * Closes a time record. Cant be invoked if newTimeRecord was called with category and description
-     * @param cat the category of the work performed in this time.
+     * @param category the category of the work performed in this time.
      * @param description description of the work performed.
      * @param user The user which the time record belongs to
      * @throws ChronoCommandException When there is something wrong with e.g. the category
      */
-    public void closeTimeRecord(String cat, String description, User user) throws ChronoCommandException {
+    public TimeRecord closeTimeRecord(Category category, String description, User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
-        if(timeRecord.getCategory() != null) {
+        /*if(timeRecord.getCategory() != null) {
             throw new ChronoCommandException(Reason.CATEGORYALREADYSPECIFIED);
-        }
+        }*/
 
-        Category category = CategoryDAO.getInstance().findCategoryByString(cat);
+        /*Category category = CategoryDAO.getInstance().findCategoryByString(cat);
         if(category == null) {
             throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
+        }*/
+
+        if (category == null && timeRecord.getCategory() == null) {
+            throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
         timeRecord.setEnd(LocalDateTime.now());
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
+
+        return timeRecord;
+    }
+
+    public TimeRecord getLatestTimeRecord(User user) {
+        return TimeSheetDAO.getInstance().getLatestTimeRecord(user);
     }
 
     /**
@@ -125,18 +142,21 @@ public class TimeSheetControl extends Control {
      * @param user The user which the time record belongs to
      * @throws ChronoCommandException When there is something wrong with e.g. the category
      */
-    public void addTimeToSheet(LocalDateTime beginn, LocalDateTime end, String cat, String description, User user)
-    throws  ChronoCommandException{
+    public void addTimeToSheet(LocalDateTime beginn, LocalDateTime end, Category category, String description, User user)
+    throws  ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-        TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
-        Category category = CategoryDAO.getInstance().findCategoryByString(cat);
+        TimeSheet timeSheet = timeSheetDAO.getTimeSheet(beginn.getMonth(), beginn.getYear(), user);
         if(category == null) {
-            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
+            throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
-        if(timeSheet == null){  //No Time sheet yet, we need to build a new one
-            timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
+        if (timeSheet == null) {  //No Time sheet yet, we need to build a new one
+            timeSheet = new TimeSheet(user, beginn.getMonth(), beginn.getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
+        }
+
+        if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         //timeSheet.addTime(new TimeRecord(beginn, end, category, description));
@@ -271,9 +291,16 @@ public class TimeSheetControl extends Control {
      * @return A list of time sheet in the specified time frame
      */
     public List<TimeSheet> getTimeSheet(Month month, int year) {
-        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+        return TimeSheetDAO.getInstance().getAllTimeSheets(month, year);
+    }
 
-        return timeSheetDAO.getAllTimeSheets(month, year);
+    /**
+     * Get all time sheets from a user
+     * @param user The user owning the time sheets
+     * @return List of all time sheets
+     */
+    public List<TimeSheet> getTimeSheetsFromUser(User user) {
+        return TimeSheetDAO.getInstance().getTimeSheetsFromUser(user);
     }
 
     /**

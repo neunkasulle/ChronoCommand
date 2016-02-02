@@ -48,6 +48,9 @@ public class Realm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         User user = UserDAO.getInstance().findUser(token.getUsername());
+        if (user == null) {
+            user = UserDAO.getInstance().findUserByEmail(token.getUsername());
+        }
         if( user != null ) {
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
         } else {

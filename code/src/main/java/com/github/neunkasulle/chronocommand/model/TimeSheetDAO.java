@@ -130,8 +130,11 @@ public class TimeSheetDAO {
         return (TimeRecord) obj;
     }
 
-    public void saveTimeRecord(TimeRecord timeRecord) {
+    public void saveTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        if (timeRecord.getCategory() != null && (timeRecord.getCategory().getId() == null || session.get(Category.class, timeRecord.getCategory().getId()) == null)) {
+            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
+        }
         Transaction tx = session.beginTransaction();
         session.saveOrUpdate(timeRecord);
         tx.commit();

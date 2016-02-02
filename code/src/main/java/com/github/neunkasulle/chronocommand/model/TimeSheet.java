@@ -93,5 +93,13 @@ public class TimeSheet {
     /*public void addTime(TimeRecord timeRecord) {
         timeRecords.add(timeRecord);
     }*/
-    
+
+    @Override
+    public String toString() {
+        String monthStr = String.valueOf(month.getValue());
+        if (monthStr.length() < 2) {
+            monthStr = "0" + monthStr;
+        }
+        return monthStr + "." + year;
+    }
 }

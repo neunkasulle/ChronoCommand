@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
+import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.Session;
 import com.vaadin.navigator.View;
@@ -19,6 +21,7 @@ import java.util.Locale;
  * Created by Janze on 20.01.2016.
  */
 public abstract class BaseView extends HorizontalLayout implements View {
+    protected ComboBox timeRecordSelection;
 
     //It would not work wenn the supervisor himself also does SZ
 
@@ -302,11 +305,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
         /* Combo box */
 
         // Creates a new combobox using an existing container
-        final ComboBox timeRecordSelection = new ComboBox(null, Arrays.asList("02.01.2016", "01.01.2016"));
+        timeRecordSelection = new ComboBox("Bitte Stundenzettel auswählen");
         timeRecordSelection.setSizeFull();
-        timeRecordSelection.setInputPrompt("Bitte Stundenzettel auswählen");
         timeRecordSelection.setNullSelectionAllowed(false);
         controlPanel.addComponent(timeRecordSelection);
+        refreshTimeSheetList();
 
         final VerticalLayout extraContent = new VerticalLayout();
         extraContent.addStyleName("container");
@@ -324,5 +327,16 @@ public abstract class BaseView extends HorizontalLayout implements View {
         }*/
         //RoleAction.valueOf(new Role("Supervisor")).fillRoleSpecificContent(extraContent);
 
+    }
+
+    protected void refreshTimeSheetList() {
+        try {
+            Object currentSelection = timeRecordSelection.getValue();
+            timeRecordSelection.removeAllItems();
+            timeRecordSelection.addItems(TimeSheetControl.getInstance().getTimeSheetsFromUser(LoginControl.getInstance().getCurrentUser()));
+            timeRecordSelection.setValue(currentSelection);
+        } catch(ChronoCommandException e) {
+            // TODO error
+        }
     }
 }

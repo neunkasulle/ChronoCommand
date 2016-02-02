@@ -25,7 +25,7 @@ public class UserDAO{
     public User findUser(String username) {
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
-            String query = "from User u where u.username = :username or u.email = :username";
+            String query = "from User u where u.username = :username";
             Object user = session.createQuery(query).setString("username", username).uniqueResult();
             if (user instanceof User) {
                 return (User) user;

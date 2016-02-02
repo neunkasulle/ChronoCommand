@@ -1,9 +1,6 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
-import com.github.neunkasulle.chronocommand.model.Reason;
-import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,7 +75,7 @@ public class MainControlTest {
         UserDAO userDAO = UserDAO.getInstance();
 
         try {
-            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), "FUU","BAR" , userDAO.findUser("tom"));
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), new Category("FUU"), "BAR" , userDAO.findUser("tom"));
         }
         catch (ChronoCommandException e) {
             assert(e.getReason() == Reason.CATEGORYNOTFOUND);
@@ -91,8 +88,9 @@ public class MainControlTest {
     public void testRightTimeRecordAdd() {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
+        Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
         try {
-            timeSheetControl.newTimeRecord("Programming", "testing", userDAO.findUser("tom"));
+            timeSheetControl.newTimeRecord(category, "testing", userDAO.findUser("tom"));
             timeSheetControl.closeTimeRecord(userDAO.findUser("tom"));
         }
         catch (ChronoCommandException e) {
@@ -100,7 +98,7 @@ public class MainControlTest {
         }
         try {
             timeSheetControl.newTimeRecord(userDAO.findUser("tom"));
-            timeSheetControl.closeTimeRecord("Programming", "testing", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(category, "testing", userDAO.findUser("tom"));
              //       LocalDateTime.now(), );
         }
         catch (ChronoCommandException e) {

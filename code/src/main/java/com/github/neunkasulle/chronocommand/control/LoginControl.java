@@ -3,6 +3,7 @@ package com.github.neunkasulle.chronocommand.control;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Reason;
 import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.model.UserDAO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 
@@ -72,4 +73,12 @@ public class LoginControl extends Control {
         return subject.isRemembered() || subject.isAuthenticated();
     }
 
+    public User getCurrentUser() throws ChronoCommandException {
+        if (!isLoggedIn()) {
+            throw new ChronoCommandException(Reason.NOTLOGGEDIN);
+        }
+
+        String username = SecurityUtils.getSubject().getPrincipal().toString();
+        return UserDAO.getInstance().findUser(username);
+    }
 }
