@@ -140,8 +140,8 @@ public class MainView extends BaseView {
 
     private void refreshContacts() {
         final List<TimeRecord> records = Arrays.asList(
-                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 9, 0), new Category("Dummy1"), "Did Dummy work"),
-                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 12, 0), new Category("Dummy2"), "Did even more dummy work"));
+                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 9, 0), new Category("Dummy1"), "Did Dummy work", null),
+                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 12, 0), new Category("Dummy2"), "Did even more dummy work", null));
         this.beanItemContainer.removeAllItems();
         this.beanItemContainer.addAll(records);
         this.form.setVisible(false);

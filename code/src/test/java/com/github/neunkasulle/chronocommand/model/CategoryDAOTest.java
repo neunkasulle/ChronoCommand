@@ -12,7 +12,7 @@ public class CategoryDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        DAOHelper.getInstance().startup();
+        DAOHelper.getInstance().startup("hibernate-inmemory.cfg.xml");
     }
 
     @After

@@ -20,11 +20,15 @@ public class DAOHelper {
     }
 
     public void startup() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+        startup("hibernate.cfg.xml");
+    }
+
+    public void startup(String hibernateConfig) {
+        sessionFactory = new Configuration().configure(hibernateConfig).buildSessionFactory();
     }
 
     public void shutdown() {
-        //sessionFactory.close();
+        sessionFactory.close();
     }
 
     public SessionFactory getSessionFactory(){

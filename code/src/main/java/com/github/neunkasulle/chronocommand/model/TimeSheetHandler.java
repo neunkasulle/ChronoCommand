@@ -7,6 +7,10 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -15,7 +19,13 @@ import java.util.List;
 /**
  * Created by Janze on 16.01.2016.
  */
+@Entity
 public class TimeSheetHandler {
+    @Id
+    @GeneratedValue
+    Long id;
+
+    @Basic(optional = false)
     String warningEmailTemplate;
 
     private static final TimeSheetHandler instance = new TimeSheetHandler();
@@ -26,6 +36,14 @@ public class TimeSheetHandler {
 
     public static TimeSheetHandler getInstance() {
         return instance;
+    }
+
+    public String getWarningEmailTemplate() {
+        return warningEmailTemplate;
+    }
+
+    public void setWarningEmailTemplate(String warningEmailTemplate) {
+        this.warningEmailTemplate = warningEmailTemplate;
     }
 
     /**
