@@ -52,7 +52,8 @@ public class TimeSheetHandler {
      * @param timeSheet a timesheet
      * @return a pdf
      */
-    public File createPdfFromTimeSheet(TimeSheet timeSheet) { //TODO fill timesheet with content
+    //TODO @Dav calc totale Time and print on pdf; add new page when timesheet is "full"
+    public File createPdfFromTimeSheet(TimeSheet timeSheet) {
         List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
         PDDocument pdfTimeSheet = null;
