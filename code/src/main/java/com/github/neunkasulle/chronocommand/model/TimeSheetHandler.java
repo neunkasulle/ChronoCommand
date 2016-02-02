@@ -12,8 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.File;
-import java.sql.Time;
-import java.time.LocalDateTime;
+import java.net.URL;
 import java.time.Month;
 import java.util.List;
 
@@ -122,7 +121,13 @@ public class TimeSheetHandler {
             }
 
             contents.close();
-            pdfTimeSheet.save("C:\\Users\\Dav\\Downloads\\Study.pdf");
+            /*URL url = getClass().getResource("..\\..\\..\\..\\..\\..\\resources\\Study.pdf");//only for test purpose
+            if (url != null) {
+                pdfTimeSheet.save(url.getPath());
+            } else {
+                System.out.println("NO");
+            }*/
+            pdfTimeSheet.save("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Study.pdf");
 
         } catch (Exception e) {
             System.err.println("problem in content section");
