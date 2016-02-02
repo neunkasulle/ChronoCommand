@@ -108,6 +108,11 @@ public class MainUI extends UI implements ViewChangeListener {
 
     @Override
     public void afterViewChange(ViewChangeEvent event) {
+        if (LoginControl.getInstance().isLoggedIn()) {
+            header.addStyleName(ValoTheme.LABEL_COLORED);
+        } else {
+            header.removeStyleName(ValoTheme.LABEL_COLORED);
+        }
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)

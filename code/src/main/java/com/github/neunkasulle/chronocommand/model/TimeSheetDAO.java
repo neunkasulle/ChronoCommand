@@ -106,10 +106,23 @@ public class TimeSheetDAO {
         return list;
     }
 
+    public TimeSheet getLatestTimeSheet(User user) {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TimeSheet.class).add(Restrictions.eq("user", user));
+        criteria.addOrder(Order.desc("year")).addOrder(Order.desc("month"));
+        if (criteria.list().isEmpty()) {
+            return null;
+        }
+
+        Object obj = criteria.list().get(0);
+        return (TimeSheet) obj;
+    }
+
     public TimeRecord getLatestTimeRecord(User user) {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(TimeRecord.class).add(Restrictions.eq("user", user)).addOrder(Order.desc("beginning"));
-        if ( criteria.list().size() == 0) {
+        TimeSheet latestTimeSheet = getLatestTimeSheet(user);
+        Criteria criteria = session.createCriteria(TimeRecord.class).add(Restrictions.eq("timeSheet", latestTimeSheet)).addOrder(Order.desc("beginning"));
+        if (criteria.list().isEmpty()) {
             return null;
         }
 
@@ -117,13 +130,20 @@ public class TimeSheetDAO {
         return (TimeRecord) obj;
     }
 
+    public void saveTimeRecord(TimeRecord timeRecord) {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(timeRecord);
+        tx.commit();
+        session.flush();
+    }
+
     public TimeSheetHandler getTimeSheetHandler() throws ChronoCommandException {
-        Session  session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Object obj = session.createCriteria(TimeSheetHandler.class).uniqueResult();
         if (obj instanceof TimeSheetHandler) {
             return (TimeSheetHandler) obj;
         }
         throw new ChronoCommandException();
-
     }
 }

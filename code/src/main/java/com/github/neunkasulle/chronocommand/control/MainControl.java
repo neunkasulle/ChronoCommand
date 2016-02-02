@@ -45,13 +45,13 @@ public class MainControl extends Control {
      * Initializes the application with all the needed
      */
     public void startup() {
-        DAOHelper.getInstance().startup();
-
-        // TODO initiate anything that needs initiating
+        DAOHelper.getInstance().startup("hibernate-inmemory.cfg.xml");
 
         Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro.ini");
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
+
+        // TODO initiate anything that needs initiating
 
         // DEBUG fill database with data
         try {
@@ -74,10 +74,11 @@ public class MainControl extends Control {
         String taet = "codework for PSE";
         LocalDateTime date1 = LocalDateTime.of(2016, 1, 1, 11, 30);
         LocalDateTime date2 = LocalDateTime.of(2016, 1, 1, 15, 30);
-        TimeRecord timeRecTom = new TimeRecord( date1, date2, prog, taet);
+        TimeRecord timeRecTom = new TimeRecord( date1, date2, prog, taet, tomTimeSheet);
 
-        tomTimeSheet.addTime(timeRecTom);
+        //tomTimeSheet.addTime(timeRecTom);
         TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
+        TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
     }
 
 

@@ -27,6 +27,10 @@ public class TimeRecord {
     @Basic
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "timesheet_id")
+    private TimeSheet timeSheet;
+
     /**
      * Constructs a new time record.
      *
@@ -35,11 +39,12 @@ public class TimeRecord {
      * @param category    the category in which this record can be sorted
      * @param description a short description of this recorded time
      */
-    public TimeRecord(LocalDateTime begin, LocalDateTime end, Category category, String description) {
+    public TimeRecord(LocalDateTime begin, LocalDateTime end, Category category, String description, TimeSheet timeSheet) {
         this.beginning = begin;
         this.end = end;
         this.category = category;
         this.description = description;
+        this.timeSheet = timeSheet;
     }
 
     public TimeRecord() {
@@ -189,5 +194,9 @@ public class TimeRecord {
      */
     public void setEnd(LocalDateTime end) {
         this.end = end;
+    }
+
+    public TimeSheet getTimeSheet() {
+        return timeSheet;
     }
 }
