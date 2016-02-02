@@ -71,11 +71,15 @@ public class MainControl extends Control {
         TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
         TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
 
-        Category prog = CategoryDAO.getInstance().findCategoryByString("Programming");
+        //Category prog = CategoryDAO.getInstance().findCategoryByString("Programming"); TODO cant find category
+        //Category prog = new Category("Programming");
+        //if (prog != null) {
+       //     System.err.println("No category found");
+        //}
         String taet = "codework for PSE";
         LocalDateTime date1 = LocalDateTime.of(2016, 1, 1, 11, 30);
         LocalDateTime date2 = LocalDateTime.of(2016, 1, 1, 15, 30);
-        TimeRecord timeRecTom = new TimeRecord( date1, date2, prog, taet, tomTimeSheet);
+        TimeRecord timeRecTom = new TimeRecord( date1, date2, null, taet, tomTimeSheet);
 
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
 

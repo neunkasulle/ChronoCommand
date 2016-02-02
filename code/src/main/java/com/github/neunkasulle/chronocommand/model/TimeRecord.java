@@ -200,10 +200,13 @@ public class TimeRecord {
         return timeSheet;
     }
 
-    public String getTotalTime() {
+    public int getTotHour() {
         int hour = this.getEndHour() - this.getBeginningHour();
+        return  hour;
+    }
+
+    public int getTotMin() {
         int min = this.getEndMinute() - this.getBeginningMinute();
-        String totTime = hour + " " + min;
-        return totTime;
+        return min;
     }
 }
