@@ -4,6 +4,7 @@ import com.github.neunkasulle.chronocommand.control.MainControl;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
@@ -12,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.File;
-import java.net.URL;
 import java.time.Month;
 import java.util.List;
 
@@ -51,14 +51,16 @@ public class TimeSheetHandler {
      * @param timeSheet a timesheet
      * @return a pdf
      */
-    //TODO @Dav calc totale Time and print on pdf; add new page when timesheet is "full"
+    //TODO @Dav add new page when timesheet is "full"
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
         List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
         PDDocument pdfTimeSheet = null;
-        File file = null;
+        File file;
+        File returnFile = null;
         try {
             file = new File("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Stundenzettel.pdf");
+            returnFile = new File("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Study.pdf");
             pdfTimeSheet = PDDocument.load(file);
         } catch (Exception e) {
             System.err.println("Loading error.");
@@ -133,11 +135,10 @@ public class TimeSheetHandler {
             contents.showText("Summe");
             contents.newLineAtOffset(105, 0);
             contents.showText(sumHour + ":" + sumMin + "h");//sum of total time
-            //contents.showText("hallo text");
             contents.endText();
 
             contents.close();
-            pdfTimeSheet.save("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Study.pdf");
+            pdfTimeSheet.save(returnFile);
 
         } catch (Exception e) {
             System.err.println("problem in content section");
@@ -147,7 +148,7 @@ public class TimeSheetHandler {
         } catch (Exception e) {
             System.err.println("closing went wrong");
         }
-        return null;
+        return returnFile;
     }
 
     /**
@@ -155,14 +156,23 @@ public class TimeSheetHandler {
      * @param timeSheets list of timesheets
      * @return one pdf with all timesheets
      */
-    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets){
+    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) {//TODO test this method
         File file = null;
+        PDDocument doc = null;
+        PDDocument totDoc = null;
 
         for (TimeSheet timesheet : timeSheets) {
-                File tmp =  createPdfFromTimeSheet(timesheet);
-                //TODO Ammend to file
+            File tmp =  createPdfFromTimeSheet(timesheet);
+            try {
+                doc = PDDocument.load(tmp);
+            } catch (Exception e) {
+                System.err.println("Loading error in createPdfFromAllTimeSheets");
+            }
+            PDPageTree loopTree =  doc.getPages();
+            for (int i = 0; i < loopTree.getCount(); i++) {
+                totDoc.addPage(loopTree.get(i));
+            }
         }
-
         return file;
     }
 
@@ -170,7 +180,6 @@ public class TimeSheetHandler {
         MainControl.getInstance().startup();
         TimeSheetHandler handler = TimeSheetHandler.getInstance();
         handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
-        //handler.createPdfFromTimeSheet();
 
         System.exit(0);
     }
