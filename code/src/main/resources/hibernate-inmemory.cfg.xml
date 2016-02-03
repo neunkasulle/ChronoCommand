@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory name="java:hibernate/SessionFactory">
+    <session-factory> <!--name="java:hibernate/SessionFactory"-->
         <property name="connection.url">jdbc:h2:mem:chronocommand</property>
         <property name="connection.driver_class">org.h2.Driver</property>
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
