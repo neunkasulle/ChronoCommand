@@ -101,8 +101,12 @@ public class TimeSheetHandler {
             for (TimeRecord timeR : recordsToPDF) {
                 contents.beginText();
                 contents.newLineAtOffset(197, yOff);
-                //contents.showText(timeR.getCategory().getName());
-                contents.showText("Programming");
+                String category = timeR.getCategory().getName();
+                if (category != null) {
+                    contents.showText(timeR.getCategory().getName());
+                } else {
+                    contents.showText("");
+                }
                 contents.endText();
                 yOff = yOff - 17;
             }
