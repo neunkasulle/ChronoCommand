@@ -8,7 +8,15 @@ beschrieben wird, welche Datenbank verwendet wird. Wir haben uns der Einfachheit
 
 
 \subsection{view} %TODO jannis und xiaoming
-\subsection{Shiro} %TODO Jan
+\subsection{Shiro}
+Shiro dient der Rechte und Sessionverwaltung von Usern.
+Grundlegend hat man in Shiro die möglichkeit die Default Implementierung von shiro zu nutzen, oder mithilfe der Interfaces
+eigene Implementierungen und/oder Spezialfällle zu behandeln.
+Durch diesen aufbau gestaltet sich eine Implentation Shiros schwierig, da die Einstiegshilfen wenig abdecken und das Reference Manual
+im gegenzug bei weitem zu ausladend gestaltet ist. Um Shiro vollständig zu Implementieren war in userem Fall von nöten, mithilfe der
+größeren Conding Samples aus der Shiro Source eine funktionierende Shiro Implemtierung für unseren Use Case zu schaffen.
+Darüber hinaus war zum Zeitpunkt der Implementierung die API der neusten Shiro Version nicht verfügbar, was durch die teilweise veralteten Coding Samples
+ eine lauffähige Implementierung erschwerte.
 \subsection{quartz} %ToDo david
 Java Quartz ist das Framework, welches uns die Möglichkkeiten geboten hat Prozesse zu einem bestimmten Zeitpunkt auszuführen. Es gab eine Verzögerung im Zeitplan durch die fehlende Kenntnisse im Umgang mit Quart bzw die Implementierung in das Projekt.
 Desweiteren hat sich auch ergeben, dass jeder Prozess, den wir über Quart ausführen wollten, eine eigene Klasse benöigte.
