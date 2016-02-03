@@ -112,6 +112,8 @@ public class TimeSheetHandler {
             }
             //Time bulk, may need no extra offset calculation
             yOff = 637;
+            int sumHour = 0;
+            int sumMin = 0;
             for (TimeRecord timeR : recordsToPDF) {
                 contents.beginText();
                 contents.newLineAtOffset(299, yOff);
@@ -121,16 +123,20 @@ public class TimeSheetHandler {
                 contents.newLineAtOffset(105, 0);
                 contents.showText(timeR.getTotHour() + ":" + timeR.getTotMin() + "h");//total time
                 contents.endText();
+                sumHour += timeR.getTotHour();
+                sumMin += timeR.getTotMin();
                 yOff -= 17;
             }
+            contents.beginText();
+            contents.newLineAtOffset(384, yOff);
+            contents.setFont(fontBold, 10);
+            contents.showText("Summe");
+            contents.newLineAtOffset(105, 0);
+            contents.showText(sumHour + ":" + sumMin + "h");//sum of total time
+            //contents.showText("hallo text");
+            contents.endText();
 
             contents.close();
-            /*URL url = getClass().getResource("..\\..\\..\\..\\..\\..\\resources\\Study.pdf");//only for test purpose
-            if (url != null) {
-                pdfTimeSheet.save(url.getPath());
-            } else {
-                System.out.println("NO");
-            }*/
             pdfTimeSheet.save("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Study.pdf");
 
         } catch (Exception e) {
