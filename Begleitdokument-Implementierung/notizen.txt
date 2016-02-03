@@ -40,8 +40,24 @@ model
     --checkHourLimit (ist in GermanLawRegulations)
    TimeSheetDAO
     getTimeSheet(...) -> (month:Month,year:int, user:User) 
-    
-    
+    addTimeSheet -> saveTimeSheet
+    ++getTimeRecordsByDay(timeSheet:TimeSheet, dayOfMonth:int):List<TimeRecord>
+    ++getAllTimeSheets(month:Month, year:int):List<TimeRecord>
+    ++getTimeSheetsFromUser(user:User):List<TimeRecord>
+    ++getLatestTimeRecord(user:User):TimeRecord
+    ++getLatsetTimeSheet(user:User):TimeSheet
+    TimeSheetExporter -> TimeSheetHandler
+    User
+      ++ +String:realName
+      ++ +User:supervisor
+      ++ +int:hoursPerMonth
+      all above durch die auflösung von "protelarier" in user gewandert
+    UserDAO
+      addUser -> saveUser
+      --deleteUser
+      ++findUserByEmail(email:String):List<User>
+      ++saveRole(role:Role)
+      ++getRoleByName(name:String):Role
     
     
     
