@@ -110,8 +110,26 @@ public class MainControlTest {
 
     @Test(expected = ChronoCommandException.class)
     public void testFalseTimeRecordAdd() throws Exception {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
 
+        try {
+            timeSheetControl.newTimeRecord(category, "testing", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(category, "testing", userDAO.findUser("tom"));
+            assert false;
+
+        }
+        catch (ChronoCommandException e) {
+            try {
+                timeSheetControl.newTimeRecord(userDAO.findUser("tom"));
+                timeSheetControl.closeTimeRecord(userDAO.findUser("tom"));
+                assert false;
+            }
+            catch (ChronoCommandException exc) {
+                assert true;
+            }
+        }
     }
-
 
 }
