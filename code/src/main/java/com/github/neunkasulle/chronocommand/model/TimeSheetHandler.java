@@ -53,8 +53,6 @@ public class TimeSheetHandler {
      */
     //TODO @Dav add new page when timesheet is "full"
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
-        List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
-
         PDDocument pdfTimeSheet = null;
         File file;
         File returnFile = null;
@@ -65,13 +63,31 @@ public class TimeSheetHandler {
         } catch (Exception e) {
             System.err.println("Loading error.");
         }
-        int yOff = 0;
         try {
-            PDFont font = PDType1Font.HELVETICA;
-            PDFont fontBold = PDType1Font.HELVETICA_BOLD;
-
             PDPage page = pdfTimeSheet.getPage(0);
+            fillContent(pdfTimeSheet, page, timeSheet);
+            pdfTimeSheet.save(returnFile);
+        } catch (Exception e) {
+            System.err.println("problem in content section");
+        }
+        try {
+            pdfTimeSheet.close();
+        } catch (Exception e) {
+            System.err.println("closing went wrong");
+        }
+        return returnFile;
+    }
+
+    private void fillContent( PDDocument pdfTimeSheet, PDPage page, TimeSheet timeSheet) {
+        List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
+
+        int yOff = 0;
+        PDFont font = PDType1Font.HELVETICA;
+        PDFont fontBold = PDType1Font.HELVETICA_BOLD;
+
+        try {
             PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
+
             contents.beginText();
             //fill name etc
             contents.setFont(font, 12);
@@ -83,8 +99,6 @@ public class TimeSheetHandler {
             contents.showText(" / ");
             contents.setFont(font, 12);
             contents.showText(Integer.toString(timeSheet.year));//year
-            contents.newLineAtOffset(20, -64);
-            contents.showText("9,45");//money
             contents.endText();
 
             //Tätigkeit bulk
@@ -92,7 +106,7 @@ public class TimeSheetHandler {
             for (TimeRecord timeR : recordsToPDF) {
                 contents.beginText();
                 contents.setFont(font, 10);
-                contents.newLineAtOffset( 60, yOff);
+                contents.newLineAtOffset(60, yOff);
                 contents.showText(timeR.getDescription());
                 contents.endText();
                 yOff = yOff - 17;
@@ -138,17 +152,10 @@ public class TimeSheetHandler {
             contents.endText();
 
             contents.close();
-            pdfTimeSheet.save(returnFile);
-
         } catch (Exception e) {
-            System.err.println("problem in content section");
+            System.out.println("Error in fillContent");
         }
-        try {
-            pdfTimeSheet.close();
-        } catch (Exception e) {
-            System.err.println("closing went wrong");
-        }
-        return returnFile;
+        return;
     }
 
     /**
