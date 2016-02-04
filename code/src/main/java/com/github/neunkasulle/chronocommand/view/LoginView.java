@@ -104,12 +104,6 @@ public class LoginView extends LoginForm implements View {
         });
         links.addComponent(timesheet);
 
-        Button messages = new Button("Messages");
-        messages.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
-        });
-        links.addComponent(messages);
-
         Button settings = new Button("Usersettings");
         settings.addClickListener(event -> {
             getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);

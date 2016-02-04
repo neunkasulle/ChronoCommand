@@ -42,7 +42,7 @@ public class AdminView extends BaseView {
     }, e -> {
         getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
     }, e -> {
-        getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
+
     }, e -> {
         this.recordList.select(null);
         refreshContacts();

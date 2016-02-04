@@ -27,7 +27,7 @@ public class SupervisorView extends BaseView {
     private final SupervisorCtrlForm form = new SupervisorCtrlForm( e -> {
         getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
     }, e -> {
-        getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
+
     }, e -> {
         this.recordList.select(null);
         refreshContacts();

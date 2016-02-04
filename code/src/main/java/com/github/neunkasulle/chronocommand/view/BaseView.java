@@ -105,7 +105,6 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 supervisorSelection.setSizeFull();
                 supervisorSelection.addValueChangeListener(e -> {
                     //TODO : Do sonething usefoll here
-                    extraPane.getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
                 });
                 supervisorSelection.setInputPrompt("Betreuer auswählen");
                 extraPane.addComponent(supervisorSelection);
@@ -276,12 +275,6 @@ public abstract class BaseView extends HorizontalLayout implements View {
         homeButton.setStyleName(BaseTheme.BUTTON_LINK);
         naviBar.addComponent(homeButton);
 
-        final Button messageButton = new Button(new ThemeResource("img/black218.png"));
-        messageButton.addClickListener(e -> {
-            getUI().getNavigator().navigateTo(MainUI.MESSAGEVIEW);
-        });
-        messageButton.setStyleName(BaseTheme.BUTTON_LINK);
-        naviBar.addComponent(messageButton);
 
         final Button logoutButton = new Button(new ThemeResource("img/logout13.png"));
         logoutButton.addClickListener(e -> {
