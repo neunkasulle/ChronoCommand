@@ -51,7 +51,7 @@ public class TimeSheetHandler {
      * @param timeSheet a timesheet
      * @return a pdf
      */
-    //TODO @Dav add new page when timesheet is "full"
+    //TODO @Dav add new page when timesheet is "full" and check if "tätigkeit" needs a new line
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
         PDDocument pdfTimeSheet = null;
         File file;
@@ -104,6 +104,7 @@ public class TimeSheetHandler {
             contents.showText(timeSheet.getRequiredHoursPerMonth() + " Stunden");//required hours per month
             contents.endText();
 
+            //TODO print this in rows not in colums
             //Tätigkeit bulk
             yOff = 637;
             for (TimeRecord timeR : recordsToPDF) {

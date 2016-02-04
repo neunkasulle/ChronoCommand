@@ -3,12 +3,11 @@ package com.github.neunkasulle.chronocommand.control;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.util.Date;
-
 import static org.quartz.JobBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.DateBuilder.*;
+import static org.quartz.CronScheduleBuilder.*;
 
 /**
  * Created by Dav on 26.01.2016.
@@ -36,13 +35,7 @@ public class SchedulerHandler {
                 .withIdentity("simpleJob", "testGroup") //name, group
                 .build();
 
-        //this is the trigger
-        Trigger hellTrigger = newTrigger()
-                .withIdentity("hellTrigger", "testGroup") //name, group
-                .startAt(dateOf(6, 6, 6)) //start today at 06:06:06
-                .build();
-
-        Trigger trigger = newTrigger()
+        Trigger intervalTrigger = newTrigger()
                 .withIdentity("intervalTrigger", "testGroup")
                 .withSchedule(simpleSchedule()
                     .withIntervalInSeconds(3)
@@ -50,15 +43,26 @@ public class SchedulerHandler {
                 .startAt(futureDate(10, IntervalUnit.SECOND))
                 .build();
 
+        Trigger lastDayOfMonth = newTrigger() //fires at 12pm every last day every month
+                .withIdentity("lastDayTrigger", "messageAllGroup")
+                .withSchedule(cronSchedule("0 0 12 L * ?"))
+                .startNow()
+                .build();
+
         sched.start();
 
         // Tell quartz to schedule the job using our trigger
-        sched.scheduleJob(printJob, trigger);
+        sched.scheduleJob(printJob, intervalTrigger);
+        sched.scheduleJob(printJob, lastDayOfMonth);
     }
 
-    //find context to call this method
+    /**
+     * finish running jobs and halts the scheduler's firing of triggers
+     * @param sched the scheduler to halt
+     * @throws SchedulerException
+     */
     private void shutdownSched(Scheduler sched) throws SchedulerException {
-        sched.shutdown(true);//kill the scheduler after every job is executed
+        sched.shutdown(true);//TODO call this method on general shutdown?
     }
 
     public static void main(String[] args) {
