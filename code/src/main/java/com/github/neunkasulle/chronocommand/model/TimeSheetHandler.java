@@ -57,15 +57,17 @@ public class TimeSheetHandler {
         File file;
         File returnFile = null;
         try {
-            file = new File("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Stundenzettel.pdf");
-            returnFile = new File("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Study.pdf");
+            file = new File(getClass().getClassLoader().getResource("Stundenzettel.pdf").getFile());
+            returnFile = new File(getClass().getClassLoader().getResource("Study.pdf").getFile());
             pdfTimeSheet = PDDocument.load(file);
         } catch (Exception e) {
             System.err.println("Loading error.");
+            return null;
         }
         try {
             PDPage page = pdfTimeSheet.getPage(0);
-            fillContent(pdfTimeSheet, page, timeSheet);
+            PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
+            fillContent(contents, timeSheet);
             pdfTimeSheet.save(returnFile);
         } catch (Exception e) {
             System.err.println("problem in content section");
@@ -78,7 +80,7 @@ public class TimeSheetHandler {
         return returnFile;
     }
 
-    private void fillContent( PDDocument pdfTimeSheet, PDPage page, TimeSheet timeSheet) {
+    private void fillContent( PDPageContentStream contents, TimeSheet timeSheet) {
         List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
         int yOff = 0;
@@ -86,19 +88,20 @@ public class TimeSheetHandler {
         PDFont fontBold = PDType1Font.HELVETICA_BOLD;
 
         try {
-            PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
-
             contents.beginText();
-            //fill name etc
             contents.setFont(font, 12);
-            contents.newLineAtOffset(278, 742);
-            contents.showText(timeSheet.getUser().realName);//name
-            contents.newLineAtOffset(165, 22);
+            //fill name etc
+            contents.newLineAtOffset(443, 764);
+            //contents.newLineAtOffset(165, 22);
             contents.showText(timeSheet.month.toString());//month
             contents.setFont(fontBold, 12);
             contents.showText(" / ");
             contents.setFont(font, 12);
             contents.showText(Integer.toString(timeSheet.year));//year
+            contents.newLineAtOffset(-165, -22);
+            contents.showText(timeSheet.getUser().realName);//name
+            contents.newLineAtOffset(0, -42);
+            contents.showText(timeSheet.getRequiredHoursPerMonth() + " Stunden");//required hours per month
             contents.endText();
 
             //Tätigkeit bulk
