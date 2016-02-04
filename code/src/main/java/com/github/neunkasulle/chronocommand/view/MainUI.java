@@ -29,7 +29,6 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String CREATEUSERVIEW = "createuser";
     public static final String TIMESHEETVIEW = "timesheet";
     public static final String EMPLOYEEVIEW = "employee";
-    public static final String MESSAGEVIEW = "messages";
     public static final String SETTINGSVIEW = "settings";
     private Navigator navigator;
     private Label header;
@@ -62,7 +61,6 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);
         navigator.addView(TIMESHEETVIEW, TimeSheetView.class);
-        navigator.addView(MESSAGEVIEW, MessageView.class);
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);
         /*if (!LoginControl.getInstance().isLoggedIn()) {\

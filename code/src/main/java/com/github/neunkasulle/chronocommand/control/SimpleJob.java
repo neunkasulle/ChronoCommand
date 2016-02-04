@@ -3,7 +3,7 @@ package com.github.neunkasulle.chronocommand.control;
 import org.quartz.JobExecutionContext;
 import org.quartz.Job;
 import org.quartz.JobExecutionException;
-import java.util.Date;
+
 
 /**
  * Created by Dav on 27.01.2016.

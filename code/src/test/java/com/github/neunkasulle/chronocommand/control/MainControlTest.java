@@ -112,7 +112,6 @@ public class MainControlTest {
     public void testFalseTimeRecordAdd() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
-        Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
 
         try {
             timeSheetControl.newTimeRecord(userDAO.findUser("tom"));

@@ -2,7 +2,6 @@ package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.*;
 import org.hibernate.Session;
-import org.hibernate.cfg.CreateKeySecondPass;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 

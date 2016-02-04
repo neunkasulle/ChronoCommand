@@ -24,6 +24,9 @@ public class TimeSheet {
     @JoinColumn(name = "user_id")
     User user;
 
+   @Basic
+    Message message;
+
     @Basic(optional = false)
     TimeSheetState state;
 
