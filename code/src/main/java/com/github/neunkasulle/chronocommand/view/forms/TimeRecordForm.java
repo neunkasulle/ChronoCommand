@@ -43,6 +43,7 @@ public class TimeRecordForm extends FormLayout {
                           final Button.ClickListener deleteOperation,
                           final Button.ClickListener cancelOperation) {
         this.save.addClickListener(saveOperation);
+        this.delete.addClickListener(deleteOperation);
         this.cancel.addClickListener(cancelOperation);
 
         save.setStyleName(ValoTheme.BUTTON_PRIMARY);

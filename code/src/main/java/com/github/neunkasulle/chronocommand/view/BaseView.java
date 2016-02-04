@@ -5,6 +5,7 @@ import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.Session;
+import com.github.neunkasulle.chronocommand.model.TimeSheet;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
@@ -15,6 +16,7 @@ import com.vaadin.ui.themes.BaseTheme;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -333,7 +335,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
         try {
             Object currentSelection = timeRecordSelection.getValue();
             timeRecordSelection.removeAllItems();
-            timeRecordSelection.addItems(TimeSheetControl.getInstance().getTimeSheetsFromUser(LoginControl.getInstance().getCurrentUser()));
+            List<TimeSheet> timeSheetList = TimeSheetControl.getInstance().getTimeSheetsFromUser(LoginControl.getInstance().getCurrentUser());
+            timeRecordSelection.addItems(timeSheetList);
+            if (currentSelection == null && timeSheetList.size() > 0) {
+                currentSelection = timeSheetList.get(timeSheetList.size() - 1);
+            }
             timeRecordSelection.setValue(currentSelection);
         } catch(ChronoCommandException e) {
             // TODO error
