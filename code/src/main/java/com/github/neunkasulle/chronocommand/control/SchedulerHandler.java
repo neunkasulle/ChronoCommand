@@ -49,11 +49,18 @@ public class SchedulerHandler {
                 .startNow()
                 .build();
 
+        Trigger weeklyTrigger = newTrigger() //every week at 12pm in every month
+                .withIdentity("weeklyTrigger", "weeklyReminder")
+                .withSchedule(cronSchedule("0 0 12 ? * L"))
+                .startNow()
+                .build();
+
         sched.start();
 
         // Tell quartz to schedule the job using our trigger
         sched.scheduleJob(printJob, intervalTrigger);
         sched.scheduleJob(printJob, lastDayOfMonth);
+        sched.scheduleJob(printJob, weeklyTrigger);
     }
 
     /**
