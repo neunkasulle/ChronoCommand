@@ -104,47 +104,30 @@ public class TimeSheetHandler {
             contents.showText(timeSheet.getRequiredHoursPerMonth() + " Stunden");//required hours per month
             contents.endText();
 
-            //TODO print this in rows not in colums
-            //Tätigkeit bulk
             yOff = 637;
+            int sumHour = 0;
+            int sumMin = 0;
             for (TimeRecord timeR : recordsToPDF) {
                 contents.beginText();
                 contents.setFont(font, 10);
                 contents.newLineAtOffset(60, yOff);
                 contents.showText(timeR.getDescription());
-                contents.endText();
-                yOff = yOff - 17;
-            }
-
-            //Kategorie bulk
-            yOff = 637;
-            for (TimeRecord timeR : recordsToPDF) {
-                contents.beginText();
-                contents.newLineAtOffset(197, yOff);
+                contents.newLineAtOffset(137, yOff);//x = 197 from 0
                 String category = timeR.getCategory().getName();
                 if (category != null) {
                     contents.showText(timeR.getCategory().getName());
                 } else {
                     contents.showText("");
                 }
-                contents.endText();
-                yOff = yOff - 17;
-            }
-            //Time bulk, may need no extra offset calculation
-            yOff = 637;
-            int sumHour = 0;
-            int sumMin = 0;
-            for (TimeRecord timeR : recordsToPDF) {
-                contents.beginText();
-                contents.newLineAtOffset(299, yOff);
+                contents.newLineAtOffset(162, yOff);//x = 299 from 0
                 contents.showText(timeR.getBeginning().toString());//start
                 contents.newLineAtOffset(85, 0);
                 contents.showText(timeR.getEnd().toString());//end
                 contents.newLineAtOffset(105, 0);
                 contents.showText(timeR.getTotHour() + ":" + timeR.getTotMin() + "h");//total time
-                contents.endText();
                 sumHour += timeR.getTotHour();
                 sumMin += timeR.getTotMin();
+                contents.endText();
                 yOff -= 17;
             }
             contents.beginText();
