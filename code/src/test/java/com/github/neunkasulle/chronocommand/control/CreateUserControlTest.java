@@ -17,7 +17,7 @@ public class CreateUserControlTest {
         MainControl mainControl = MainControl.getInstance();
 
 
-        mainControl.startup();
+        mainControl.startup(false);
     }
 
     @Test

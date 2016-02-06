@@ -18,7 +18,7 @@ public class LoginControlTest {
     public void setUp() throws Exception {
         MainControl mainControl = MainControl.getInstance();
 
-        mainControl.startup();
+        mainControl.startup(false);
     }
 
     @Test
