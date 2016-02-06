@@ -1,5 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import com.github.neunkasulle.chronocommand.control.UeberTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * Created by jannis on 02.02.16.
  */
-public class TimeSheetDAOTest {
+public class TimeSheetDAOTest extends UeberTest {
 
     @Before
     public void setUp() throws Exception {

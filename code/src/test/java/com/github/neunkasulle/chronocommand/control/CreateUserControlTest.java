@@ -12,13 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Janze on 06.02.2016.
  */
-public class CreateUserControlTest {
-
-    @Before
-    public void setUp() throws Exception {
-        MainControl mainControl = MainControl.getInstance();
-        mainControl.startup(false);
-    }
+public class CreateUserControlTest extends UeberTest {
 
     @Test
     public void testCreateUser() throws Exception {

@@ -1,5 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import com.github.neunkasulle.chronocommand.control.UeberTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CategoryDAOTest {
+public class CategoryDAOTest extends UeberTest {
 
     @Before
     public void setUp() throws Exception {

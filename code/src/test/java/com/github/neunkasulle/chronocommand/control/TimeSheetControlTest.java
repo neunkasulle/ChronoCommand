@@ -13,15 +13,7 @@ import static org.junit.Assert.*;
  * Created by Janze on 01.02.2016.
  *
  */
-public class TimeSheetControlTest {
-
-    @Before
-    public void setUp() throws Exception {
-        MainControl mainControl = MainControl.getInstance();
-
-        mainControl.startup(false);
-
-    }
+public class TimeSheetControlTest extends UeberTest{
 
     @After
     public void tearDown() throws Exception {
