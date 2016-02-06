@@ -1,9 +1,11 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
+import com.sun.istack.internal.Nullable;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
@@ -137,7 +139,7 @@ public class TimeSheetControl extends Control {
      * Adds a whole time record to the timeSheet
      * @param beginn Start of work
      * @param end end of work
-     * @param cat the category of the work performed in this time.
+     * @param category the category of the work performed in this time.
      * @param description description of the work performed.
      * @param user The user which the time record belongs to
      * @throws ChronoCommandException When there is something wrong with e.g. the category
@@ -315,6 +317,16 @@ public class TimeSheetControl extends Control {
         }
 
         return currentMinutes;
+    }
+
+    public void editTimeRecord(TimeRecord timeRecord, Category newCategory, String newDescription,
+                               LocalDateTime newBeginn, LocalDateTime newEnd) {
+
+        timeRecord.setCategory(newCategory);
+        timeRecord.setDescription(newDescription);
+        timeRecord.setEnd(newEnd);
+        timeRecord.setBeginning(newBeginn);
+
     }
 
 }

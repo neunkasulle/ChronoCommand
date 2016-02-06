@@ -209,4 +209,8 @@ public class TimeRecord {
         int min = this.getEndMinute() - this.getBeginningMinute();
         return min;
     }
+
+    public void setBeginning(LocalDateTime beginning) {
+        this.beginning = beginning;
+    }
 }
