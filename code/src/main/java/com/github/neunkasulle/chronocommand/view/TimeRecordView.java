@@ -31,19 +31,23 @@ public class TimeRecordView extends BaseView {
     private Button stopButton;
     private Label elapsedTime;
 
-    private final TimeRecordForm form = new TimeRecordForm(e -> {
+    private final TimeRecordForm form = new TimeRecordForm(event -> {
         try {
             // Commit the fields from UI to DAO
             this.form.getFormFieldBinding().commit();
+            TimeSheetControl.getInstance().editTimeRecord(this.form.getFormFieldBinding().getItemDataSource().getBean());
+            refreshTimeRecords();
 
             //TODO: DO other stuff
-        } catch (FieldGroup.CommitException ex) {
-            throw new IllegalArgumentException(ex);
+        } catch (FieldGroup.CommitException e) {
+            throw new IllegalArgumentException(e);
+        } catch (ChronoCommandException e) {
+            Notification.show("Failed to save Timerecord: " + e, Notification.Type.ERROR_MESSAGE);
         }
-    }, e -> {
+    }, event -> {
         //TODO: Delete it
         refreshTimeRecords();
-    }, e -> {
+    }, event -> {
         this.recordList.select(null);
         refreshTimeRecords();
     });
@@ -171,15 +175,11 @@ public class TimeRecordView extends BaseView {
             }
         });
 
-        //Remove unused columns
-        recordList.removeColumn("id");
-        recordList.removeColumn("beginning");
-        recordList.removeColumn("end");
-        recordList.removeColumn("category");
+        recordList.setColumns("duration", "category.name", "description", "beginningTime", "endTime");
 
-        recordList.setColumnOrder("beginningTime", "endTime", "category.name", "description");
-        recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Kategorie");
-        recordList.getDefaultHeaderRow().getCell("description").setHtml("Tätigkeit");
+        recordList.setColumnOrder("duration", "category.name", "description", "beginningTime", "endTime");
+        recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Category");
+        recordList.getDefaultHeaderRow().getCell("description").setHtml("Description");
 
         timeRecordSelection.addValueChangeListener(event1 -> {
             refreshTimeRecords();
@@ -195,10 +195,6 @@ public class TimeRecordView extends BaseView {
     }
 
     private void refreshTimeRecords() {
-        /*final List<TimeRecord> records = Arrays.asList(
-                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 9, 0), new Category("Dummy1"), "Did Dummy work", null),
-                new TimeRecord(LocalDateTime.of(2016, 1, 1, 8, 0), LocalDateTime.of(2016, 1, 1, 12, 0), new Category("Dummy2"), "Did even more dummy work", null));*/
-
         TimeSheet timeSheet = (TimeSheet) timeRecordSelection.getValue();
         final List<TimeRecord> records = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
         this.beanItemContainer.removeAllItems();

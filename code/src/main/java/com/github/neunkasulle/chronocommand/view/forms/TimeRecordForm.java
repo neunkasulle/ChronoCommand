@@ -1,14 +1,11 @@
 package com.github.neunkasulle.chronocommand.view.forms;
 
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.model.Category;
 import com.github.neunkasulle.chronocommand.model.TimeRecord;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-
-import java.util.List;
 
 /**
  * Created by Ming-Samsung on 2016/1/31.
@@ -20,7 +17,7 @@ public class TimeRecordForm extends FormLayout {
     private TextField endHour = new TextField("Ende (Stunde)");
     private TextField endMinute = new TextField("Ende (Minute)");
 
-    private ComboBox categoryName = new ComboBox("Kategorie");
+    private ComboBox category = new ComboBox("Kategorie");
     private TextField description = new TextField("Tätigkeit");
 
     private Button save = new Button("Speichern");
@@ -60,10 +57,7 @@ public class TimeRecordForm extends FormLayout {
         endHour.setWidth(timeFieldWidth);
         endMinute.setWidth(timeFieldWidth);
 
-        final List<Category> categoryList = TimeSheetControl.getInstance().getAllCategories();
-        for (Category c : categoryList) {
-            categoryName.addItem(c.getName());
-        }
+        category.addItems(TimeSheetControl.getInstance().getAllCategories());
 
         final HorizontalLayout actions1 = new HorizontalLayout(save, delete);
         actions1.setSpacing(true);
@@ -73,7 +67,7 @@ public class TimeRecordForm extends FormLayout {
         begin.setSpacing(true);
         final HorizontalLayout end =  new HorizontalLayout(endHour, endMinute);
         end.setSpacing(true);
-        addComponents(begin, end, categoryName, description, actions1, actions2);
+        addComponents(begin, end, category, description, actions1, actions2);
     }
 
     public void edit(TimeRecord record) {
