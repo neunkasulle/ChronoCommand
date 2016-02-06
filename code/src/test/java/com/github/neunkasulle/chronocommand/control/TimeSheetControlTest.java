@@ -86,9 +86,6 @@ public class TimeSheetControlTest {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         fail();
-
     }
-
-
 
 }

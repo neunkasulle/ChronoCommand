@@ -1,5 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.Reason;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
 import org.junit.Before;
@@ -15,9 +17,7 @@ public class CreateUserControlTest {
     @Before
     public void setUp() throws Exception {
         MainControl mainControl = MainControl.getInstance();
-
-
-        mainControl.startup();
+        mainControl.startup(false);
     }
 
     @Test
@@ -31,5 +31,29 @@ public class CreateUserControlTest {
 
         assert(userDAO.findUser("Chutulu").getRealname().equals(" "));
 
+    }
+
+    @Test
+    public void testCreateExistingUser() {
+        CreateUserControl createUserControl;
+        createUserControl = CreateUserControl.getInstance();
+        try {
+            createUserControl.createUser(new Role("admin"),"tom", "chutulu@eatsyour.soul","1234", " ", null, 999999999);
+        }
+        catch (ChronoCommandException e) {
+            assertTrue(e.getReason() == Reason.USERALREADYEXISTS);
+        }
+    }
+
+    @Test
+    public void testCreateExistingEmail() {
+        CreateUserControl createUserControl;
+        createUserControl = CreateUserControl.getInstance();
+        try {
+            createUserControl.createUser(new Role("admin"),"...", "tom@chronocommand.eu","1234", " ", null, 999999999);
+        }
+        catch (ChronoCommandException e) {
+            assertTrue(e.getReason() == Reason.USERALREADYEXISTS);
+        }
     }
 }
