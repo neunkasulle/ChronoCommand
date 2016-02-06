@@ -19,7 +19,7 @@ public class TimeSheetControlTest {
     public void setUp() throws Exception {
         MainControl mainControl = MainControl.getInstance();
 
-        mainControl.startup();
+        mainControl.startup(false);
 
     }
 

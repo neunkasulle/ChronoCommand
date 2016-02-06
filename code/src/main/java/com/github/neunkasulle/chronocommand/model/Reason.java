@@ -17,4 +17,5 @@ public enum Reason {
     INVALIDSOMETHING,
     NOTLOGGEDIN,
     TIMESHEETLOCKED,
+    NOTPERMITTED,
 }

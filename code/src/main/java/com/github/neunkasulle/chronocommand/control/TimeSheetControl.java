@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
+import javax.annotation.Nullable;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -185,7 +187,7 @@ public class TimeSheetControl extends Control {
      * A time sheet will be marked as checked
      * @param timeSheet the time sheet which will be marked
      */
-    public void approveTimeSheet(TimeSheet timeSheet, User user) {
+    public void approveTimeSheet(TimeSheet timeSheet) {
 
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
 
@@ -295,14 +297,15 @@ public class TimeSheetControl extends Control {
         return currentMinutes;
     }
 
-    public void editTimeRecord(TimeRecord timeRecord, Category newCategory, String newDescription,
-                               LocalDateTime newBeginn, LocalDateTime newEnd) {
-
-        timeRecord.setCategory(newCategory);
-        timeRecord.setDescription(newDescription);
-        timeRecord.setEnd(newEnd);
-        timeRecord.setBeginning(newBeginn);
-
+    public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
+        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+        // TODO check for valid data
+        if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+        TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
     }
 
 }

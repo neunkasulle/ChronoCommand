@@ -191,8 +191,10 @@ public abstract class BaseView extends HorizontalLayout implements View {
         return null;
     }
 
-    public void logoutClicked() {
-
+    public void logoutClicked(Button.ClickEvent clickEvent) {
+        LoginControl.getInstance().logout();
+        getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
+        //getUI().getPage().reload();
     }
 
     public void menuClicked() {
@@ -277,11 +279,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
 
         final Button logoutButton = new Button(new ThemeResource("img/logout13.png"));
-        logoutButton.addClickListener(e -> {
-            LoginControl.getInstance().logout();
-            getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
-            this.logoutClicked();
-        });
+        logoutButton.addClickListener(this::logoutClicked);
         logoutButton.setStyleName(BaseTheme.BUTTON_LINK);
         naviBar.addComponent(logoutButton);
 

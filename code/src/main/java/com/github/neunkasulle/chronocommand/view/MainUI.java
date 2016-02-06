@@ -23,6 +23,8 @@ import com.vaadin.ui.*;
 @Theme("chronocommand")
 @Widgetset("com.github.neunkasulle.chronocommand.ChronoCommandWidgetset")
 public class MainUI extends UI implements ViewChangeListener {
+    public static final boolean PRODUCTIONMODE = false;
+
     public static final String LOGINVIEW = "login";
     public static final String TIMERECORDVIEW = "timerecord";
     public static final String ADMINVIEW = "admin";
@@ -116,7 +118,7 @@ public class MainUI extends UI implements ViewChangeListener {
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
+    @VaadinServletConfiguration(ui = MainUI.class, productionMode = MainUI.PRODUCTIONMODE)
     public static class ChronoCommandServlet extends VaadinServlet implements ServiceDestroyListener {
         @Override
         protected void servletInitialized() throws ServletException {
@@ -126,7 +128,7 @@ public class MainUI extends UI implements ViewChangeListener {
             Logger logger = LoggerFactory.getLogger(MainUI.class);
             logger.info("Starting up ChronoCommand servlet");
 
-            MainControl.getInstance().startup();
+            MainControl.getInstance().startup(MainUI.PRODUCTIONMODE);
         }
 
         @Override

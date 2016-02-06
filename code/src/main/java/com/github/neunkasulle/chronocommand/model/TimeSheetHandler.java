@@ -185,7 +185,7 @@ public class TimeSheetHandler {
     }
 
     public static void main(String[] args) {
-        MainControl.getInstance().startup();
+        MainControl.getInstance().startup(false);
         TimeSheetHandler handler = TimeSheetHandler.getInstance();
         handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
 
