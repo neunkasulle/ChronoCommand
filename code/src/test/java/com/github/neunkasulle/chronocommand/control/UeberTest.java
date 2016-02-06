@@ -9,10 +9,10 @@ import static org.junit.Assert.*;
  * Created by Janze on 06.02.2016.
  */
 public class UeberTest {
-
+    public MainControl mainControl;
     @Before
     public void setUp() throws Exception {
-        MainControl mainControl = MainControl.getInstance();
+        mainControl = MainControl.getInstance();
         mainControl.startup(false);
     }
 

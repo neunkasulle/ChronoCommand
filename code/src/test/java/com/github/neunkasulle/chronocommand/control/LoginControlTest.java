@@ -49,4 +49,49 @@ public class LoginControlTest extends UeberTest {
         }
     }
 
+    @Test
+    public void isLoggedInTest() {
+        LoginControl loginControl = LoginControl.getInstance();
+        boolean theONETruth;
+        try {
+            loginControl.login("tom", "cat", true);
+
+        }
+        catch (ChronoCommandException ex) {
+            assertFalse(ex.getReason() == Reason.BADCREDENTIALS);
+        }
+        theONETruth = loginControl.isLoggedIn();
+
+        assert(theONETruth);
+    }
+
+    @Test
+    public void getUserTest() {
+        LoginControl loginControl = LoginControl.getInstance();
+        try {
+            loginControl.login("tom", "cat", true);
+
+        }
+        catch (ChronoCommandException ex) {
+            fail();
+        }
+        try {
+            assertTrue(loginControl.getCurrentUser().getUsername().equals("tom"));
+        }
+        catch (ChronoCommandException ex) {
+            fail();
+        }
+    }
+
+    @Test
+    public void getUserTestFailing() {
+        LoginControl loginControl = LoginControl.getInstance();
+
+        try {
+            loginControl.getCurrentUser().getUsername().equals("tom");
+        }
+        catch (ChronoCommandException ex) {
+            assertTrue(ex.getReason() == Reason.NOTLOGGEDIN);
+        }
+    }
 }

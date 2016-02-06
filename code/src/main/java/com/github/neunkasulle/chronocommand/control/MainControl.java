@@ -34,14 +34,6 @@ public class MainControl extends Control {
     }
 
     /**
-     * Handles Exceptions which are not handled on invocation.
-     * When application crashed critical, it will save and shut down.
-     */
-    private void exceptionHandling() {
-        throw new NotYetImplementedException(); //TODO
-    }
-
-    /**
      * Initializes the application with all the needed
      */
     public void startup(boolean productionMode) {
