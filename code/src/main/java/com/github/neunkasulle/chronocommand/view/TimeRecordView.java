@@ -32,6 +32,7 @@ public class TimeRecordView extends BaseView {
     private Label elapsedTime;
 
     private final TimeRecordForm form = new TimeRecordForm(event -> {
+        // save
         try {
             // Commit the fields from UI to DAO
             this.form.getFormFieldBinding().commit();
@@ -45,9 +46,11 @@ public class TimeRecordView extends BaseView {
             Notification.show("Failed to save Timerecord: " + e, Notification.Type.ERROR_MESSAGE);
         }
     }, event -> {
+        // delete
         //TODO: Delete it
         refreshTimeRecords();
     }, event -> {
+        // cancel
         this.recordList.select(null);
         refreshTimeRecords();
     });
@@ -118,7 +121,7 @@ public class TimeRecordView extends BaseView {
                 refreshTimeSheetList();
                 refreshTimeRecords();
             } catch(ChronoCommandException e) {
-                Notification.show("Failed to start time record: " + e.getReason().name(), Notification.Type.ERROR_MESSAGE);
+                Notification.show("Failed to start time record: " + e.getReason().name(), Notification.Type.WARNING_MESSAGE);
             }
         });
         stopButton.addClickListener(event1 -> {
@@ -131,7 +134,7 @@ public class TimeRecordView extends BaseView {
                 refreshTimeSheetList();
                 refreshTimeRecords();
             } catch(ChronoCommandException e) {
-                Notification.show("Failed to stop time record: " + e.getReason().name(), Notification.Type.ERROR_MESSAGE);
+                Notification.show("Failed to stop time record: " + e.getReason().name(), Notification.Type.WARNING_MESSAGE);
             }
         });
 
