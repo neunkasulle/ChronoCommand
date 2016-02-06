@@ -1,16 +1,12 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
-import com.sun.istack.internal.Nullable;
-
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.time.LocalDate;
 
 /**
@@ -45,7 +41,7 @@ public class TimeSheetControl extends Control {
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
-        //timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), null, null));
+
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, null, null, timeSheet);
         timeSheetDAO.saveTimeRecord(timeRecord);
 
@@ -63,18 +59,13 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
-        //Category category = CategoryDAO.getInstance().findCategoryByString(cat);
-
-        /*if(category == null) {
-            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
-        }*/
 
         if(timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
         }
 
-        //timeSheet.addTime(new TimeRecord(LocalDateTime.now(), LocalDateTime.now(), category, description));
+
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, category, description, timeSheet);
         timeSheetDAO.saveTimeRecord(timeRecord);
 
@@ -110,14 +101,6 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
-        /*if(timeRecord.getCategory() != null) {
-            throw new ChronoCommandException(Reason.CATEGORYALREADYSPECIFIED);
-        }*/
-
-        /*Category category = CategoryDAO.getInstance().findCategoryByString(cat);
-        if(category == null) {
-            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
-        }*/
 
         if (category == null && timeRecord.getCategory() == null) {
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
@@ -181,7 +164,7 @@ public class TimeSheetControl extends Control {
      * A timeSheet will be locked against changes
      * @param timeSheet the timesheet which will be locked
      */
-    public void lockTimeSheet(TimeSheet timeSheet) {
+    public void lockTimeSheet(TimeSheet timeSheet, User user) {
 
         timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
 
@@ -191,7 +174,7 @@ public class TimeSheetControl extends Control {
      * A TimeSheet will be unlocked again and thus can be changed again
      * @param timeSheet the time sheet which will be unlocked
      */
-    public void unlockTimeSheet(TimeSheet timeSheet) {
+    public void unlockTimeSheet(TimeSheet timeSheet, User user) {
 
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
 
@@ -202,18 +185,11 @@ public class TimeSheetControl extends Control {
      * A time sheet will be marked as checked
      * @param timeSheet the time sheet which will be marked
      */
-    public void approveTimeSheet(TimeSheet timeSheet) {
+    public void approveTimeSheet(TimeSheet timeSheet, User user) {
 
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
 
         //TODO Permissions checks and stuff?
-    }
-
-    /**
-     * I'm a pink fluffy unicorn
-     */
-    public void filtersChanged() {
-        //not needed for now
     }
 
     /**

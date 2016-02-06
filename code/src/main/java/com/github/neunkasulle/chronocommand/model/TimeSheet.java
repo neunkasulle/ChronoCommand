@@ -93,9 +93,6 @@ public class TimeSheet {
         return this.requiredHoursPerMonth;
     }
 
-    /*public void addTime(TimeRecord timeRecord) {
-        timeRecords.add(timeRecord);
-    }*/
 
     @Override
     public String toString() {

@@ -57,6 +57,7 @@ public class Realm extends AuthorizingRealm {
             throw new AuthenticationException();
         }
     }
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long userId = (Long) principals.fromRealm(getName()).iterator().next();
@@ -72,6 +73,7 @@ public class Realm extends AuthorizingRealm {
             return null;
         }
     }
+
 
 }
 
