@@ -24,7 +24,7 @@ public class TimeSheet {
     @JoinColumn(name = "user_id")
     User user;
 
-   @Basic
+    @Basic
     Message message;
 
     @Basic(optional = false)
@@ -104,5 +104,13 @@ public class TimeSheet {
             monthStr = "0" + monthStr;
         }
         return monthStr + "." + year;
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
     }
 }
