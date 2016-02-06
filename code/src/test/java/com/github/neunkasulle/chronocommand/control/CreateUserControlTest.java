@@ -27,7 +27,10 @@ public class CreateUserControlTest {
 
         createUserControl = CreateUserControl.getInstance();
 
-        createUserControl.createUser(new Role("admin"),"Chutulu", "chutulu@eatsyour.soul","1234", " ", null, 999999999);
+        Role admin = new Role("admin");
+        UserDAO.getInstance().saveRole(admin);
+
+        createUserControl.createUser(admin,"Chutulu", "chutulu@eatsyour.soul","1234", " ", null, 999999999);
 
         assert(userDAO.findUser("Chutulu").getRealname().equals(" "));
 
