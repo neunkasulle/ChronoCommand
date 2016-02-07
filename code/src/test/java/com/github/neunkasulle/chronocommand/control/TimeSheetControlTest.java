@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 import static org.junit.Assert.*;
 
@@ -78,6 +79,53 @@ public class TimeSheetControlTest extends UeberTest{
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         fail();
+    }
+
+    @Test
+    public void closeTimeRecordTest() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        try {
+            timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(null, " ", userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException ex) {
+            assertTrue(ex.getReason() == Reason.MISSINGCATEGORY);
+        }
+    }
+
+    @Test
+    public void getLatestRecordTest(){
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        TimeRecord timeRecord = null;
+        try {
+            timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
+            timeRecord = timeSheetControl.getLatestTimeRecord(userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException ex) {
+            fail();
+        }
+        assertTrue(timeRecord.getCategory() == null);
+    }
+
+    @Test
+    public void lockTimeSheetTest() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
+
+        TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.FEBRUARY, 2016).get(0);
+        timeSheetControl.lockTimeSheet(timeSheet, userDAO.findUser("tom"));
+
+        try {
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, " ", timeSheet.getUser());
+        }
+        catch (ChronoCommandException exc) {
+            assertTrue(exc.getReason() == Reason.TIMESHEETLOCKED);
+        }
+
     }
 
 }

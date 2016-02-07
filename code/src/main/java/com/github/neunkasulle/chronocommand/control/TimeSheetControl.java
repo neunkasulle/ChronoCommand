@@ -1,7 +1,7 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
-import javax.annotation.Nullable;
+
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -103,7 +103,6 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
-
         if (category == null && timeRecord.getCategory() == null) {
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
@@ -146,9 +145,9 @@ public class TimeSheetControl extends Control {
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
-        //timeSheet.addTime(new TimeRecord(beginn, end, category, description));
         timeSheetDAO.saveTimeRecord(new TimeRecord(beginn, end, category, description, timeSheet));
     }
+
 
     /**
      * Collects all time Sheets from user which are supervised by a specific user
@@ -157,11 +156,12 @@ public class TimeSheetControl extends Control {
      * @param user the supervising user
      * @return A list of time sheets
      */
+    /*
     public List<TimeSheet> getSupervisedTimeSheets(Month month, int year, User user) {
         //not needed for now
         return null;
     }
-
+*/
     /**
      * A timeSheet will be locked against changes
      * @param timeSheet the timesheet which will be locked
@@ -187,7 +187,7 @@ public class TimeSheetControl extends Control {
      * A time sheet will be marked as checked
      * @param timeSheet the time sheet which will be marked
      */
-    public void approveTimeSheet(TimeSheet timeSheet) {
+    public void approveTimeSheet(TimeSheet timeSheet, User user) {
 
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
 
