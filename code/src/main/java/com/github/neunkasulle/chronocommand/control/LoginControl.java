@@ -44,7 +44,7 @@ public class LoginControl extends Control {
         try {
             SecurityUtils.getSubject().login(token);
         } catch (AuthenticationException e) {
-            LOGGER.info("Failed Login", e);
+            LOGGER.error("Failed Login", e);
             throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
 
