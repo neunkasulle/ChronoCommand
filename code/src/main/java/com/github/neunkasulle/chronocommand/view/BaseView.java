@@ -4,7 +4,6 @@ import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
-import com.github.neunkasulle.chronocommand.model.Session;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -13,6 +12,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
+import org.apache.shiro.session.Session;
 
 import java.util.Arrays;
 import java.util.Date;
