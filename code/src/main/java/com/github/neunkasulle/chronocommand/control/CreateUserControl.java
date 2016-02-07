@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 
@@ -11,8 +13,9 @@ import javax.annotation.Nullable;
  */
 public class CreateUserControl extends Control {
     private static CreateUserControl ourInstance = new CreateUserControl();
-    
+    private final Logger LOGGER = LoggerFactory.getLogger(CreateUserControl.class);
     private CreateUserControl() {
+
 
     }
 
@@ -39,14 +42,17 @@ public class CreateUserControl extends Control {
         UserDAO userDAO = UserDAO.getInstance();
 
         if(userDAO.findUser(name) != null) {
+            LOGGER.error("user" + name + "already exists");
             throw new ChronoCommandException(Reason.USERALREADYEXISTS);
         }
 
         if (userDAO.findUserByEmail(email) != null) {
+            LOGGER.error("email" + email + "is already in use");
             throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
         }
 
         userDAO.saveUser(new User(userType, name, email, password, fullname, supervisor, hoursPerMonth));
+        LOGGER.info("successfully created new user" + name);
     }
 
 }

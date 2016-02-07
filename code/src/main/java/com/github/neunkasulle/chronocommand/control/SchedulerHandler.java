@@ -2,6 +2,8 @@ package com.github.neunkasulle.chronocommand.control;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
@@ -14,6 +16,7 @@ import static org.quartz.CronScheduleBuilder.*;
  * Name can be changed everytime
  */
 public class SchedulerHandler {
+    private final Logger LOGGER = LoggerFactory.getLogger(SchedulerHandler.class);
 
     private static Scheduler intantiateSched() throws SchedulerException {
         SchedulerFactory schedFact = new StdSchedulerFactory();

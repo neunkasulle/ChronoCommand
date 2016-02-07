@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.File;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
  * Handles TimeSheet manipulation
  */
 public class TimeSheetControl extends Control {
+    private final Logger LOGGER = LoggerFactory.getLogger(TimeSheetControl.class);
 
     private static TimeSheetControl ourInstance = new TimeSheetControl();
 
@@ -40,16 +43,19 @@ public class TimeSheetControl extends Control {
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
         if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
+            LOGGER.info("New time sheet created" + LocalDate.now().getMonth() + LocalDate.now().getYear());
         }
 
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, null, null, timeSheet);
         timeSheetDAO.saveTimeRecord(timeRecord);
+        LOGGER.info("new time record started for" + user.getUsername());
 
         return timeRecord;
     }
@@ -66,17 +72,20 @@ public class TimeSheetControl extends Control {
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
         if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         if(timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
+            LOGGER.info("New time sheet created" + LocalDate.now().getMonth() + LocalDate.now().getYear());
         }
 
 
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, category, description, timeSheet);
         timeSheetDAO.saveTimeRecord(timeRecord);
+        LOGGER.info("new time record started for" + user.getUsername());
 
         return timeRecord;
     }
@@ -91,15 +100,18 @@ public class TimeSheetControl extends Control {
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
         if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         if(timeRecord.getCategory() == null) {
+            LOGGER.error("missing category");
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
         timeRecord.setEnd(LocalDateTime.now());
         timeSheetDAO.saveTimeRecord(timeRecord);
+        LOGGER.info("Time record closed for" + user.getUsername());
 
         return timeRecord;
     }
@@ -116,10 +128,12 @@ public class TimeSheetControl extends Control {
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
         if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         if (category == null && timeRecord.getCategory() == null) {
+            LOGGER.error("missing category");
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
@@ -127,6 +141,7 @@ public class TimeSheetControl extends Control {
         timeRecord.setDescription(description);
         timeRecord.setEnd(LocalDateTime.now());
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
+        LOGGER.info("Time record closed for" + user.getUsername());
 
         return timeRecord;
     }
@@ -150,19 +165,23 @@ public class TimeSheetControl extends Control {
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(beginn.getMonth(), beginn.getYear(), user);
 
         if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         if(category == null) {
+            LOGGER.error("missing category");
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
         if (timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, beginn.getMonth(), beginn.getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
+            LOGGER.info("New time sheet created" + LocalDate.now().getMonth() + LocalDate.now().getYear() + user.getUsername());
         }
 
         timeSheetDAO.saveTimeRecord(new TimeRecord(beginn, end, category, description, timeSheet));
+        LOGGER.info("Time record created for" + user.getUsername());
     }
 
 
@@ -184,8 +203,8 @@ public class TimeSheetControl extends Control {
      * @param timeSheet the timesheet which will be locked
      */
     public void lockTimeSheet(TimeSheet timeSheet, User user) {
-
         timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
+        LOGGER.info("Locked:" + timeSheet.getMonth() + user.getUsername());
 
     }
 
@@ -196,7 +215,7 @@ public class TimeSheetControl extends Control {
     public void unlockTimeSheet(TimeSheet timeSheet, User user) {
 
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
-
+        LOGGER.info("unlocked:" + timeSheet.getMonth() + user.getUsername());
         //TODO permission from validated to unlocked
     }
 
@@ -205,7 +224,7 @@ public class TimeSheetControl extends Control {
      * @param timeSheet the time sheet which will be marked
      */
     public void approveTimeSheet(TimeSheet timeSheet, User user) {
-
+        LOGGER.info("checked:" + timeSheet.getMonth() + user.getUsername());
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
 
         //TODO Permissions checks and stuff?
@@ -316,10 +335,12 @@ public class TimeSheetControl extends Control {
 
     public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
         if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
         // TODO check for valid data
         if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
+            LOGGER.error("not permitted to perfomr action: editTimeRecord caused by" + LoginControl.getInstance().getCurrentUser().getUsername());
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);

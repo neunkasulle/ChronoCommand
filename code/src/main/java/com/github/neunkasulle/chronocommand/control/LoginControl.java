@@ -47,6 +47,7 @@ public class LoginControl extends Control {
             LOGGER.error("Failed Login", e);
             throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
+        LOGGER.info(username + "logged in successfully");
 
     }
 
@@ -75,9 +76,9 @@ public class LoginControl extends Control {
 
     public User getCurrentUser() throws ChronoCommandException {
         if (!isLoggedIn()) {
+            LOGGER.error("user not logged in");
             throw new ChronoCommandException(Reason.NOTLOGGEDIN);
         }
-
         String username = SecurityUtils.getSubject().getPrincipal().toString();
         return UserDAO.getInstance().findUser(username);
     }
