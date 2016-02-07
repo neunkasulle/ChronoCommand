@@ -43,8 +43,7 @@ model
   Role
     Enum -> class
     [ +id:Long{readonly}, +name:String, +description:String, +permission:Set<String> |]
-  Session
-    (maybe deleted cause shiro)
+  --Session
   TimeRecord
     maybe --timeSheet
     maybe --checkTimes
