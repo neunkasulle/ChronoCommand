@@ -39,6 +39,10 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
+        if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+
         if(timeSheet == null){  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
@@ -61,6 +65,9 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
+        if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
 
         if(timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
@@ -82,6 +89,11 @@ public class TimeSheetControl extends Control {
     public TimeRecord closeTimeRecord(User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
+
+        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+
         if(timeRecord.getCategory() == null) {
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
@@ -102,6 +114,10 @@ public class TimeSheetControl extends Control {
     public TimeRecord closeTimeRecord(Category category, String description, User user) throws ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
+
+        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
 
         if (category == null && timeRecord.getCategory() == null) {
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
@@ -132,6 +148,11 @@ public class TimeSheetControl extends Control {
     throws  ChronoCommandException {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(beginn.getMonth(), beginn.getYear(), user);
+
+        if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+
         if(category == null) {
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
@@ -139,10 +160,6 @@ public class TimeSheetControl extends Control {
         if (timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, beginn.getMonth(), beginn.getYear());
             timeSheetDAO.saveTimeSheet(timeSheet);
-        }
-
-        if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
-            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
 
         timeSheetDAO.saveTimeRecord(new TimeRecord(beginn, end, category, description, timeSheet));
