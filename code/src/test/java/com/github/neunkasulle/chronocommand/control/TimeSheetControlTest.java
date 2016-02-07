@@ -2,9 +2,8 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -125,7 +124,38 @@ public class TimeSheetControlTest extends UeberTest{
         catch (ChronoCommandException exc) {
             assertTrue(exc.getReason() == Reason.TIMESHEETLOCKED);
         }
+    }
 
+    @Test
+    public void printAllTimeSheetsUserTest() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        File pdfSheets = timeSheetControl.printAllTimeSheets(userDAO.findUser("tom"));
+
+        assertTrue(pdfSheets != null);
+
+    }
+
+    @Test
+    public void printAllTimeSheetsTimeTest() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        File pdfSheets = timeSheetControl.printAllTimeSheets(Month.JANUARY, 2016);
+
+        assertTrue(pdfSheets != null);
+    }
+
+    @Test
+    public void printTimeSheet() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        TimeSheet timeSheet = new TimeSheet(userDAO.findUser("tom"), Month.AUGUST, 1993);
+        File file = timeSheetControl.printTimeSheet(timeSheet);
+
+        assertTrue(file != null);
     }
 
 }
