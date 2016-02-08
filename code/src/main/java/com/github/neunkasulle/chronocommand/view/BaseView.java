@@ -12,6 +12,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 import java.util.Arrays;
@@ -253,7 +254,14 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         final HorizontalLayout userInfo = new HorizontalLayout();
         userInfo.setSizeFull();
-        final Button userSettingsButton = new Button("Musterman");
+
+        String nameOfUser;
+        try {
+            nameOfUser = LoginControl.getInstance().getCurrentUser().getRealname();
+        } catch (ChronoCommandException e) {
+            nameOfUser = "Not logged in!";
+        }
+        final Button userSettingsButton = new Button(nameOfUser);
         userSettingsButton.setStyleName(BaseTheme.BUTTON_LINK);
         userSettingsButton.addClickListener(e -> {
             getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
@@ -261,7 +269,17 @@ public abstract class BaseView extends HorizontalLayout implements View {
         userInfo.addComponent(userSettingsButton);
 
         //TODO: use role.getName() or something like that here
-        userInfo.addComponent(new Label("HIWI"));
+        String roleOfUser;
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            roleOfUser = "Administrator";
+        } else if (SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
+            roleOfUser = "Supervisor";
+        } else if (SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+            roleOfUser = "HIWI";
+        } else {
+            roleOfUser = "No role!";
+        }
+        userInfo.addComponent(new Label(roleOfUser));
         controlPanel.addComponent(userInfo);
 
         /* Action links */

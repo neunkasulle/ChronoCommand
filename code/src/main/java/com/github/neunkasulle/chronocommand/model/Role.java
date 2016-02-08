@@ -17,6 +17,15 @@ import java.util.Set;
 @Table(name="cc_roles")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class Role {
+    @Transient
+    public static final String PERM_ADMINISTRATOR = "administrator";
+    @Transient
+    public static final String PERM_SUPERVISOR = "supervisor";
+    @Transient
+    public static final String PERM_PROLETARIER = "supervisor";
+    @Transient
+    public static final String PERM_LONGHOURS = "longhours";
+    // TODO all the other permissions
 
     @Id
     @GeneratedValue

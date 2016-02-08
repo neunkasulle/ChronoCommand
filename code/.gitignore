@@ -4,4 +4,4 @@ target
 *.cache
 *.iml
 .sonar_lock
-
+logs

@@ -20,12 +20,14 @@ package com.github.neunkasulle.chronocommand.security;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
+import org.slf4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -51,7 +53,7 @@ public class Realm extends AuthorizingRealm {
         if (user == null) {
             user = UserDAO.getInstance().findUserByEmail(token.getUsername());
         }
-        if( user != null ) {
+        if (user != null) {
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
         } else {
             throw new AuthenticationException();
@@ -60,9 +62,9 @@ public class Realm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Long userId = (Long) principals.fromRealm(getName()).iterator().next();
-        User user = UserDAO.getInstance().getUser(userId);
-        if( user != null ) {
+        String username = (String) principals.fromRealm(getName()).iterator().next();
+        User user = UserDAO.getInstance().findUser(username);
+        if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             for( Role role : user.getRoles() ) {
                 info.addRole(role.getName());

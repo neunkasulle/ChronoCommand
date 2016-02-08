@@ -13,6 +13,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -177,10 +178,24 @@ public class TimeRecordView extends BaseView {
                 return String.class;
             }
         });
+        gpcontainer.addGeneratedProperty("date", new PropertyValueGenerator<String>() {
+            @Override
+            public String getValue(Item item, Object itemId, Object propertyId) {
+                final LocalDateTime beginningTime = (LocalDateTime) item.getItemProperty("beginning").getValue();
+                String beginning = "";
+                beginning += beginningTime.getDayOfMonth() + ".";
+                beginning += beginningTime.getMonthValue() + ".";
+                return beginning;
+            }
 
-        recordList.setColumns("duration", "category.name", "description", "beginningTime", "endTime");
+            @Override
+            public Class<String> getType() {
+                return String.class;
+            }
+        });
 
-        recordList.setColumnOrder("duration", "category.name", "description", "beginningTime", "endTime");
+        recordList.setColumns("date", "duration", "category.name", "description", "beginningTime", "endTime");
+        //recordList.setColumnOrder("date", "duration", "category.name", "description", "beginningTime", "endTime");
         recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Category");
         recordList.getDefaultHeaderRow().getCell("description").setHtml("Description");
 

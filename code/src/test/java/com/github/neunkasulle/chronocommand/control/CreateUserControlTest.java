@@ -50,7 +50,7 @@ public class CreateUserControlTest extends UeberTest {
             createUserControl.createUser(new Role("admin"),"...", "tom@chronocommand.eu","1234", " ", null, 999999999);
         }
         catch (ChronoCommandException e) {
-            assertTrue(e.getReason() == Reason.USERALREADYEXISTS);
+            assertTrue(e.getReason() == Reason.EMAILALREADYINUSE);
         }
     }
 }

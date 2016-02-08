@@ -1,6 +1,7 @@
 package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.*;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -146,8 +147,14 @@ public class UserDAO{
         return (User) obj;
     }
 
+    public List<User> getUsersByRole(Role role) {
+        throw new NotYetImplementedException();
+    }
+
     public Role getRoleByName(String name) {
-        throw new UnsupportedOperationException();
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Object role = session.createCriteria(Role.class).add(Restrictions.eq("name", name)).uniqueResult();
+        return (Role) role;
     }
 
     public void saveRole(Role role) {
