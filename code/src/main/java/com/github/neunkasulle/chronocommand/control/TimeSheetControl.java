@@ -364,12 +364,16 @@ public class TimeSheetControl {
     }
 
     public void sendEmail(User recipient, String message) {
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
+        String host = "localhost";
+        Properties properties = System.getProperties();
+
+        properties.setProperty("mail.smtp.host", host);
+
+        Session session = Session.getDefaultInstance(properties, null);
 
         try {
             javax.mail.Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
+            msg.setFrom(new InternetAddress("reminder@chronocommand.eu", "Example.com Admin"));
             msg.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(recipient.getEmail(), recipient.getRealname()));
             msg.setSubject("ChronoCommand Reminder");
