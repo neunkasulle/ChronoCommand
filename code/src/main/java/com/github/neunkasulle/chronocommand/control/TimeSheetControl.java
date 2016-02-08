@@ -342,4 +342,11 @@ public class TimeSheetControl extends Control {
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
     }
 
+    public void addMessageToTimeSheet(TimeSheet timeSheet, Message message) {
+        timeSheet.setMessage(message);
+    }
+
+    public List<Message> getMessagesFromTimeSheet(TimeSheet timeSheet) {
+        return timeSheet.getMessages();
+    }
 }

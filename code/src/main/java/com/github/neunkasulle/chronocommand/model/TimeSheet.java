@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.Month;
+import java.util.List;
 
 
 /**
@@ -25,7 +26,7 @@ public class TimeSheet {
     User user;
 
     @Basic
-    Message message;
+    List<Message> messages;
 
     @Basic(optional = false)
     TimeSheetState state;
@@ -103,11 +104,11 @@ public class TimeSheet {
         return monthStr + "." + year;
     }
 
-    public Message getMessage() {
-        return message;
+    public List<Message> getMessages() {
+        return messages;
     }
 
     public void setMessage(Message message) {
-        this.message = message;
+        this.messages.add(message);
     }
 }
