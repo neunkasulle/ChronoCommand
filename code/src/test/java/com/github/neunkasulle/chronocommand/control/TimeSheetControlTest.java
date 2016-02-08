@@ -115,7 +115,7 @@ public class TimeSheetControlTest extends UeberTest{
         UserDAO userDAO = UserDAO.getInstance();
         Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
 
-        TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.FEBRUARY, 2016).get(0);
+        TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.JANUARY, 2016).get(0);
         timeSheetControl.lockTimeSheet(timeSheet, userDAO.findUser("tom"));
 
         try {
