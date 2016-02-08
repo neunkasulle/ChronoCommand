@@ -3,11 +3,11 @@ package com.github.neunkasulle.chronocommand.control;
 import com.github.neunkasulle.chronocommand.model.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.IniSecurityManagerFactory;
-import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.util.Factory;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.hibernate.internal.util.collections.IdentitySet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -18,7 +18,9 @@ import java.util.Set;
  * Created by Janze on 18.01.2016.
  * Controling startup and shutdown
  */
-public class MainControl extends Control {
+public class MainControl {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainControl.class);
+
     public static final String ROLE_ADMINISTRATOR = "administrator";
     public static final String ROLE_SUPERVISOR = "supervisor";
     public static final String ROLE_PROLETARIER = "proletarier";
@@ -90,7 +92,6 @@ public class MainControl extends Control {
             UserDAO.getInstance().saveRole(longhours);
         }
 
-        // TODO initiate anything that needs initiating
 
         // DEBUG fill database with data
         if (!productionMode) {
@@ -98,6 +99,7 @@ public class MainControl extends Control {
                 CategoryDAO.getInstance().saveCategory(new Category("Programming"));
                 CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
             } catch (ChronoCommandException e) {
+                LOGGER.error("Save category failed", e);
             }
 
             User bigboss = new User(administrator, "admin", "the@big.boss", "admin", "BigBoss", null, 0);
@@ -122,14 +124,10 @@ public class MainControl extends Control {
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
             } catch (ChronoCommandException e) {
+                LOGGER.error("Save time record failed", e);
             }
         }
     }
-
-    public boolean isInitialStartup() {
-        return false;// TODO
-    }
-
 
     /**
      * Saves necessary data before shutting down
@@ -137,6 +135,5 @@ public class MainControl extends Control {
     public void shutdown() {
         DAOHelper.getInstance().shutdown();
 
-        // TODO initiate anything that needs initiating
     }
 }

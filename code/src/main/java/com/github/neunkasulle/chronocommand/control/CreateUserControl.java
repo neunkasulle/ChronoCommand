@@ -11,12 +11,11 @@ import javax.annotation.Nullable;
  * Controls the Creation of new users
  *
  */
-public class CreateUserControl extends Control {
+public class CreateUserControl {
     private static CreateUserControl ourInstance = new CreateUserControl();
-    private final Logger LOGGER = LoggerFactory.getLogger(CreateUserControl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreateUserControl.class);
     private CreateUserControl() {
-
-
+        
     }
 
     /**

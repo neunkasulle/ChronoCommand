@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  * Created by Janze on 18.01.2016.
  * Handles Login and Logout
  */
-public class LoginControl extends Control {
+public class LoginControl {
     private static LoginControl ourInstance = new LoginControl();
-    private final Logger LOGGER = LoggerFactory.getLogger(LoginControl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginControl.class);
 
     private LoginControl() {
     }

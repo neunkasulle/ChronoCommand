@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Janze on 18.01.2016.
  * Controls User management
  */
-public class UserManagementControl extends  Control {
+public class UserManagementControl {
 
     private static UserManagementControl ourInstance = new UserManagementControl();
 

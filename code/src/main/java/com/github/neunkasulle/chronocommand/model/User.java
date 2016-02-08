@@ -1,7 +1,5 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.apache.shiro.codec.Hex;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
@@ -14,6 +12,7 @@ import java.util.Set;
 
 /**
  * Created by Janze on 16.01.2016.
+ * user object
  */
 
 @Entity
@@ -60,11 +59,6 @@ public class User {
     @Basic
     private int hoursPerMonth;
 
-
-    public User() {
-
-    }
-
     public User(Role userType, String username, String email, String password, String realName, User supervisor, int hoursPerMonth) {
         this.roles = new HashSet<>();
         this.roles.add(userType);
@@ -100,10 +94,6 @@ public class User {
      */
     public String getRealname() {
         return realName;
-    }
-
-    public void setRealname(final String realname) {
-        this.realName = realname;
     }
 
     public String getEmail() {

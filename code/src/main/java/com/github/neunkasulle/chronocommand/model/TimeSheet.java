@@ -40,12 +40,7 @@ public class TimeSheet {
     @Basic(optional = false)
     int requiredHoursPerMonth;
 
-    /*@OneToMany
-    List<TimeRecord> timeRecords;*/
-
     int currentMinutesThisMonth;
-
-    public TimeSheet() {}
 
     public TimeSheet(User user, Month month, int year) {
         this.user = user;
@@ -53,7 +48,6 @@ public class TimeSheet {
         this.year = year;
         this.requiredHoursPerMonth = this.user.getHoursPerMonth();
         state = TimeSheetState.UNLOCKED;
-        //timeRecords = new LinkedList<>();
     }
 
     public int getId() {

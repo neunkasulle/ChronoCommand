@@ -45,7 +45,7 @@ public class Category {
 
     /**
      * setName implementation for category
-     * @param name
+     * @param name name of the category
      */
     public void setName(String name) {
         this.name = name;

@@ -6,7 +6,6 @@ import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class CategoryDAO {
     private static final CategoryDAO instance = new CategoryDAO();
-    private final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
 
     private CategoryDAO() {
 

@@ -47,9 +47,6 @@ public class TimeRecord {
         this.timeSheet = timeSheet;
     }
 
-    public TimeRecord() {
-
-    }
 
     /**
      * Gets the internal DB id
@@ -201,13 +198,11 @@ public class TimeRecord {
     }
 
     public int getTotHour() {
-        int hour = this.getEndHour() - this.getBeginningHour();
-        return  hour;
+        return  this.getEndHour() - this.getBeginningHour();
     }
 
     public int getTotMin() {
-        int min = this.getEndMinute() - this.getBeginningMinute();
-        return min;
+        return this.getEndMinute() - this.getBeginningMinute();
     }
 
     public void setBeginning(LocalDateTime beginning) {

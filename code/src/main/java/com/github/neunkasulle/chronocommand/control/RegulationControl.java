@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Janze on 17.01.2016.
  * Checks Time Sheets for regulation violations
  */
-public class RegulationControl extends Control {
+public class RegulationControl {
     Deque<User> warnedUsers;
 
     private static RegulationControl ourInstance = new RegulationControl();

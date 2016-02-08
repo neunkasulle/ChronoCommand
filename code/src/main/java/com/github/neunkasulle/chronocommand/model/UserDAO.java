@@ -15,9 +15,11 @@ import java.util.List;
  */
 public class UserDAO{
     private static final UserDAO instance = new UserDAO();
-    private Logger log = LoggerFactory.getLogger(UserDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
 
-    private UserDAO() {}
+    private UserDAO() {
+
+    }
 
     public static UserDAO getInstance() {
         return instance;
@@ -31,12 +33,12 @@ public class UserDAO{
             if (user instanceof User) {
                 return (User) user;
             } else if (user == null) {
-                log.warn("No user with username \"{}\" found", username);
+                LOGGER.warn("No user with username \"{}\" found", username);
             } else {
-                log.error("Failed to get user with username \"{}\" because the object we received is not of type User: {}", username, user);
+                LOGGER.error("Failed to get user with username \"{}\" because the object we received is not of type User: {}", username, user);
             }
         } catch (HibernateException e) {
-            log.error("Failed to get user with username \"{}\".", username, e);
+            LOGGER.error("Failed to get user with username \"{}\".", username, e);
         }
         return null;
     }
@@ -46,11 +48,11 @@ public class UserDAO{
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             User user = session.get(User.class, userId);
             if (user == null) {
-                log.error("No user with id {} found.", userId);
+                LOGGER.error("No user with id {} found.", userId);
             }
             return user;
         } catch (HibernateException e) {
-            log.error("Failed to get user with id {}.", userId, e);
+            LOGGER.error("Failed to get user with id {}.", userId, e);
             return null;
         }
     }
@@ -64,7 +66,7 @@ public class UserDAO{
             session.flush();
             return true;
         } catch (HibernateException e) {
-            log.error("Failed to save user \"{}\".", user.getEmail(), e);
+            LOGGER.error("Failed to save user \"{}\".", user.getEmail(), e);
             return false;
         }
     }
@@ -76,19 +78,19 @@ public class UserDAO{
                     .add(Restrictions.eq("supervisor_id", supervisor.getId()))
                     .list();
             if (objlist.isEmpty()) {
-                log.warn("No user with supervisor \"{}\" found", supervisor.getEmail());
+                LOGGER.warn("No user with supervisor \"{}\" found", supervisor.getEmail());
             }
             List<User> users = new ArrayList<>(objlist.size());
             for (Object obj : objlist) {
                 if (obj instanceof User) {
                     users.add((User) obj);
                 } else {
-                    log.error("Element not instance of User: {}", obj.toString());
+                    LOGGER.error("Element not instance of User: {}", obj.toString());
                 }
             }
             return users;
         } catch (HibernateException e) {
-            log.error("Failed to get users with supervisor \"{}\".", supervisor.getEmail(), e);
+            LOGGER.error("Failed to get users with supervisor \"{}\".", supervisor.getEmail(), e);
         }
         return new ArrayList<>();
     }
@@ -123,19 +125,19 @@ public class UserDAO{
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             List objlist = session.createCriteria(User.class).list();
             if (objlist.isEmpty()) {
-                log.warn("No users found");
+                LOGGER.warn("No users found");
             }
             List<User> users = new ArrayList<>(objlist.size());
             for (Object obj : objlist) {
                 if (obj instanceof User) {
                     users.add((User) obj);
                 } else {
-                    log.error("Element not instance of User: {}", obj.toString());
+                    LOGGER.error("Element not instance of User: {}", obj.toString());
                 }
             }
             return users;
         } catch (HibernateException e) {
-            log.error("Failed to get all users.", e);
+            LOGGER.error("Failed to get all users.", e);
         }
         return new ArrayList<>();
     }

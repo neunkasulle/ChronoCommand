@@ -17,8 +17,6 @@ import java.util.List;
 public class TimeSheetDAO {
     private static final TimeSheetDAO instance = new TimeSheetDAO();
 
-    private TimeSheetDAO() {}
-
     public static TimeSheetDAO getInstance() {
         return instance;
     }
@@ -71,14 +69,12 @@ public class TimeSheetDAO {
         return list;
     }
 
-    public boolean saveTimeSheet(TimeSheet timeSheet) {
+    public void saveTimeSheet(TimeSheet timeSheet) {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         session.saveOrUpdate(timeSheet);
         tx.commit();
         session.flush();
-        boolean red = true; // das ist nur da, damit intellij nicht wegen code dublikaten rummotz!
-        return red;
     }
 
     public List<TimeSheet> getAllTimeSheets(Month month, int year) {
@@ -146,6 +142,6 @@ public class TimeSheetDAO {
         if (obj instanceof TimeSheetHandler) {
             return (TimeSheetHandler) obj;
         }
-        throw new ChronoCommandException();
+        throw new ChronoCommandException(Reason.INVALIDSOMETHING);
     }
 }

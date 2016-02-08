@@ -16,7 +16,7 @@ import static org.quartz.CronScheduleBuilder.*;
  * Name can be changed everytime
  */
 public class SchedulerHandler {
-    private final Logger LOGGER = LoggerFactory.getLogger(SchedulerHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerHandler.class);
 
     private static Scheduler intantiateSched() throws SchedulerException {
         SchedulerFactory schedFact = new StdSchedulerFactory();
@@ -80,12 +80,10 @@ public class SchedulerHandler {
         try {
             scheduleAll();
         } catch (SchedulerException e) {
-            System.err.println("NOT WORKING");
+            LOGGER.error("NOT WORKING");
         }
+        LOGGER.debug("Here it comes: \n");
 
-        System.out.println("Here it comes: \n");
-
-       //exit programm manually
     }
 
 }
