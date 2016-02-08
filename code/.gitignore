@@ -5,3 +5,4 @@ target
 *.iml
 .sonar_lock
 logs
+*Study.pdf
