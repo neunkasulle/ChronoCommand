@@ -27,6 +27,27 @@ public class TimeSheetDAOTest extends UeberTest {
     }
 
     @Test
+    public void testSetMessage() throws Exception {
+        Role role = new Role("r");
+        User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
+        TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
+
+        UserDAO.getInstance().saveRole(role);
+        UserDAO.getInstance().saveUser(user);
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+
+        timeSheet.setMessage(Message.ERROR_BAR);
+        timeSheet.setMessage(Message.ERROR_FOO);
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+
+        TimeSheet dbTimeSheet = TimeSheetDAO.getInstance().getTimeSheet(Month.APRIL, 1984, user);
+        List<Message> messages = dbTimeSheet.getMessages();
+        assertEquals(2, messages.size());
+        assertEquals(Message.ERROR_BAR, messages.get(0));
+        assertEquals(Message.ERROR_FOO, messages.get(1));
+    }
+
+    @Test
     public void TestGetTimeRecord() throws Exception {
         Role role = new Role("r");
         User user = new User(role, "a", "b", "d@e.f", "g", null, 5);

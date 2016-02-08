@@ -38,11 +38,7 @@ public class CategoryDAO {
 
         List<Category> categories = new ArrayList<>(all.list().size());
         for (Object obj : all.list()) {
-            if (obj instanceof Category) {
-                categories.add((Category) obj);
-            } else {
-                LOGGER.error("Element not instance of Category: {}", obj.toString());
-            }
+            categories.add((Category) obj);
         }
 
         return categories;
@@ -64,6 +60,7 @@ public class CategoryDAO {
         session.saveOrUpdate(category);
         tx.commit();
         session.flush();
+        session.close();
     }
 
     /**
@@ -75,11 +72,7 @@ public class CategoryDAO {
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Category.class).add(Restrictions.eq("name", catAsString));
         Object obj = criteria.uniqueResult();
-        if (obj instanceof Category) {
-            return (Category) obj;
-        } else {
-            return null;
-        }
+        return (Category) obj;
     }
 
 }

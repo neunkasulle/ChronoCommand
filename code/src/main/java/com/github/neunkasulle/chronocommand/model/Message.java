@@ -5,5 +5,6 @@ package com.github.neunkasulle.chronocommand.model;
  * Messages for Time sheets
  */
 public enum Message {
-
+    ERROR_FOO,
+    ERROR_BAR,
 }

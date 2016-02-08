@@ -59,6 +59,10 @@ public class User {
     @Basic
     private int hoursPerMonth;
 
+    public User() {
+        // hibernate needs this
+    }
+
     public User(Role userType, String username, String email, String password, String realName, User supervisor, int hoursPerMonth) {
         this.roles = new HashSet<>();
         this.roles.add(userType);

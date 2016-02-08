@@ -17,6 +17,8 @@ import java.util.List;
 public class TimeSheetDAO {
     private static final TimeSheetDAO instance = new TimeSheetDAO();
 
+    private TimeSheetDAO() {}
+
     public static TimeSheetDAO getInstance() {
         return instance;
     }
@@ -75,6 +77,7 @@ public class TimeSheetDAO {
         session.saveOrUpdate(timeSheet);
         tx.commit();
         session.flush();
+        session.close();
     }
 
     public List<TimeSheet> getAllTimeSheets(Month month, int year) {
@@ -84,7 +87,6 @@ public class TimeSheetDAO {
         List<TimeSheet> timeSheets = new LinkedList<>();
 
         for(User user: users) {
-
              timeSheets.add(getTimeSheet(month, year, user));
         }
         return timeSheets;
@@ -110,6 +112,7 @@ public class TimeSheetDAO {
         }
 
         Object obj = criteria.list().get(0);
+        session.close();
         return (TimeSheet) obj;
     }
 
@@ -134,6 +137,7 @@ public class TimeSheetDAO {
         session.saveOrUpdate(timeRecord);
         tx.commit();
         session.flush();
+        session.close();
     }
 
     public TimeSheetHandler getTimeSheetHandler() throws ChronoCommandException {

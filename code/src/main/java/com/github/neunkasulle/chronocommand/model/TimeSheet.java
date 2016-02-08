@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,7 +26,9 @@ public class TimeSheet {
     @JoinColumn(name = "user_id")
     User user;
 
-    @Basic
+    @ElementCollection
+    @Enumerated
+    @JoinTable(name = "cc_timesheet_messages")
     List<Message> messages;
 
     @Basic(optional = false)
@@ -42,12 +45,17 @@ public class TimeSheet {
 
     int currentMinutesThisMonth;
 
+    protected TimeSheet() {
+        // hibernate needs this
+    }
+
     public TimeSheet(User user, Month month, int year) {
         this.user = user;
         this.month = month;
         this.year = year;
         this.requiredHoursPerMonth = this.user.getHoursPerMonth();
-        state = TimeSheetState.UNLOCKED;
+        this.state = TimeSheetState.UNLOCKED;
+        this.messages = new ArrayList<>();
     }
 
     public int getId() {

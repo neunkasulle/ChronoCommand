@@ -13,9 +13,7 @@ public class DAOHelper {
 
     private SessionFactory sessionFactory;
 
-    private DAOHelper() {
-
-    }
+    private DAOHelper() {}
 
     public static DAOHelper getInstance() {
         return instance;

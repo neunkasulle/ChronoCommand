@@ -64,6 +64,7 @@ public class UserDAO{
             session.saveOrUpdate(user);
             tx.commit();
             session.flush();
+            session.close();
             return true;
         } catch (HibernateException e) {
             LOGGER.error("Failed to save user \"{}\".", user.getEmail(), e);
@@ -165,6 +166,6 @@ public class UserDAO{
         session.saveOrUpdate(role);
         tx.commit();
         session.flush();
+        session.close();
     }
-
 }

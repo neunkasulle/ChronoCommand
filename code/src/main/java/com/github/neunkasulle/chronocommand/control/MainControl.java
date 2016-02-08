@@ -136,4 +136,8 @@ public class MainControl {
         DAOHelper.getInstance().shutdown();
 
     }
+
+    private boolean isInitialStartup() {
+        return false;
+    }
 }

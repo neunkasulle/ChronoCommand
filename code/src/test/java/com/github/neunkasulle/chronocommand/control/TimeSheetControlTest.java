@@ -116,6 +116,7 @@ public class TimeSheetControlTest extends UeberTest{
         Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
 
         TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.JANUARY, 2016).get(0);
+        assertNotNull(timeSheet);
         timeSheetControl.lockTimeSheet(timeSheet, userDAO.findUser("tom"));
 
         try {

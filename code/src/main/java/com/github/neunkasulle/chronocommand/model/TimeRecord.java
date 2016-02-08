@@ -31,6 +31,10 @@ public class TimeRecord {
     @JoinColumn(name = "timesheet_id")
     private TimeSheet timeSheet;
 
+    public TimeRecord() {
+        // hibernate needs this
+    }
+
     /**
      * Constructs a new time record.
      *
