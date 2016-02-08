@@ -96,7 +96,8 @@ public class UserDAO{
         return new ArrayList<>();
     }
 
-    public boolean checkUserDetails(Role userRole, String name, String email, User supervisor, int hoursPerMonth) {
+    public boolean checkUserDetails(Role userRole, String name, String email, User supervisor, int hoursPerMonth) throws ChronoCommandException {
+        // TODO throw exceptions instead of returning booleans
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         if (session.get(Role.class, userRole.getId()) == null ) {
             return false;

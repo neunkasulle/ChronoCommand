@@ -31,7 +31,7 @@ public class User {
     @Basic(optional=false)
     @Column(length=250)
     @org.hibernate.annotations.Index(name="idx_users_username")
-    protected String realName;
+    protected String realname;
 
     @Basic(optional=false)
     @org.hibernate.annotations.Index(name="idx_users_email")
@@ -63,13 +63,13 @@ public class User {
         // hibernate needs this
     }
 
-    public User(Role userType, String username, String email, String password, String realName, User supervisor, int hoursPerMonth) {
+    public User(Role userType, String username, String email, String password, String realname, User supervisor, int hoursPerMonth) {
         this.roles = new HashSet<>();
         this.roles.add(userType);
         this.username = username;
         this.email = email;
         this.password = new Sha512Hash(password, null, 1024);
-        this.realName = realName;
+        this.realname = realname;
         this.supervisor = supervisor;
         this.hoursPerMonth = hoursPerMonth;
     }
@@ -97,7 +97,11 @@ public class User {
      * @return the username associated with this user account;
      */
     public String getRealname() {
-        return realName;
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public String getEmail() {
