@@ -34,7 +34,6 @@ public class UserManagementControl {
 
     public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
-            UserDAO.getInstance().checkUserDetails(null, username, email, null, 0);
 
             if (!username.isEmpty()) {
                 user.setUsername(username);

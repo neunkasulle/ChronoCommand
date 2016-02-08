@@ -96,32 +96,6 @@ public class UserDAO{
         return new ArrayList<>();
     }
 
-    public boolean checkUserDetails(Role userRole, String name, String email, User supervisor, int hoursPerMonth) throws ChronoCommandException {
-        // TODO throw exceptions instead of returning booleans
-        org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
-        if (session.get(Role.class, userRole.getId()) == null ) {
-            return false;
-        }
-        Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("name", name));
-        if (criteria.list().size() > 0) {
-            return false;
-        }
-        if ( !email.contains("@") || !email.contains(".") ) {
-            return false;
-        }
-        criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
-        if (criteria.list().size() > 0) {
-            return false;
-        }
-        if (session.get(User.class, supervisor.getId()) == null) {
-            return false;
-        }
-        if ( hoursPerMonth < 0 || hoursPerMonth > 80) {
-            return false;
-        }
-        return true;
-    }
-
     public List<User> getAllUsers() {
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
