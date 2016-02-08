@@ -1,7 +1,10 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.model.*;
+import org.apache.shiro.SecurityUtils;
 import org.hibernate.cfg.NotYetImplementedException;
+
+import java.util.List;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -37,7 +40,13 @@ public class UserManagementControl extends  Control {
         throw new NotYetImplementedException();
     }
 
-
-
+    public List<User> getUsersByRole(Role role) throws ChronoCommandException {
+        User currentUser = LoginControl.getInstance().getCurrentUser();
+        Role administrator = UserDAO.getInstance().getRoleByName(MainControl.ROLE_ADMINISTRATOR);
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+        return UserDAO.getInstance().getUsersByRole(role);
+    }
 
 }
