@@ -28,7 +28,7 @@ public class TimeSheetDAOTest extends UeberTest {
 
     @Test
     public void testSetMessage() throws Exception {
-        Role role = new Role("r");
+        Role role = new Role("r", true);
         User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
 
@@ -49,7 +49,7 @@ public class TimeSheetDAOTest extends UeberTest {
 
     @Test
     public void TestGetTimeRecord() throws Exception {
-        Role role = new Role("r");
+        Role role = new Role("r", true);
         User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
         Category category = new Category("c");
@@ -70,7 +70,7 @@ public class TimeSheetDAOTest extends UeberTest {
 
     @Test
     public void TestGetTimeRecords() throws Exception {
-        Role role = new Role("r");
+        Role role = new Role("r", true);
         User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
         Category category = new Category("c");

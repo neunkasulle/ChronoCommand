@@ -82,8 +82,8 @@ public class User {
 
         this.supervisor = supervisor;
 
-        if (hoursPerMonth > 0 || hoursPerMonth < 80) {
-            throw new  ChronoCommandException(Reason.INVALIDNUMBER);
+        if (hoursPerMonth < 0 || hoursPerMonth > 80) {
+            throw new ChronoCommandException(Reason.INVALIDNUMBER);
         }
         this.hoursPerMonth = hoursPerMonth;
 
@@ -103,8 +103,8 @@ public class User {
     }
 
     public void setUsername(String username) throws ChronoCommandException {
-        if(username == null) {
-            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        if(username == null || username.isEmpty()) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.username = username;
     }
@@ -118,7 +118,10 @@ public class User {
         return realname;
     }
 
-    public void setRealname(String realname) {
+    public void setRealname(String realname) throws ChronoCommandException {
+        if(realname == null || realname.isEmpty()) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
         this.realname = realname;
     }
 

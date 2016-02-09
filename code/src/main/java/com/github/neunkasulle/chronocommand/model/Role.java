@@ -22,7 +22,7 @@ public class Role {
     @Transient
     public static final String PERM_SUPERVISOR = "supervisor";
     @Transient
-    public static final String PERM_PROLETARIER = "supervisor";
+    public static final String PERM_PROLETARIER = "proletarier";
     @Transient
     public static final String PERM_LONGHOURS = "longhours";
     // TODO all the other permissions
@@ -45,6 +45,9 @@ public class Role {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<String> permissions;
 
+    @Basic(optional = false)
+    private boolean primaryRole;
+
     protected Role() {
     }
 
@@ -52,8 +55,9 @@ public class Role {
      * Contructs a new role, without permissions
      * @param name the name of the new role
      */
-    public Role(String name) {
+    public Role(String name, boolean primaryRole) {
         this.name = name;
+        this.primaryRole = primaryRole;
     }
 
     /**
@@ -110,5 +114,12 @@ public class Role {
      */
     public void setPermissions(Set<String> permissions) {
         this.permissions = permissions;
+    }
+
+    /**
+     * Whether this role is a primary role (administrator, supervisor or proletarier)
+     */
+    public boolean isPrimaryRole() {
+        return primaryRole;
     }
 }

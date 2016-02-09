@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.MainControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
@@ -65,9 +66,12 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(TIMESHEETVIEW, TimeSheetView.class);
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);
-        /*if (!LoginControl.getInstance().isLoggedIn()) {\
-            navigator.navigateTo(LOGINVIEW);
-        }*/
+        if (!LoginControl.getInstance().isLoggedIn()) {
+            try {
+                LoginControl.getInstance().login("matt", "matt", false); // TODO DEBUG
+            } catch(ChronoCommandException e) {}
+            //navigator.navigateTo(LOGINVIEW);
+        }
 
         /*VerticalLayout content = new VerticalLayout();
         content.setSizeFull();

@@ -81,12 +81,6 @@ public class TimeRecordView extends BaseView {
         headLine.addComponent(activitySelection);
         headLine.setComponentAlignment(activitySelection, Alignment.TOP_CENTER);
 
-        //TODO: No back-end connection!
-        /*final HorizontalLayout timeButtons = new HorizontalLayout();
-        timeButtons.setSpacing(true);
-        headLine.addComponent(timeButtons);
-        headLine.setComponentAlignment(timeButtons, Alignment.TOP_RIGHT);*/
-
         startButton = new Button("Starten");
         headLine.addComponent(startButton);
 
@@ -109,7 +103,7 @@ public class TimeRecordView extends BaseView {
                 elapsedTime.setValue("Seit " + newestTimeRecord.getBeginning().toString());
             }
         } catch(ChronoCommandException e) {
-            //Notification.show(": " + e.getReason().name(), Notification.Type.ERROR_MESSAGE);
+            Notification.show("Failed to get latest time record: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
         }
 
         startButton.addClickListener(event1 -> {
@@ -122,7 +116,7 @@ public class TimeRecordView extends BaseView {
                 refreshTimeSheetList();
                 refreshTimeRecords();
             } catch(ChronoCommandException e) {
-                Notification.show("Failed to start time record: " + e.getReason().name(), Notification.Type.WARNING_MESSAGE);
+                Notification.show("Failed to start time record: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
             }
         });
         stopButton.addClickListener(event1 -> {
@@ -135,7 +129,7 @@ public class TimeRecordView extends BaseView {
                 refreshTimeSheetList();
                 refreshTimeRecords();
             } catch(ChronoCommandException e) {
-                Notification.show("Failed to stop time record: " + e.getReason().name(), Notification.Type.WARNING_MESSAGE);
+                Notification.show("Failed to stop time record: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
             }
         });
 

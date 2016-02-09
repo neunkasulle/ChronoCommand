@@ -1,8 +1,10 @@
 package com.github.neunkasulle.chronocommand.view;
 
+import com.github.neunkasulle.chronocommand.control.LoginControl;
+import com.github.neunkasulle.chronocommand.control.UserManagementControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.view.forms.AdminCtrlForm;
 import com.github.neunkasulle.chronocommand.view.forms.SupervisorCtrlForm;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
@@ -10,8 +12,8 @@ import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ChameleonTheme;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +32,7 @@ public class SupervisorView extends BaseView {
 
     }, e -> {
         this.recordList.select(null);
-        refreshContacts();
+        refreshSupervisedUsers();
     });
 
     @Override
@@ -108,16 +110,21 @@ public class SupervisorView extends BaseView {
 
         // Updae fortable
 
-        refreshContacts();
+        refreshSupervisedUsers();
     }
 
-    private void refreshContacts() {
-        final User hiwi1 = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi1", "hiwi1@kit.edu", "asdf", null, 40);
-        final User hiwi2 = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi2", "hiwi2@kit.edu", "asdf", null, 40);
-
-        final List<User> records = Arrays.asList(hiwi1, hiwi2);
+    private void refreshSupervisedUsers() {
         this.beanItemContainer.removeAllItems();
-        this.beanItemContainer.addAll(records);
+
+        List<User> userList;
+        try {
+            userList = UserManagementControl.getInstance().getUsersBySupervisor(LoginControl.getInstance().getCurrentUser());
+        } catch(ChronoCommandException e) {
+            Notification.show("Failed to get supervised users: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+            return;
+        }
+
+        this.beanItemContainer.addAll(userList);
         this.form.setVisible(false);
     }
 

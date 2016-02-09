@@ -1,5 +1,8 @@
 package com.github.neunkasulle.chronocommand.view;
 
+import com.github.neunkasulle.chronocommand.control.LoginControl;
+import com.github.neunkasulle.chronocommand.control.UserManagementControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.view.forms.AdminCtrlForm;
@@ -127,16 +130,17 @@ public class AdminView extends BaseView {
     }
 
     private void refreshContacts() {
-        final User admin = new User(new Role("Admin"), "Admin", "Admin", "admin@kit.edu", "asdf", null, 40);
-        final User supervisor1 = new User(new Role("Supervisor"), "SUP1", "Peter Lustig", "lustig@kit.edu", "asdf", null, 40);
-        final User supervisor2 = new User(new Role("Supervisor"), "SUP2", "Hans Peter", "peter@kit.edu", "asdf", null, 40);
-        final User hiwi1 = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi1", "hiwi1@kit.edu", "asdf", supervisor1, 40);
-        final User hiwi2 = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi2", "hiwi2@kit.edu", "asdf", supervisor1, 40);
-        final User hiwi3 = new User(new Role("Proletarier"), "HIWI3", "Ein Hiwi3", "hiwi3@kit.edu", "asdf", supervisor2, 40);
-
-        final List<User> records = Arrays.asList(admin, supervisor1, supervisor2, hiwi1, hiwi2, hiwi3);
         this.beanItemContainer.removeAllItems();
-        this.beanItemContainer.addAll(records);
+
+        List<User> userList;
+        try {
+            userList = UserManagementControl.getInstance().getAllUsers();
+        } catch(ChronoCommandException e) {
+            Notification.show("Failed to get all users: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+            return;
+        }
+
+        this.beanItemContainer.addAll(userList);
         this.form.setVisible(false);
     }
 

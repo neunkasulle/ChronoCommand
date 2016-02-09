@@ -1,9 +1,8 @@
 package com.github.neunkasulle.chronocommand.view;
 
-import com.github.neunkasulle.chronocommand.model.Role;
-import com.github.neunkasulle.chronocommand.model.TimeSheet;
-import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.view.forms.AdminCtrlForm;
+import com.github.neunkasulle.chronocommand.control.LoginControl;
+import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+import com.github.neunkasulle.chronocommand.model.*;
 import com.github.neunkasulle.chronocommand.view.forms.TimeSheetForm;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
@@ -11,12 +10,8 @@ import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import org.vaadin.dialogs.ConfirmDialog;
 
-import java.time.Month;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -35,7 +30,7 @@ public class TimeSheetView extends BaseView {
         //TODO
     }, e -> {
         this.recordList.select(null);
-        refreshContacts();
+        refreshTimeSheets();
     });
 
     @Override
@@ -132,16 +127,21 @@ public class TimeSheetView extends BaseView {
 
         // Updae fortable
 
-        refreshContacts();
+        refreshTimeSheets();
     }
 
-    private void refreshContacts() {
-        final User hiwi = new User(new Role("Proletarier"), "HIWI2", "Ein Hiwi2", "hiwi2@kit.edu", "asdf", null, 40);
-
-        final List<TimeSheet> records = Arrays.asList(new TimeSheet(hiwi, Month.JANUARY, 2016),
-                new TimeSheet(hiwi, Month.APRIL, 2016));
+    private void refreshTimeSheets() {
         this.beanItemContainer.removeAllItems();
-        this.beanItemContainer.addAll(records);
+
+        List<TimeSheet> timeSheetList;
+        try {
+            timeSheetList = TimeSheetControl.getInstance().getTimeSheetsFromUser(LoginControl.getInstance().getCurrentUser());
+        } catch(ChronoCommandException e) {
+            Notification.show("Failed to get timesheets: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+            return;
+        }
+
+        this.beanItemContainer.addAll(timeSheetList);
         this.form.setVisible(false);
     }
 

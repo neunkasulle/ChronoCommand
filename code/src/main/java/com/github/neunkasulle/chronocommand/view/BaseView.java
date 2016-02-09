@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
@@ -93,7 +94,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 listOfMyProletarierButton.setSizeFull();
 
             }
-        }, ADMIN("Admin") {
+        }, ADMINISTRATOR("Administrator") {
             @Override
             public void fillRoleSpecificContent(final Layout extraPane) {
                 //TODO: fill me!
@@ -330,8 +331,12 @@ public abstract class BaseView extends HorizontalLayout implements View {
         extraContent.addStyleName("container");
         extraContent.setWidth(CONTROL_PANEL_WIDTH);
 
-        //TODO: Dummy code, use real role here!
-        RoleAction.valueOf(new Role("Admin")).fillRoleSpecificContent(extraContent);
+        try {
+            Role role = UserManagementControl.getInstance().getPrimaryRoleFromUser(LoginControl.getInstance().getCurrentUser());
+            RoleAction.valueOf(role.getName()).fillRoleSpecificContent(extraContent);
+        } catch (ChronoCommandException e) {
+            Notification.show("Failed: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+        }
 
         /*for (final Role role : user.getRoles()) {
             RoleAction.valueOf(role).fillRoleSpecificContent(extraContent);
@@ -346,7 +351,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             timeRecordSelection.removeAllItems();
             List<TimeSheet> timeSheetList = TimeSheetControl.getInstance().getTimeSheetsFromUser(LoginControl.getInstance().getCurrentUser());
             timeRecordSelection.addItems(timeSheetList);
-            if (currentSelection == null && timeSheetList.size() > 0) {
+            if (currentSelection == null && !timeSheetList.isEmpty()) {
                 currentSelection = timeSheetList.get(timeSheetList.size() - 1);
             }
             timeRecordSelection.setValue(currentSelection);

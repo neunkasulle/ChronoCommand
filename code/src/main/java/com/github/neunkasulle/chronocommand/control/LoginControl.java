@@ -47,7 +47,7 @@ public class LoginControl {
             LOGGER.error("Failed Login", e);
             throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
-        LOGGER.info(username + "logged in successfully");
+        LOGGER.info(username + " logged in successfully");
 
     }
 

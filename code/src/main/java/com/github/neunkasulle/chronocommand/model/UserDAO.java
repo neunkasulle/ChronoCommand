@@ -71,7 +71,7 @@ public class UserDAO{
         }
     }
 
-    public List<User> getProletarierBySupervisor(User supervisor) {
+    public List<User> getUsersBySupervisor(User supervisor) {
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             List objlist = session.createCriteria(User.class)

@@ -21,10 +21,10 @@ import java.util.Set;
 public class MainControl {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainControl.class);
 
-    public static final String ROLE_ADMINISTRATOR = "administrator";
-    public static final String ROLE_SUPERVISOR = "supervisor";
-    public static final String ROLE_PROLETARIER = "proletarier";
-    public static final String ROLE_LONGHOURS = "longhours";
+    public static final String ROLE_ADMINISTRATOR = "ADMINISTRATOR";
+    public static final String ROLE_SUPERVISOR = "SUPERVISOR";
+    public static final String ROLE_PROLETARIER = "PROLETARIER";
+    public static final String ROLE_LONGHOURS = "LONGHOURS";
 
     private static MainControl ourInstance = new MainControl();
 
@@ -57,7 +57,7 @@ public class MainControl {
         // initialize roles
         Role administrator = UserDAO.getInstance().getRoleByName(ROLE_ADMINISTRATOR);
         if (administrator == null) {
-            administrator = new Role(ROLE_ADMINISTRATOR);
+            administrator = new Role(ROLE_ADMINISTRATOR, true);
             Set<String> administratorPermissions = new IdentitySet(1);
             administratorPermissions.add(Role.PERM_ADMINISTRATOR);
             administrator.setPermissions(administratorPermissions);
@@ -66,7 +66,7 @@ public class MainControl {
 
         Role supervisor = UserDAO.getInstance().getRoleByName(ROLE_SUPERVISOR);
         if (supervisor == null) {
-            supervisor = new Role(ROLE_SUPERVISOR);
+            supervisor = new Role(ROLE_SUPERVISOR, true);
             Set<String> supervisorPermissions = new IdentitySet(2);
             supervisorPermissions.add(Role.PERM_SUPERVISOR);
             supervisorPermissions.add(Role.PERM_PROLETARIER);
@@ -76,7 +76,7 @@ public class MainControl {
 
         Role proletarier = UserDAO.getInstance().getRoleByName(ROLE_PROLETARIER);
         if (proletarier == null) {
-            proletarier = new Role(ROLE_PROLETARIER);
+            proletarier = new Role(ROLE_PROLETARIER, true);
             Set<String> proletarierPermissions = new IdentitySet(1);
             proletarierPermissions.add(Role.PERM_PROLETARIER);
             proletarier.setPermissions(proletarierPermissions);
@@ -85,7 +85,7 @@ public class MainControl {
 
         Role longhours = UserDAO.getInstance().getRoleByName(ROLE_LONGHOURS);
         if (longhours == null) {
-            longhours = new Role(ROLE_LONGHOURS);
+            longhours = new Role(ROLE_LONGHOURS, false);
             Set<String> longhourPermissions = new IdentitySet(1);
             longhourPermissions.add(Role.PERM_LONGHOURS);
             longhours.setPermissions(longhourPermissions);
@@ -99,17 +99,21 @@ public class MainControl {
                 CategoryDAO.getInstance().saveCategory(new Category("Programming"));
                 CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
             } catch (ChronoCommandException e) {
-                LOGGER.error("Save category failed", e);
+                LOGGER.error("Saving categories failed: " + e.getReason().toString());
             }
 
-            User bigboss = new User(administrator, "admin", "the@big.boss", "admin", "BigBoss", null, 0);
-            UserDAO.getInstance().saveUser(bigboss);
+            try {
+                User bigboss = new User(administrator, "admin", "the@big.boss", "admin", "BigBoss", null, 0);
+                UserDAO.getInstance().saveUser(bigboss);
 
-            User tom = new User(supervisor, "tom", "tom@chronocommand.eu", "cat", "Tom", null, 23);
-            UserDAO.getInstance().saveUser(tom);
+                User tom = new User(supervisor, "tom", "tom@chronocommand.eu", "cat", "Tom", null, 23);
+                UserDAO.getInstance().saveUser(tom);
 
-            User matt = new User(proletarier, "matt", "matt@example.com", "matt", "Matt", tom, 10);
-            UserDAO.getInstance().saveUser(matt);
+                User matt = new User(proletarier, "matt", "matt@example.com", "matt", "Matt", tom, 10);
+                UserDAO.getInstance().saveUser(matt);
+            } catch (ChronoCommandException e) {
+                LOGGER.error("Saving users failed: " + e.getReason().toString());
+            }
 
             TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
             TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
