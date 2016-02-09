@@ -159,4 +159,12 @@ public class TimeSheetControlTest extends UeberTest{
         assertTrue(file != null);
     }
 
+    @Test
+    public void emailtest() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        User user = new User(null, "neun", "jan@zenkner.eu", "1234", "Fuu Bar", null, 999);
+
+        timeSheetControl.sendEmail(user, "TROLOLOLOLO");
+    }
+
 }

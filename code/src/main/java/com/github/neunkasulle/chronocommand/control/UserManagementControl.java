@@ -24,19 +24,35 @@ public class UserManagementControl {
 
 
 
-    public void addUser(User user) {
+    public void addUser(User user) throws ChronoCommandException {
         throw new NotYetImplementedException();
     }
 
-    public void removeUser() {
+    public void setUserDisabled(boolean disabled) throws ChronoCommandException {
         throw new NotYetImplementedException();
     }
 
-    public void editUser() {
-        throw new NotYetImplementedException();
+    public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
+
+            if (!username.isEmpty()) {
+                user.setUsername(username);
+            }
+            if (!realname.isEmpty()) {
+                user.setRealname(realname);
+            }
+            if (!email.isEmpty()) {
+                user.setEmail(email);
+            }
+            if (!password.isEmpty()) {
+                user.setPassword(password);
+            }
+        } else {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
     }
 
-    public User findUser(String username) {
+    public User findUser(String username) throws ChronoCommandException {
         throw new NotYetImplementedException();
     }
 

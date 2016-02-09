@@ -1,10 +1,15 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
+import com.github.neunkasulle.chronocommand.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -12,6 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 import java.time.LocalDate;
+import java.util.Properties;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -355,5 +361,31 @@ public class TimeSheetControl {
 
     public List<Message> getMessagesFromTimeSheet(TimeSheet timeSheet) {
         return timeSheet.getMessages();
+    }
+
+    public void sendEmail(User recipient, String message) {
+        String host = "localhost";
+        Properties properties = System.getProperties();
+
+        properties.setProperty("mail.smtp.host", host);
+
+        Session session = Session.getDefaultInstance(properties, null);
+
+        try {
+            javax.mail.Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("reminder@chronocommand.eu", "Example.com Admin"));
+            msg.addRecipient(javax.mail.Message.RecipientType.TO,
+                    new InternetAddress(recipient.getEmail(), recipient.getRealname()));
+            msg.setSubject("ChronoCommand Reminder");
+            msg.setText(message);
+            Transport.send(msg);
+
+        } catch (AddressException e) {
+            LOGGER.error("Adress Exception", e);
+        } catch (MessagingException e) {
+            LOGGER.error("Messaging Exception", e);
+        }catch (java.io.UnsupportedEncodingException e) {
+            LOGGER.error("Unsupported encoding", e);
+        }
     }
 }

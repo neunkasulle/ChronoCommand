@@ -31,7 +31,7 @@ public class User {
     @Basic(optional=false)
     @Column(length=250)
     @org.hibernate.annotations.Index(name="idx_users_username")
-    protected String realName;
+    protected String realname;
 
     @Basic(optional=false)
     @org.hibernate.annotations.Index(name="idx_users_email")
@@ -63,15 +63,30 @@ public class User {
         // hibernate needs this
     }
 
-    public User(Role userType, String username, String email, String password, String realName, User supervisor, int hoursPerMonth) {
+    public User(Role userType, String username, String email, String password, String realname, User supervisor,
+                int hoursPerMonth) throws ChronoCommandException {
         this.roles = new HashSet<>();
+
         this.roles.add(userType);
+
         this.username = username;
+
+        if ( !email.contains("@") || !email.contains(".") ) {
+            throw new ChronoCommandException(Reason.INVALIDEMAIL);
+        }
         this.email = email;
+
         this.password = new Sha512Hash(password, null, 1024);
-        this.realName = realName;
+
+        this.realname = realname;
+
         this.supervisor = supervisor;
+
+        if (hoursPerMonth > 0 || hoursPerMonth < 80) {
+            throw new  ChronoCommandException(Reason.INVALIDNUMBER);
+        }
         this.hoursPerMonth = hoursPerMonth;
+
     }
 
     public Long getId() {
@@ -87,7 +102,10 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username) throws ChronoCommandException {
+        if(username == null) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
         this.username = username;
     }
 
@@ -97,14 +115,21 @@ public class User {
      * @return the username associated with this user account;
      */
     public String getRealname() {
-        return realName;
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws ChronoCommandException {
+        if ( !email.contains("@") || !email.contains(".") ) {
+            throw new ChronoCommandException(Reason.INVALIDEMAIL);
+        }
         this.email = email;
     }
 
@@ -169,7 +194,10 @@ public class User {
         return hoursPerMonth;
     }
 
-    public void setHoursPerMonth(int hoursPerMonth) {
+    public void setHoursPerMonth(int hoursPerMonth) throws ChronoCommandException {
+        if (hoursPerMonth > 0 || hoursPerMonth < 80) {
+            throw new  ChronoCommandException(Reason.INVALIDNUMBER);
+        }
         this.hoursPerMonth = hoursPerMonth;
     }
 }

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
+
 /**
  * Created by Janze on 16.01.2016.
  */
@@ -88,7 +89,7 @@ public class TimeSheetHandler {
                 contents.setFont(font, 12);
                 contents.showText(Integer.toString(timeSheet.year));//year
                 contents.newLineAtOffset(-187, -22);
-                contents.showText(timeSheet.getUser().realName);//name
+                contents.showText(timeSheet.getUser().realname);//name
                 contents.newLineAtOffset(0, -42);
                 contents.showText(timeSheet.getRequiredHoursPerMonth() + " Stunden");//required hours per month
                 contents.endText();
@@ -191,5 +192,4 @@ public class TimeSheetHandler {
 
         System.exit(0);
     }
-
 }
