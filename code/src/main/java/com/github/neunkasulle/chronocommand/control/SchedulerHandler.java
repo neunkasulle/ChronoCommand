@@ -30,10 +30,8 @@ public class SchedulerHandler {
      * @throws SchedulerException the one and only
      */
     public static void scheduleAll() throws SchedulerException {
-
         Scheduler sched = intantiateSched();
 
-        //this defines the job the scheduler shall do
         JobDetail printJob = newJob(SimpleJob.class)
                 .withIdentity("simpleJob", "testGroup") //name, group
                 .build();

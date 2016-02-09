@@ -1,7 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.*;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -126,7 +125,13 @@ public class UserDAO{
     }
 
     public List<User> getUsersByRole(Role role) {
-        throw new NotYetImplementedException();
+        List<User> roleUser = new ArrayList<>();
+        for (User user : getAllUsers()) {
+            if (user.getRoles().equals(role)) {
+                roleUser.add(user);
+            }
+        }
+        return roleUser;
     }
 
     public Role getRoleByName(String name) {
