@@ -38,6 +38,10 @@ public class SchedulerHandler {
                 .withIdentity("simpleJob", "testGroup") //name, group
                 .build();
 
+        JobDetail reminderJob = newJob(WeeklyMailJob.class)
+                .withIdentity("reminderJob", "weeklyreminder") //name, group
+                .build();
+
         Trigger intervalTrigger = newTrigger()
                 .withIdentity("intervalTrigger", "testGroup")
                 .withSchedule(simpleSchedule()
@@ -63,7 +67,7 @@ public class SchedulerHandler {
         // Tell quartz to schedule the job using our trigger
         sched.scheduleJob(printJob, intervalTrigger);
         sched.scheduleJob(printJob, lastDayOfMonth);
-        sched.scheduleJob(printJob, weeklyTrigger);
+        sched.scheduleJob(reminderJob, weeklyTrigger);
     }
 
     /**
