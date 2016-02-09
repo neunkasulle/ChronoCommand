@@ -60,13 +60,23 @@ public class UserManagementControl {
     }
 
     public User findUser(String username) throws ChronoCommandException {
+        if (!LoginControl.getInstance().isLoggedIn()) {
+            throw new ChronoCommandException(Reason.NOTLOGGEDIN);
+        }
         User user = UserDAO.getInstance().findUser(username);
         if (user == null) {
             throw new ChronoCommandException(Reason.NOSUCHUSER);
         }
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            return user;
+        }
         if (user.equals(LoginControl.getInstance().getCurrentUser())) {
             return user;
         }
+        if (LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor())) {
+            return user;
+        }
+        throw new ChronoCommandException(Reason.NOTPERMITTED);
     }
 
     public List<User> getUsersByRole(Role role) throws ChronoCommandException {
