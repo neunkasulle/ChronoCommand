@@ -64,7 +64,7 @@ public class SchedulerHandler {
 
         sched.start();
 
-        // Tell quartz to schedule the job using our trigger
+        // Tell quartz to schedule a job with a trigger
         sched.scheduleJob(printJob, intervalTrigger);
         sched.scheduleJob(printJob, lastDayOfMonth);
         sched.scheduleJob(reminderJob, weeklyTrigger);

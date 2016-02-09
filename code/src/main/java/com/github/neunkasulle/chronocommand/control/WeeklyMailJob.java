@@ -5,9 +5,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Job;
 import org.quartz.JobExecutionException;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 
 /**
@@ -17,21 +15,28 @@ public class WeeklyMailJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        //TODO check every User & send mails to them
+        List<User> recipients = checkUserLastRecord();
+        String message = "You should work more and harder lazy ass"; //TODO may change message text
+
+        for (User user : recipients) {
+            TimeSheetControl.getInstance().sendEmail(user, message);
+        }
     }
 
-    private void checkUserLastRecord() {
+    private List<User> checkUserLastRecord() {
         List<User> allUser = UserDAO.getInstance().getAllUsers();
-        Calendar calendar = Calendar.getInstance();
         List<TimeRecord> allTimeRecords= new LinkedList<>();
+        List<User> recipients = new LinkedList<>();
         for (User user : allUser) {
             allTimeRecords.add(TimeSheetControl.getInstance().getLatestTimeRecord(user));
         }
         for (TimeRecord record : allTimeRecords) {
             LocalDateTime lastEndTime = record.getEnd();
-            //if (lastEndTime.)
+            if (lastEndTime.getDayOfMonth() < (LocalDateTime.now().getDayOfMonth() - 7)) {
+                recipients.add(record.getTimeSheet().getUser());
+            }
         }
-
+        return recipients;
     }
 
 
