@@ -16,7 +16,7 @@ public class WeeklyMailJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         List<User> recipients = checkUserLastRecord();
-        String message = "You should work more and harder lazy ass"; //TODO may change message text
+        String message = "You should work more and harder lazy ass";
 
         for (User user : recipients) {
             TimeSheetControl.getInstance().sendEmail(user, message);

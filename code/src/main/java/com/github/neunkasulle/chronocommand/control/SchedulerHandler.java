@@ -36,20 +36,16 @@ public class SchedulerHandler {
                 .withIdentity("simpleJob", "testGroup") //name, group
                 .build();
 
-        JobDetail reminderJob = newJob(WeeklyMailJob.class)
-                .withIdentity("reminderJob", "weeklyreminder") //name, group
+        JobDetail weeklyReminderJob = newJob(WeeklyMailJob.class)
+                .withIdentity("weeklyReminderJob", "weeklyReminder") //name, group
                 .build();
 
-        Trigger intervalTrigger = newTrigger()
-                .withIdentity("intervalTrigger", "testGroup")
-                .withSchedule(simpleSchedule()
-                    .withIntervalInSeconds(3)
-                    .withRepeatCount(3))
-                .startAt(futureDate(10, IntervalUnit.SECOND))
+        JobDetail monthlyReminderJob = newJob(MonthlyReminder.class)
+                .withIdentity("monthlyReminderJob", "monthlyReminder")
                 .build();
 
         Trigger lastDayOfMonth = newTrigger() //fires at 12pm every last day every month
-                .withIdentity("lastDayTrigger", "messageAllGroup")
+                .withIdentity("lastDayTrigger", "monthlyreminder")
                 .withSchedule(cronSchedule("0 0 12 L * ?"))
                 .startNow()
                 .build();
@@ -63,9 +59,8 @@ public class SchedulerHandler {
         sched.start();
 
         // Tell quartz to schedule a job with a trigger
-        sched.scheduleJob(printJob, intervalTrigger);
-        sched.scheduleJob(printJob, lastDayOfMonth);
-        sched.scheduleJob(reminderJob, weeklyTrigger);
+        sched.scheduleJob(monthlyReminderJob, lastDayOfMonth);
+        sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
     }
 
     /**
