@@ -56,7 +56,6 @@ public class MainUI extends UI implements ViewChangeListener {
         if (!PRODUCTIONMODE) {
             Label devMode = new Label("development mode");
             devMode.setSizeUndefined();
-            devMode.addStyleName(ValoTheme.LABEL_H1);
             baseLayout.addComponent(devMode);
             baseLayout.setComponentAlignment(devMode, Alignment.TOP_CENTER);
         }
