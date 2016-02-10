@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
@@ -63,11 +64,10 @@ public class TimeSheetHandler {
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
         PDDocument pdfTimeSheet;
         File file;
-        File returnFile;
+        FileOutputStream outputFile;
         try {
             file = new File(getClass().getClassLoader().getResource("Stundenzettel.pdf").getFile());
-            //returnFile = new File(getClass().getClassLoader().getResource("Study.pdf").getFile());//TODO create new file or save different
-            returnFile = new File("C:\\Users\\Dav\\Documents\\ChronoCommand\\code\\src\\main\\resources\\Study.pdf");
+            outputFile = new FileOutputStream("Study.pdf");//TODO may save different
             pdfTimeSheet = PDDocument.load(file);
         } catch (Exception e) {
             LOGGER.error("Loading error.");
@@ -106,10 +106,7 @@ public class TimeSheetHandler {
                 contents.beginText();
                 contents.setFont(font, 10);
                 contents.newLineAtOffset(60, yOff);
-                //contents.showText(timeR.getDescription());//description
-
-                contents.showText("Abrakadabra es erscheine TEXT");
-
+                contents.showText(timeR.getDescription());//description
                 contents.newLineAtOffset(137, 0);
                 String category = timeR.getCategory().getName();
                 if (category != null) {
@@ -147,7 +144,7 @@ public class TimeSheetHandler {
 
             contents.close();
 
-            pdfTimeSheet.save(returnFile);
+            pdfTimeSheet.save(outputFile);
         } catch (Exception e) {
             LOGGER.error("problem in content section");
         }
@@ -156,6 +153,7 @@ public class TimeSheetHandler {
         } catch (Exception e) {
             LOGGER.error("closing went wrong");
         }
+        File returnFile = new File("Study.pdf");
         return returnFile;
     }
 
