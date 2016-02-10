@@ -108,7 +108,8 @@ public class TimeRecordView extends BaseView {
 
         startButton.addClickListener(event1 -> {
             try {
-                TimeRecord newTimeRecord = TimeSheetControl.getInstance().newTimeRecord((Category) categorySelection.getValue(), activitySelection.getValue(), LoginControl.getInstance().getCurrentUser());
+                TimeRecord newTimeRecord = TimeSheetControl.getInstance().newTimeRecord((Category) categorySelection.getValue(),
+                        activitySelection.getValue(), LoginControl.getInstance().getCurrentUser());
                 startButton.setVisible(false);
                 stopButton.setVisible(true);
                 elapsedTime.setVisible(true);
@@ -176,10 +177,16 @@ public class TimeRecordView extends BaseView {
             @Override
             public String getValue(Item item, Object itemId, Object propertyId) {
                 final LocalDateTime beginningTime = (LocalDateTime) item.getItemProperty("beginning").getValue();
-                String beginning = "";
-                beginning += beginningTime.getDayOfMonth() + ".";
-                beginning += beginningTime.getMonthValue() + ".";
-                return beginning;
+                String day = String.valueOf(beginningTime.getDayOfMonth());
+                if (day.length() == 1) {
+                    day = "0" + day;
+                }
+                String month = String.valueOf(beginningTime.getMonthValue());
+                if (month.length() == 1) {
+                    month = "0" + month;
+                }
+                String year = String.valueOf(beginningTime.getYear());
+                return day + "." + month + "." + year;
             }
 
             @Override

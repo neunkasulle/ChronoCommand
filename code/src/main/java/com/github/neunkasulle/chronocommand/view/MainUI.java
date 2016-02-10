@@ -26,6 +26,7 @@ import com.vaadin.ui.*;
 public class MainUI extends UI implements ViewChangeListener {
     public static final boolean PRODUCTIONMODE = false;
 
+    public static final String INITIALSTARTUPVIEW = "initialstartup";
     public static final String LOGINVIEW = "login";
     public static final String TIMERECORDVIEW = "timerecord";
     public static final String ADMINVIEW = "admin";
@@ -33,13 +34,13 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String TIMESHEETVIEW = "timesheet";
     public static final String EMPLOYEEVIEW = "employee";
     public static final String SETTINGSVIEW = "settings";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainUI.class);
     private Navigator navigator;
     private Label header;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Logger logger = LoggerFactory.getLogger(MainUI.class);
-        logger.info("Request context: {} service: {} path: {}", vaadinRequest.getContextPath(), vaadinRequest.getService().toString(), vaadinRequest.getPathInfo());
+        LOGGER.info("Request context: {} service: {} path: {}", vaadinRequest.getContextPath(), vaadinRequest.getService().toString(), vaadinRequest.getPathInfo());
 
         getPage().setTitle("ChronoCommand");
 
@@ -58,6 +59,7 @@ public class MainUI extends UI implements ViewChangeListener {
 
         navigator = new Navigator(this, timeRecordView);
         navigator.addViewChangeListener(this);
+        navigator.addView(INITIALSTARTUPVIEW, InitialStartupView.class);
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.addView(EMPLOYEEVIEW, new SupervisorView());
         navigator.addView(ADMINVIEW, new AdminView());
@@ -94,6 +96,18 @@ public class MainUI extends UI implements ViewChangeListener {
 
     @Override
     public boolean beforeViewChange(ViewChangeEvent event) {
+        LOGGER.info(event.getViewName());
+        if (MainControl.getInstance().isInitialStartup()) {
+            LOGGER.info("Initial startup: please create an administrator");
+            if (!INITIALSTARTUPVIEW.equals(event.getViewName())) {
+                event.getNavigator().navigateTo(INITIALSTARTUPVIEW);
+                return false;
+            }
+        } else if (INITIALSTARTUPVIEW.equals(event.getViewName())) {
+            event.getNavigator().navigateTo(LOGINVIEW);
+            return false;
+        }
+
         /*Subject currentUser = SecurityUtils.getSubject();
         if (LoginControl.getInstance().isLoggedIn() && LOGINVIEW.equals(event.getViewName())) {
             event.getNavigator().navigateTo(TIMERECORDVIEW);

@@ -20,30 +20,30 @@ public class TimeSheet {
 
     @Id
     @GeneratedValue
-    int id;
+    private Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @ElementCollection
     @Enumerated
     @JoinTable(name = "cc_timesheet_messages")
-    List<Message> messages;
+    private List<Message> messages;
 
     @Basic(optional = false)
-    TimeSheetState state;
+    private TimeSheetState state;
 
     @Basic(optional = false)
-    Month month;
+    private Month month;
 
     @Basic(optional = false)
-    int year;
+    private int year;
 
     @Basic(optional = false)
-    int requiredHoursPerMonth;
+    private int requiredHoursPerMonth;
 
-    int currentMinutesThisMonth;
+    private int currentMinutesThisMonth;
 
     protected TimeSheet() {
         // hibernate needs this
@@ -58,7 +58,7 @@ public class TimeSheet {
         this.messages = new ArrayList<>();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

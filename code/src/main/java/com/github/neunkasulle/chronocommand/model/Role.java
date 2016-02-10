@@ -122,4 +122,14 @@ public class Role {
     public boolean isPrimaryRole() {
         return primaryRole;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof Role) && id.equals(((Role) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id.intValue();
+    }
 }

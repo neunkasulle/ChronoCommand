@@ -51,7 +51,7 @@ public class TimeSheetDAO {
     public List<TimeRecord> getTimeRecordsByDay(TimeSheet timeSheet, int dayOfMonth) {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(TimeRecord.class);
-        LocalDateTime day = LocalDateTime.of(timeSheet.year, timeSheet.month, dayOfMonth, 0,0);
+        LocalDateTime day = LocalDateTime.of(timeSheet.getYear(), timeSheet.getMonth(), dayOfMonth, 0,0);
         LocalDateTime nextDay = day.plusDays(1);
         criteria.add(Restrictions.ge("beginning", day)).add(Restrictions.lt("beginning", nextDay));
         List<TimeRecord> list = new ArrayList<>();

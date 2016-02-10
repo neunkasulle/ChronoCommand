@@ -102,13 +102,11 @@ public class UserManagementControl {
         return UserDAO.getInstance().getAllUsers();
     }
 
-    public Role getPrimaryRoleFromUser(User user) {
-        Set<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            if (role.isPrimaryRole()) {
-                return role;
-            }
+    public void createInitialAdministrator(String username, String email, String password, String realname) throws ChronoCommandException {
+        if (!MainControl.getInstance().isInitialStartup()) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
-        return null;
+        Role admin = UserDAO.getInstance().getRoleByName(MainControl.ROLE_ADMINISTRATOR);
+        User user = new User(admin, username, email, password, realname, null, 0);
     }
 }

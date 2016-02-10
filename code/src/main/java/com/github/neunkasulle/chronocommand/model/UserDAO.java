@@ -127,7 +127,7 @@ public class UserDAO{
     public List<User> getUsersByRole(Role role) {
         List<User> roleUser = new ArrayList<>();
         for (User user : getAllUsers()) {
-            if (user.getRoles().equals(role)) {
+            if (user.getPrimaryRole().equals(role)) {
                 roleUser.add(user);
             }
         }

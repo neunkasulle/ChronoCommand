@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 import java.util.Set;
 
 
@@ -25,6 +26,8 @@ public class MainControl {
     public static final String ROLE_SUPERVISOR = "SUPERVISOR";
     public static final String ROLE_PROLETARIER = "PROLETARIER";
     public static final String ROLE_LONGHOURS = "LONGHOURS";
+
+    private boolean initialStartup = true;
 
     private static MainControl ourInstance = new MainControl();
 
@@ -92,7 +95,6 @@ public class MainControl {
             UserDAO.getInstance().saveRole(longhours);
         }
 
-
         // DEBUG fill database with data
         if (!productionMode) {
             try {
@@ -141,7 +143,16 @@ public class MainControl {
 
     }
 
-    private boolean isInitialStartup() {
-        return false;
+    /**
+     * @return true if there is no administrator
+     */
+    public boolean isInitialStartup() {
+        if (!initialStartup) {
+            return false;
+        }
+        Role administrator = UserDAO.getInstance().getRoleByName(ROLE_ADMINISTRATOR);
+        List<User> adminList = UserDAO.getInstance().getUsersByRole(administrator);
+        initialStartup = adminList.isEmpty();
+        return initialStartup;
     }
 }

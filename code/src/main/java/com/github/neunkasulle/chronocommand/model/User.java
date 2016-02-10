@@ -3,6 +3,7 @@ package com.github.neunkasulle.chronocommand.model;
 import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.internal.util.compare.EqualsHelper;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -205,5 +206,24 @@ public class User {
             throw new  ChronoCommandException(Reason.INVALIDNUMBER);
         }
         this.hoursPerMonth = hoursPerMonth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof User) && id.equals(((User) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id.intValue();
+    }
+
+    public Role getPrimaryRole() {
+        for (Role role : roles) {
+            if (role.isPrimaryRole()) {
+                return role;
+            }
+        }
+        return null;
     }
 }

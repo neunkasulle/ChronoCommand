@@ -332,7 +332,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
         extraContent.setWidth(CONTROL_PANEL_WIDTH);
 
         try {
-            Role role = UserManagementControl.getInstance().getPrimaryRoleFromUser(LoginControl.getInstance().getCurrentUser());
+            Role role = LoginControl.getInstance().getCurrentUser().getPrimaryRole();
             RoleAction.valueOf(role.getName()).fillRoleSpecificContent(extraContent);
         } catch (ChronoCommandException e) {
             Notification.show("Failed: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);

@@ -100,7 +100,7 @@ public class GermanLawRegulations extends Regulations {
             for (TimeRecord timeRecord : timeRecords ) {
                 minutesPerDay += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd());
             }
-            if (!timeSheet.user.isPermitted("longHours")) {
+            if (!timeSheet.getUser().isPermitted("longHours")) {
                 if (minutesPerDay > maxWorkingHours) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
@@ -121,7 +121,7 @@ public class GermanLawRegulations extends Regulations {
      * ich denke, dass das leider mit switch case machen muss ^^
      */
     private int getNumberOfDaysInMonth(TimeSheet timeSheet) {
-        return LocalDate.of(timeSheet.year, timeSheet.month, 1).lengthOfMonth();
+        return LocalDate.of(timeSheet.getYear(), timeSheet.getMonth(), 1).lengthOfMonth();
     }
 
     /**
@@ -133,7 +133,7 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkMonthHours(TimeRecord[] timeRecords, TimeSheet timeSheet) {
         String result = "";
-        if ( timeSheet.currentMinutesThisMonth > timeSheet.requiredHoursPerMonth * 60) {
+        if ( timeSheet.getCurrentMinutesThisMonth() > timeSheet.getRequiredHoursPerMonth() * 60) {
             result += "Maximale Arbeitszeit für diesen Monat überschritten";
         }
         return result;

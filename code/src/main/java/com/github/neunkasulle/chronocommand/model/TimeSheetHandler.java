@@ -88,11 +88,11 @@ public class TimeSheetHandler {
             contents.setFont(font, 12);
             //fill name etc
             contents.newLineAtOffset(465, 764);
-            contents.showText(Integer.toString(timeSheet.month.getValue()));//month
+            contents.showText(Integer.toString(timeSheet.getMonth().getValue()));//month
             contents.setFont(fontBold, 12);
             contents.showText(" / ");
             contents.setFont(font, 12);
-            contents.showText(Integer.toString(timeSheet.year));//year
+            contents.showText(Integer.toString(timeSheet.getYear()));//year
             contents.newLineAtOffset(-187, -22);
             contents.showText(timeSheet.getUser().realname);//name
             contents.newLineAtOffset(0, -42);
