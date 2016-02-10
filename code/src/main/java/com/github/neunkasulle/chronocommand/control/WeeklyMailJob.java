@@ -31,7 +31,7 @@ public class WeeklyMailJob implements Job {
             allTimeRecords.add(TimeSheetControl.getInstance().getLatestTimeRecord(user));
         }
         for (TimeRecord record : allTimeRecords) {
-            LocalDateTime lastEndTime = record.getEnd();
+            LocalDateTime lastEndTime = record.getEnding();
             if (lastEndTime.getDayOfMonth() < (LocalDateTime.now().getDayOfMonth() - 7)) {
                 recipients.add(record.getTimeSheet().getUser());
             }

@@ -53,6 +53,14 @@ public class MainUI extends UI implements ViewChangeListener {
         baseLayout.addComponent(header);
         baseLayout.setComponentAlignment(header, Alignment.TOP_CENTER);
 
+        if (!PRODUCTIONMODE) {
+            Label devMode = new Label("development mode");
+            devMode.setSizeUndefined();
+            devMode.addStyleName(ValoTheme.LABEL_H1);
+            baseLayout.addComponent(devMode);
+            baseLayout.setComponentAlignment(devMode, Alignment.TOP_CENTER);
+        }
+
         TimeRecordView timeRecordView = new TimeRecordView();
         baseLayout.addComponent(timeRecordView);
         baseLayout.setComponentAlignment(timeRecordView, Alignment.TOP_CENTER);
@@ -69,29 +77,11 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);
         if (!LoginControl.getInstance().isLoggedIn()) {
-            try {
+            /*try {
                 LoginControl.getInstance().login("matt", "matt", false); // TODO DEBUG
-            } catch(ChronoCommandException e) {}
+            } catch(ChronoCommandException e) {}*/
             //navigator.navigateTo(LOGINVIEW);
         }
-
-        /*VerticalLayout content = new VerticalLayout();
-        content.setSizeFull();
-        setContent(content);
-
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-
-        Button button = new Button("Click Me!!!");
-        button.addClickListener( e -> {
-            content.addComponent(new Label("Thanks " + name.getValue()
-                    + ", it works!"));
-            Notification.show("Wow", "You pressed!", Notification.Type.WARNING_MESSAGE);
-        });
-
-        content.addComponents(name, button);
-        content.setMargin(true);
-        content.setSpacing(true);*/
     }
 
     @Override
@@ -103,6 +93,7 @@ public class MainUI extends UI implements ViewChangeListener {
                 event.getNavigator().navigateTo(INITIALSTARTUPVIEW);
                 return false;
             }
+            return true;
         } else if (INITIALSTARTUPVIEW.equals(event.getViewName())) {
             event.getNavigator().navigateTo(LOGINVIEW);
             return false;

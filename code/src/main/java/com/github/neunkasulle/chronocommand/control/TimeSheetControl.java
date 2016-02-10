@@ -118,7 +118,7 @@ public class TimeSheetControl {
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
 
-        timeRecord.setEnd(LocalDateTime.now());
+        timeRecord.setEnding(LocalDateTime.now());
         timeSheetDAO.saveTimeRecord(timeRecord);
         LOGGER.info("Time record closed for" + user.getUsername());
 
@@ -148,7 +148,7 @@ public class TimeSheetControl {
 
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
-        timeRecord.setEnd(LocalDateTime.now());
+        timeRecord.setEnding(LocalDateTime.now());
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
         LOGGER.info("Time record closed for" + user.getUsername());
 
@@ -336,7 +336,7 @@ public class TimeSheetControl {
     private int getCurrentMinutes(TimeRecord[] timeRecords) {
         int currentMinutes = 0;
         for (TimeRecord timeRecord : timeRecords) {
-            currentMinutes += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd());
+            currentMinutes += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnding());
         }
 
         return currentMinutes;

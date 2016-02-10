@@ -13,7 +13,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -96,7 +95,7 @@ public class TimeRecordView extends BaseView {
 
         try {
             TimeRecord newestTimeRecord = TimeSheetControl.getInstance().getLatestTimeRecord(LoginControl.getInstance().getCurrentUser());
-            if (newestTimeRecord != null && newestTimeRecord.getEnd() == null) {
+            if (newestTimeRecord != null && newestTimeRecord.getEnding() == null) {
                 startButton.setVisible(false);
                 stopButton.setVisible(true);
                 elapsedTime.setVisible(true);
@@ -155,7 +154,7 @@ public class TimeRecordView extends BaseView {
         gpcontainer.addGeneratedProperty("beginningTime",
                 new LocalDateTimeToLocalTimeStringConverter("beginning"));
         gpcontainer.addGeneratedProperty("endTime",
-                new LocalDateTimeToLocalTimeStringConverter("end"));
+                new LocalDateTimeToLocalTimeStringConverter("ending"));
         gpcontainer.addGeneratedProperty("duration", new PropertyValueGenerator<String>() {
             @Override
             public String getValue(final Item item, final Object itemId,
@@ -163,7 +162,7 @@ public class TimeRecordView extends BaseView {
                 final LocalDateTime beginning = (LocalDateTime)
                         item.getItemProperty("beginning").getValue();
                 final LocalDateTime end = (LocalDateTime)
-                        item.getItemProperty("end").getValue();
+                        item.getItemProperty("ending").getValue();
                 final long diff = ChronoUnit.SECONDS.between(beginning, end);
                 return LocalDateTime.ofEpochSecond(diff, 0, ZoneOffset.UTC).toLocalTime().toString();
             }

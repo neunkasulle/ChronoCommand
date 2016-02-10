@@ -134,7 +134,7 @@ public class TimeSheetHandler {
                     contents.showText(":" + startDate.getMinute());
                 }
                 //end date + time
-                LocalDateTime endDate = timeR.getEnd();
+                LocalDateTime endDate = timeR.getEnding();
                 contents.newLineAtOffset(35, 0);
                 if (endDate.getDayOfMonth() < 10) {
                     contents.showText("0" + endDate.getDayOfMonth() + ".");

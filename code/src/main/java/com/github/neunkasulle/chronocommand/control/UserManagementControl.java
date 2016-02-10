@@ -111,5 +111,6 @@ public class UserManagementControl {
         }
         Role admin = UserDAO.getInstance().getRoleByName(MainControl.ROLE_ADMINISTRATOR);
         User user = new User(admin, username.trim(), email.trim(), password, realname.trim(), null, 0);
+        UserDAO.getInstance().saveUser(user);
     }
 }

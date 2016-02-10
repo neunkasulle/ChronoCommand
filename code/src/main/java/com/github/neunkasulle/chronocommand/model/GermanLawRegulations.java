@@ -33,8 +33,8 @@ public class GermanLawRegulations extends Regulations {
                     timeRecord.getBeginning().getDayOfMonth(), 6, 0)) || timeRecord.getBeginning().isAfter(LocalDateTime.of(timeRecord.getBeginning().getYear(),
                     timeRecord.getBeginning().getMonth(), timeRecord.getBeginning().getDayOfMonth(), 23, 0))) {
                 result += "Nachtarbeit nicht erlaubt";
-            } else if (timeRecord.getEnd().isAfter(LocalDateTime.of(timeRecord.getEnd().getYear(), timeRecord.getEnd().getMonth(), timeRecord.getEnd().getDayOfMonth(), 1, 0))
-                    && timeRecord.getEnd().isBefore(LocalDateTime.of(timeRecord.getEnd().getYear(), timeRecord.getEnd().getMonth(), timeRecord.getEnd().getDayOfMonth(), 6, 0))) {
+            } else if (timeRecord.getEnding().isAfter(LocalDateTime.of(timeRecord.getEnding().getYear(), timeRecord.getEnding().getMonth(), timeRecord.getEnding().getDayOfMonth(), 1, 0))
+                    && timeRecord.getEnding().isBefore(LocalDateTime.of(timeRecord.getEnding().getYear(), timeRecord.getEnding().getMonth(), timeRecord.getEnding().getDayOfMonth(), 6, 0))) {
                 result += "Nachtarbeit nicht erlaubt";
             }
         }
@@ -53,7 +53,7 @@ public class GermanLawRegulations extends Regulations {
         int maxWorkingWithoutBreak = 6*60; // 6 Hours in minutes
 
         for (TimeRecord timeRecord : timeRecords) {
-            if (ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd()) >= maxWorkingWithoutBreak) {
+            if (ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnding()) >= maxWorkingWithoutBreak) {
                 result += "Nach 6h Arbeiten muss eine Pause eingelegt werden";
             }
         }
@@ -72,7 +72,7 @@ public class GermanLawRegulations extends Regulations {
             if (timeRecord.getBeginning().getDayOfWeek() == DayOfWeek.SUNDAY) {
                 result += "Sonn- und Feiertagsarbeit nicht erlaubt";
             }
-            else if (timeRecord.getEnd().getDayOfWeek() == DayOfWeek.SUNDAY) {
+            else if (timeRecord.getEnding().getDayOfWeek() == DayOfWeek.SUNDAY) {
                 result += "Sonn- und Feiertagsarbeit nicht erlaubt";
             }
             //TODO: Feiertage einlesen und hier dann überprüfen lassen
@@ -98,7 +98,7 @@ public class GermanLawRegulations extends Regulations {
             List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
             int minutesPerDay = 0;
             for (TimeRecord timeRecord : timeRecords ) {
-                minutesPerDay += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnd());
+                minutesPerDay += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnding());
             }
             if (!timeSheet.getUser().isPermitted("longHours")) {
                 if (minutesPerDay > maxWorkingHours) {

@@ -200,7 +200,7 @@ public class User {
     }
 
     public void setHoursPerMonth(int hoursPerMonth) throws ChronoCommandException {
-        if (hoursPerMonth > 0 || hoursPerMonth < 80) {
+        if (hoursPerMonth < 0 || hoursPerMonth > 80) {
             throw new  ChronoCommandException(Reason.INVALIDNUMBER);
         }
         this.hoursPerMonth = hoursPerMonth;

@@ -18,7 +18,7 @@ public class TimeRecord {
     private LocalDateTime beginning;
 
     @Column
-    private LocalDateTime end;
+    private LocalDateTime ending;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -39,13 +39,13 @@ public class TimeRecord {
      * Constructs a new time record.
      *
      * @param begin       The beginning of the time record
-     * @param end         The end of the time record
+     * @param ending         The end of the time record
      * @param category    the category in which this record can be sorted
      * @param description a short description of this recorded time
      */
-    public TimeRecord(LocalDateTime begin, LocalDateTime end, Category category, String description, TimeSheet timeSheet) {
+    public TimeRecord(LocalDateTime begin, LocalDateTime ending, Category category, String description, TimeSheet timeSheet) {
         this.beginning = begin;
-        this.end = end;
+        this.ending = ending;
         this.category = category;
         this.description = description;
         this.timeSheet = timeSheet;
@@ -107,8 +107,8 @@ public class TimeRecord {
      *
      * @return the ending time
      */
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getEnding() {
+        return ending;
     }
 
     /**
@@ -116,7 +116,7 @@ public class TimeRecord {
      * @return the end hour
      */
     public int getEndHour() {
-        return this.end.getHour();
+        return this.ending.getHour();
     }
 
     /**
@@ -124,7 +124,7 @@ public class TimeRecord {
      * @param hour the nre hour
      */
     public void setEndHour(final int hour) {
-        this.end = this.end.minusHours(this.end.getHour()).plusHours(hour);
+        this.ending = this.ending.minusHours(this.ending.getHour()).plusHours(hour);
     }
 
     /**
@@ -132,7 +132,7 @@ public class TimeRecord {
      * @return the end minute
      */
     public int getEndMinute() {
-        return this.end.getMinute();
+        return this.ending.getMinute();
     }
 
     /**
@@ -140,7 +140,7 @@ public class TimeRecord {
      * @param minute the new minute
      */
     public void setEndMinute(final int minute) {
-        this.end = this.end.minusMinutes(this.end.getMinute()).plusMinutes(minute);
+        this.ending = this.ending.minusMinutes(this.ending.getMinute()).plusMinutes(minute);
     }
 
     /**
@@ -193,8 +193,8 @@ public class TimeRecord {
      *
      * @param end the new end time
      */
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setEnding(LocalDateTime end) {
+        this.ending = end;
     }
 
     public TimeSheet getTimeSheet() {

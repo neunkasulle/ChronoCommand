@@ -14,6 +14,8 @@ public class InitialStartupView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+        setSpacing(true);
+
         Label label = new Label("Please create an administrator");
         label.addStyleName(ValoTheme.LABEL_H3);
         addComponent(label);

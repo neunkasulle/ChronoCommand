@@ -29,11 +29,12 @@ public class TimeSheetDAOTest extends UeberTest {
     @Test
     public void testSetMessage() throws Exception {
         Role role = new Role("r", true);
-        User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
-        TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
-
         UserDAO.getInstance().saveRole(role);
+
+        User user = new User(role, "a", "d@e.f", "b", "g", null, 5);
         UserDAO.getInstance().saveUser(user);
+
+        TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
 
         timeSheet.setMessage(Message.ERROR_BAR);
@@ -50,15 +51,18 @@ public class TimeSheetDAOTest extends UeberTest {
     @Test
     public void TestGetTimeRecord() throws Exception {
         Role role = new Role("r", true);
-        User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
-        TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
-        Category category = new Category("c");
-        TimeRecord timeRecord = new TimeRecord(LocalDateTime.MIN, LocalDateTime.MAX, category, "bla", timeSheet);
-
         UserDAO.getInstance().saveRole(role);
+
+        User user = new User(role, "a", "d@e.f", "b", "g", null, 5);
         UserDAO.getInstance().saveUser(user);
+
+        TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+
+        Category category = new Category("c");
         CategoryDAO.getInstance().saveCategory(category);
+
+        TimeRecord timeRecord = new TimeRecord(LocalDateTime.MIN, LocalDateTime.MAX, category, "bla", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
 
         TimeRecord dbTimeRecord = TimeSheetDAO.getInstance().getLatestTimeRecord(user);
@@ -71,16 +75,20 @@ public class TimeSheetDAOTest extends UeberTest {
     @Test
     public void TestGetTimeRecords() throws Exception {
         Role role = new Role("r", true);
-        User user = new User(role, "a", "b", "d@e.f", "g", null, 5);
+        UserDAO.getInstance().saveRole(role);
+
+        User user = new User(role, "a", "d@e.f", "b", "g", null, 5);
+        UserDAO.getInstance().saveUser(user);
+
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+
         Category category = new Category("c");
+        CategoryDAO.getInstance().saveCategory(category);
+
         TimeRecord timeRecord1 = new TimeRecord(LocalDateTime.MIN, LocalDateTime.MAX, category, "bla", timeSheet);
         TimeRecord timeRecord2 = new TimeRecord(LocalDateTime.MIN, LocalDateTime.MAX, category, "bla", timeSheet);
 
-        UserDAO.getInstance().saveRole(role);
-        UserDAO.getInstance().saveUser(user);
-        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
-        CategoryDAO.getInstance().saveCategory(category);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord1);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord2);
 
