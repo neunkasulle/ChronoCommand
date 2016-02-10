@@ -70,23 +70,17 @@ public class User {
 
         this.roles.add(userType);
 
-        this.username = username;
+        setUsername(username);
 
-        if ( !email.contains("@") || !email.contains(".") ) {
-            throw new ChronoCommandException(Reason.INVALIDEMAIL);
-        }
-        this.email = email;
+        setEmail(email);
 
-        this.password = new Sha512Hash(password, null, 1024);
+        setPassword(password);
 
-        this.realname = realname;
+        setRealname(realname);
 
-        this.supervisor = supervisor;
+        setSupervisor(supervisor);
 
-        if (hoursPerMonth < 0 || hoursPerMonth > 80) {
-            throw new ChronoCommandException(Reason.INVALIDNUMBER);
-        }
-        this.hoursPerMonth = hoursPerMonth;
+        setHoursPerMonth(hoursPerMonth);
 
     }
 
@@ -104,7 +98,7 @@ public class User {
     }
 
     public void setUsername(String username) throws ChronoCommandException {
-        if(username == null || username.isEmpty()) {
+        if (username == null || username.isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.username = username;
@@ -120,7 +114,11 @@ public class User {
     }
 
     public void setRealname(String realname) throws ChronoCommandException {
-        if(realname == null || realname.isEmpty()) {
+        if (realname == null) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
+        realname = realname.trim();
+        if (realname.isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.realname = realname;
@@ -177,16 +175,16 @@ public class User {
         return mailFlag;
     }
 
+    public void setMailFlag(boolean mailFlag) {
+        this.mailFlag = mailFlag;
+    }
+
     public boolean isDisabled() {
         return isDisabled;
     }
 
     public void setDisable(boolean disable) {
         isDisabled = disable;
-    }
-
-    public void setMailFlag(boolean mailFlag) {
-        this.mailFlag = mailFlag;
     }
 
     public User getSupervisor() {

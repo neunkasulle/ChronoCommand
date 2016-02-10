@@ -29,19 +29,23 @@ public class CreateUserControl {
     /**
      * Creates a new User and passes it to the DB
      * @param userType The initial Role of the User
-     * @param name  Username for the new User. Must be unique.
+     * @param username  Username for the new User. Must be unique.
      * @param email Email adress of the new User. Must be unique
      * @param password Password of the new User.
      * @param supervisor User which  is supervising this new user. Can be null
      * @param hoursPerMonth Numbers the new user has to work to fulfill his contract.
      * @throws ChronoCommandException If there are Errors with the user creation.
      */
-    public void createUser(Role userType, String name, String email, String password, String fullname,
+    public void createUser(Role userType, String username, String email, String password, String fullname,
                                 @Nullable User supervisor, int hoursPerMonth) throws ChronoCommandException {
         UserDAO userDAO = UserDAO.getInstance();
 
-        if(userDAO.findUser(name) != null) {
-            LOGGER.error("user" + name + "already exists");
+        username = username.trim();
+        email = email.trim();
+        fullname = fullname.trim();
+
+        if(userDAO.findUser(username) != null) {
+            LOGGER.error("user" + username + "already exists");
             throw new ChronoCommandException(Reason.USERALREADYEXISTS);
         }
 
@@ -50,8 +54,8 @@ public class CreateUserControl {
             throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
         }
 
-        userDAO.saveUser(new User(userType, name, email, password, fullname, supervisor, hoursPerMonth));
-        LOGGER.info("successfully created new user" + name);
+        userDAO.saveUser(new User(userType, username, email, password, fullname, supervisor, hoursPerMonth));
+        LOGGER.info("successfully created new user" + username);
     }
 
 }

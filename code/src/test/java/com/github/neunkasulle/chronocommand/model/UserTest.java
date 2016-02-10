@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.model;
 
 import com.github.neunkasulle.chronocommand.control.UeberTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -20,6 +21,7 @@ public class UserTest extends UeberTest {
         user = new User();
     }
 
+    @Ignore
     @Test
     public void testSetUsername() throws Exception {
         try {

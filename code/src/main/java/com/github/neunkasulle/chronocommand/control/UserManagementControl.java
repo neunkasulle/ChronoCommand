@@ -34,6 +34,9 @@ public class UserManagementControl {
     }
 
     public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
+        username = username.trim();
+        realname = realname.trim();
+        email = email.trim();
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
             if (!username.isEmpty() && !user.getUsername().equals(username)) {
                 if (UserDAO.getInstance().findUser(username) != null) {
@@ -107,6 +110,6 @@ public class UserManagementControl {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
         Role admin = UserDAO.getInstance().getRoleByName(MainControl.ROLE_ADMINISTRATOR);
-        User user = new User(admin, username, email, password, realname, null, 0);
+        User user = new User(admin, username.trim(), email.trim(), password, realname.trim(), null, 0);
     }
 }
