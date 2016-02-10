@@ -105,15 +105,10 @@ public class TimeSheetHandler {
             for (TimeRecord timeR : recordsToPDF) {
                 contents.beginText();
                 contents.setFont(font, 10);
-                contents.newLineAtOffset(60, yOff);
+                contents.newLineAtOffset(58, yOff);
                 contents.showText(timeR.getDescription());//description
-                contents.newLineAtOffset(137, 0);
-                String category = timeR.getCategory().getName();
-                if (category != null) {
-                    contents.showText(timeR.getCategory().getName());//category
-                } else {
-                    contents.showText("");
-                }
+                contents.newLineAtOffset(139, 0);
+                contents.showText(timeR.getCategory().getName());//category
                 //start date + time
                 LocalDateTime startDate = timeR.getBeginning();
                 contents.newLineAtOffset(102, 0);
