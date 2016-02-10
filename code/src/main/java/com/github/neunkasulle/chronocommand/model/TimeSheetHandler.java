@@ -112,18 +112,59 @@ public class TimeSheetHandler {
                 //start date + time
                 LocalDateTime startDate = timeR.getBeginning();
                 contents.newLineAtOffset(102, 0);
-                contents.showText(startDate.getDayOfMonth() + "." + startDate.getMonth().getValue() + "." + startDate.getYear());
-                contents.newLineAtOffset(45, 0);
-                contents.showText(" " + startDate.getHour() + ":" + startDate.getMinute());
+                if (startDate.getDayOfMonth() < 10) {
+                    contents.showText("0" + startDate.getDayOfMonth() + ".");
+                } else {
+                    contents.showText(startDate.getDayOfMonth() + ".");
+                }
+                if (startDate.getMonth().getValue() < 10) {
+                    contents.showText("0" + startDate.getMonth().getValue() + "." + startDate.getYear());
+                } else {
+                    contents.showText(startDate.getMonth().getValue() + "." + startDate.getYear());
+                }
+                contents.newLineAtOffset(50, 0);
+                if (startDate.getHour() < 10) {
+                    contents.showText(" 0" + startDate.getHour());
+                } else {
+                    contents.showText(" " + startDate.getHour());
+                }
+                if (startDate.getMinute() < 10) {
+                    contents.showText(":0" + startDate.getMinute());
+                } else {
+                    contents.showText(":" + startDate.getMinute());
+                }
                 //end date + time
                 LocalDateTime endDate = timeR.getEnd();
-                contents.newLineAtOffset(42, 0);
-                contents.showText(endDate.getDayOfMonth() + "." + endDate.getMonth().getValue() + "." + endDate.getYear());
-                contents.newLineAtOffset(45, 0);
-                contents.showText(" " + endDate.getHour() + ":" + endDate.getMinute());
+                contents.newLineAtOffset(35, 0);
+                if (endDate.getDayOfMonth() < 10) {
+                    contents.showText("0" + endDate.getDayOfMonth() + ".");
+                } else {
+                    contents.showText(endDate.getDayOfMonth() + ".");
+                }
+                if (endDate.getMonth().getValue() < 10) {
+                    contents.showText("0" + endDate.getMonth().getValue() + "." + endDate.getYear());
+                } else {
+                    contents.showText(endDate.getMonth().getValue() + "." + endDate.getYear());
+                }
+                contents.newLineAtOffset(50, 0);
+                if (endDate.getHour() < 10) {
+                    contents.showText(" 0" + endDate.getHour());
+                } else {
+                    contents.showText(" " + endDate.getHour());
+                }
+                if (endDate.getMinute() < 10) {
+                    contents.showText(":0" + endDate.getMinute());
+                } else {
+                    contents.showText(":" + endDate.getMinute());
+                }
                 //total time
-                contents.newLineAtOffset(60, 0);
-                contents.showText(timeR.getTotHour() + ":" + timeR.getTotMin() + "h");
+                contents.newLineAtOffset(55, 0);
+                contents.showText(timeR.getTotHour() + ":");
+                if (timeR.getTotMin() < 10) {
+                    contents.showText("0" + timeR.getTotMin() + "h");
+                } else {
+                    contents.showText(timeR.getTotMin() + "h");
+                }
                 sumHour += timeR.getTotHour();
                 sumMin += timeR.getTotMin();
                 contents.endText();
@@ -134,9 +175,13 @@ public class TimeSheetHandler {
             contents.setFont(fontBold, 10);
             contents.showText("Summe");
             contents.newLineAtOffset(105, 0);
-            contents.showText(sumHour + ":" + sumMin + "h");//sum of total time
+            contents.showText(sumHour + ":");//sum of total time
+            if (sumMin < 10) {
+                contents.showText("0" + sumMin + "h");
+            } else {
+                contents.showText(sumMin + "h");
+            }
             contents.endText();
-
             contents.close();
 
             pdfTimeSheet.save(outputFile);
