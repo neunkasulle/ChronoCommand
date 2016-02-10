@@ -146,7 +146,10 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws ChronoCommandException {
+        if (password.isEmpty()) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
         this.password = new Sha512Hash(password, null, 1024);
     }
 
