@@ -87,11 +87,9 @@ public class UserManagementControl {
     }
 
     public List<User> getUsersBySupervisor(User user) throws ChronoCommandException {
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
-            throw new ChronoCommandException(Reason.INVALIDSOMETHING);
-        }
         if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)
-                && !(LoginControl.getInstance().getCurrentUser().equals(user))) {
+                && !(SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)
+                    && LoginControl.getInstance().getCurrentUser().equals(user))) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
         return UserDAO.getInstance().getUsersBySupervisor(user);
