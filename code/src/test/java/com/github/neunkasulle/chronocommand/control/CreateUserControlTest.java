@@ -24,7 +24,7 @@ public class CreateUserControlTest extends UeberTest {
         Role admin = new Role("admin", true);
         UserDAO.getInstance().saveRole(admin);
 
-        createUserControl.createUser(admin,"Chutulu", "chutulu@eatsyour.soul","1234", " ", null, 999999999);
+        createUserControl.createUser(admin,"Chutulu", "chutulu@eatsyour.soul","1234", " ", null, 80);
 
         assert(userDAO.findUser("Chutulu").getRealname().equals(" "));
 

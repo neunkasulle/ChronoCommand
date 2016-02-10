@@ -162,7 +162,7 @@ public class TimeSheetControlTest extends UeberTest{
     @Test
     public void emailtest() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
-        User user = new User(null, "neun", "jan@zenkner.eu", "1234", "Fuu Bar", null, 999);
+        User user = new User(null, "neun", "jan@zenkner.eu", "1234", "Fuu Bar", null, 0);
 
         timeSheetControl.sendEmail(user, "TROLOLOLOLO");
     }
