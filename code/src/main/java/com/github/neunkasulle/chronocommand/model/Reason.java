@@ -20,6 +20,7 @@ public enum Reason {
     NOTPERMITTED("Performed action not permitted"),
     INVALIDEMAIL("Invalid email address"),
     USERNAMETAKEN("Username already taken"),
+    STRINGTOOLONG("Input string is too long"),
     ;
 
     private final String text;

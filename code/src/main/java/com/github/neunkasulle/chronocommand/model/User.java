@@ -20,21 +20,24 @@ import java.util.Set;
 @Table(name="cc_users")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
+    private final static int STRINGLENGTH = 254;
+
     @Id
     @GeneratedValue
     private Long id;
 
     @Basic(optional=false)
-    @Column(length=100)
+    @Column(length=STRINGLENGTH)
     @org.hibernate.annotations.Index(name="idx_users_username")
     protected String username;
 
     @Basic(optional=false)
-    @Column(length=250)
+    @Column(length=STRINGLENGTH)
     @org.hibernate.annotations.Index(name="idx_users_username")
     protected String realname;
 
     @Basic(optional=false)
+    @Column(length = STRINGLENGTH)
     @org.hibernate.annotations.Index(name="idx_users_email")
     protected String email;
 
@@ -98,8 +101,11 @@ public class User {
     }
 
     public void setUsername(String username) throws ChronoCommandException {
-        if (username == null || username.isEmpty()) {
+        if (username == null || username.trim().isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
+        if(username.length() > STRINGLENGTH) {
+            throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
         this.username = username;
     }
@@ -131,6 +137,9 @@ public class User {
     public void setEmail(String email) throws ChronoCommandException {
         if ( !email.contains("@") || !email.contains(".") ) {
             throw new ChronoCommandException(Reason.INVALIDEMAIL);
+        }
+        if(email.length() > STRINGLENGTH) {
+            throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
         this.email = email;
     }
