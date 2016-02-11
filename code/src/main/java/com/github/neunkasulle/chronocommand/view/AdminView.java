@@ -1,6 +1,5 @@
 package com.github.neunkasulle.chronocommand.view;
 
-import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
@@ -14,7 +13,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +26,7 @@ public class AdminView extends BaseView {
     private final Grid recordList = new Grid();
 
     private final AdminCtrlForm form = new AdminCtrlForm(e -> {
-        getUI().getNavigator().navigateTo(MainUI.EMPLOYEEVIEW);
+        getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
     }, e -> {
         getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
     }, e -> {

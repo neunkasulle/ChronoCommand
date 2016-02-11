@@ -88,7 +88,7 @@ public class LoginView extends LoginForm implements View {
 
         Button employees = new Button("Employees");
         employees.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.EMPLOYEEVIEW);
+            getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
         });
         links.addComponent(employees);
 

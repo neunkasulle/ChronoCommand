@@ -2,13 +2,10 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.MainControl;
-import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -34,7 +31,7 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String ADMINVIEW = "admin";
     public static final String CREATEUSERVIEW = "createuser";
     public static final String TIMESHEETVIEW = "timesheet";
-    public static final String EMPLOYEEVIEW = "employee";
+    public static final String SUPERVISORVIEW = "supervisor";
     public static final String SETTINGSVIEW = "settings";
     private static final Logger LOGGER = LoggerFactory.getLogger(MainUI.class);
     private Navigator navigator;
@@ -70,7 +67,7 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addViewChangeListener(this);
         navigator.addView(INITIALSTARTUPVIEW, InitialStartupView.class);
         navigator.addView(LOGINVIEW, new LoginView());
-        navigator.addView(EMPLOYEEVIEW, new SupervisorView());
+        navigator.addView(SUPERVISORVIEW, new SupervisorView());
         navigator.addView(ADMINVIEW, new AdminView());
         navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);

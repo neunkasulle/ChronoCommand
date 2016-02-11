@@ -6,6 +6,7 @@ import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
+import com.github.neunkasulle.chronocommand.model.User;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
@@ -33,33 +34,39 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         PROLETARIER("Proletarier") {
             @Override
-            public void fillRoleSpecificContent(final Layout extraPane) {
+            public void fillRoleSpecificContent(final Layout extraPane, ComboBox timeRecordSelection) {
                 /* Betreuer */
 
                 final HorizontalLayout supervisorPane = new HorizontalLayout();
                 supervisorPane.setSizeFull();
                 extraPane.addComponent(supervisorPane);
 
-                supervisorPane.addComponent(new Label("Betreuer"));
-                supervisorPane.addComponent(new Label("Betreuer1"));
+                try {
+                    User supervisor = LoginControl.getInstance().getCurrentUser().getSupervisor();
+                    if (supervisor != null) {
+                        supervisorPane.addComponent(new Label("Supervisor: " + supervisor.getRealname()));
+                    }
+                } catch(ChronoCommandException e) {
+                    Notification.show("Failed to get supervisor: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+                }
 
                  /* Other actions  */
 
                 final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
-                newTimeRecordButton.addClickListener(e -> {
+                newTimeRecordButton.addClickListener(event -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
                 });
                 extraPane.addComponent(newTimeRecordButton);
 
                 final Button submitTimeRecordButton = new Button("Stundenzetten abschicken");
-                submitTimeRecordButton.addClickListener(e -> {
+                submitTimeRecordButton.addClickListener(event -> {
                     //TODO: Implement submission
                 });
                 extraPane.addComponent(submitTimeRecordButton);
             }
         }, SUPERVISOR("Supervisor") {
             @Override
-            public void fillRoleSpecificContent(final Layout extraPane) {
+            public void fillRoleSpecificContent(final Layout extraPane, ComboBox timeRecordSelection) {
                 //TODO: fill me!
                 /* Betreuer */
 
@@ -67,19 +74,23 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 supervisorPane.setSizeFull();
                 extraPane.addComponent(supervisorPane);
 
-                supervisorPane.addComponent(new Label("Betreuer"));
-                supervisorPane.addComponent(new Label("Betreuer1"));
+                /*supervisorPane.addComponent(new Label("Betreuer"));
+                supervisorPane.addComponent(new Label("Betreuer1"));*/
 
                 final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
-                newTimeRecordButton.addClickListener(e -> {
+                newTimeRecordButton.addClickListener(event -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
                 });
                 extraPane.addComponent(newTimeRecordButton);
                 newTimeRecordButton.setSizeFull();
 
-                final Button submitTimeRecordButton = new Button("Stundenzetten abschicken");
-                submitTimeRecordButton.addClickListener(e -> {
-                    //TODO: Implement submission
+                final Button submitTimeRecordButton = new Button("Stundenzettel abschicken");
+                submitTimeRecordButton.addClickListener(event -> {
+                    try {
+                        TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue(), LoginControl.getInstance().getCurrentUser());
+                    } catch(ChronoCommandException e) {
+                        Notification.show("Failed to lock timesheet: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+                    }
                 });
                 extraPane.addComponent(submitTimeRecordButton);
                 submitTimeRecordButton.setSizeFull();
@@ -88,6 +99,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 final Button listOfMyProletarierButton = new Button("Meine HIWIs anzeigen");
                 listOfMyProletarierButton.setSizeFull();
                 listOfMyProletarierButton.addClickListener(e -> {
+                    extraPane.getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
                     //TODO: Get the list of all his HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfMyProletarierButton);
@@ -96,7 +108,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             }
         }, ADMINISTRATOR("Administrator") {
             @Override
-            public void fillRoleSpecificContent(final Layout extraPane) {
+            public void fillRoleSpecificContent(final Layout extraPane, ComboBox timeRecordSelection) {
                 //TODO: fill me!
                 final HorizontalLayout adminToSupervisorPane = new HorizontalLayout();
                 adminToSupervisorPane.setSizeFull();
@@ -105,7 +117,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final ComboBox supervisorSelection = new ComboBox(null, Arrays.asList("Betreuer1", "Betreuer2"));
                 supervisorSelection.setSizeFull();
-                supervisorSelection.addValueChangeListener(e -> {
+                supervisorSelection.addValueChangeListener(event -> {
                     //TODO : Do sonething usefoll here
                 });
                 supervisorSelection.setInputPrompt("Betreuer auswählen");
@@ -124,7 +136,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button listOfAllProletarierButton = new Button("Alle HIWIs anzeigen");
                 listOfAllProletarierButton.setSizeFull();
-                listOfAllProletarierButton.addClickListener(e -> {
+                listOfAllProletarierButton.addClickListener(event -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfAllProletarierButton);
@@ -132,7 +144,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button listOfAllSupervisorButton = new Button("Alle Betreuer anzeigen");
                 listOfAllSupervisorButton.setSizeFull();
-                listOfAllSupervisorButton.addClickListener(e -> {
+                listOfAllSupervisorButton.addClickListener(event -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfAllSupervisorButton);
@@ -157,7 +169,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             throw new IllegalArgumentException("Unknown role: " + role.getId() + " " + role.getName());
         }
 
-        public abstract void fillRoleSpecificContent(final Layout extraPane);
+        public abstract void fillRoleSpecificContent(final Layout extraPane, ComboBox timeRecordSelection);
 
     }
 
@@ -335,7 +347,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         try {
             Role role = LoginControl.getInstance().getCurrentUser().getPrimaryRole();
-            RoleAction.valueOf(role.getName()).fillRoleSpecificContent(extraContent);
+            RoleAction.valueOf(role.getName()).fillRoleSpecificContent(extraContent, timeRecordSelection);
         } catch (ChronoCommandException e) {
             Notification.show("Failed: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
         }
