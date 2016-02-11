@@ -73,6 +73,10 @@ public class TimeRecordForm extends FormLayout {
     public void edit(TimeRecord record) {
         this.object = record;
         if (record != null) {
+            if (record.getEnding() == null) {
+                setVisible(false);
+                return;
+            }
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(record, this);
             beginningHour.focus();
         }

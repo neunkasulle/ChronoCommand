@@ -103,7 +103,8 @@ public class TimeSheet {
         if (monthStr.length() < 2) {
             monthStr = "0" + monthStr;
         }
-        return monthStr + "." + year;
+        monthStr = month.toString();
+        return monthStr + " " + year;
     }
 
     public List<Message> getMessages() {

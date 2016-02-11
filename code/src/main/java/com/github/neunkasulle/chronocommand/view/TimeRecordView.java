@@ -146,8 +146,11 @@ public class TimeRecordView extends BaseView {
         final GeneratedPropertyContainer gpcontainer = new GeneratedPropertyContainer(beanItemContainer);
         recordList.setContainerDataSource(gpcontainer);
         recordList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        recordList.addSelectionListener(e
-                -> form.edit((TimeRecord) recordList.getSelectedRow()));
+        recordList.addSelectionListener(e -> {
+            if (recordList.getSelectedRow() != null && ((TimeRecord) recordList.getSelectedRow()).getBeginning() != null) {
+                form.edit((TimeRecord) recordList.getSelectedRow());
+            }
+        });
         recordList.setSizeFull();
 
         //Add generated columns
