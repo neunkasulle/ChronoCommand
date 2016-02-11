@@ -21,6 +21,9 @@ public class LocalDateTimeToLocalTimeStringConverter extends  PropertyValueGener
                            final Object propertyId) {
         final LocalDateTime time = (LocalDateTime)
                 item.getItemProperty(this.propertyId).getValue();
+        if (time == null) {
+            return "-";
+        }
         return time.toLocalTime().toString();
     }
 

@@ -7,6 +7,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -85,7 +87,6 @@ public class MainUI extends UI implements ViewChangeListener {
 
     @Override
     public boolean beforeViewChange(ViewChangeEvent event) {
-        LOGGER.info(event.getViewName());
         if (MainControl.getInstance().isInitialStartup()) {
             LOGGER.info("Initial startup: please create an administrator");
             if (!INITIALSTARTUPVIEW.equals(event.getViewName())) {
@@ -98,7 +99,6 @@ public class MainUI extends UI implements ViewChangeListener {
             return false;
         }
 
-        /*Subject currentUser = SecurityUtils.getSubject();
         if (LoginControl.getInstance().isLoggedIn() && LOGINVIEW.equals(event.getViewName())) {
             event.getNavigator().navigateTo(TIMERECORDVIEW);
             return false;
@@ -106,7 +106,7 @@ public class MainUI extends UI implements ViewChangeListener {
         if (!LoginControl.getInstance().isLoggedIn() && !LOGINVIEW.equals(event.getViewName())) {
             event.getNavigator().navigateTo(LOGINVIEW);
             return false;
-        }*/
+        }
 
         if ("".equals(event.getViewName())) {
             event.getNavigator().navigateTo(LOGINVIEW); // FIXME TIMERECORDVIEW

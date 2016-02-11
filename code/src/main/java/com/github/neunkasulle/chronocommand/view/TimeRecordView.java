@@ -99,7 +99,7 @@ public class TimeRecordView extends BaseView {
                 startButton.setVisible(false);
                 stopButton.setVisible(true);
                 elapsedTime.setVisible(true);
-                elapsedTime.setValue("Seit " + newestTimeRecord.getBeginning().toString());
+                elapsedTime.setValue("since " + newestTimeRecord.getBeginning().getHour() + ":" + newestTimeRecord.getBeginning().getMinute());
             }
         } catch(ChronoCommandException e) {
             Notification.show("Failed to get latest time record: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
@@ -112,7 +112,7 @@ public class TimeRecordView extends BaseView {
                 startButton.setVisible(false);
                 stopButton.setVisible(true);
                 elapsedTime.setVisible(true);
-                elapsedTime.setValue("Seit " + newTimeRecord.getBeginning().toString());
+                elapsedTime.setValue("since " + newTimeRecord.getBeginning().getHour() + ":" + newTimeRecord.getBeginning().getMinute());
                 refreshTimeSheetList();
                 refreshTimeRecords();
             } catch(ChronoCommandException e) {
@@ -163,6 +163,9 @@ public class TimeRecordView extends BaseView {
                         item.getItemProperty("beginning").getValue();
                 final LocalDateTime end = (LocalDateTime)
                         item.getItemProperty("ending").getValue();
+                if (end == null) {
+                    return "-";
+                }
                 final long diff = ChronoUnit.SECONDS.between(beginning, end);
                 return LocalDateTime.ofEpochSecond(diff, 0, ZoneOffset.UTC).toLocalTime().toString();
             }
@@ -195,7 +198,6 @@ public class TimeRecordView extends BaseView {
         });
 
         recordList.setColumns("date", "duration", "category.name", "description", "beginningTime", "endTime");
-        //recordList.setColumnOrder("date", "duration", "category.name", "description", "beginningTime", "endTime");
         recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Category");
         recordList.getDefaultHeaderRow().getCell("description").setHtml("Description");
 

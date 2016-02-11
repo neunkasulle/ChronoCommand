@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
 import com.github.neunkasulle.chronocommand.model.Message;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,10 @@ public class TimeSheetControl {
      * @param user The user which the time record belongs to
      */
     public TimeRecord newTimeRecord(User user) throws ChronoCommandException {
+        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
 
@@ -77,9 +82,12 @@ public class TimeSheetControl {
      * @throws ChronoCommandException When there is something wrong with e.g. the category
      */
     public TimeRecord newTimeRecord(Category category, String description, User user) throws ChronoCommandException {
+        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
-
 
         if(timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
@@ -105,6 +113,10 @@ public class TimeSheetControl {
      * @throws ChronoCommandException ChronoCommandException When there is something wrong with e.g. the category
      */
     public TimeRecord closeTimeRecord(User user) throws ChronoCommandException {
+        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
@@ -133,6 +145,10 @@ public class TimeSheetControl {
      * @throws ChronoCommandException When there is something wrong with e.g. the category
      */
     public TimeRecord closeTimeRecord(Category category, String description, User user) throws ChronoCommandException {
+        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
 
@@ -169,7 +185,11 @@ public class TimeSheetControl {
      * @throws ChronoCommandException When there is something wrong with e.g. the category
      */
     public void addTimeToSheet(LocalDateTime beginn, LocalDateTime end, Category category, String description, User user)
-    throws  ChronoCommandException {
+                throws  ChronoCommandException {
+        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheet timeSheet = timeSheetDAO.getTimeSheet(beginn.getMonth(), beginn.getYear(), user);
 

@@ -302,26 +302,28 @@ public abstract class BaseView extends HorizontalLayout implements View {
         logoutButton.setStyleName(BaseTheme.BUTTON_LINK);
         naviBar.addComponent(logoutButton);
 
-        /* Date picker */
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+            /* Date picker */
 
-        final InlineDateField calendar = new InlineDateField();
-        calendar.setValue(new Date());
-        calendar.setImmediate(true);
-        calendar.setLocale(Locale.getDefault());
-        calendar.setResolution(Resolution.MINUTE);
-        calendar.addValueChangeListener(e -> Notification.show("Value changed:",
-                String.valueOf(e.getProperty().getValue()),
-                Notification.Type.TRAY_NOTIFICATION));
-        controlPanel.addComponent(calendar);
+            final InlineDateField calendar = new InlineDateField();
+            calendar.setValue(new Date());
+            calendar.setImmediate(true);
+            calendar.setLocale(Locale.getDefault());
+            calendar.setResolution(Resolution.MINUTE);
+            calendar.addValueChangeListener(e -> Notification.show("Value changed:",
+                    String.valueOf(e.getProperty().getValue()),
+                    Notification.Type.TRAY_NOTIFICATION));
+            controlPanel.addComponent(calendar);
 
-        /* Combo box */
+            /* Combo box */
 
-        // Creates a new combobox using an existing container
-        timeRecordSelection = new ComboBox("Bitte Stundenzettel auswählen");
-        timeRecordSelection.setSizeFull();
-        timeRecordSelection.setNullSelectionAllowed(false);
-        controlPanel.addComponent(timeRecordSelection);
-        refreshTimeSheetList();
+            // Creates a new combobox using an existing container
+            timeRecordSelection = new ComboBox("Bitte Stundenzettel auswählen");
+            timeRecordSelection.setSizeFull();
+            timeRecordSelection.setNullSelectionAllowed(false);
+            controlPanel.addComponent(timeRecordSelection);
+            refreshTimeSheetList();
+        }
 
         final VerticalLayout extraContent = new VerticalLayout();
         extraContent.addStyleName("container");
