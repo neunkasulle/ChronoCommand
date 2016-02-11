@@ -114,4 +114,18 @@ public class TimeSheet {
     public void setMessage(Message message) {
         this.messages.add(message);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof TimeSheet) {
+            return id.equals(((TimeSheet) o).getId());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return id.intValue();
+    }
 }
