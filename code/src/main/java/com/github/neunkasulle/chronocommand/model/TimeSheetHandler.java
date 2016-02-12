@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.model;
 
 import com.github.neunkasulle.chronocommand.control.MainControl;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -13,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -74,8 +77,11 @@ public class TimeSheetHandler {
             file = new File(getClass().getClassLoader().getResource("Stundenzettel.pdf").getFile());
             outputFile = new FileOutputStream("Study.pdf");//TODO save different
             pdfTimeSheet = PDDocument.load(file);
-        } catch (Exception e) {
-            LOGGER.error("Loading error.");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
         try {
@@ -87,19 +93,23 @@ public class TimeSheetHandler {
                 fillContent(contents, recordsToPDF, timeSheet);
             } else {
                 List<List<TimeRecord>> multiList = splitRecordList(recordsToPDF);
-
                 pdfTimeSheet.removePage(0);
-                for (List<TimeRecord> singleList : multiList) {
-                    PDPage newPage = page;
+
+                for (int i = 0; i < multiList.size(); i++) {
+                    COSDictionary pageDic = page.getCOSObject();
+                    COSDictionary newPageDic = new COSDictionary(pageDic);
+                    newPageDic.removeItem(COSName.ANNOTS);
+
+                    PDPage newPage = new PDPage(newPageDic);
+
+                    PDPageContentStream con = new PDPageContentStream(pdfTimeSheet, newPage, true, true);
+                    fillContent(con, multiList.get(i), timeSheet);
                     pdfTimeSheet.addPage(newPage);
-                    PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, newPage, true, true);
-                    fillContent(contents, singleList, timeSheet);
                 }
             }
-
             pdfTimeSheet.save(outputFile);
-        } catch (Exception e) {
-            LOGGER.error("problem in content section");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         try {
             pdfTimeSheet.close();
@@ -113,9 +123,15 @@ public class TimeSheetHandler {
     private List splitRecordList(List<TimeRecord> rec) {
         List<List<TimeRecord>> lists = new ArrayList<>();
 
-        while (rec.size() > 27) {
-            List<TimeRecord> addList = rec.subList(0, 26);
-            rec.subList(0, 26).clear();
+        int sizeList = (rec.size() / 27);
+
+        for (int i = 0; i <= sizeList; i++) {
+            int start = 27 * i;
+            int ende = start + 27;
+            if (ende >= rec.size()) {
+                ende = rec.size();
+            }
+            List<TimeRecord> addList = rec.subList(start, ende);
             lists.add(addList);
         }
         return lists;
@@ -251,7 +267,9 @@ public class TimeSheetHandler {
     public static void main(String[] args) {
         MainControl.getInstance().startup(false);
         TimeSheetHandler handler = TimeSheetHandler.getInstance();
-        handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
+        //handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
+
+        handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.DECEMBER, 2016, UserDAO.getInstance().findUser("tom")));
 
         System.exit(0);
     }

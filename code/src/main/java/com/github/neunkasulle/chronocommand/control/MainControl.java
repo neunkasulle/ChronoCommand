@@ -121,10 +121,99 @@ public class MainControl {
             TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
 
             String taetigkeit = "codework for PSE";
+            TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 1, 11, 30), LocalDateTime.of(2016, 1, 1, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
+            TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0), LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
+
+            //test for more than 27 entries
+            TimeSheet t = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.DECEMBER, 2016);
+            TimeSheetDAO.getInstance().saveTimeSheet(t);
             LocalDateTime date1 = LocalDateTime.of(2016, 1, 1, 11, 30);
             LocalDateTime date2 = LocalDateTime.of(2016, 1, 1, 15, 30);
-            TimeRecord timeRecTom = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
-            TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0), LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
+            TimeRecord t1 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 1", t);
+            TimeRecord t2 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 2", t);
+            TimeRecord t3 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 3", t);
+            TimeRecord t4 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 4", t);
+            TimeRecord t5 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 5", t);
+            TimeRecord t6 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 6", t);
+            TimeRecord t7 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 7", t);
+            TimeRecord t8 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 8", t);
+            TimeRecord t9 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 9", t);
+            TimeRecord t0 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 10", t);
+            TimeRecord t11 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 11", t);
+            TimeRecord t22 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 12", t);
+            TimeRecord t33 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 13", t);
+            TimeRecord t44 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 14", t);
+            TimeRecord t66 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 15", t);
+            TimeRecord t55 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 16", t);
+            TimeRecord t77 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 17", t);
+            TimeRecord t88 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 18", t);
+            TimeRecord t99 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 19", t);
+            TimeRecord t09 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 20", t);
+            TimeRecord t111 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 21", t);
+            TimeRecord t12 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 22", t);
+            TimeRecord t13 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 23", t);
+            TimeRecord t14 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 24", t);
+            TimeRecord t15 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 25", t);
+            TimeRecord t16 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 26", t);
+            TimeRecord t17 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 27", t);
+            TimeRecord t21 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 28", t);
+            TimeRecord t222 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 29", t);
+            TimeRecord t23 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 30", t);
+            TimeRecord t24 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 31", t);
+            TimeRecord t25 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 32", t);
+            TimeRecord t26 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 33", t);
+            TimeRecord t27 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 34", t);
+            TimeRecord t28 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 35", t);
+            TimeRecord t29 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 36", t);
+            TimeRecord t20 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 37", t);
+            TimeRecord t08 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 38", t);
+            TimeRecord t06 = new TimeRecord(date1, date2, CategoryDAO.getInstance().findCategoryByString("Programming"), "done something 39", t);
+
+            try {
+                TimeSheetDAO.getInstance().saveTimeRecord(t1);
+                TimeSheetDAO.getInstance().saveTimeRecord(t2);
+                TimeSheetDAO.getInstance().saveTimeRecord(t3);
+                TimeSheetDAO.getInstance().saveTimeRecord(t4);
+                TimeSheetDAO.getInstance().saveTimeRecord(t5);
+                TimeSheetDAO.getInstance().saveTimeRecord(t6);
+                TimeSheetDAO.getInstance().saveTimeRecord(t7);
+                TimeSheetDAO.getInstance().saveTimeRecord(t8);
+                TimeSheetDAO.getInstance().saveTimeRecord(t9);
+                TimeSheetDAO.getInstance().saveTimeRecord(t0);
+                TimeSheetDAO.getInstance().saveTimeRecord(t11);
+                TimeSheetDAO.getInstance().saveTimeRecord(t111);
+                TimeSheetDAO.getInstance().saveTimeRecord(t12);
+                TimeSheetDAO.getInstance().saveTimeRecord(t13);
+                TimeSheetDAO.getInstance().saveTimeRecord(t14);
+                TimeSheetDAO.getInstance().saveTimeRecord(t15);
+                TimeSheetDAO.getInstance().saveTimeRecord(t16);
+                TimeSheetDAO.getInstance().saveTimeRecord(t17);
+                TimeSheetDAO.getInstance().saveTimeRecord(t21);
+                TimeSheetDAO.getInstance().saveTimeRecord(t22);
+                TimeSheetDAO.getInstance().saveTimeRecord(t222);
+                TimeSheetDAO.getInstance().saveTimeRecord(t23);
+                TimeSheetDAO.getInstance().saveTimeRecord(t24);
+                TimeSheetDAO.getInstance().saveTimeRecord(t25);
+                TimeSheetDAO.getInstance().saveTimeRecord(t26);
+                TimeSheetDAO.getInstance().saveTimeRecord(t27);
+                TimeSheetDAO.getInstance().saveTimeRecord(t28);
+                TimeSheetDAO.getInstance().saveTimeRecord(t29);
+                TimeSheetDAO.getInstance().saveTimeRecord(t09);
+                TimeSheetDAO.getInstance().saveTimeRecord(t33);
+                TimeSheetDAO.getInstance().saveTimeRecord(t44);
+                TimeSheetDAO.getInstance().saveTimeRecord(t55);
+                TimeSheetDAO.getInstance().saveTimeRecord(t66);
+                TimeSheetDAO.getInstance().saveTimeRecord(t20);
+                TimeSheetDAO.getInstance().saveTimeRecord(t08);
+                TimeSheetDAO.getInstance().saveTimeRecord(t09);
+                TimeSheetDAO.getInstance().saveTimeRecord(t77);
+                TimeSheetDAO.getInstance().saveTimeRecord(t88);
+                TimeSheetDAO.getInstance().saveTimeRecord(t99);
+                TimeSheetDAO.getInstance().saveTimeRecord(t06);
+            } catch (Exception e) {
+                LOGGER.error("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");//serious error message
+            }
+            //end test
 
             try {
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
