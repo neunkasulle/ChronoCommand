@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,6 +40,9 @@ public class TimeSheetHandler {
     String warningEmailTemplate; //TODO do we need this?
 
     private static final TimeSheetHandler instance = new TimeSheetHandler();
+
+    private static final PDFont FONT = PDType1Font.HELVETICA;
+    private static final PDFont FONT_BOLD = PDType1Font.HELVETICA_BOLD;
 
     private TimeSheetHandler() {
 
@@ -76,9 +80,22 @@ public class TimeSheetHandler {
         }
         try {
             PDPage page = pdfTimeSheet.getPage(0);
-            PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
+            List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
-            fillContent(contents, timeSheet);
+            if (recordsToPDF.size() < 27) {
+                PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, page, true, true);
+                fillContent(contents, recordsToPDF, timeSheet);
+            } else {
+                List<List<TimeRecord>> multiList = splitRecordList(recordsToPDF);
+
+                pdfTimeSheet.removePage(0);
+                for (List<TimeRecord> singleList : multiList) {
+                    PDPage newPage = page;
+                    pdfTimeSheet.addPage(newPage);
+                    PDPageContentStream contents = new PDPageContentStream(pdfTimeSheet, newPage, true, true);
+                    fillContent(contents, singleList, timeSheet);
+                }
+            }
 
             pdfTimeSheet.save(outputFile);
         } catch (Exception e) {
@@ -93,21 +110,29 @@ public class TimeSheetHandler {
         return returnFile;
     }
 
-    private void fillContent(PDPageContentStream contents, TimeSheet timeSheet) throws IOException {
-        List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
+    private List splitRecordList(List<TimeRecord> rec) {
+        List<List<TimeRecord>> lists = new ArrayList<>();
 
-        int yOff = 0;
-        PDFont font = PDType1Font.HELVETICA;
-        PDFont fontBold = PDType1Font.HELVETICA_BOLD;
-        //fill Content
+        while (rec.size() > 27) {
+            List<TimeRecord> addList = rec.subList(0, 26);
+            rec.subList(0, 26).clear();
+            lists.add(addList);
+        }
+        return lists;
+    }
+
+    private void fillContent(PDPageContentStream contents, List<TimeRecord> recordsToPDF, TimeSheet timeSheet) throws IOException {
+        int yOff = 637;
+        int sumHour = 0;
+        int sumMin = 0;
+
         contents.beginText();
-        contents.setFont(font, 12);
-        //fill name etc
+        contents.setFont(FONT, 12);
         contents.newLineAtOffset(465, 764);
         contents.showText(Integer.toString(timeSheet.getMonth().getValue()));//month
-        contents.setFont(fontBold, 12);
+        contents.setFont(FONT_BOLD, 12);
         contents.showText(" / ");
-        contents.setFont(font, 12);
+        contents.setFont(FONT, 12);
         contents.showText(Integer.toString(timeSheet.getYear()));//year
         contents.newLineAtOffset(-187, -22);
         contents.showText(timeSheet.getUser().realname);//name
@@ -115,12 +140,9 @@ public class TimeSheetHandler {
         contents.showText(timeSheet.getRequiredHoursPerMonth() + " Stunden");//required hours per month
         contents.endText();
 
-        yOff = 637;
-        int sumHour = 0;
-        int sumMin = 0;
         for (TimeRecord timeR : recordsToPDF) {
             contents.beginText();
-            contents.setFont(font, 10);
+            contents.setFont(FONT, 10);
             contents.newLineAtOffset(58, yOff);
             contents.showText(timeR.getDescription());//description
             contents.newLineAtOffset(139, 0);
@@ -188,7 +210,7 @@ public class TimeSheetHandler {
         }
         contents.beginText();
         contents.newLineAtOffset(384, yOff);
-        contents.setFont(fontBold, 10);
+        contents.setFont(FONT_BOLD, 10);
         contents.showText("Summe");
         contents.newLineAtOffset(105, 0);
         contents.showText(sumHour + ":");//sum of total time
