@@ -384,10 +384,12 @@ public class TimeSheetControl {
     }
 
     public void sendEmail(User recipient, String message) {
-        String host = "localhost";
+        String host = "mail.teco.edu";
+        String port = "25";
         Properties properties = System.getProperties();
 
         properties.setProperty("mail.smtp.host", host);
+        properties.put("mail.smtp.port", port);
 
         Session session = Session.getDefaultInstance(properties, null);
 
