@@ -95,6 +95,8 @@ public class MainControl {
             UserDAO.getInstance().saveRole(longhours);
         }
 
+        SchedulerHandler.scheduleAll();
+
         // DEBUG fill database with data
         if (!productionMode) {
             try {
@@ -138,6 +140,7 @@ public class MainControl {
      * Saves necessary data before shutting down
      */
     public void shutdown() {
+        SchedulerHandler.getInstance().shutdownSched();
         DAOHelper.getInstance().shutdown();
 
     }
