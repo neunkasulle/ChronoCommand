@@ -47,7 +47,7 @@ public class User {
     @Column(length=511)
     protected String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="cc_users_roles")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     protected Set<Role> roles;
