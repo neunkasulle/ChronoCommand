@@ -1,9 +1,11 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha512Hash;
+import org.apache.shiro.util.ByteSource;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.internal.util.compare.EqualsHelper;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -63,12 +65,16 @@ public class User {
     @Basic
     private int hoursPerMonth;
 
+    @Basic
+    private ByteSource salt;
+
     public User() {
         // hibernate needs this
     }
 
     public User(Role userType, String username, String email, String password, String realname, User supervisor,
                 int hoursPerMonth) throws ChronoCommandException {
+
         this.roles = new HashSet<>();
 
         this.roles.add(userType);
@@ -77,6 +83,8 @@ public class User {
 
         setEmail(email);
 
+        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+        salt = rng.nextBytes();
         setPassword(password);
 
         setRealname(realname);
@@ -89,6 +97,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public ByteSource getSalt() {
+        return salt;
     }
 
     /**
@@ -156,7 +168,7 @@ public class User {
         if (password.isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        this.password = new Sha512Hash(password, null, 1024);
+        this.password = new Sha512Hash(password, salt, 1024);
     }
 
 

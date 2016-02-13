@@ -54,7 +54,7 @@ public class Realm extends AuthorizingRealm {
             user = UserDAO.getInstance().findUserByEmail(token.getUsername());
         }
         if (user != null) {
-            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), user.getSalt(), getName());
         } else {
             throw new AuthenticationException();
         }
