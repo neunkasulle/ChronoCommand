@@ -65,15 +65,13 @@ public class UserManagementControl {
         if (user == null) {
             throw new ChronoCommandException(Reason.NOSUCHUSER);
         }
-        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) ||
+            user.equals(LoginControl.getInstance().getCurrentUser()) ||
+            LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor()))
+        {
             return user;
         }
-        if (user.equals(LoginControl.getInstance().getCurrentUser())) {
-            return user;
-        }
-        if (LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor())) {
-            return user;
-        }
+
         throw new ChronoCommandException(Reason.NOTPERMITTED);
     }
 
