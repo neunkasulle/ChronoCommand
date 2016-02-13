@@ -78,7 +78,6 @@ public class TimeSheetControlTest extends UeberTest{
     public void editTimeRecordTest() {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
-        fail();
     }
 
     @Test
@@ -95,69 +94,58 @@ public class TimeSheetControlTest extends UeberTest{
     }
 
     @Test
-    public void getLatestRecordTest(){
+    public void getLatestRecordTest() throws ChronoCommandException {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
 
         TimeRecord timeRecord = null;
-        try {
             timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
             timeRecord = timeSheetControl.getLatestTimeRecord(userDAO.findUser("tom"));
-        }
-        catch (ChronoCommandException ex) {
-            fail();
-        }
+
         assertTrue(timeRecord.getCategory() == null);
     }
 
     @Test
-    public void lockTimeSheetTest() {
+    public void lockTimeSheetTest() throws Exception{
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
 
-        TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.JANUARY, 2016).get(0);
-        assertNotNull(timeSheet);
-        timeSheetControl.lockTimeSheet(timeSheet, userDAO.findUser("tom"));
-
-        try {
+            TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.JANUARY, 2016).get(0);
+            assertNotNull(timeSheet);
+            timeSheetControl.lockTimeSheet(timeSheet, userDAO.findUser("tom"));
             timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, " ", timeSheet.getUser());
-        }
-        catch (ChronoCommandException exc) {
-            assertTrue(exc.getReason() == Reason.TIMESHEETLOCKED);
-        }
     }
 
     @Test
-    public void printAllTimeSheetsUserTest() {
+    public void printAllTimeSheetsUserTest() throws ChronoCommandException {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
-
-        File pdfSheets = timeSheetControl.printAllTimeSheets(userDAO.findUser("tom"));
-
-        assertTrue(pdfSheets != null);
-
+        File pdfSheets = null;
+        pdfSheets = timeSheetControl.printAllTimeSheets(userDAO.findUser("tom"));
+        assertNotNull(pdfSheets);
     }
 
     @Test
-    public void printAllTimeSheetsTimeTest() {
+    public void printAllTimeSheetsTimeTest() throws ChronoCommandException{
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
 
-        File pdfSheets = timeSheetControl.printAllTimeSheets(Month.JANUARY, 2016);
+            File pdfSheets = timeSheetControl.printAllTimeSheets(Month.JANUARY, 2016);
+            assert(pdfSheets != null);
 
-        assertTrue(pdfSheets != null);
     }
 
     @Test
     public void printTimeSheet() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
+        File file = null;
 
         TimeSheet timeSheet = new TimeSheet(userDAO.findUser("tom"), Month.AUGUST, 1993);
-        File file = timeSheetControl.printTimeSheet(timeSheet);
+        file = timeSheetControl.printTimeSheet(timeSheet);
 
-        assertTrue(file != null);
+        assertNotNull(file);
     }
 
     @Ignore
