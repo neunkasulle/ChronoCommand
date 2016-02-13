@@ -2,20 +2,25 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.MainControl;
-import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.*;
-import com.vaadin.ui.themes.ValoTheme;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
-import com.vaadin.ui.*;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ServiceDestroyEvent;
+import com.vaadin.server.ServiceDestroyListener;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 
 /**
  *

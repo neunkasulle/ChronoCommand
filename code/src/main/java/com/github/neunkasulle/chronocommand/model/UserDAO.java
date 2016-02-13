@@ -1,7 +1,9 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.hibernate.*;
-import org.hibernate.criterion.Criterion;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

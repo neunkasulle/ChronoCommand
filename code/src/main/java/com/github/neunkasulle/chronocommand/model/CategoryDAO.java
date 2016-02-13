@@ -2,7 +2,8 @@ package com.github.neunkasulle.chronocommand.model;
 
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
-import org.hibernate.*;
+import org.hibernate.Criteria;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;

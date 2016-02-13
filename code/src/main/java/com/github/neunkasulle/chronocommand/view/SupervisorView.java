@@ -12,7 +12,6 @@ import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ChameleonTheme;
 
 import java.util.List;
 import java.util.Set;

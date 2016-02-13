@@ -8,6 +8,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -20,9 +22,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -274,8 +273,13 @@ public class TimeSheetHandler {
                 LOGGER.error("Loading error in createPdfFromAllTimeSheets");
             }
             PDPageTree loopTree = doc.getPages();
-            for (int i = 0; i < loopTree.getCount(); i++) {
-                totDoc.addPage(loopTree.get(i));
+            try {
+                for (int i = 0; i < loopTree.getCount(); i++) {
+                    totDoc.addPage(loopTree.get(i));
+                }
+            }
+            catch (NullPointerException e) {
+                LOGGER.error("Nullptr", e);
             }
         }
         return file;

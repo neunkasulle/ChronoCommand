@@ -1,15 +1,9 @@
 package com.github.neunkasulle.chronocommand.view.forms;
 
-import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.model.Category;
-import com.github.neunkasulle.chronocommand.model.TimeRecord;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.event.ShortcutAction;
-import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
-
-import java.util.List;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.FormLayout;
 
 /**
  * Created by Ming-Samsung on 2016/1/31.

@@ -1,7 +1,6 @@
 package com.github.neunkasulle.chronocommand.view.forms;
 
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
-import com.github.neunkasulle.chronocommand.model.User;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;

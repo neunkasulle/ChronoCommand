@@ -1,12 +1,16 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.*;
-import org.quartz.JobExecutionContext;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.TimeRecord;
+import com.github.neunkasulle.chronocommand.model.User;
+import com.github.neunkasulle.chronocommand.model.UserDAO;
 import org.quartz.Job;
+import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Dav on 09.02.2016.

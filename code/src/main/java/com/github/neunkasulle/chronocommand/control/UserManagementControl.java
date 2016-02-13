@@ -5,7 +5,6 @@ import org.apache.shiro.SecurityUtils;
 import org.hibernate.cfg.NotYetImplementedException;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Janze on 18.01.2016.

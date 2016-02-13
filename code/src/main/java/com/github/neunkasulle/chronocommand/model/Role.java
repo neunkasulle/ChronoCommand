@@ -1,12 +1,10 @@
 package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Set;
 
 /**

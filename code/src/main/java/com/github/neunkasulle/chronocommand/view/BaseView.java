@@ -2,7 +2,6 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
@@ -17,7 +16,6 @@ import com.vaadin.ui.themes.BaseTheme;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
