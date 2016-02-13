@@ -72,7 +72,6 @@ public class TimeSheetHandler {
      * @param timeSheet a timesheet
      * @return a pdf
      */
-    //TODO @Dav add new page when timesheet is "full"
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
         PDDocument pdfTimeSheet;
         File file;
@@ -126,6 +125,11 @@ public class TimeSheetHandler {
         return returnFile;
     }
 
+    /**
+     * split the list with all time records to print multiple pages
+     * @param rec the list with all time records
+     * @return a list which contains sublists with time records
+     */
     private List splitRecordList(List<TimeRecord> rec) {
         List<List<TimeRecord>> lists = new ArrayList<>();
 
@@ -143,6 +147,13 @@ public class TimeSheetHandler {
         return lists;
     }
 
+    /**
+     * method to fill the template with timerecords
+     * @param contents
+     * @param recordsToPDF a list of timerecords
+     * @param timeSheet the timesheet to print
+     * @throws IOException
+     */
     private void fillContent(PDPageContentStream contents, List<TimeRecord> recordsToPDF, TimeSheet timeSheet) throws IOException {
         int yOff = 637;
 
@@ -246,7 +257,7 @@ public class TimeSheetHandler {
     /**
      * creates one pdf with all given timesheets
      *
-     * @param timeSheets list of timesheets
+     * @param timeSheets a list of timesheets
      * @return one pdf with all timesheets
      */
     public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) {//TODO test this method
