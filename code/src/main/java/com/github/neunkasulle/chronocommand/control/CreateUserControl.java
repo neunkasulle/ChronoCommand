@@ -1,6 +1,8 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,10 @@ public class CreateUserControl {
      */
     public void createUser(Role userType, String username, String email, String password, String fullname,
                                 @Nullable User supervisor, int hoursPerMonth) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         UserDAO userDAO = UserDAO.getInstance();
 
         username = username.trim();

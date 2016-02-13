@@ -32,10 +32,6 @@ public class SchedulerHandler {
     public static void scheduleAll() throws SchedulerException {
         Scheduler sched = intantiateSched();
 
-        JobDetail printJob = newJob(SimpleJob.class)
-                .withIdentity("simpleJob", "testGroup") //name, group
-                .build();
-
         JobDetail weeklyReminderJob = newJob(WeeklyMailJob.class)
                 .withIdentity("weeklyReminderJob", "weeklyReminder") //name, group
                 .build();

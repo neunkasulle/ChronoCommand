@@ -15,7 +15,14 @@ public class WeeklyMailJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        List<User> recipients = checkUserLastRecord();
+        List<User> recipients = null;
+
+        try {
+            recipients = checkUserLastRecord();
+        } catch (ChronoCommandException e) {
+            e.printStackTrace();
+        }
+
         String message = "You should work more and harder lazy ass";
 
         for (User user : recipients) {
@@ -23,12 +30,16 @@ public class WeeklyMailJob implements Job {
         }
     }
 
-    private List<User> checkUserLastRecord() {
+    private List<User> checkUserLastRecord()throws ChronoCommandException {
         List<User> allUser = UserDAO.getInstance().getAllUsers();
         List<TimeRecord> allTimeRecords= new LinkedList<>();
         List<User> recipients = new LinkedList<>();
         for (User user : allUser) {
-            allTimeRecords.add(TimeSheetControl.getInstance().getLatestTimeRecord(user));
+            try {
+                allTimeRecords.add(TimeSheetControl.getInstance().getLatestTimeRecord(user));
+            } catch (ChronoCommandException e) {
+                e.printStackTrace();
+            }
         }
         for (TimeRecord record : allTimeRecords) {
             LocalDateTime lastEndTime = record.getEnding();
