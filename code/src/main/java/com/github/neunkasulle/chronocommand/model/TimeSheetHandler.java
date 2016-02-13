@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * Created by Janze on 16.01.2016.
+ * Handlig emails and formating stuff
  */
 @Entity
 public class TimeSheetHandler {

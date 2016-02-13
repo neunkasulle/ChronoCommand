@@ -20,13 +20,15 @@ public class SchedulerHandler {
 
     private static Scheduler sched;
 
+    private SchedulerHandler() {
+
+    }
+
     public static SchedulerHandler getInstance() {
         return ourInstance;
     }
 
-    private SchedulerHandler() {
 
-    }
 
     private static void intantiateSched() throws SchedulerException {
         SchedulerFactory schedFact = new StdSchedulerFactory();
@@ -40,7 +42,7 @@ public class SchedulerHandler {
         try {
             intantiateSched();
         } catch (SchedulerException e) {
-            LOGGER.error("Failure in instantiating scheduler");
+            LOGGER.error("Failure in instantiating scheduler", e);
         }
 
         JobDetail weeklyReminderJob = newJob(WeeklyMailJob.class)
@@ -69,7 +71,7 @@ public class SchedulerHandler {
             sched.scheduleJob(monthlyReminderJob, lastDayOfMonth);
             sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
         } catch (SchedulerException e) {
-            LOGGER.error("Failure in starting scheduler");
+            LOGGER.error("Failure in starting scheduler", e);
         }
     }
 
@@ -80,7 +82,7 @@ public class SchedulerHandler {
         try {
             sched.shutdown(true);
         } catch (SchedulerException e) {
-            LOGGER.error("Failure in shutdown");
+            LOGGER.error("Failure in shutdown", e);
         }
     }
 }

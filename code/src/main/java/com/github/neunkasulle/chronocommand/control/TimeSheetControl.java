@@ -214,20 +214,6 @@ public class TimeSheetControl {
         LOGGER.info("Time record created for" + user.getUsername());
     }
 
-
-    /**
-     * Collects all time Sheets from user which are supervised by a specific user
-     * @param month the month from which the time sheets will be collected
-     * @param year the year from which the time sheets will be collected
-     * @param user the supervising user
-     * @return A list of time sheets
-     */
-    /*
-    public List<TimeSheet> getSupervisedTimeSheets(Month month, int year, User user) {
-        //not needed for now
-        return null;
-    }
-*/
     /**
      * A timeSheet will be locked against changes
      * @param timeSheet the timesheet which will be locked
@@ -246,22 +232,27 @@ public class TimeSheetControl {
      * A TimeSheet will be unlocked again and thus can be changed again
      * @param timeSheet the time sheet which will be unlocked
      */
-    public void unlockTimeSheet(TimeSheet timeSheet, User user) {
+    public void unlockTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException {
 
+        if(timeSheet.getState() != TimeSheetState.UNLOCKED
+                && SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
         LOGGER.info("unlocked:" + timeSheet.getMonth() + user.getUsername());
-        //TODO permission from validated to unlocked
     }
 
     /**
      * A time sheet will be marked as checked
      * @param timeSheet the time sheet which will be marked
      */
-    public void approveTimeSheet(TimeSheet timeSheet, User user) {
+    public void approveTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException{
+        if(SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
         LOGGER.info("checked:" + timeSheet.getMonth() + user.getUsername());
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
 
-        //TODO Permissions checks and stuff?
     }
 
     /**

@@ -31,7 +31,6 @@ public class Role {
 
     @Basic(optional = false)
     @Column(length = 100)
-    @Index(name = "idx_roles_name")
     private String name;
 
     @Basic//(optional = false)

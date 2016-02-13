@@ -8,7 +8,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,13 +49,6 @@ public class LoginControl {
 
     }
 
-    /**
-     * Sends a password reset mail when invoked
-     */
-    public void lostPassword() {
-        throw new NotYetImplementedException();
-
-    }
 
     /**
      * logs out the an active user
