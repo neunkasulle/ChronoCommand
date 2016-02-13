@@ -38,7 +38,7 @@ public class Role {
     @Column(length = 255)
     private String description;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "cc_roles_permissions")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<String> permissions;
