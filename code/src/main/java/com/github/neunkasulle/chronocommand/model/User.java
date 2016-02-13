@@ -115,6 +115,9 @@ public class User {
         if(username.length() > STRINGLENGTH) {
             throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
+        if(username.equals(username.trim())) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
         this.username = username;
     }
 
@@ -131,8 +134,11 @@ public class User {
         if (realname == null) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        realname = realname.trim();
-        if (realname.isEmpty()) {
+        String realnameTrim = realname.trim();
+        if (realnameTrim.isEmpty()) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
+        if (realname.equals(realnameTrim)) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.realname = realname;
@@ -161,7 +167,10 @@ public class User {
     }
 
     public void setPassword(String password) throws ChronoCommandException {
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
+        if (password.equals(password.trim())) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         RandomNumberGenerator rng = new SecureRandomNumberGenerator();

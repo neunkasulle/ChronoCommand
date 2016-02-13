@@ -45,16 +45,15 @@ public class CreateUserControl {
 
         UserDAO userDAO = UserDAO.getInstance();
 
-        username = username.trim();
-        email = email.trim();
-        fullname = fullname.trim();
+        String usernameTrim = username.trim();
+        String emailTrim = email.trim();
 
-        if(userDAO.findUser(username) != null) {
+        if(userDAO.findUser(usernameTrim) != null) {
             LOGGER.error("user" + username + "already exists");
             throw new ChronoCommandException(Reason.USERALREADYEXISTS);
         }
 
-        if (userDAO.findUserByEmail(email) != null) {
+        if (userDAO.findUserByEmail(emailTrim) != null) {
             LOGGER.error("email" + email + "is already in use");
             throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
         }
