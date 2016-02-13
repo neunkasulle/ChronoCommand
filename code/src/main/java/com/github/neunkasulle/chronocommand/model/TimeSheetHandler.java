@@ -47,6 +47,9 @@ public class TimeSheetHandler {
     private static final PDFont FONT = PDType1Font.HELVETICA;
     private static final PDFont FONT_BOLD = PDType1Font.HELVETICA_BOLD;
 
+    private int sumHour;
+    private int sumMin;
+
     private TimeSheetHandler() {
 
     }
@@ -65,6 +68,7 @@ public class TimeSheetHandler {
 
     /**
      * creates a printable timesheet pdf
+     *
      * @param timeSheet a timesheet
      * @return a pdf
      */
@@ -73,6 +77,8 @@ public class TimeSheetHandler {
         PDDocument pdfTimeSheet;
         File file;
         FileOutputStream outputFile;
+        sumHour = 0;
+        sumMin = 0;
         try {
             file = new File(getClass().getClassLoader().getResource("Stundenzettel.pdf").getFile());
             outputFile = new FileOutputStream("Study.pdf");//TODO save different
@@ -139,8 +145,6 @@ public class TimeSheetHandler {
 
     private void fillContent(PDPageContentStream contents, List<TimeRecord> recordsToPDF, TimeSheet timeSheet) throws IOException {
         int yOff = 637;
-        int sumHour = 0;
-        int sumMin = 0;
 
         contents.beginText();
         contents.setFont(FONT, 12);
@@ -241,6 +245,7 @@ public class TimeSheetHandler {
 
     /**
      * creates one pdf with all given timesheets
+     *
      * @param timeSheets list of timesheets
      * @return one pdf with all timesheets
      */
@@ -250,27 +255,17 @@ public class TimeSheetHandler {
         PDDocument totDoc = null;
 
         for (TimeSheet timesheet : timeSheets) {
-            File tmp =  createPdfFromTimeSheet(timesheet);
+            File tmp = createPdfFromTimeSheet(timesheet);
             try {
                 doc = PDDocument.load(tmp);
             } catch (Exception e) {
                 LOGGER.error("Loading error in createPdfFromAllTimeSheets");
             }
-            PDPageTree loopTree =  doc.getPages();
+            PDPageTree loopTree = doc.getPages();
             for (int i = 0; i < loopTree.getCount(); i++) {
                 totDoc.addPage(loopTree.get(i));
             }
         }
         return file;
-    }
-
-    public static void main(String[] args) {
-        MainControl.getInstance().startup(false);
-        TimeSheetHandler handler = TimeSheetHandler.getInstance();
-        //handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
-
-        handler.createPdfFromTimeSheet(TimeSheetDAO.getInstance().getTimeSheet(Month.DECEMBER, 2016, UserDAO.getInstance().findUser("tom")));
-
-        System.exit(0);
     }
 }
