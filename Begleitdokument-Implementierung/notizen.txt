@@ -1,4 +1,4 @@
-model
+﻿model
   --Administrator
   --Supervisor
   --Proletarier
@@ -47,6 +47,10 @@ model
     ++getLatestTimeRecord(user:User):TimeRecord
     ++getLatsetTimeSheet(user:User):TimeSheet
     TimeSheetExporter -> TimeSheetHandler
+      --createEmails
+      ++ -splitRecordList     %private methoden auch dazuzählen?
+      ++ -fillContent
+      [ +id:Long{readonly} +FONT:PDType1Font{static} +FONT_BOLD:PDType1Font{static} +sumHour:int{private} +sumMin:int{private}
     User
       ++ +String:realName
       ++ +User:supervisor
@@ -58,6 +62,7 @@ model
       ++findUserByEmail(email:String):List<User>
       ++saveRole(role:Role)
       ++getRoleByName(name:String):Role
+
     
     
     
