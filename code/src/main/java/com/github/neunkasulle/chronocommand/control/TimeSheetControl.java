@@ -172,10 +172,7 @@ public class TimeSheetControl {
     }
 
     public TimeRecord getLatestTimeRecord(User user) throws ChronoCommandException {
-        //TODO is this check necessary?
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
-            throw new ChronoCommandException(Reason.NOTPERMITTED);
-        }
+
         return TimeSheetDAO.getInstance().getLatestTimeRecord(user);
     }
 

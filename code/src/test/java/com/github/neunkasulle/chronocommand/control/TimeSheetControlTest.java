@@ -99,8 +99,8 @@ public class TimeSheetControlTest extends UeberTest{
         UserDAO userDAO = UserDAO.getInstance();
 
         TimeRecord timeRecord = null;
-            timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
-            timeRecord = timeSheetControl.getLatestTimeRecord(userDAO.findUser("tom"));
+        timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
+        timeRecord = timeSheetControl.getLatestTimeRecord(userDAO.findUser("tom"));
 
         assertTrue(timeRecord.getCategory() == null);
     }

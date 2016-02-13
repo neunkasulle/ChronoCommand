@@ -1,6 +1,5 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import com.github.neunkasulle.chronocommand.control.MainControl;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -19,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,9 +71,9 @@ public class TimeSheetHandler {
      * @return a pdf
      */
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
-        PDDocument pdfTimeSheet;
+        PDDocument pdfTimeSheet = null;
         File file;
-        FileOutputStream outputFile;
+        FileOutputStream outputFile = null;
         sumHour = 0;
         sumMin = 0;
         try {
@@ -83,11 +81,14 @@ public class TimeSheetHandler {
             outputFile = new FileOutputStream("Study.pdf");//TODO save different
             pdfTimeSheet = PDDocument.load(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error("File not found", e);
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("IO", e);
             return null;
+        }
+        catch (NullPointerException e) {
+            LOGGER.error("Nullptr", e);
         }
         try {
             PDPage page = pdfTimeSheet.getPage(0);
