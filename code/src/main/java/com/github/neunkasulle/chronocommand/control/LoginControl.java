@@ -38,7 +38,7 @@ public class LoginControl {
      * @param rememberMe when the session should be remembered this is true.
      * @throws ChronoCommandException if there are errors while trying to log in
      */
-    public void l6ogin(String username, String password, boolean rememberMe) throws ChronoCommandException {
+    public void login(String username, String password, boolean rememberMe) throws ChronoCommandException {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         try {
             SecurityUtils.getSubject().login(token);
