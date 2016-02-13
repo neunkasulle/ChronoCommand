@@ -22,16 +22,6 @@ public class UserManagementControl {
         return ourInstance;
     }
 
-
-
-    public void addUser(User user) throws ChronoCommandException {
-        throw new NotYetImplementedException();
-    }
-
-    public void setUserDisabled(boolean disabled) throws ChronoCommandException {
-        throw new NotYetImplementedException();
-    }
-
     public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
 
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
