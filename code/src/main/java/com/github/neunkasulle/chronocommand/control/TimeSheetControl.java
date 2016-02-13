@@ -395,7 +395,7 @@ public class TimeSheetControl {
 
         try {
             javax.mail.Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("reminder@chronocommand.eu", "Example.com Admin"));
+            msg.setFrom(new InternetAddress("reminder@chronocommand.eu", "ChronoCommand"));
             msg.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(recipient.getEmail(), recipient.getRealname()));
             msg.setSubject("ChronoCommand Reminder");
@@ -406,7 +406,7 @@ public class TimeSheetControl {
             LOGGER.error("Adress Exception", e);
         } catch (MessagingException e) {
             LOGGER.error("Messaging Exception", e);
-        }catch (java.io.UnsupportedEncodingException e) {
+        } catch (java.io.UnsupportedEncodingException e) {
             LOGGER.error("Unsupported encoding", e);
         }
     }

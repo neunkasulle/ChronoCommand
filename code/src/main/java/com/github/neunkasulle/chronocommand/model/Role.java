@@ -124,6 +124,11 @@ public class Role {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public boolean equals(Object o) {
         return (o instanceof Role) && id.equals(((Role) o).getId());
     }

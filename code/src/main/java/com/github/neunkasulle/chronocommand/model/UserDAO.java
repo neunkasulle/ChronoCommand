@@ -140,6 +140,16 @@ public class UserDAO{
         return (Role) role;
     }
 
+    public List<Role> getAllRoles() {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        List objlist = session.createCriteria(Role.class).list();
+        List<Role> roleList = new ArrayList<>(objlist.size());
+        for (Object obj : objlist) {
+            roleList.add((Role) obj);
+        }
+        return roleList;
+    }
+
     public void saveRole(Role role) {
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

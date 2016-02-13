@@ -20,6 +20,7 @@ package com.github.neunkasulle.chronocommand.security;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;

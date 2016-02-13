@@ -27,6 +27,7 @@ public class TimeRecordView extends BaseView {
 
     private final Grid recordList = new Grid();
 
+    private Label header;
     private Button startButton;
     private Button stopButton;
     private Label elapsedTime;
@@ -58,10 +59,12 @@ public class TimeRecordView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
-        final Label header = new Label("Zeit erfassen / Status: TODO");
+        header = new Label();
         header.setId("page-header");
         header.setSizeFull();
         contentPane.addComponent(header);
+
+        updateHeaderLabel();
 
         /* Headline */
 
@@ -99,7 +102,17 @@ public class TimeRecordView extends BaseView {
                 startButton.setVisible(false);
                 stopButton.setVisible(true);
                 elapsedTime.setVisible(true);
-                elapsedTime.setValue("since " + newestTimeRecord.getBeginning().getHour() + ":" + newestTimeRecord.getBeginning().getMinute());
+                String hour = String.valueOf(newestTimeRecord.getBeginning().getHour());
+                if (hour.length() == 1) {
+                    hour = "0" + hour;
+                }
+                String minute = String.valueOf(newestTimeRecord.getBeginning().getMinute());
+                if (minute.length() == 1) {
+                    minute = "0" + minute;
+                }
+                elapsedTime.setValue("since " + hour + ":" + minute);
+                categorySelection.select(newestTimeRecord.getCategory());
+                activitySelection.setValue(newestTimeRecord.getDescription());
             }
         } catch(ChronoCommandException e) {
             Notification.show("Failed to get latest time record: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
@@ -112,7 +125,15 @@ public class TimeRecordView extends BaseView {
                 startButton.setVisible(false);
                 stopButton.setVisible(true);
                 elapsedTime.setVisible(true);
-                elapsedTime.setValue("since " + newTimeRecord.getBeginning().getHour() + ":" + newTimeRecord.getBeginning().getMinute());
+                String hour = String.valueOf(newTimeRecord.getBeginning().getHour());
+                if (hour.length() == 1) {
+                    hour = "0" + hour;
+                }
+                String minute = String.valueOf(newTimeRecord.getBeginning().getMinute());
+                if (minute.length() == 1) {
+                    minute = "0" + minute;
+                }
+                elapsedTime.setValue("since " + hour + ":" + minute);
                 refreshTimeSheetList();
                 refreshTimeRecords();
             } catch(ChronoCommandException e) {
@@ -218,6 +239,9 @@ public class TimeRecordView extends BaseView {
     }
 
     private void refreshTimeRecords() {
+        if (timeRecordSelection == null) {
+            return;
+        }
         TimeSheet timeSheet = (TimeSheet) timeRecordSelection.getValue();
         final List<TimeRecord> records = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
         this.beanItemContainer.removeAllItems();
@@ -225,5 +249,25 @@ public class TimeRecordView extends BaseView {
         this.form.setVisible(false);
     }
 
+    private void updateHeaderLabel() {
+        if (timeRecordSelection == null) {
+            header.setValue("");
+            header.setVisible(false);
+            return;
+        }
+        TimeSheet timeSheet = (TimeSheet) timeRecordSelection.getValue();
+        if (timeSheet == null) {
+            header.setValue("");
+            header.setVisible(false);
+            return;
+        }
 
+        String headerValue = "";
+        if (timeSheet.getState() == TimeSheetState.UNLOCKED) {
+            headerValue = "Record time / ";
+        }
+        headerValue += "Status: " + timeSheet.getState().toString();
+        header.setValue(headerValue);
+        header.setVisible(true);
+    }
 }

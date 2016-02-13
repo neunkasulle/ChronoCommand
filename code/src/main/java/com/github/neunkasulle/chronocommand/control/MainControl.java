@@ -113,22 +113,22 @@ public class MainControl {
 
                 User matt = new User(proletarier, "matt", "matt@example.com", "matt", "Matt", tom, 10);
                 UserDAO.getInstance().saveUser(matt);
+
+                TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
+                TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
+
+                String taetigkeit = "codework for PSE";
+                TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 1, 11, 30), LocalDateTime.of(2016, 1, 1, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
+                TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0), LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
+
+                try {
+                    TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
+                    TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
+                } catch (ChronoCommandException e) {
+                    LOGGER.error("Save time record failed", e);
+                }
             } catch (ChronoCommandException e) {
                 LOGGER.error("Saving users failed: " + e.getReason().toString());
-            }
-
-            TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
-            TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
-
-            String taetigkeit = "codework for PSE";
-            TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 1, 11, 30), LocalDateTime.of(2016, 1, 1, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
-            TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0), LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
-
-            try {
-                TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
-                TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
-            } catch (ChronoCommandException e) {
-                LOGGER.error("Save time record failed", e);
             }
             //stop deleting
         }

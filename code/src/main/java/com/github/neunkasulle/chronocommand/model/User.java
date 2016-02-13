@@ -22,7 +22,7 @@ import java.util.Set;
 @Table(name="cc_users")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
-    private final static int STRINGLENGTH = 254;
+    private static final int STRINGLENGTH = 254;
 
     @Id
     @GeneratedValue
@@ -45,7 +45,7 @@ public class User {
 
     @Basic(optional=false)
     @Column(length=511)
-    protected Sha512Hash password;
+    protected String password;
 
     @ManyToMany
     @JoinTable(name="cc_users_roles")
@@ -66,7 +66,7 @@ public class User {
     private int hoursPerMonth;
 
     @Basic
-    private ByteSource salt;
+    private String salt;
 
     public User() {
         // hibernate needs this
@@ -83,8 +83,6 @@ public class User {
 
         setEmail(email);
 
-        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
-        salt = rng.nextBytes();
         setPassword(password);
 
         setRealname(realname);
@@ -100,7 +98,7 @@ public class User {
     }
 
     public ByteSource getSalt() {
-        return salt;
+        return ByteSource.Util.bytes(salt);
     }
 
     /**
@@ -148,7 +146,7 @@ public class User {
 
     public void setEmail(String email) throws ChronoCommandException {
 
-        if(email.matches("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")) {
+        if(!email.matches("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")) {
             throw new ChronoCommandException(Reason.INVALIDEMAIL);
         }
         this.email = email;
@@ -161,14 +159,16 @@ public class User {
      */
 
     public Sha512Hash getPassword() {
-        return password;
+        return Sha512Hash.fromBase64String(password);
     }
 
     public void setPassword(String password) throws ChronoCommandException {
         if (password.isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        this.password = new Sha512Hash(password, salt, 1024);
+        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+        this.salt = rng.nextBytes().toBase64();
+        this.password = new Sha512Hash(password, salt, 1024).toBase64();
     }
 
 
@@ -223,6 +223,11 @@ public class User {
             throw new  ChronoCommandException(Reason.INVALIDNUMBER);
         }
         this.hoursPerMonth = hoursPerMonth;
+    }
+
+    @Override
+    public String toString() {
+        return realname + " <" + email + ">";
     }
 
     @Override

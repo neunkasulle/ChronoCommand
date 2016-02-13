@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import java.io.File;
 import java.time.LocalDateTime;
@@ -149,7 +150,7 @@ public class TimeSheetControlTest extends UeberTest{
     }
 
     @Test
-    public void printTimeSheet() {
+    public void printTimeSheet() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
 
@@ -159,6 +160,7 @@ public class TimeSheetControlTest extends UeberTest{
         assertTrue(file != null);
     }
 
+    @Ignore
     @Test
     public void emailtest() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();

@@ -49,7 +49,10 @@ public class TimeSheet {
         // hibernate needs this
     }
 
-    public TimeSheet(User user, Month month, int year) {
+    public TimeSheet(User user, Month month, int year) throws ChronoCommandException {
+        if (user == null) {
+            throw new ChronoCommandException(Reason.NOSUCHUSER);
+        }
         this.user = user;
         this.month = month;
         this.year = year;

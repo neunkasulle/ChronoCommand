@@ -70,13 +70,6 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 //TODO: fill me!
                 /* Betreuer */
 
-                final HorizontalLayout supervisorPane = new HorizontalLayout();
-                supervisorPane.setSizeFull();
-                extraPane.addComponent(supervisorPane);
-
-                /*supervisorPane.addComponent(new Label("Betreuer"));
-                supervisorPane.addComponent(new Label("Betreuer1"));*/
-
                 final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
                 newTimeRecordButton.addClickListener(event -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
@@ -110,7 +103,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             @Override
             public void fillRoleSpecificContent(final Layout extraPane, ComboBox timeRecordSelection) {
                 //TODO: fill me!
-                final HorizontalLayout adminToSupervisorPane = new HorizontalLayout();
+                /*final HorizontalLayout adminToSupervisorPane = new HorizontalLayout();
                 adminToSupervisorPane.setSizeFull();
                 extraPane.addComponent(adminToSupervisorPane);
                 adminToSupervisorPane.addComponent(new Label("Zu Betreuersicht wechseln:"));
@@ -121,10 +114,10 @@ public abstract class BaseView extends HorizontalLayout implements View {
                     //TODO : Do sonething usefoll here
                 });
                 supervisorSelection.setInputPrompt("Betreuer auswählen");
-                extraPane.addComponent(supervisorSelection);
+                extraPane.addComponent(supervisorSelection);*/
 
 
-                final HorizontalLayout accountManagementPane = new HorizontalLayout();
+                /*final HorizontalLayout accountManagementPane = new HorizontalLayout();
                 accountManagementPane.setSizeFull();
                 extraPane.addComponent(accountManagementPane);
                 accountManagementPane.addComponent(new Label("Account Verwalten:"));
@@ -132,23 +125,40 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 final ComboBox accountManagementSelection = new ComboBox(null, Arrays.asList("Neuen Account zulegen", "Account löschen", "Account bearbeiten"));
                 accountManagementSelection.setSizeFull();
                 accountManagementSelection.setInputPrompt("Operation auswählen");
-                extraPane.addComponent(accountManagementSelection);
+                extraPane.addComponent(accountManagementSelection);*/
 
-                final Button listOfAllProletarierButton = new Button("Alle HIWIs anzeigen");
+                final Button createNewAccount = new Button("Create new account");
+                createNewAccount.setSizeFull();
+                createNewAccount.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.CREATEUSERVIEW));
+                extraPane.addComponent(createNewAccount);
+
+                /*final Button editAccount = new Button("Edit account");
+                editAccount.setSizeFull();
+                editAccount.addClickListener(event -> {
+                    //TODO
+                });
+                extraPane.addComponent(editAccount);
+
+                final Button deleteAccount = new Button("Delete account");
+                deleteAccount.setSizeFull();
+                deleteAccount.addClickListener(event -> {
+                    //TODO
+                });
+                extraPane.addComponent(deleteAccount);*/
+
+                final Button listOfAllProletarierButton = new Button("Show all HIWIs");
                 listOfAllProletarierButton.setSizeFull();
                 listOfAllProletarierButton.addClickListener(event -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfAllProletarierButton);
-                listOfAllProletarierButton.setSizeFull();
 
-                final Button listOfAllSupervisorButton = new Button("Alle Betreuer anzeigen");
+                final Button listOfAllSupervisorButton = new Button("Show all supervisors");
                 listOfAllSupervisorButton.setSizeFull();
                 listOfAllSupervisorButton.addClickListener(event -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
                 extraPane.addComponent(listOfAllSupervisorButton);
-                listOfAllSupervisorButton.setSizeFull();
 
             }
 

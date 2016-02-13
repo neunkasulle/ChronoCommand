@@ -113,4 +113,12 @@ public class UserManagementControl {
         User user = new User(admin, username.trim(), email.trim(), password, realname.trim(), null, 0);
         UserDAO.getInstance().saveUser(user);
     }
+
+    public List<Role> getAllRoles() {
+        return UserDAO.getInstance().getAllRoles();
+    }
+
+    public Role getRoleByName(String roleName) {
+        return UserDAO.getInstance().getRoleByName(roleName);
+    }
 }
