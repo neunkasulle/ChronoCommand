@@ -115,7 +115,7 @@ public class User {
         if(username.length() > STRINGLENGTH) {
             throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
-        if(username.equals(username.trim())) {
+        if(trimFraud(username)) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.username = username;
@@ -134,11 +134,10 @@ public class User {
         if (realname == null) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        String realnameTrim = realname.trim();
-        if (realnameTrim.isEmpty()) {
+        if (realname.trim().isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        if (realname.equals(realnameTrim)) {
+        if (trimFraud(realname)) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.realname = realname;
@@ -170,7 +169,7 @@ public class User {
         if (password.trim().isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        if (password.equals(password.trim())) {
+        if (trimFraud(password)) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         RandomNumberGenerator rng = new SecureRandomNumberGenerator();
@@ -254,5 +253,12 @@ public class User {
             }
         }
         return null;
+    }
+
+    public boolean trimFraud(String string) {
+        if(string.trim().equals(string)) {
+            return true;
+        }
+        return false;
     }
 }

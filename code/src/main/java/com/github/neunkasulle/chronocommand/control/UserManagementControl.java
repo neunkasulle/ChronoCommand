@@ -33,9 +33,7 @@ public class UserManagementControl {
     }
 
     public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
-        username = username.trim();
-        realname = realname.trim();
-        email = email.trim();
+
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
             if (!username.isEmpty() && !user.getUsername().equals(username)) {
                 if (UserDAO.getInstance().findUser(username) != null) {
@@ -43,18 +41,16 @@ public class UserManagementControl {
                 }
                 user.setUsername(username);
             }
-            if (!realname.isEmpty()) {
-                user.setRealname(realname);
+
+            user.setRealname(realname);
+
+            if (UserDAO.getInstance().findUserByEmail(email) != null) {
+                throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
             }
-            if (!email.isEmpty() && !user.getEmail().equals(email)) {
-                if (UserDAO.getInstance().findUserByEmail(email) != null) {
-                    throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
-                }
-                user.setEmail(email);
-            }
-            if (!password.isEmpty()) {
-                user.setPassword(password);
-            }
+            user.setEmail(email);
+
+            user.setPassword(password);
+
             UserDAO.getInstance().saveUser(user);
         } else {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
