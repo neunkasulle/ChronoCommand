@@ -135,11 +135,9 @@ public class User {
     }
 
     public void setEmail(String email) throws ChronoCommandException {
-        if ( !email.contains("@") || !email.contains(".") ) {
+
+        if(email.matches("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")) {
             throw new ChronoCommandException(Reason.INVALIDEMAIL);
-        }
-        if(email.length() > STRINGLENGTH) {
-            throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
         this.email = email;
     }
