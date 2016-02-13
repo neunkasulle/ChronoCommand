@@ -70,8 +70,76 @@
       ++saveRole(role:Role)
       ++getRoleByName(name:String):Role
 )
-
-    
+control
+  --Control
+  CreateUserControl
+      createUser(...) -> (userType:Role, username:String, realname:String, email:String, passwort:String, supervisor:User, hoursPerMonth:int)
+      --showErrorMessage
+  LoginControl
+      ++logout
+      ++isLoggedIn
+      ++getCurrentUser
+      --hash
+  MainControl
+      ++isInitialStartup():bool
+  ++MonthlyReminder
+  RegulationControl
+      --checkTimeSheet(timeSheet:TimeSheet)
+      checkTimeSheets() -> (List<TimeSheet>)
+      --checkHolidays(timeSheets:List):Stack
+      --checkRestricted(timeSheets:List):Stack
+      --checkTimeSheetRestrictions(timeSheets:List):Stack
+      --checkTimeSheetLimits(timeSheets:List):Stack
+      --generalWarnings(userStack:Stack)
+      --readInRegulation(file:File):Regulations
+      [ -localRegulations:Regulations, +warnedUsers:Deque<User> ||]
+  ReminderControl
+  Timer -> SchedulerHandler
+      ++intantiateSched
+      ++scheduleAll
+      ++shutdownSched
+      [ +sched:Scheduler ||]
+  StatisticControl
+  TimeSheetControl
+      newTimeRecord():bool -> (user:User):TimeRecord
+      newTimeRecord(...) -> (category:Category, description:String, user:User):TimeRecord
+      closeTimeRecord():bool -> (user:User):TimeRecord
+      closeTimeRecord(...) -> (category:Category, description:String, user:User):TimeRecord
+      ++getLatestTimeRecord(user:User):TimeRecord
+      addTimeToTimeSheet(time:Zeit) -> (beginn:LocalDateTime, end:LocalDateTime, category:Category, description:String, user:User)
+      --getSupervisedTimeSheets(month:int, year:int)
+      lockTimeSheet(...):bool -> (timeSheet:TimeSheet, user:User)
+      unlockTimeSheet(...):bool -> (timeSheet:TimeSheet, user:User)
+      approveTimeSheet(...):bool -> (timeSheet:TimeSheet, user:User)
+      --filtersChanged
+      printCheckedTimeSheets(month:int, year:int):pdf -> (month:int):File
+      printAllTimeSheets(month:int, year:int):pdf -> (month:int):File
+      printTimeSheet(timeSheet:TimeSheet):pdf -> :File
+      printAllTimeSheets(proletarier:Proletarier):pdf -> (user:User):File
+      ++getAllCategories:List<Category>
+      getTimeSheet(month:int, year:int):TimeSheet -> (month:int):List<TimeSheet>
+      ++getTimeSheetsFromUser(user:User):List<TimeSheet>
+      ++getCurrentMinutes(timeRecords:TimeRecords[]):int
+      ++editTimeRecord(timeRecord:TimeRecord)
+      ++assMessageToTimeSheet(timeSheet:TimeSheet, message:Message)
+      ++getMessageFromTimeSheet(timeSheet:TimeSheet):List<Message>
+      ++sendEmail(recipient:User, message:String
+  UserManagementControl
+      adddUser() -> (user:User)
+      ++setUserDisabled(bool)
+      --createUser(userType:Role, name:String, email:String, passwort:String, supervisor:Supervisor, hoursPerMonth:int):bool
+      --removeUser
+      editUser() -> (user:User, username:String, realname:String, email:String, passwort:String)
+      getUser(sessionID:int):User -> findUser(username:String):User
+      ++getUserByRole(role:Role):List<User>
+      ++getUsersBySupervisor(supervisor:User):List<User>
+      ++getAllUsers:List<User>
+      ++createInitialAdministrator(username:String, email:String, password:String, realname:String)
+      ++getAllRoles:List<Role>
+      ++getRoleByName(roleName:String):Role
+  ++WeeklyMailJob
+      ++execute
+      ++checkUserLastrecord:List<User>
     
     
     
