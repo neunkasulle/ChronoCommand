@@ -42,12 +42,12 @@ Die Sequenzdiagramme aus dem Entwurfen haben sich wie folgt verändert:
    \caption{Neue Login Sequenz}
 \end{figure}
 
-\subsection{Account erstellungs sequenz}
+\subsection{Account erstellungs Sequenz}
 
 \begin{figure}
   \centering
     \includegraphics[width=\linewidth]{Create-user-account.svg}
-   \caption{Alte Login Sequenz}
+   \caption{alte Benutzererstellungssequenz}
 \end{figure}
 
 \paragraph{Veränderungen}
@@ -59,5 +59,30 @@ Die Sequenzdiagramme aus dem Entwurfen haben sich wie folgt verändert:
 \begin{figure}
   \centering
     \includegraphics[width=\linewidth]{Create-user-account-new.svg}
-   \caption{Alte Login Sequenz}
+   \caption{Neue Benutzererstellungssequenz}
+\end{figure}
+
+\subsection{Neue Zeiterfassung - Sequenz}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{new-Time-record.svg}
+   \caption{Alte Zeiterfassungssequenz}
+\end{figure}
+
+\paragraph{Veränderungen}
+\begin{itemize}
+    \item Der Ablauf wurde in einklag mit Hibernate gebracht.
+    \begin{itemize}
+        \item Die TimeSheetControl kommuniziert nurnoch mit dem TimeSheetDAO
+        \item TimeRecords werden erstellt und gespeichert, sobald die Zeiterfassung gestartet wurde\(erhöhte persistenz\)
+        \item Wird der Tiem record geschlossen wird an dem jüngsten TimeRecord eine Endzeit hinzugefügt.
+    \end{itemize}
+    \item Das durchreichen von Wahrheitswerten wurde durch internes error handling ersetzt.
+\end{itemize}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{new-Time-record-new.svg}
+   \caption{Neue Zeiterfassungssequenz}
 \end{figure}
