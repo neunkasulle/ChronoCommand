@@ -1,12 +1,10 @@
 package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Set;
 
 /**
@@ -33,14 +31,13 @@ public class Role {
 
     @Basic(optional = false)
     @Column(length = 100)
-    @Index(name = "idx_roles_name")
     private String name;
 
-    @Basic//(optional = false)
+    @Basic(optional = false)
     @Column(length = 255)
     private String description;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "cc_roles_permissions")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<String> permissions;
@@ -55,8 +52,9 @@ public class Role {
      * Contructs a new role, without permissions
      * @param name the name of the new role
      */
-    public Role(String name, boolean primaryRole) {
+    public Role(String name, String description, boolean primaryRole) {
         this.name = name;
+        this.description = description;
         this.primaryRole = primaryRole;
     }
 
@@ -121,6 +119,11 @@ public class Role {
      */
     public boolean isPrimaryRole() {
         return primaryRole;
+    }
+
+    @Override
+    public String toString() {
+        return description;
     }
 
     @Override

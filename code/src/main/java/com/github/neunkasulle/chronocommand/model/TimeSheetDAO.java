@@ -1,7 +1,8 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.hibernate.*;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -13,11 +14,14 @@ import java.util.List;
 
 /**
  * Created by jannis on 19.01.16.
+ * Data acess object for time sheets
  */
 public class TimeSheetDAO {
     private static final TimeSheetDAO instance = new TimeSheetDAO();
 
-    private TimeSheetDAO() {}
+    private TimeSheetDAO() {
+
+    }
 
     public static TimeSheetDAO getInstance() {
         return instance;

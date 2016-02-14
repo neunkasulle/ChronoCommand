@@ -1,13 +1,15 @@
 package com.github.neunkasulle.chronocommand.view.forms;
 
-import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.model.Category;
-import com.github.neunkasulle.chronocommand.model.TimeRecord;
+import com.github.neunkasulle.chronocommand.control.MainControl;
+import com.github.neunkasulle.chronocommand.control.UserManagementControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
 
 import java.util.List;
 
@@ -15,13 +17,24 @@ import java.util.List;
  * Created by Ming-Samsung on 2016/1/31.
  */
 public class AdminCtrlForm extends FormLayout {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminCtrlForm.class);
 
-    private Button toSupervisor = new Button("Zur Betreuer-Ansicht");
-    private Button editUser = new Button("Benutzerdaten bearbeiten");
-    private Button deleteUser = new Button("Benutzerdaten Löschen");
-    private Button toTimeSheets = new Button("Stundenzettel anzeigen");
-    private Button sendMessage = new Button("Nachricht senden");
-    private Button cancel = new Button("Abbrechen");
+    private VerticalLayout actionLayout = new VerticalLayout();
+    //private Button btnToSupervisor = new Button("Zur Betreuer-Ansicht");
+    private Button btnEditUser = new Button("Edit user");
+    private Button btnToTimeSheets = new Button("Show timesheets");
+    private Button btnCancel = new Button("Cancel");
+
+    private VerticalLayout editUserLayout = new VerticalLayout();
+    //private ComboBox selectRole;
+    private ComboBox selectSupervisor;
+    private TextField hoursPerMonth;
+    private TextField usernameInputField;
+    private TextField realnameInputField;
+    private TextField emailInputField;
+    private PasswordField passwordFirstTimeInputField;
+    private PasswordField passwordSecondTimeInputField;
+    private CheckBox disable;
 
     private User object;
 
@@ -37,25 +50,184 @@ public class AdminCtrlForm extends FormLayout {
 
     public AdminCtrlForm(final Button.ClickListener toSuperviserOperation,
                          final Button.ClickListener editUserOperation,
-                         final Button.ClickListener  deleteUserOperation,
                          final Button.ClickListener toTimeSheetsOperation,
-                         final Button.ClickListener sendMessageOperation,
                          final Button.ClickListener cancelOperation) {
-        this.toSupervisor.addClickListener(toSuperviserOperation);
-        this.editUser.addClickListener(editUserOperation);
-        this.deleteUser.addClickListener(deleteUserOperation);
-        this.toTimeSheets.addClickListener(toTimeSheetsOperation);
-        this.sendMessage.addClickListener(sendMessageOperation);
-        this.cancel.addClickListener(cancelOperation);
+        //this.btnToSupervisor.addClickListener(toSuperviserOperation);
+        this.btnEditUser.addClickListener(event -> createEditUser());
+        this.btnToTimeSheets.addClickListener(toTimeSheetsOperation);
+        this.btnCancel.addClickListener(cancelOperation);
+        actionLayout.setSpacing(true);
+        actionLayout.addComponents(btnEditUser, btnToTimeSheets, btnCancel);
 
-        addComponents(toSupervisor, editUser, deleteUser, toTimeSheets, sendMessage, cancel);
+        editUserLayout.setVisible(false);
+
+        addComponents(actionLayout, editUserLayout);
+    }
+
+    private void createEditUser() {
+        clearUserEdit();
+        editUserLayout.setVisible(true);
+        actionLayout.setVisible(false);
+
+        editUserLayout.setSpacing(true);
+
+        // TODO do we want to allow changing the role?
+        /*selectRole = new ComboBox("Role:");
+        List<Role> roleList = UserManagementControl.getInstance().getAllRoles();
+        for (Role role : roleList) {
+            if (role.isPrimaryRole()) {
+                selectRole.addItem(role);
+            }
+        }
+        selectRole.select(object.getPrimaryRole());
+        editUserLayout.addComponent(selectRole);*/
+
+        selectSupervisor = new ComboBox("Supervisor:");
+        try {
+            List<User> supervisorList = UserManagementControl.getInstance().getUsersByRole(UserManagementControl.getInstance().getRoleByName(MainControl.ROLE_SUPERVISOR));
+            selectSupervisor.addItems(supervisorList);
+        } catch (ChronoCommandException e) {
+            Notification.show("Failed to get supervisors: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+        }
+        selectSupervisor.setVisible(false);
+        selectSupervisor.select(object.getSupervisor());
+        editUserLayout.addComponent(selectSupervisor);
+
+        /*selectRole.addValueChangeListener(event1 -> {
+            if (UserManagementControl.getInstance().getRoleByName(MainControl.ROLE_PROLETARIER).equals(selectRole.getValue())) {
+                selectSupervisor.setVisible(true);
+                hoursPerMonth.setVisible(true);
+            } else if (UserManagementControl.getInstance().getRoleByName(MainControl.ROLE_SUPERVISOR).equals(selectRole.getValue())) {
+                selectSupervisor.setVisible(false);
+                hoursPerMonth.setVisible(true);
+            } else {
+                selectSupervisor.setVisible(false);
+                hoursPerMonth.setVisible(false);
+            }
+        });*/
+
+        /* Input Area */
+
+        hoursPerMonth = new TextField("Hours per Month:");
+        hoursPerMonth.setSizeFull();
+        hoursPerMonth.setImmediate(true);
+        hoursPerMonth.setVisible(false);
+        hoursPerMonth.setValue(String.valueOf(object.getHoursPerMonth()));
+        editUserLayout.addComponent(hoursPerMonth);
+
+        if (object.isPermitted(Role.PERM_ADMINISTRATOR)) {
+            selectSupervisor.setVisible(false);
+            hoursPerMonth.setVisible(false);
+        } else if (object.isPermitted(Role.PERM_SUPERVISOR)) {
+            selectSupervisor.setVisible(false);
+            hoursPerMonth.setVisible(true);
+        } else {
+            selectSupervisor.setVisible(true);
+            hoursPerMonth.setVisible(true);
+        }
+
+        //Username Input
+        usernameInputField = new TextField("Username:");
+        usernameInputField.setSizeFull();
+        usernameInputField.setImmediate(true);
+        usernameInputField.setMaxLength(100);
+        usernameInputField.setValue(object.getUsername());
+        editUserLayout.addComponent(usernameInputField);
+
+        //Name Input
+        realnameInputField = new TextField("Realname:");
+        realnameInputField.setSizeFull();
+        realnameInputField.setImmediate(true);
+        realnameInputField.setMaxLength(255);
+        realnameInputField.setValue(object.getRealname());
+        editUserLayout.addComponent(realnameInputField);
+
+        //EMail Input
+        emailInputField = new TextField("Email:");
+        emailInputField.setSizeFull();
+        emailInputField.setImmediate(true);
+        emailInputField.setMaxLength(255);
+        emailInputField.setValue(object.getEmail());
+        editUserLayout.addComponent(emailInputField);
+
+        //PW 1st Input
+        passwordFirstTimeInputField = new PasswordField("Password:");
+        passwordFirstTimeInputField.setImmediate(true);
+        passwordFirstTimeInputField.setMaxLength(255);
+        editUserLayout.addComponent(passwordFirstTimeInputField);
+
+        //PW 2nt Input
+        passwordSecondTimeInputField = new PasswordField("Repeat password:");
+        passwordSecondTimeInputField.setImmediate(true);
+        passwordSecondTimeInputField.setMaxLength(255);
+        editUserLayout.addComponent(passwordSecondTimeInputField);
+
+        disable = new CheckBox("Disable user");
+        disable.setImmediate(true);
+        disable.setValue(object.isDisabled());
+        disable.addValueChangeListener(event -> {
+            if (disable.getValue()) {
+                ConfirmDialog.show(getUI(), "Disable user?", "Are you sure you want to disable this user?", "Yes", "No", event1 -> {
+                    if (event1.isCanceled()) {
+                        disable.setValue(false);
+                    }
+                });
+            }
+        });
+        editUserLayout.addComponent(disable);
+
+
+        final HorizontalLayout buttonBar = new HorizontalLayout();
+        buttonBar.setSizeFull();
+        buttonBar.setSpacing(true);
+        editUserLayout.addComponent(buttonBar);
+
+
+        //Create New User Button
+        final Button createNewUserButton = new Button("Save");
+        createNewUserButton.addClickListener(event1 -> {
+            int hoursPerMonth_int;
+            try {
+                hoursPerMonth_int = Integer.parseInt(hoursPerMonth.getValue());
+            } catch (NumberFormatException e) {
+                Notification.show("Error: Hours per month is not an integer!", Notification.Type.WARNING_MESSAGE);
+                hoursPerMonth.selectAll();
+                return;
+            }
+            if (!passwordFirstTimeInputField.getValue().equals(passwordSecondTimeInputField.getValue())) {
+                Notification.show("Error: Passwords do not match!", Notification.Type.WARNING_MESSAGE);
+                passwordFirstTimeInputField.selectAll();
+                return;
+            }
+            try {
+                UserManagementControl.getInstance().editUser(object, usernameInputField.getValue(), realnameInputField.getValue(),
+                        emailInputField.getValue(), passwordFirstTimeInputField.getValue(), (User) selectSupervisor.getValue(), hoursPerMonth_int, disable.getValue());
+                clearUserEdit();
+            } catch (ChronoCommandException e) {
+                LOGGER.warn("Failed to save user: " + e.getReason().toString(), e);
+                Notification.show("Failed to save user: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+            }
+        });
+        buttonBar.addComponent(createNewUserButton);
+
+        final Button cancelButton = new Button("Cancel");
+        cancelButton.addClickListener(event1 -> {
+            clearUserEdit();
+        });
+        buttonBar.addComponent(cancelButton);
+    }
+
+    private void clearUserEdit() {
+        editUserLayout.removeAllComponents();
+        editUserLayout.setVisible(false);
+        actionLayout.setVisible(true);
     }
 
     public void edit(final User object) {
         this.object = object;
         if (object != null) {
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(object, this);
-            toSupervisor.focus();
+            //toSupervisor.focus();
         }
         setVisible(object != null);
     }

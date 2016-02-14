@@ -26,10 +26,10 @@ public class AdminView extends BaseView {
     private final Grid recordList = new Grid();
 
     private final AdminCtrlForm form = new AdminCtrlForm(e -> {
+        // supervisor
         getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
     }, e -> {
-        getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
-    }, e -> {
+        // edit
         ConfirmDialog.show(getUI(), "Möchten sie den Benutzer wirklich löschen?",
                 dialog -> {
                     if (dialog.isConfirmed()) {
@@ -40,11 +40,12 @@ public class AdminView extends BaseView {
                     }
                 }
         );
+        getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
     }, e -> {
+        // show timesheets
         getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
     }, e -> {
-
-    }, e -> {
+        // cancel
         this.recordList.select(null);
         refreshContacts();
     });
@@ -79,7 +80,7 @@ public class AdminView extends BaseView {
         recordList.setSizeFull();
 
         //Add generated columns
-        gpcontainer.addGeneratedProperty("roleSumary", new PropertyValueGenerator<String>() {
+        gpcontainer.addGeneratedProperty("roleSummary", new PropertyValueGenerator<String>() {
             @Override
             public String getValue(final Item item, final Object itemId,
                                    final Object propertyId) {
@@ -89,7 +90,7 @@ public class AdminView extends BaseView {
                 final StringBuilder ruleStr = new StringBuilder();
 
                 for (final Role role : roles) {
-                    ruleStr.append(role.getName());
+                    ruleStr.append(role.getDescription());
                     ruleStr.append(" ");
                 }
 
@@ -102,21 +103,15 @@ public class AdminView extends BaseView {
             }
         });
 
-        //Remove unused columns
-        recordList.removeColumn("id");
-        recordList.removeColumn("password");
-        recordList.removeColumn("roles");
-        recordList.removeColumn("mailFlag");
-        recordList.removeColumn("disabled");
-        recordList.removeColumn("supervisor");
+        recordList.setColumns("username", "realname", "email", "hoursPerMonth", "roleSummary", "supervisor");
 
-        recordList.setColumnOrder("username", "realname", "supervisor.realname", "email", "roleSumary", "hoursPerMonth");
-        recordList.getDefaultHeaderRow().getCell("username").setHtml("Benutzername");
+        recordList.setColumnOrder("username", "realname", "email", "hoursPerMonth", "roleSummary", "supervisor");
+        recordList.getDefaultHeaderRow().getCell("username").setHtml("Username");
         recordList.getDefaultHeaderRow().getCell("realname").setHtml("Name");
-        recordList.getDefaultHeaderRow().getCell("supervisor.realname").setHtml("Betreuer");
-        recordList.getDefaultHeaderRow().getCell("email").setHtml("E-Mail");
-        recordList.getDefaultHeaderRow().getCell("roleSumary").setHtml("Rollen");
-        recordList.getDefaultHeaderRow().getCell("hoursPerMonth").setHtml("Stunden / Woche");
+        recordList.getDefaultHeaderRow().getCell("email").setHtml("Email");
+        recordList.getDefaultHeaderRow().getCell("hoursPerMonth").setHtml("Hours per month");
+        recordList.getDefaultHeaderRow().getCell("roleSummary").setHtml("Roles");
+        recordList.getDefaultHeaderRow().getCell("supervisor").setHtml("Supervisor");
 
         // The action form
 
@@ -141,5 +136,4 @@ public class AdminView extends BaseView {
         this.beanItemContainer.addAll(userList);
         this.form.setVisible(false);
     }
-
 }

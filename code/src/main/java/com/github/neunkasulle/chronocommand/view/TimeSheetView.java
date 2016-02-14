@@ -2,7 +2,8 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.model.*;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.TimeSheet;
 import com.github.neunkasulle.chronocommand.view.forms.TimeSheetForm;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;

@@ -6,10 +6,8 @@ import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.model.UserDAO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,19 +43,15 @@ public class LoginControl {
             SecurityUtils.getSubject().login(token);
         } catch (AuthenticationException e) {
             LOGGER.error("Failed Login", e);
+            if (e.getCause() instanceof ChronoCommandException) {
+                throw (ChronoCommandException) e.getCause();
+            }
             throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
         LOGGER.info(username + " logged in successfully");
 
     }
 
-    /**
-     * Sends a password reset mail when invoked
-     */
-    public void lostPassword() {
-        throw new NotYetImplementedException();
-
-    }
 
     /**
      * logs out the an active user

@@ -1,13 +1,13 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha512Hash;
-import org.hibernate.annotations.*;
+import org.apache.shiro.util.ByteSource;
 import org.hibernate.annotations.Cache;
-import org.hibernate.internal.util.compare.EqualsHelper;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +20,7 @@ import java.util.Set;
 @Table(name="cc_users")
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User {
-    private final static int STRINGLENGTH = 254;
+    private static final int STRINGLENGTH = 254;
 
     @Id
     @GeneratedValue
@@ -43,9 +43,9 @@ public class User {
 
     @Basic(optional=false)
     @Column(length=511)
-    protected Sha512Hash password;
+    protected String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="cc_users_roles")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     protected Set<Role> roles;
@@ -63,12 +63,16 @@ public class User {
     @Basic
     private int hoursPerMonth;
 
+    @Basic
+    private String salt;
+
     public User() {
         // hibernate needs this
     }
 
     public User(Role userType, String username, String email, String password, String realname, User supervisor,
                 int hoursPerMonth) throws ChronoCommandException {
+
         this.roles = new HashSet<>();
 
         this.roles.add(userType);
@@ -91,6 +95,10 @@ public class User {
         return id;
     }
 
+    public ByteSource getSalt() {
+        return ByteSource.Util.bytes(salt);
+    }
+
     /**
      * Returns the username associated with this user account;
      *
@@ -106,6 +114,9 @@ public class User {
         }
         if(username.length() > STRINGLENGTH) {
             throw new ChronoCommandException(Reason.STRINGTOOLONG);
+        }
+        if(trimFraud(username)) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.username = username;
     }
@@ -123,8 +134,10 @@ public class User {
         if (realname == null) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        realname = realname.trim();
-        if (realname.isEmpty()) {
+        if (realname.trim().isEmpty()) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
+        if (trimFraud(realname)) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         this.realname = realname;
@@ -135,11 +148,9 @@ public class User {
     }
 
     public void setEmail(String email) throws ChronoCommandException {
-        if ( !email.contains("@") || !email.contains(".") ) {
+
+        if(!email.matches("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")) {
             throw new ChronoCommandException(Reason.INVALIDEMAIL);
-        }
-        if(email.length() > STRINGLENGTH) {
-            throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
         this.email = email;
     }
@@ -151,14 +162,19 @@ public class User {
      */
 
     public Sha512Hash getPassword() {
-        return password;
+        return Sha512Hash.fromBase64String(password);
     }
 
     public void setPassword(String password) throws ChronoCommandException {
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
-        this.password = new Sha512Hash(password, null, 1024);
+        if (trimFraud(password)) {
+            throw new ChronoCommandException(Reason.INVALIDSTRING);
+        }
+        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+        this.salt = rng.nextBytes().toBase64();
+        this.password = new Sha512Hash(password, salt, 1024).toBase64();
     }
 
 
@@ -216,6 +232,11 @@ public class User {
     }
 
     @Override
+    public String toString() {
+        return realname + " <" + email + ">";
+    }
+
+    @Override
     public boolean equals(Object o) {
         return (o instanceof User) && id.equals(((User) o).getId());
     }
@@ -232,5 +253,12 @@ public class User {
             }
         }
         return null;
+    }
+
+    public boolean trimFraud(String string) {
+        if (string.trim().equals(string)) {
+            return false;
+        }
+        return true;
     }
 }

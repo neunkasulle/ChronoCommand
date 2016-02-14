@@ -5,11 +5,9 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.quartz.JobBuilder.*;
-import static org.quartz.SimpleScheduleBuilder.*;
-import static org.quartz.TriggerBuilder.*;
-import static org.quartz.DateBuilder.*;
-import static org.quartz.CronScheduleBuilder.*;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
  * Created by Dav on 26.01.2016.
@@ -18,23 +16,34 @@ import static org.quartz.CronScheduleBuilder.*;
 public class SchedulerHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerHandler.class);
 
-    private static Scheduler intantiateSched() throws SchedulerException {
-        SchedulerFactory schedFact = new StdSchedulerFactory();
-        Scheduler sched = schedFact.getScheduler();
-        return sched;
+    private static final SchedulerHandler ourInstance = new SchedulerHandler();
+
+    private static Scheduler sched;
+
+    private SchedulerHandler() {
+
     }
 
-    //TODO call this method once on startup
+    public static SchedulerHandler getInstance() {
+        return ourInstance;
+    }
+
+
+
+    private static void intantiateSched() throws SchedulerException {
+        SchedulerFactory schedFact = new StdSchedulerFactory();
+        sched = schedFact.getScheduler();
+    }
+
     /**
      * schedules all jobs with the triggers
-     * @throws SchedulerException the one and only
      */
-    public static void scheduleAll() throws SchedulerException {
-        Scheduler sched = intantiateSched();
-
-        JobDetail printJob = newJob(SimpleJob.class)
-                .withIdentity("simpleJob", "testGroup") //name, group
-                .build();
+    public static void scheduleAll() {
+        try {
+            intantiateSched();
+        } catch (SchedulerException e) {
+            LOGGER.error("Failure in instantiating scheduler", e);
+        }
 
         JobDetail weeklyReminderJob = newJob(WeeklyMailJob.class)
                 .withIdentity("weeklyReminderJob", "weeklyReminder") //name, group
@@ -56,31 +65,24 @@ public class SchedulerHandler {
                 .startNow()
                 .build();
 
-        sched.start();
-
-        // Tell quartz to schedule a job with a trigger
-        sched.scheduleJob(monthlyReminderJob, lastDayOfMonth);
-        sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
+        try {
+            sched.start();
+            // Tell quartz to schedule a job with a trigger
+            sched.scheduleJob(monthlyReminderJob, lastDayOfMonth);
+            sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
+        } catch (SchedulerException e) {
+            LOGGER.error("Failure in starting scheduler", e);
+        }
     }
 
     /**
      * finish running jobs and halts the scheduler's firing of triggers
-     * @param sched the scheduler to halt
-     * @throws SchedulerException
      */
-    private void shutdownSched(Scheduler sched) throws SchedulerException {
-        sched.shutdown(true);//TODO call this method on general shutdown?
-    }
-
-    public static void main(String[] args) {
-
+    public void shutdownSched() {
         try {
-            scheduleAll();
+            sched.shutdown(true);
         } catch (SchedulerException e) {
-            LOGGER.error("NOT WORKING");
+            LOGGER.error("Failure in shutdown", e);
         }
-        LOGGER.debug("Here it comes: \n");
-
     }
-
 }

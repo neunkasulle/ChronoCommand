@@ -57,10 +57,12 @@ public class MainControl {
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
 
+        Regulations.startup(new GermanLawRegulations());
+
         // initialize roles
         Role administrator = UserDAO.getInstance().getRoleByName(ROLE_ADMINISTRATOR);
         if (administrator == null) {
-            administrator = new Role(ROLE_ADMINISTRATOR, true);
+            administrator = new Role(ROLE_ADMINISTRATOR, "Administrator", true);
             Set<String> administratorPermissions = new IdentitySet(1);
             administratorPermissions.add(Role.PERM_ADMINISTRATOR);
             administrator.setPermissions(administratorPermissions);
@@ -69,7 +71,7 @@ public class MainControl {
 
         Role supervisor = UserDAO.getInstance().getRoleByName(ROLE_SUPERVISOR);
         if (supervisor == null) {
-            supervisor = new Role(ROLE_SUPERVISOR, true);
+            supervisor = new Role(ROLE_SUPERVISOR, "Supervisor", true);
             Set<String> supervisorPermissions = new IdentitySet(2);
             supervisorPermissions.add(Role.PERM_SUPERVISOR);
             supervisorPermissions.add(Role.PERM_PROLETARIER);
@@ -79,7 +81,7 @@ public class MainControl {
 
         Role proletarier = UserDAO.getInstance().getRoleByName(ROLE_PROLETARIER);
         if (proletarier == null) {
-            proletarier = new Role(ROLE_PROLETARIER, true);
+            proletarier = new Role(ROLE_PROLETARIER, "HIWI", true);
             Set<String> proletarierPermissions = new IdentitySet(1);
             proletarierPermissions.add(Role.PERM_PROLETARIER);
             proletarier.setPermissions(proletarierPermissions);
@@ -88,12 +90,14 @@ public class MainControl {
 
         Role longhours = UserDAO.getInstance().getRoleByName(ROLE_LONGHOURS);
         if (longhours == null) {
-            longhours = new Role(ROLE_LONGHOURS, false);
+            longhours = new Role(ROLE_LONGHOURS, "Nightwork allowed", false);
             Set<String> longhourPermissions = new IdentitySet(1);
             longhourPermissions.add(Role.PERM_LONGHOURS);
             longhours.setPermissions(longhourPermissions);
             UserDAO.getInstance().saveRole(longhours);
         }
+
+        SchedulerHandler.scheduleAll();
 
         // DEBUG fill database with data
         if (!productionMode) {
@@ -101,7 +105,7 @@ public class MainControl {
                 CategoryDAO.getInstance().saveCategory(new Category("Programming"));
                 CategoryDAO.getInstance().saveCategory(new Category("Procrastination"));
             } catch (ChronoCommandException e) {
-                LOGGER.error("Saving categories failed: " + e.getReason().toString());
+                LOGGER.error("Saving categories failed: " + e.getReason().toString(), e);
             }
 
             try {
@@ -113,23 +117,27 @@ public class MainControl {
 
                 User matt = new User(proletarier, "matt", "matt@example.com", "matt", "Matt", tom, 10);
                 UserDAO.getInstance().saveUser(matt);
-            } catch (ChronoCommandException e) {
-                LOGGER.error("Saving users failed: " + e.getReason().toString());
+
             }
-
-            TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
-            TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
-
-            String taetigkeit = "codework for PSE";
-            TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 1, 11, 30), LocalDateTime.of(2016, 1, 1, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
-            TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0), LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
-
+            catch (ChronoCommandException e) {
+                LOGGER.error("Saving users failed: " + e.getReason().toString(), e);
+            }
             try {
+                TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
+                TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
+
+                String taetigkeit = "codework for PSE";
+                TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 1, 11, 30),
+                        LocalDateTime.of(2016, 1, 1, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
+                TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0),
+                        LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
-            } catch (ChronoCommandException e) {
-                LOGGER.error("Save time record failed", e);
             }
+            catch (ChronoCommandException e) {
+                    LOGGER.error("Save time record failed", e);
+                }
+
             //stop deleting
         }
     }
@@ -138,6 +146,7 @@ public class MainControl {
      * Saves necessary data before shutting down
      */
     public void shutdown() {
+        SchedulerHandler.getInstance().shutdownSched();
         DAOHelper.getInstance().shutdown();
 
     }

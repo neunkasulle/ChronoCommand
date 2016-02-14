@@ -17,17 +17,14 @@ package com.github.neunkasulle.chronocommand.security;
  * specific language governing permissions and limitations
  * under the License.
  */
-import com.github.neunkasulle.chronocommand.model.Role;
-import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
-import org.slf4j.Logger;
+
+import com.github.neunkasulle.chronocommand.model.*;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -54,7 +51,11 @@ public class Realm extends AuthorizingRealm {
             user = UserDAO.getInstance().findUserByEmail(token.getUsername());
         }
         if (user != null) {
-            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+            if (user.isDisabled()) {
+                throw new AuthenticationException(new ChronoCommandException(Reason.USERDISABLED));
+            } else {
+                return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), user.getSalt(), getName());
+            }
         } else {
             throw new AuthenticationException();
         }

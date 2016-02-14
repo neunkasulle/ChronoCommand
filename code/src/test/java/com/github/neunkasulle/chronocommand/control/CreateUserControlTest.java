@@ -21,7 +21,7 @@ public class CreateUserControlTest extends UeberTest {
 
         createUserControl = CreateUserControl.getInstance();
 
-        Role admin = new Role("admin", true);
+        Role admin = new Role("admin", "a", true);
         UserDAO.getInstance().saveRole(admin);
 
         createUserControl.createUser(admin,"Chutulu", "chutulu@eatsyour.soul","1234", "dè real Ĉthulh⊂", null, 80);
@@ -30,27 +30,17 @@ public class CreateUserControlTest extends UeberTest {
 
     }
 
-    @Test
-    public void testCreateExistingUser() {
+    @Test(expected = ChronoCommandException.class)
+    public void testCreateExistingUser() throws ChronoCommandException{
         CreateUserControl createUserControl;
         createUserControl = CreateUserControl.getInstance();
-        try {
-            createUserControl.createUser(new Role("admin", true),"tom", "chutulu@eatsyour.soul","1234", "dè real Ĉthulh⊂", null, 999999999);
-        }
-        catch (ChronoCommandException e) {
-            assertTrue(e.getReason() == Reason.USERALREADYEXISTS);
-        }
+        createUserControl.createUser(new Role("admin", "a", true),"tom", "chutulu@eatsyour.soul","1234", "dè real Ĉthulh⊂", null, 999999999);
     }
 
-    @Test
-    public void testCreateExistingEmail() {
+    @Test(expected = ChronoCommandException.class)
+    public void testCreateExistingEmail()throws ChronoCommandException {
         CreateUserControl createUserControl;
         createUserControl = CreateUserControl.getInstance();
-        try {
-            createUserControl.createUser(new Role("admin", true),"...", "tom@chronocommand.eu","1234", "dè real Ĉthulh⊂", null, 999999999);
-        }
-        catch (ChronoCommandException e) {
-            assertTrue(e.getReason() == Reason.EMAILALREADYINUSE);
-        }
+        createUserControl.createUser(new Role("admin", "a", true),"...", "tom@chronocommand.eu","1234", "dè real Ĉthulh⊂", null, 999999999);
     }
 }

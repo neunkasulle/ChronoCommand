@@ -1,7 +1,9 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.hibernate.*;
-import org.hibernate.criterion.Criterion;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,7 @@ public class UserDAO{
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             String query = "from User u where u.username = :username";
             Object user = session.createQuery(query).setString("username", username).uniqueResult();
+            session.close();
             if (user instanceof User) {
                 return (User) user;
             } else if (user == null) {
@@ -46,6 +49,7 @@ public class UserDAO{
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             User user = session.get(User.class, userId);
+            session.close();
             if (user == null) {
                 LOGGER.error("No user with id {} found.", userId);
             }
@@ -59,6 +63,9 @@ public class UserDAO{
     public boolean saveUser(User user) {
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+            if (session.contains(user.roles)) {
+                session.evict(user.roles);
+            }
             Transaction tx = session.beginTransaction();
             session.saveOrUpdate(user);
             tx.commit();
@@ -75,8 +82,9 @@ public class UserDAO{
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             List objlist = session.createCriteria(User.class)
-                    .add(Restrictions.eq("supervisor_id", supervisor.getId()))
+                    .add(Restrictions.eq("supervisor", supervisor))
                     .list();
+            session.close();
             if (objlist.isEmpty()) {
                 LOGGER.warn("No user with supervisor \"{}\" found", supervisor.getEmail());
             }
@@ -99,6 +107,7 @@ public class UserDAO{
         try {
             org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
             List objlist = session.createCriteria(User.class).list();
+            session.close();
             if (objlist.isEmpty()) {
                 LOGGER.warn("No users found");
             }
@@ -121,6 +130,7 @@ public class UserDAO{
         org.hibernate.Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
         Object obj = criteria.uniqueResult();
+        session.close();
         return (User) obj;
     }
 
@@ -137,7 +147,19 @@ public class UserDAO{
     public Role getRoleByName(String name) {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Object role = session.createCriteria(Role.class).add(Restrictions.eq("name", name)).uniqueResult();
+        session.close();
         return (Role) role;
+    }
+
+    public List<Role> getAllRoles() {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        List objlist = session.createCriteria(Role.class).list();
+        session.close();
+        List<Role> roleList = new ArrayList<>(objlist.size());
+        for (Object obj : objlist) {
+            roleList.add((Role) obj);
+        }
+        return roleList;
     }
 
     public void saveRole(Role role) {

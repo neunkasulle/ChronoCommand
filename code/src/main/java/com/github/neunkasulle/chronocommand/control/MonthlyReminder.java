@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Dav on 09.02.2016.
+ * Triggered monthly to send out reminders for users
  */
 public class MonthlyReminder implements Job {
 

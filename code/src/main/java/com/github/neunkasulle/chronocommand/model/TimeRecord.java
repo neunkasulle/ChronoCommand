@@ -44,10 +44,10 @@ public class TimeRecord {
      * @param description a short description of this recorded time
      */
     public TimeRecord(LocalDateTime begin, LocalDateTime ending, Category category, String description, TimeSheet timeSheet) {
-        this.beginning = begin;
-        this.ending = ending;
-        this.category = category;
-        this.description = description;
+        setBeginning(begin);
+        setEnding(ending);
+        setCategory(category);
+        setDescription(description);
         this.timeSheet = timeSheet;
     }
 
@@ -194,7 +194,11 @@ public class TimeRecord {
      * @param end the new end time
      */
     public void setEnding(LocalDateTime end) {
-        this.ending = end;
+        if (end != null) {
+            this.ending = end.withSecond(0).withNano(0);
+        } else {
+            this.ending = null;
+        }
     }
 
     public TimeSheet getTimeSheet() {
@@ -210,6 +214,6 @@ public class TimeRecord {
     }
 
     public void setBeginning(LocalDateTime beginning) {
-        this.beginning = beginning;
+        this.beginning = beginning.withNano(0).withSecond(0);
     }
 }

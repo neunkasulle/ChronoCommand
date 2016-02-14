@@ -1,83 +1,45 @@
+\section{Veränderungen}
+\subsection{Klassendiagramm}
 Im Folgenden wird anhand des aktualisierten Klassendiagramms gezeigt, was sich zum Entwurf verändert hat.
 
-%hier klassendiagramm einfügen
-
+\includegraphics{Class Diagramm_alt.svg}
 In der view haben sich folgenden Änderungen ergeben:
-  \begin{itemize}
-      \item Hinzugefügte Klasse
-      \item Entfernte Klassen
-      \item hinzugefügte methoden
-      \item entfernte methoden
-  \end{itemize}
-  
+\VerbatimInput{view-diff}
+
 In der conrtol haben sich folgende Änderungen ergeben:
-
+\VerbatimInput{control-diff}
 Im model haben sich folgende Änderungen ergeben: %TODO tex syntax
-model
-  --Administrator
-  --Supervisor
-  --Proletarier
-  category 
-  categoryDAO
-    addCategory -> saveCategory, void
-    ++findCategoryByString(String: string): Category
-  ++DAOHelper
-    ++startup
-    ++shutdown
-    ++getSessionFactory:SessionFactory
-  (ChonoCommandException)
-  GermanLawRegulations
-    checkMaxArbeitszeit ->  checkWorkHours
-    checkPausezeit -> checkForPause
-    --checkRuhezeit
-    checkNachtarbeit -> checkNightWork
-    checkFeiertagsruhe -> checkSundayWork
-  Message
-    --isDraft
-  MessageDAO
-    addMessage -> saveMessage
-  Regulations
-    --loadHolidays (kommt in GermanLawRegulations)
-    --loadRestrictedTimes
-    --loadTimeRestrictions
-  Role
-    Enum -> class
-    [ +id:Long{readonly}, +name:String, +description:String, +permission:Set<String> |]
-  --Session
-  TimeRecord
-    maybe --timeSheet
-    maybe --checkTimes
-  TimeSheet
-    hoursPerMonth -> requiredHoursPerMonth
-    ++currentHours
-    ++timeRecords
-    --checkHourLimit (ist in GermanLawRegulations)
-   TimeSheetDAO
-    getTimeSheet(...) -> (month:Month,year:int, user:User) 
-    addTimeSheet -> saveTimeSheet
-    ++getTimeRecordsByDay(timeSheet:TimeSheet, dayOfMonth:int):List<TimeRecord>
-    ++getAllTimeSheets(month:Month, year:int):List<TimeRecord>
-    ++getTimeSheetsFromUser(user:User):List<TimeRecord>
-    ++getLatestTimeRecord(user:User):TimeRecord
-    ++getLatsetTimeSheet(user:User):TimeSheet
-    TimeSheetExporter -> TimeSheetHandler
-    User
-      ++ +String:realName
-      ++ +User:supervisor
-      ++ +int:hoursPerMonth
-      all above durch die auflösung von "protelarier" in user gewandert
-    UserDAO
-      addUser -> saveUser
-      --deleteUser
-      ++findUserByEmail(email:String):List<User>
-      ++saveRole(role:Role)
-      ++getRoleByName(name:String):Role
-    
+\VerbatimInput{model-diff}
+Daraus ergibt sich das aktualisierte Klassendiagramm:
 
+%neues Klassendiagramm
+
+\subsection{Sequenzen}
 Die Sequenzdiagramme aus dem Entwurfen haben sich wie folgt verändert:
+\subsubsection{Login Sequenz}
 
-Erste Sequenzdiagramm \(aus Entwurfsdokumen\) 
- veränderungen : blablabla
- 
- Zweites Sequenzdiagram
- etc
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{Login-Sequenz.svg}
+   \caption{Alte Login Sequenz}
+\end{figure}
+
+\paragraph{Veränderungen}
+\begin{itemize}
+    \item Login wurde um die Funktion \emph{remember me} erweitert.
+    \item Die Authentifizierung wurde in einklang mit dem Shiro Framework gestaltet:
+    \begin{itemize}
+        \item Zum Login wird ein token aus Passwort und Username genutzt.
+        \item Durch das Token wird der Nutzer ermittelt und dessen Authentifizierungsdaten\(Password, ...\) geholt.
+        \item Diese werden mittels einen speziellen Hash vergleicher mit dem angegebenen Token verglichen.
+    \end{itemize}
+    \item Laden der View wurde durch Vaadins \emph{navigateTo} ersetzt.
+\end{itemize}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{Login-Sequenz-new.svg}
+   \caption{Neue Login Sequenz}
+\end{figure}
+
+

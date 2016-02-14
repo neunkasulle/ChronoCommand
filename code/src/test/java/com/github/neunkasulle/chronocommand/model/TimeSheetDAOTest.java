@@ -28,10 +28,10 @@ public class TimeSheetDAOTest extends UeberTest {
 
     @Test
     public void testSetMessage() throws Exception {
-        Role role = new Role("r", true);
+        Role role = new Role("r", "a", true);
         UserDAO.getInstance().saveRole(role);
 
-        User user = new User(role, "a", "d@e.f", "b", "g", null, 5);
+        User user = new User(role, "a", "d@e.fe", "b", "g", null, 5);
         UserDAO.getInstance().saveUser(user);
 
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
@@ -50,10 +50,10 @@ public class TimeSheetDAOTest extends UeberTest {
 
     @Test
     public void TestGetTimeRecord() throws Exception {
-        Role role = new Role("r", true);
+        Role role = new Role("r", "a", true);
         UserDAO.getInstance().saveRole(role);
 
-        User user = new User(role, "a", "d@e.f", "b", "g", null, 5);
+        User user = new User(role, "a", "d@e.fe", "b", "g", null, 5);
         UserDAO.getInstance().saveUser(user);
 
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);
@@ -74,10 +74,10 @@ public class TimeSheetDAOTest extends UeberTest {
 
     @Test
     public void TestGetTimeRecords() throws Exception {
-        Role role = new Role("r", true);
+        Role role = new Role("r", "a", true);
         UserDAO.getInstance().saveRole(role);
 
-        User user = new User(role, "a", "d@e.f", "b", "g", null, 5);
+        User user = new User(role, "a", "d@e.fe", "b", "g", null, 5);
         UserDAO.getInstance().saveUser(user);
 
         TimeSheet timeSheet = new TimeSheet(user, Month.APRIL, 1984);

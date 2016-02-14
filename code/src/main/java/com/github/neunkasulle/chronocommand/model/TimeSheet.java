@@ -49,7 +49,10 @@ public class TimeSheet {
         // hibernate needs this
     }
 
-    public TimeSheet(User user, Month month, int year) {
+    public TimeSheet(User user, Month month, int year) throws ChronoCommandException {
+        if (user == null) {
+            throw new ChronoCommandException(Reason.NOSUCHUSER);
+        }
         this.user = user;
         this.month = month;
         this.year = year;
@@ -66,9 +69,6 @@ public class TimeSheet {
         return currentMinutesThisMonth;
     }
 
-    public void setCurrentMinutesThisMonth(int hours) {
-        currentMinutesThisMonth = hours;
-    }
 
     public boolean setTimeSheetState(TimeSheetState state) {
         this.state = state;
@@ -117,11 +117,7 @@ public class TimeSheet {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof TimeSheet) {
-            return id.equals(((TimeSheet) o).getId());
-        } else {
-            return false;
-        }
+        return o instanceof TimeSheet && id.equals(((TimeSheet) o).getId());
     }
 
     @Override

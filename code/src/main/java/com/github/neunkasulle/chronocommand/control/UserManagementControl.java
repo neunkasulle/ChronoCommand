@@ -5,7 +5,6 @@ import org.apache.shiro.SecurityUtils;
 import org.hibernate.cfg.NotYetImplementedException;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Janze on 18.01.2016.
@@ -23,20 +22,7 @@ public class UserManagementControl {
         return ourInstance;
     }
 
-
-
-    public void addUser(User user) throws ChronoCommandException {
-        throw new NotYetImplementedException();
-    }
-
-    public void setUserDisabled(boolean disabled) throws ChronoCommandException {
-        throw new NotYetImplementedException();
-    }
-
-    public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
-        username = username.trim();
-        realname = realname.trim();
-        email = email.trim();
+    public void editUser(User user, String username, String realname, String email, String password, User supervisor, int hoursPerMonth, boolean disable) throws ChronoCommandException {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
             if (!username.isEmpty() && !user.getUsername().equals(username)) {
                 if (UserDAO.getInstance().findUser(username) != null) {
@@ -44,18 +30,33 @@ public class UserManagementControl {
                 }
                 user.setUsername(username);
             }
-            if (!realname.isEmpty()) {
-                user.setRealname(realname);
-            }
+
+            user.setRealname(realname);
+
             if (!email.isEmpty() && !user.getEmail().equals(email)) {
                 if (UserDAO.getInstance().findUserByEmail(email) != null) {
                     throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
                 }
                 user.setEmail(email);
             }
+
             if (!password.isEmpty()) {
                 user.setPassword(password);
             }
+
+            if (user.getPrimaryRole().equals(UserDAO.getInstance().getRoleByName(MainControl.ROLE_PROLETARIER))) {
+                if (supervisor != null && supervisor.isPermitted(Role.PERM_SUPERVISOR)) {
+                    user.setSupervisor(supervisor);
+                }
+            }
+
+            if (hoursPerMonth < 0 || hoursPerMonth > 80) {
+                throw new ChronoCommandException(Reason.INVALIDHOURSPERMONTH);
+            }
+            user.setHoursPerMonth(hoursPerMonth);
+
+            user.setDisable(disable);
+
             UserDAO.getInstance().saveUser(user);
         } else {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
@@ -70,15 +71,13 @@ public class UserManagementControl {
         if (user == null) {
             throw new ChronoCommandException(Reason.NOSUCHUSER);
         }
-        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) ||
+            user.equals(LoginControl.getInstance().getCurrentUser()) ||
+            LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor()))
+        {
             return user;
         }
-        if (user.equals(LoginControl.getInstance().getCurrentUser())) {
-            return user;
-        }
-        if (LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor())) {
-            return user;
-        }
+
         throw new ChronoCommandException(Reason.NOTPERMITTED);
     }
 
@@ -112,5 +111,13 @@ public class UserManagementControl {
         Role admin = UserDAO.getInstance().getRoleByName(MainControl.ROLE_ADMINISTRATOR);
         User user = new User(admin, username.trim(), email.trim(), password, realname.trim(), null, 0);
         UserDAO.getInstance().saveUser(user);
+    }
+
+    public List<Role> getAllRoles() {
+        return UserDAO.getInstance().getAllRoles();
+    }
+
+    public Role getRoleByName(String roleName) {
+        return UserDAO.getInstance().getRoleByName(roleName);
     }
 }

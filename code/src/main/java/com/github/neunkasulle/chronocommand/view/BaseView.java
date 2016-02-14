@@ -2,7 +2,6 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
-import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
@@ -17,7 +16,6 @@ import com.vaadin.ui.themes.BaseTheme;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -70,13 +68,6 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 //TODO: fill me!
                 /* Betreuer */
 
-                final HorizontalLayout supervisorPane = new HorizontalLayout();
-                supervisorPane.setSizeFull();
-                extraPane.addComponent(supervisorPane);
-
-                /*supervisorPane.addComponent(new Label("Betreuer"));
-                supervisorPane.addComponent(new Label("Betreuer1"));*/
-
                 final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
                 newTimeRecordButton.addClickListener(event -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
@@ -110,7 +101,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             @Override
             public void fillRoleSpecificContent(final Layout extraPane, ComboBox timeRecordSelection) {
                 //TODO: fill me!
-                final HorizontalLayout adminToSupervisorPane = new HorizontalLayout();
+                /*final HorizontalLayout adminToSupervisorPane = new HorizontalLayout();
                 adminToSupervisorPane.setSizeFull();
                 extraPane.addComponent(adminToSupervisorPane);
                 adminToSupervisorPane.addComponent(new Label("Zu Betreuersicht wechseln:"));
@@ -121,10 +112,10 @@ public abstract class BaseView extends HorizontalLayout implements View {
                     //TODO : Do sonething usefoll here
                 });
                 supervisorSelection.setInputPrompt("Betreuer auswählen");
-                extraPane.addComponent(supervisorSelection);
+                extraPane.addComponent(supervisorSelection);*/
 
 
-                final HorizontalLayout accountManagementPane = new HorizontalLayout();
+                /*final HorizontalLayout accountManagementPane = new HorizontalLayout();
                 accountManagementPane.setSizeFull();
                 extraPane.addComponent(accountManagementPane);
                 accountManagementPane.addComponent(new Label("Account Verwalten:"));
@@ -132,23 +123,38 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 final ComboBox accountManagementSelection = new ComboBox(null, Arrays.asList("Neuen Account zulegen", "Account löschen", "Account bearbeiten"));
                 accountManagementSelection.setSizeFull();
                 accountManagementSelection.setInputPrompt("Operation auswählen");
-                extraPane.addComponent(accountManagementSelection);
+                extraPane.addComponent(accountManagementSelection);*/
 
-                final Button listOfAllProletarierButton = new Button("Alle HIWIs anzeigen");
+                final Button listOfAllProletarierButton = new Button("Show all users");
                 listOfAllProletarierButton.setSizeFull();
-                listOfAllProletarierButton.addClickListener(event -> {
-                    //TODO: Get the list of all HIWIs and show it in the Grid.
-                });
+                listOfAllProletarierButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.ADMINVIEW));
                 extraPane.addComponent(listOfAllProletarierButton);
-                listOfAllProletarierButton.setSizeFull();
 
-                final Button listOfAllSupervisorButton = new Button("Alle Betreuer anzeigen");
+                final Button createNewAccount = new Button("Create new account");
+                createNewAccount.setSizeFull();
+                createNewAccount.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.CREATEUSERVIEW));
+                extraPane.addComponent(createNewAccount);
+
+                /*final Button editAccount = new Button("Edit account");
+                editAccount.setSizeFull();
+                editAccount.addClickListener(event -> {
+                    //TODO
+                });
+                extraPane.addComponent(editAccount);
+
+                final Button deleteAccount = new Button("Delete account");
+                deleteAccount.setSizeFull();
+                deleteAccount.addClickListener(event -> {
+                    //TODO
+                });
+                extraPane.addComponent(deleteAccount);*/
+
+                /*final Button listOfAllSupervisorButton = new Button("Show all supervisors");
                 listOfAllSupervisorButton.setSizeFull();
                 listOfAllSupervisorButton.addClickListener(event -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
-                extraPane.addComponent(listOfAllSupervisorButton);
-                listOfAllSupervisorButton.setSizeFull();
+                extraPane.addComponent(listOfAllSupervisorButton);*/
 
             }
 
@@ -317,6 +323,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
             /* Date picker */
 
+            /* TODO has no functionality right now
             final InlineDateField calendar = new InlineDateField();
             calendar.setValue(new Date());
             calendar.setImmediate(true);
@@ -325,7 +332,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             calendar.addValueChangeListener(e -> Notification.show("Value changed:",
                     String.valueOf(e.getProperty().getValue()),
                     Notification.Type.TRAY_NOTIFICATION));
-            controlPanel.addComponent(calendar);
+            controlPanel.addComponent(calendar);*/
 
             /* Combo box */
 

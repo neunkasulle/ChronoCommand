@@ -3,6 +3,8 @@ package com.github.neunkasulle.chronocommand.view;
 import com.ejt.vaadin.loginform.LoginForm;
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.Reason;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.navigator.View;
@@ -49,6 +51,7 @@ public class LoginView extends LoginForm implements View {
 
         layout.addComponent(loginButton);
         layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
+        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         authInfoMissing = new Label("Please provide username and password!");
         authInfoMissing.setStyleName(ValoTheme.LABEL_FAILURE);
@@ -57,60 +60,12 @@ public class LoginView extends LoginForm implements View {
         layout.addComponent(authInfoMissing);
         layout.setComponentAlignment(authInfoMissing, Alignment.MIDDLE_CENTER);
 
-        authenticationFailed = new Label("Username or password incorrect");
+        authenticationFailed = new Label();
         authenticationFailed.setStyleName(ValoTheme.LABEL_FAILURE);
         authenticationFailed.setSizeUndefined();
         authenticationFailed.setVisible(false);
         layout.addComponent(authenticationFailed);
         layout.setComponentAlignment(authenticationFailed, Alignment.MIDDLE_CENTER);
-
-        Button forgotPassword = new Button("Forgot password");
-        forgotPassword.setStyleName(ValoTheme.BUTTON_LINK);
-        forgotPassword.addClickListener(this::forgotPasswordClicked);
-        layout.addComponent(forgotPassword);
-        layout.setComponentAlignment(forgotPassword, Alignment.MIDDLE_CENTER);
-
-        // DEBUG
-        HorizontalLayout links = new HorizontalLayout();
-        layout.addComponent(links);
-
-        Button timeRecord = new Button("TimeRecord");
-        timeRecord.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
-        });
-        links.addComponent(timeRecord);
-
-        Button admin = new Button("Admin");
-        admin.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.ADMINVIEW);
-        });
-        links.addComponent(admin);
-
-        Button employees = new Button("Employees");
-        employees.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
-        });
-        links.addComponent(employees);
-
-        Button createUser = new Button("Create User");
-        createUser.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.CREATEUSERVIEW);
-        });
-        links.addComponent(createUser);
-
-        Button timesheet = new Button("Timesheet");
-        timesheet.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
-        });
-        links.addComponent(timesheet);
-
-        Button settings = new Button("Usersettings");
-        settings.addClickListener(event -> {
-            getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
-        });
-        links.addComponent(settings);
-
-
 
         return layout;
     }
@@ -130,6 +85,7 @@ public class LoginView extends LoginForm implements View {
             authenticationFailed.setVisible(false);
             getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
         } catch(ChronoCommandException e) {
+            authenticationFailed.setValue(e.getReason().toString());
             authenticationFailed.setVisible(true);
             passwordField.clear();
         }

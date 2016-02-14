@@ -1,6 +1,5 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import com.github.neunkasulle.chronocommand.control.MainControl;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -9,6 +8,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -19,16 +20,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
  * Created by Janze on 16.01.2016.
+ * Handlig emails and formating stuff
  */
 @Entity
 public class TimeSheetHandler {
@@ -73,9 +71,9 @@ public class TimeSheetHandler {
      * @return a pdf
      */
     public File createPdfFromTimeSheet(TimeSheet timeSheet) {
-        PDDocument pdfTimeSheet;
+        PDDocument pdfTimeSheet = null;
         File file;
-        FileOutputStream outputFile;
+        FileOutputStream outputFile = null;
         sumHour = 0;
         sumMin = 0;
         try {
@@ -83,11 +81,14 @@ public class TimeSheetHandler {
             outputFile = new FileOutputStream("Study.pdf");//TODO save different
             pdfTimeSheet = PDDocument.load(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error("File not found", e);
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("IO", e);
             return null;
+        }
+        catch (NullPointerException e) {
+            LOGGER.error("Nullptr", e);
         }
         try {
             PDPage page = pdfTimeSheet.getPage(0);
@@ -273,8 +274,13 @@ public class TimeSheetHandler {
                 LOGGER.error("Loading error in createPdfFromAllTimeSheets");
             }
             PDPageTree loopTree = doc.getPages();
-            for (int i = 0; i < loopTree.getCount(); i++) {
-                totDoc.addPage(loopTree.get(i));
+            try {
+                for (int i = 0; i < loopTree.getCount(); i++) {
+                    totDoc.addPage(loopTree.get(i));
+                }
+            }
+            catch (NullPointerException e) {
+                LOGGER.error("Nullptr", e);
             }
         }
         return file;

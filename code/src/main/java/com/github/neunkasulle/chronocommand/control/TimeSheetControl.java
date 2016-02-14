@@ -1,23 +1,23 @@
 package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
-import com.github.neunkasulle.chronocommand.model.Message;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-import javax.mail.*;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
-import java.time.LocalDate;
 import java.util.Properties;
 
 /**
@@ -30,7 +30,7 @@ public class TimeSheetControl {
     private static final String NEWTIMESHEET = "New time sheet created";
     private static final String LOCKED = "Time sheet is locked";
     private static final String MISSCAT  = "Missing category";
-
+    private static final String MISSDESC  = "Missing description";
     private static TimeSheetControl ourInstance = new TimeSheetControl();
 
     private TimeSheetControl() {
@@ -161,7 +161,10 @@ public class TimeSheetControl {
             LOGGER.error(MISSCAT);
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
-
+        if (description.isEmpty() && timeRecord.getDescription().isEmpty()) {
+            LOGGER.error(MISSDESC);
+            throw new ChronoCommandException(Reason.MISSINGDESCRIPTION);
+        }
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
         timeRecord.setEnding(LocalDateTime.now());
@@ -171,7 +174,8 @@ public class TimeSheetControl {
         return timeRecord;
     }
 
-    public TimeRecord getLatestTimeRecord(User user) {
+    public TimeRecord getLatestTimeRecord(User user) throws ChronoCommandException {
+
         return TimeSheetDAO.getInstance().getLatestTimeRecord(user);
     }
 
@@ -213,25 +217,15 @@ public class TimeSheetControl {
         LOGGER.info("Time record created for" + user.getUsername());
     }
 
-
-    /**
-     * Collects all time Sheets from user which are supervised by a specific user
-     * @param month the month from which the time sheets will be collected
-     * @param year the year from which the time sheets will be collected
-     * @param user the supervising user
-     * @return A list of time sheets
-     */
-    /*
-    public List<TimeSheet> getSupervisedTimeSheets(Month month, int year, User user) {
-        //not needed for now
-        return null;
-    }
-*/
     /**
      * A timeSheet will be locked against changes
      * @param timeSheet the timesheet which will be locked
      */
-    public void lockTimeSheet(TimeSheet timeSheet, User user) {
+    public void lockTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
         LOGGER.info("Locked:" + timeSheet.getMonth() + user.getUsername());
 
@@ -241,22 +235,27 @@ public class TimeSheetControl {
      * A TimeSheet will be unlocked again and thus can be changed again
      * @param timeSheet the time sheet which will be unlocked
      */
-    public void unlockTimeSheet(TimeSheet timeSheet, User user) {
+    public void unlockTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException {
 
+        if(timeSheet.getState() != TimeSheetState.UNLOCKED
+                && SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
         LOGGER.info("unlocked:" + timeSheet.getMonth() + user.getUsername());
-        //TODO permission from validated to unlocked
     }
 
     /**
      * A time sheet will be marked as checked
      * @param timeSheet the time sheet which will be marked
      */
-    public void approveTimeSheet(TimeSheet timeSheet, User user) {
+    public void approveTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException{
+        if(SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
         LOGGER.info("checked:" + timeSheet.getMonth() + user.getUsername());
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
 
-        //TODO Permissions checks and stuff?
     }
 
     /**
@@ -265,7 +264,12 @@ public class TimeSheetControl {
      * @param year the year of the time sheets
      * @return a Pdf File which an be printed
      */
-    public File printCheckedTimeSheets(Month month, int year) {
+    public File printCheckedTimeSheets(Month month, int year) throws ChronoCommandException {
+        //TODO who can print checked time sheets?
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
@@ -287,7 +291,11 @@ public class TimeSheetControl {
      * @param year the year of the time sheets
      * @return a Pdf File which an be printed
      */
-    public File printAllTimeSheets(Month month, int year) {
+    public File printAllTimeSheets(Month month, int year) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
@@ -301,7 +309,11 @@ public class TimeSheetControl {
      * @param timeSheet the time sheet which should be printed
      * @return a Pdf File which an be printed
      */
-    public File printTimeSheet(TimeSheet timeSheet) {
+    public File printTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
         return timeSheetHandler.createPdfFromTimeSheet(timeSheet);
@@ -312,7 +324,11 @@ public class TimeSheetControl {
      * @param user the user from which the time sheets are printed
      * @return a Pdf File which an be printed
      */
-    public File printAllTimeSheets(User user) {
+    public File printAllTimeSheets(User user) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
@@ -335,7 +351,11 @@ public class TimeSheetControl {
      * @param year the year of the time sheets
      * @return A list of time sheet in the specified time frame
      */
-    public List<TimeSheet> getTimeSheet(Month month, int year) {
+    public List<TimeSheet> getTimeSheet(Month month, int year) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         return TimeSheetDAO.getInstance().getAllTimeSheets(month, year);
     }
 
@@ -344,7 +364,11 @@ public class TimeSheetControl {
      * @param user The user owning the time sheets
      * @return List of all time sheets
      */
-    public List<TimeSheet> getTimeSheetsFromUser(User user) {
+    public List<TimeSheet> getTimeSheetsFromUser(User user) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
         return TimeSheetDAO.getInstance().getTimeSheetsFromUser(user);
     }
 
@@ -376,7 +400,7 @@ public class TimeSheetControl {
     }
 
     public void addMessageToTimeSheet(TimeSheet timeSheet, Message message) {
-        timeSheet.setMessage(message);
+        timeSheet.setMessage(message); //TODO is this method still relevant?
     }
 
     public List<Message> getMessagesFromTimeSheet(TimeSheet timeSheet) {
@@ -384,6 +408,7 @@ public class TimeSheetControl {
     }
 
     public void sendEmail(User recipient, String message) {
+
         String host = "mail.teco.edu";
         String port = "25";
         Properties properties = System.getProperties();
@@ -395,7 +420,7 @@ public class TimeSheetControl {
 
         try {
             javax.mail.Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("reminder@chronocommand.eu", "Example.com Admin"));
+            msg.setFrom(new InternetAddress("reminder@chronocommand.eu", "ChronoCommand"));
             msg.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(recipient.getEmail(), recipient.getRealname()));
             msg.setSubject("ChronoCommand Reminder");
@@ -406,7 +431,7 @@ public class TimeSheetControl {
             LOGGER.error("Adress Exception", e);
         } catch (MessagingException e) {
             LOGGER.error("Messaging Exception", e);
-        }catch (java.io.UnsupportedEncodingException e) {
+        } catch (java.io.UnsupportedEncodingException e) {
             LOGGER.error("Unsupported encoding", e);
         }
     }
