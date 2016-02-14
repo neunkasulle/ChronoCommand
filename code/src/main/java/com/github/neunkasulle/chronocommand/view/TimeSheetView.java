@@ -4,6 +4,7 @@ import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.TimeSheet;
+import com.github.neunkasulle.chronocommand.model.User;
 import com.github.neunkasulle.chronocommand.view.forms.TimeSheetForm;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
@@ -37,17 +38,18 @@ public class TimeSheetView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
-        final HorizontalLayout header = new HorizontalLayout(new Label("Stundenzettel von:"),
+        final HorizontalLayout header = new HorizontalLayout(new Label("Timesheet of:"),
                 new Label("Max Mustermann"));
         header.setId("page-header");
         header.setSizeFull();
         header.setSpacing(true);
         contentPane.addComponent(header);
 
+        /*
         final TextField filter = new TextField();
         contentPane.addComponent(filter);
         filter.setSizeFull();
-
+        */
         /* Form & table */
 
         final HorizontalLayout formContent = new HorizontalLayout();
@@ -116,10 +118,10 @@ public class TimeSheetView extends BaseView {
         recordList.removeColumn("requiredHoursPerMonth");
 
         recordList.setColumnOrder("yearAsString", "month", "requiredHours", "currentHours", "state");
-        recordList.getDefaultHeaderRow().getCell("yearAsString").setHtml("Jahr");
-        recordList.getDefaultHeaderRow().getCell("month").setHtml("Monat");
-        recordList.getDefaultHeaderRow().getCell("requiredHours").setHtml("Vorgeschriebene Stundenzahl");
-        recordList.getDefaultHeaderRow().getCell("currentHours").setHtml("Erreichte Stundenzahl");
+        recordList.getDefaultHeaderRow().getCell("yearAsString").setHtml("Year");
+        recordList.getDefaultHeaderRow().getCell("month").setHtml("Month");
+        recordList.getDefaultHeaderRow().getCell("requiredHours").setHtml("Hours per Month");
+        recordList.getDefaultHeaderRow().getCell("currentHours").setHtml("Reached Hours");
         recordList.getDefaultHeaderRow().getCell("state").setHtml("Status");
 
         // The action form
