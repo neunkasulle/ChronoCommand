@@ -86,3 +86,26 @@ Die Sequenzdiagramme aus dem Entwurfen haben sich wie folgt verändert:
     \includegraphics[width=\linewidth]{new-Time-record-new.svg}
    \caption{Neue Zeiterfassungssequenz}
 \end{figure}
+
+\subsection{Admin druckt alle Stundenzettel - Sequenz}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{Admin-prints-all-timesheets.svg}
+   \caption{Alte Admin druckt Sequenz}
+\end{figure}
+
+\paragraph{Veränderungen}
+\begin{itemize}
+    \item Der Ablauf durch Hibernate stark vereinfacht
+    \begin{itemize}
+        \item Anstatt durch die for Schleifen die Stundezettel iterativ zu sammeln, genügt nun eine SQL abfrage im DAO um alle Stundenzettel zu erhalten
+    \end{itemize}
+    \item Das drucken übernimmt nun eine Subfunktion des TimeSheetHandlers
+\end{itemize}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{}
+   \caption{Aufgrund der Vereinfachungen durch hibernate ist ein Sequenzdiagramm hier nicht notwendig}
+\end{figure}
