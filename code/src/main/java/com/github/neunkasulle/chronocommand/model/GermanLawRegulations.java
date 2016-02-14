@@ -171,7 +171,7 @@ public class GermanLawRegulations extends Regulations {
                         } else {
                             date.minusDays(days);
                         }
-                        System.out.println(date.toString() + holidayName);
+                        holidays.put(date, holidayName);
                     } else {
                         String[] daymonth = dateStr.split("\\.");
                         int day = Integer.parseInt(daymonth[0]);
