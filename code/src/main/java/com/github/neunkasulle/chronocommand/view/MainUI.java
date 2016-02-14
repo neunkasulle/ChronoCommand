@@ -40,6 +40,7 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String TIMESHEETVIEW = "timesheet";
     public static final String SUPERVISORVIEW = "supervisor";
     public static final String SETTINGSVIEW = "settings";
+    public static final String CREATEPROJECTVIEW = "createproject";
     private static final Logger LOGGER = LoggerFactory.getLogger(MainUI.class);
     private Navigator navigator;
     private Label header;
@@ -78,6 +79,7 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(ADMINVIEW, new AdminView());
         navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);
+        navigator.addView(CREATEPROJECTVIEW, CreateProjectView.class);
         navigator.addView(TIMESHEETVIEW, TimeSheetView.class);
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
         navigator.setErrorView(ErrorView.class);

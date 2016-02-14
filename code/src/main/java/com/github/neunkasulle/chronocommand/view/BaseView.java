@@ -135,6 +135,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 createNewAccount.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.CREATEUSERVIEW));
                 extraPane.addComponent(createNewAccount);
 
+                final Button createNewProjectButton = new Button("Create new project");
+                createNewProjectButton.setSizeFull();
+                createNewProjectButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.CREATEPROJECTVIEW));
+                extraPane.addComponent(createNewProjectButton);
+
                 /*final Button editAccount = new Button("Edit account");
                 editAccount.setSizeFull();
                 editAccount.addClickListener(event -> {
