@@ -139,13 +139,15 @@ public class CreateUserView extends BaseView {
         //Create New User Button
         final Button createNewUserButton = new Button("Create");
         createNewUserButton.addClickListener(event1 -> {
-            int hoursPerMonth_int;
-            try {
-                hoursPerMonth_int = Integer.parseInt(hoursPerMonth.getValue());
-            } catch (NumberFormatException e) {
-                Notification.show("Error: Hours per month is not an integer!", Notification.Type.WARNING_MESSAGE);
-                hoursPerMonth.selectAll();
-                return;
+            int hoursPerMonth_int = 0;
+            if (hoursPerMonth.isVisible()) {
+                try {
+                    hoursPerMonth_int = Integer.parseInt(hoursPerMonth.getValue());
+                } catch (NumberFormatException e) {
+                    Notification.show("Error: Hours per month is not an integer!", Notification.Type.WARNING_MESSAGE);
+                    hoursPerMonth.selectAll();
+                    return;
+                }
             }
             if (!passwordFirstTimeInputField.getValue().equals(passwordSecondTimeInputField.getValue())) {
                 Notification.show("Error: Passwords do not match!", Notification.Type.WARNING_MESSAGE);
@@ -155,6 +157,7 @@ public class CreateUserView extends BaseView {
             try {
                 CreateUserControl.getInstance().createUser((Role) selectRole.getValue(), usernameInputField.getValue(), emailInputField.getValue(), passwordFirstTimeInputField.getValue(), realnameInputField.getValue(), (User) selectSupervisor.getValue(), hoursPerMonth_int);
                 LOGGER.info("New user \'{}\' created.", usernameInputField.getValue());
+                Notification.show("User created successfully");
                 clearAll();
             } catch (ChronoCommandException e) {
                 Notification.show("Failed to create user: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
@@ -172,6 +175,12 @@ public class CreateUserView extends BaseView {
     }
 
     private void clearAll() {
-        // TODO
+        selectSupervisor.select(null);
+        hoursPerMonth.setValue("");
+        usernameInputField.setValue("");
+        realnameInputField.setValue("");
+        emailInputField.setValue("");
+        passwordFirstTimeInputField.setValue("");
+        passwordSecondTimeInputField.setValue("");
     }
 }

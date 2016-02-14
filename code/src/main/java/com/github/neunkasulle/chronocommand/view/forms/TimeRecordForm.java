@@ -12,17 +12,17 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class TimeRecordForm extends FormLayout {
 
-    private TextField beginningHour = new TextField("Begin (Stunde)");
-    private TextField beginningMinute = new TextField("Begin (Minute)");
-    private TextField endHour = new TextField("Ende (Stunde)");
-    private TextField endMinute = new TextField("Ende (Minute)");
+    private TextField beginningHour = new TextField("Beginning (hour)");
+    private TextField beginningMinute = new TextField("Beginning (minute)");
+    private TextField endHour = new TextField("End (hour)");
+    private TextField endMinute = new TextField("End (minute)");
 
-    private ComboBox category = new ComboBox("Kategorie");
-    private TextField description = new TextField("Tätigkeit");
+    private ComboBox category = new ComboBox("Project");
+    private TextField description = new TextField("Description");
 
-    private Button save = new Button("Speichern");
-    private Button delete = new Button("Löschen");
-    private Button cancel = new Button("Abbrechen");
+    private Button save = new Button("Save");
+    private Button delete = new Button("Delete");
+    private Button cancel = new Button("Cancel");
 
     private TimeRecord object;
 
