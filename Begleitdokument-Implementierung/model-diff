@@ -1,0 +1,72 @@
+model
+  --Administrator
+  --Supervisor
+  --Proletarier
+  category 
+  categoryDAO
+    addCategory -> saveCategory, void
+    ++findCategoryByString(String: string): Category
+  ++DAOHelper
+    ++startup
+    ++shutdown
+    ++getSessionFactory:SessionFactory
+  (ChonoCommandException)
+  GermanLawRegulations
+    checkMaxArbeitszeit ->  checkWorkHours
+    checkPausezeit -> checkForPause
+    --checkRuhezeit
+    checkNachtarbeit -> checkNightWork
+    checkFeiertagsruhe -> checkSundayWork
+  Message
+    --isDraft
+    [ --id:int, --sendTime:Time{readonly}, --receiveTime:Time, --content:String{readonly}, --sender:User{readonly}, --recipient:User{readonly}, --isRead:bool, --isDraft:bool ||]
+  --MessageDAO
+
+  ++Reason:Enum
+    ++toString():String
+    [ +text:String ||]
+  Regulations
+    --loadHolidays (kommt in GermanLawRegulations)
+    --loadRestrictedTimes
+    --loadTimeRestrictions
+  Role
+    Enum -> class
+    [ +id:Long{readonly}, +name:String, +description:String, +permission:Set<String> |]
+  --Session
+    (maybe deleted cause shiro)
+  TimeRecord
+
+  TimeSheet
+    hoursPerMonth -> requiredHoursPerMonth
+    --addTime
+    --checkHourLimit (ist in GermanLawRegulations)
+    [ -proletarier:Proletarier{readonly}, +user:User{readonly}, +messages:List<Messages>, +currentMinutesThisMonth:int ||]
+  TimeSheetDAO
+    getTimeSheet(...) -> (month:Month,year:int, user:User) 
+    addTimeSheet -> saveTimeSheet
+    ++getTimeRecordsByDay(timeSheet:TimeSheet, dayOfMonth:int):List<TimeRecord>
+    ++saveTimeSheet(TimeSheet):void
+    ++getAllTimeSheets(month:Month, year:int):List<TimeRecord>
+    ++getTimeSheetsFromUser(user:User):List<TimeRecord>
+    ++getLatestTimeRecord(user:User):TimeRecord
+    ++getLatsetTimeSheet(user:User):TimeSheet
+  TimeSheetExporter -> TimeSheetHandler
+      --createEmails
+      ++splitRecordList(List<TimeRecord>):List
+      ++fillContent(PDPageContentStream, List<TimeRecord>, TimeSheet)
+      [ +id:Long{readonly}, +FONT:PDType1Font{static}, +FONT_BOLD:PDType1Font{static}, +sumHour:int{private}, +sumMin:int{private}
+  User
+      ++ +String:realName
+      ++ +User:supervisor
+      ++ +int:hoursPerMonth
+      all above durch die auflösung von "protelarier" in user gewandert
+      ++isPermitted(String):bool
+      ++getPrimaryRole:Role
+      [ +mailFlag:bool, +isDisabled:bool, +salt:String ||]
+  --UserDAO
+(     addUser -> saveUser
+      --deleteUser
+      ++findUserByEmail(email:String):List<User>
+      ++saveRole(role:Role)
+      ++getRoleByName(name:String):Role
+)
