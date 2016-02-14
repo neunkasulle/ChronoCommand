@@ -183,3 +183,12 @@ view
       [ +beanItemContainer:BeanItemContainer<TimeSheet>, +recordList:Grid, +form:TimeSheetForm ||]
   UserSettingsView
   --View{abstract}
+++view.forms
+  ++AdminCtrlForm
+  ++SupervisorCtrlForm
+  ++TimeRecordForm
+  ++TimeSheetForm
+++security
+  ++Realm
+      ++doGetAuthenticationInfo(authcToken:AuthenticationToken)
+      ++doGetAuthorizationInfo(principals:PrincipalCollection)
