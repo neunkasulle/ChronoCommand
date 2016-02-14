@@ -125,8 +125,7 @@ control
       ++getMessageFromTimeSheet(timeSheet:TimeSheet):List<Message>
       ++sendEmail(recipient:User, message:String
   UserManagementControl
-      adddUser() -> (user:User)
-      ++setUserDisabled(bool)
+      --addUser()
       --createUser(userType:Role, name:String, email:String, passwort:String, supervisor:Supervisor, hoursPerMonth:int):bool
       --removeUser
       editUser() -> (user:User, username:String, realname:String, email:String, passwort:String)
