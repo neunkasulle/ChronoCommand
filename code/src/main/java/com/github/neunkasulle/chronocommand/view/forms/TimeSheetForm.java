@@ -10,10 +10,10 @@ import com.vaadin.ui.FormLayout;
  */
 public class TimeSheetForm extends FormLayout {
 
-    private Button exportPDF = new Button("PDF exportieren");
-    private Button setOK = new Button("Als geprüft markieren");
-    private Button fireIssue = new Button("Mängel melden");
-    private Button cancel = new Button("Abbrechen");
+    private Button exportPDF = new Button("Export PDF");
+    private Button setOK = new Button("Mark as ok");
+    private Button fireIssue = new Button("Mark as not ok");
+    private Button cancel = new Button("Cancel");
 
     private TimeSheet object;
 
