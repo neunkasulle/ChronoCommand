@@ -7,8 +7,15 @@ import org.hibernate.cfg.NotYetImplementedException;
  *
  */
 public abstract class Regulations {
+    private static Regulations instance = null;
 
-    public String checkTimeSheet(TimeSheet timeSheet) {
-        throw new NotYetImplementedException();
+    public static void startup(Regulations instance) {
+        Regulations.instance = instance;
     }
+
+    public static Regulations getInstance() {
+        return instance;
+    }
+
+    public abstract String checkTimeSheet(TimeSheet timeSheet);
 }

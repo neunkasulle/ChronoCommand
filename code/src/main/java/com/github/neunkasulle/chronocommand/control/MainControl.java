@@ -57,6 +57,8 @@ public class MainControl {
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
 
+        Regulations.startup(new GermanLawRegulations());
+
         // initialize roles
         Role administrator = UserDAO.getInstance().getRoleByName(ROLE_ADMINISTRATOR);
         if (administrator == null) {
