@@ -6,8 +6,19 @@ Im Folgenden wird anhand des aktualisierten Klassendiagramms gezeigt, was sich z
 In der view haben sich folgenden Änderungen ergeben:
 \VerbatimInput{view-diff}
 
+Die meisten Änderungen in der \emph{View} sind durch Vaadin entstanden. 
+Im speziellen mussten Methoden und Attribute angepasst oder hinzugefügt werden, 
+damit \emph{Vaadin} funktioniert.
+Es wurden auch drei neue Sichten hinzugefügt, \emph{AdminView}, \emph{SupervisorView} und \emph{TimeRecordView}, 
+dafür wurde auch das Packet \emph{view.forms} erstellt.
+Die abstrakte \emph{View} wurde gelöscht, da mit \emph{Vaadin} das gewünschte Entwurfsmuster 
+ohne weitere Aufwendungen nicht umsetzbar war.
+Die \emph{MessageView} wurde entfernt aufgrund einer Änderung der Anforderungen an das Projekt.
+
 In der conrtol haben sich folgende Änderungen ergeben:
 \VerbatimInput{control-diff}
+
+
 Im model haben sich folgende Änderungen ergeben: %TODO tex syntax
 \VerbatimInput{model-diff}
 Daraus ergibt sich das aktualisierte Klassendiagramm:
