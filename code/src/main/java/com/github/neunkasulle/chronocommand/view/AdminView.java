@@ -103,15 +103,15 @@ public class AdminView extends BaseView {
             }
         });
 
-        recordList.setColumns("username", "realname", "email", "supervisor", "hoursPerMonth", "roleSummary");
+        recordList.setColumns("username", "realname", "email", "hoursPerMonth", "roleSummary", "supervisor");
 
-        recordList.setColumnOrder("username", "realname", "email", "supervisor", "hoursPerMonth", "roleSummary");
+        recordList.setColumnOrder("username", "realname", "email", "hoursPerMonth", "roleSummary", "supervisor");
         recordList.getDefaultHeaderRow().getCell("username").setHtml("Username");
         recordList.getDefaultHeaderRow().getCell("realname").setHtml("Name");
         recordList.getDefaultHeaderRow().getCell("email").setHtml("Email");
-        recordList.getDefaultHeaderRow().getCell("supervisor").setHtml("Supervisor");
         recordList.getDefaultHeaderRow().getCell("hoursPerMonth").setHtml("Hours per month");
         recordList.getDefaultHeaderRow().getCell("roleSummary").setHtml("Roles");
+        recordList.getDefaultHeaderRow().getCell("supervisor").setHtml("Supervisor");
 
         // The action form
 
