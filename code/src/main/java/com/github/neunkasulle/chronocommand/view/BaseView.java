@@ -50,13 +50,13 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                  /* Other actions  */
 
-                final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
+                final Button newTimeRecordButton = new Button("New time record");
                 newTimeRecordButton.addClickListener(event -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.NEWTIMERECORDVIEW);
                 });
                 extraPane.addComponent(newTimeRecordButton);
 
-                final Button submitTimeRecordButton = new Button("Stundenzetten abschicken");
+                final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     //TODO: Implement submission
                 });
@@ -68,14 +68,14 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 //TODO: fill me!
                 /* Betreuer */
 
-                final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
+                final Button newTimeRecordButton = new Button("New time record");
                 newTimeRecordButton.addClickListener(event -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.NEWTIMERECORDVIEW);
                 });
                 extraPane.addComponent(newTimeRecordButton);
                 newTimeRecordButton.setSizeFull();
 
-                final Button submitTimeRecordButton = new Button("Stundenzettel abschicken");
+                final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     try {
                         TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue(), LoginControl.getInstance().getCurrentUser());
@@ -87,7 +87,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 submitTimeRecordButton.setSizeFull();
 
 
-                final Button listOfMyProletarierButton = new Button("Meine HIWIs anzeigen");
+                final Button listOfMyProletarierButton = new Button("Show Supervised HIWIs");
                 listOfMyProletarierButton.setSizeFull();
                 listOfMyProletarierButton.addClickListener(e -> {
                     extraPane.getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
@@ -127,8 +127,9 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button listOfAllProletarierButton = new Button("Show all users");
                 listOfAllProletarierButton.setSizeFull();
-                listOfAllProletarierButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.ADMINVIEW));
                 extraPane.addComponent(listOfAllProletarierButton);
+                listOfAllProletarierButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.ADMINVIEW));
+
 
                 final Button createNewAccount = new Button("Create new account");
                 createNewAccount.setSizeFull();
