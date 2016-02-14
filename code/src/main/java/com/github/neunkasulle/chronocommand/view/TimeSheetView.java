@@ -38,9 +38,6 @@ public class TimeSheetView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
-     
-
-
         final HorizontalLayout header = new HorizontalLayout(new Label("Timesheet of:"),
                 new Label("Max Mustermann"));
         header.setId("page-header");
@@ -48,10 +45,11 @@ public class TimeSheetView extends BaseView {
         header.setSpacing(true);
         contentPane.addComponent(header);
 
+        /*
         final TextField filter = new TextField();
         contentPane.addComponent(filter);
         filter.setSizeFull();
-
+        */
         /* Form & table */
 
         final HorizontalLayout formContent = new HorizontalLayout();
