@@ -29,8 +29,14 @@ um andere Funktionalitäten und Änderungen im \emph{Backend} korrekt zu unterst
 Im model haben sich folgende Änderungen ergeben: %TODO tex syntax
 \VerbatimInput{model-diff}
 
-%text
-
+Die drei Rollen \emph{Proletarier}, \emph{Supervisor} und \emph{Administrator} wurden gelöscht, da durch 
+die Änderung von \emph{Role} von Enum zu Klasse, sie unnötig wurden. Die Klasse \emph{UserDAO} wurde ebenso gelöscht.
+\emph{Message} wurde zu Enum, da die Anforderungen sich geändert haben und 
+die Klasse mit ursprünglicher Funktionalität nicht mehr nötig ist. Mit dazu wird auch die Klasse \emph{MessageDAO} nicht mehr benötigt.
+Wir können auch die Klasse \emph{Session} löschen, da die Verwaltung von Sessions komplett von \emph{Shiro} übernommen wird.
+Im \emph{TimeSheetDAO} wurden, vorallem zur \emph{TimeSheetControl}, passende Methoden hinzugefügt.
+Von der gelöschten \emph{Proletarier} Klasse wurden die Methoden in \emph{User} verschoben.
+Zur Unterstützung der DAO Klassen wurde zusätlich die Klasse \emph{DAOHelper} implementiert.
 
 Daraus ergibt sich das aktualisierte Klassendiagramm:
 

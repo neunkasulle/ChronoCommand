@@ -33,7 +33,6 @@ model
     Enum -> class
     [ +id:Long{readonly}, +name:String, +description:String, +permission:Set<String> |]
   --Session
-    (maybe deleted cause shiro)
   TimeRecord
 
   TimeSheet
@@ -63,4 +62,10 @@ model
       ++isPermitted(String):bool
       ++getPrimaryRole:Role
       [ +mailFlag:bool, +isDisabled:bool, +salt:String ||]
-  --UserDAO
+  UserDAO
+      addUser -> saveUser
+      --deleteUser
+      ++findUserByEmail(email:String):List<User>
+      ++saveRole(role:Role)
+      ++getRoleByName(name:String):Role
+ 
