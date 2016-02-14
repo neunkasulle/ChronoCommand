@@ -109,10 +109,6 @@ public class MainUI extends UI implements ViewChangeListener {
             event.getNavigator().navigateTo(LOGINVIEW);
             return false;
         }
-        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) && TIMERECORDVIEW.equals(event.getViewName())) {
-            event.getNavigator().navigateTo(ADMINVIEW);
-            return false;
-        }
 
         if ("".equals(event.getViewName())) {
             event.getNavigator().navigateTo(LOGINVIEW);

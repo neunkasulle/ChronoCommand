@@ -78,7 +78,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     try {
-                        TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue(), LoginControl.getInstance().getCurrentUser());
+                        TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue());
                     } catch(ChronoCommandException e) {
                         Notification.show("Failed to lock timesheet: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
                     }

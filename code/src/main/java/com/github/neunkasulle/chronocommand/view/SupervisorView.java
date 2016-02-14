@@ -26,7 +26,7 @@ public class SupervisorView extends BaseView {
     private final Grid recordList = new Grid();
 
     private final SupervisorCtrlForm form = new SupervisorCtrlForm( e -> {
-        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
+        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW + "/" + this.form.getFormFieldBinding().getItemDataSource().getBean().getUsername());
     }, e -> {
         this.recordList.select(null);
         refreshSupervisedUsers();

@@ -30,7 +30,7 @@ public class TimeSheetControlTest extends UeberTest{
             timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), new Category("FUU"), "BAR" , userDAO.findUser("tom"));
         }
         catch (ChronoCommandException e) {
-            assert(e.getReason() == Reason.CATEGORYNOTFOUND);
+            assert(e.getReason() == Reason.PROJECTNOTFOUND);
             throw e;
         }
 
@@ -83,7 +83,7 @@ public class TimeSheetControlTest extends UeberTest{
             timeSheetControl.closeTimeRecord(null, "a", userDAO.findUser("tom"));
         }
         catch (ChronoCommandException ex) {
-            assertTrue(ex.getReason() == Reason.MISSINGCATEGORY);
+            assertTrue(ex.getReason() == Reason.MISSINGPROJECT);
         }
     }
 
@@ -118,9 +118,9 @@ public class TimeSheetControlTest extends UeberTest{
         UserDAO userDAO = UserDAO.getInstance();
         Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
 
-            TimeSheet timeSheet = timeSheetControl.getTimeSheet(Month.JANUARY, 2016).get(0);
+            TimeSheet timeSheet = timeSheetControl.getTimeSheets(Month.JANUARY, 2016).get(0);
             assertNotNull(timeSheet);
-            timeSheetControl.lockTimeSheet(timeSheet, userDAO.findUser("tom"));
+            timeSheetControl.lockTimeSheet(timeSheet);
             timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, " ", timeSheet.getUser());
     }
 

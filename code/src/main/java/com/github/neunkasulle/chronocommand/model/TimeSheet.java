@@ -26,7 +26,7 @@ public class TimeSheet {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated
     @JoinTable(name = "cc_timesheet_messages")
     private List<Message> messages;
@@ -43,7 +43,7 @@ public class TimeSheet {
     @Basic(optional = false)
     private int requiredHoursPerMonth;
 
-    private int currentMinutesThisMonth;
+    private int currentMinutesThisMonth = 0;
 
     protected TimeSheet() {
         // hibernate needs this
@@ -69,6 +69,9 @@ public class TimeSheet {
         return currentMinutesThisMonth;
     }
 
+    public void setCurrentMinutesThisMonth(int currentMinutesThisMonth) {
+        this.currentMinutesThisMonth = currentMinutesThisMonth;
+    }
 
     public boolean setTimeSheetState(TimeSheetState state) {
         this.state = state;

@@ -10,6 +10,7 @@ import com.vaadin.ui.FormLayout;
  */
 public class TimeSheetForm extends FormLayout {
 
+    private Button showTimeRecords = new Button("Show Timerecords");
     private Button exportPDF = new Button("Export PDF");
     private Button setOK = new Button("Mark as ok");
     private Button fireIssue = new Button("Mark as not ok");
@@ -27,23 +28,29 @@ public class TimeSheetForm extends FormLayout {
         return this.formFieldBindings;
     }
 
-    public TimeSheetForm(final Button.ClickListener exportPDFOperation,
+    public TimeSheetForm(final Button.ClickListener showTimeRecordsOperation,
+                         final Button.ClickListener exportPDFOperation,
                          final Button.ClickListener setOKOperation,
-                         final Button.ClickListener  fireIssueOperation,
+                         final Button.ClickListener fireIssueOperation,
                          final Button.ClickListener cancelOperation) {
+        this.showTimeRecords.addClickListener(showTimeRecordsOperation);
         this.exportPDF.addClickListener(exportPDFOperation);
         this.setOK.addClickListener(setOKOperation);
         this.fireIssue.addClickListener(fireIssueOperation);
         this.cancel.addClickListener(cancelOperation);
 
-        addComponents(exportPDF, setOK, fireIssue, cancel);
+        addComponents(showTimeRecords, exportPDF, setOK, fireIssue, cancel);
+    }
+
+    public Button getExportPDFBtn() {
+        return exportPDF;
     }
 
     public void edit(final TimeSheet object) {
         this.object = object;
         if (object != null) {
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(object, this);
-            exportPDF.focus();
+            showTimeRecords.focus();
         }
         setVisible(object != null);
     }

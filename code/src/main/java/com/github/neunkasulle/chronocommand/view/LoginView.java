@@ -4,6 +4,7 @@ import com.ejt.vaadin.loginform.LoginForm;
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.Reason;
+import com.github.neunkasulle.chronocommand.model.Role;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.shiro.SecurityUtils;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -83,7 +85,11 @@ public class LoginView extends LoginForm implements View {
         try {
             LoginControl.getInstance().login(loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue());
             authenticationFailed.setVisible(false);
-            getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
+            if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+                getUI().getNavigator().navigateTo(MainUI.ADMINVIEW);
+            } else {
+                getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
+            }
         } catch(ChronoCommandException e) {
             authenticationFailed.setValue(e.getReason().toString());
             authenticationFailed.setVisible(true);

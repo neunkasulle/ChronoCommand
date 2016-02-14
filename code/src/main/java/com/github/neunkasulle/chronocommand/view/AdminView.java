@@ -43,7 +43,7 @@ public class AdminView extends BaseView {
         getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
     }, e -> {
         // show timesheets
-        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
+        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW + "/" + this.form.getFormFieldBinding().getItemDataSource().getBean().getUsername());
     }, e -> {
         // cancel
         this.recordList.select(null);

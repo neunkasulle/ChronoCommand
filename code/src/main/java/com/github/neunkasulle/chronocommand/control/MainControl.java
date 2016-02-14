@@ -133,6 +133,13 @@ public class MainControl {
                         LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
+
+                TimeSheet mattTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("matt"), Month.FEBRUARY, 2016);
+                TimeSheetDAO.getInstance().saveTimeSheet(mattTimeSheet);
+
+                TimeRecord timeRecMatt = new TimeRecord(LocalDateTime.of(2016, 2, 4, 10, 0), LocalDateTime.of(2016, 2, 4, 15, 23),
+                        CategoryDAO.getInstance().findCategoryByString("Procrastination"), taetigkeit, mattTimeSheet);
+                TimeSheetDAO.getInstance().saveTimeRecord(timeRecMatt);
             }
             catch (ChronoCommandException e) {
                     LOGGER.error("Save time record failed", e);

@@ -6,8 +6,8 @@ package com.github.neunkasulle.chronocommand.model;
  */
 public enum Reason {
     BADCREDENTIALS("Username or password incorrect"),
-    CATEGORYNOTFOUND("Category not found"),
-    MISSINGCATEGORY("Missing category"),
+    PROJECTNOTFOUND("Project not found"),
+    MISSINGPROJECT("Missing project"),
     MISSINGDESCRIPTION("Missing description"),
     CATEGORYALREADYSPECIFIED("Category already specified"),
     USERALREADYEXISTS("User already exists"),
