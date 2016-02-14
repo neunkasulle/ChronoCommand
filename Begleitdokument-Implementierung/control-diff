@@ -36,9 +36,9 @@ control
       ++getLatestTimeRecord(user:User):TimeRecord
       addTimeToTimeSheet(time:Zeit) -> (beginn:LocalDateTime, end:LocalDateTime, category:Category, description:String, user:User)
 %      --getSupervisedTimeSheets(month:int, year:int)
-      lockTimeSheet(...):bool -> (timeSheet:TimeSheet, user:User)
-      unlockTimeSheet(...):bool -> (timeSheet:TimeSheet, user:User)
-      approveTimeSheet(...):bool -> (timeSheet:TimeSheet, user:User)
+      lockTimeSheet(...):bool -> (timeSheet:TimeSheet)
+      unlockTimeSheet(...):bool -> (timeSheet:TimeSheet)
+      approveTimeSheet(...):bool -> (timeSheet:TimeSheet)
       --filtersChanged
       printCheckedTimeSheets(month:int, year:int):pdf -> (month:int):File
       printAllTimeSheets(month:int, year:int):pdf -> (month:int):File
