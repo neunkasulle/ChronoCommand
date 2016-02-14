@@ -1,23 +1,28 @@
 package com.github.neunkasulle.chronocommand.model;
 
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
+import java.util.*;
 
 /**
  * nicht überprüft werden Ruhezeiteinhaltungen, da es bis jz keine sinnvolle möglichkeit gibt
  * das zu überprüfen.
  */
 public class GermanLawRegulations extends Regulations {
+    private Map<LocalDate, String> holidays = new HashMap<>();
+    private Set<Integer> yearsInitialized = new HashSet<>();
+
+    public GermanLawRegulations() {
+        readHolidays(LocalDate.now().getYear());
+    }
 
     @Override
     public String checkTimeSheet(TimeSheet timeSheet) {
         List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
-        return super.checkTimeSheet(timeSheet);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -69,6 +74,8 @@ public class GermanLawRegulations extends Regulations {
      * @return
      */
     private String checkSundayWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
+        readHolidays(timeSheet.getYear());
+
         String result = "";
         for (TimeRecord timeRecord : timeRecords) {
             if (timeRecord.getBeginning().getDayOfWeek() == DayOfWeek.SUNDAY) {
@@ -141,4 +148,63 @@ public class GermanLawRegulations extends Regulations {
         return result;
     }
 
+    private void readHolidays(int year) {
+        if (yearsInitialized.contains(year)) {
+            return;
+        }
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(getClass().getClassLoader().getResource("feiertage-bw.bin").getPath()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (!line.isEmpty()) {
+                    String[] tmp = line.split(":");
+                    if (tmp.length != 2) {
+                        throw new Exception();
+                    }
+                    String holidayName = tmp[0].trim();
+                    String dateStr = tmp[1].trim();
+                    if (dateStr.charAt(0) == '+' || dateStr.charAt(0) == '-') {
+                        int days = Integer.parseInt(dateStr.substring(1));
+                        LocalDate date = getEasterDate(year);
+                        if (dateStr.charAt(0) == '+') {
+                            date.plusDays(days);
+                        } else {
+                            date.minusDays(days);
+                        }
+                        System.out.println(date.toString() + holidayName);
+                    } else {
+                        String[] daymonth = dateStr.split("\\.");
+                        int day = Integer.parseInt(daymonth[0]);
+                        int month = Integer.parseInt(daymonth[1]);
+                        LocalDate date = LocalDate.of(year, month, day);
+                        holidays.put(date, holidayName);
+                    }
+                }
+            }
+            bufferedReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //TODO
+        }
+        yearsInitialized.add(year);
+    }
+
+    public LocalDate getEasterDate(int year) throws ChronoCommandException {
+        switch (year) {
+            case 2015:
+                return LocalDate.of(2015, 4, 5);
+            case 2016:
+                return LocalDate.of(2016, 3, 27);
+            case 2017:
+                return LocalDate.of(2017, 4, 16);
+            case 2018:
+                return LocalDate.of(2018, 4, 1);
+            case 2019:
+                return LocalDate.of(2019, 4, 21);
+            case 2020:
+                return LocalDate.of(2020, 4, 12);
+            default:
+                throw new ChronoCommandException(Reason.INVALIDNUMBER);
+        }
+    }
 }
