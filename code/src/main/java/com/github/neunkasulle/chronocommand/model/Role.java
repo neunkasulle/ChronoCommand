@@ -33,7 +33,7 @@ public class Role {
     @Column(length = 100)
     private String name;
 
-    @Basic//(optional = false)
+    @Basic(optional = false)
     @Column(length = 255)
     private String description;
 
@@ -52,8 +52,9 @@ public class Role {
      * Contructs a new role, without permissions
      * @param name the name of the new role
      */
-    public Role(String name, boolean primaryRole) {
+    public Role(String name, String description, boolean primaryRole) {
         this.name = name;
+        this.description = description;
         this.primaryRole = primaryRole;
     }
 
@@ -122,7 +123,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return name;
+        return description;
     }
 
     @Override

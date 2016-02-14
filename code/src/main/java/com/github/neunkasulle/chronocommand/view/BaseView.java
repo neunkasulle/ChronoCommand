@@ -125,6 +125,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 accountManagementSelection.setInputPrompt("Operation auswählen");
                 extraPane.addComponent(accountManagementSelection);*/
 
+                final Button listOfAllProletarierButton = new Button("Show all users");
+                listOfAllProletarierButton.setSizeFull();
+                listOfAllProletarierButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.ADMINVIEW));
+                extraPane.addComponent(listOfAllProletarierButton);
+
                 final Button createNewAccount = new Button("Create new account");
                 createNewAccount.setSizeFull();
                 createNewAccount.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.CREATEUSERVIEW));
@@ -144,19 +149,12 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 });
                 extraPane.addComponent(deleteAccount);*/
 
-                final Button listOfAllProletarierButton = new Button("Show all HIWIs");
-                listOfAllProletarierButton.setSizeFull();
-                listOfAllProletarierButton.addClickListener(event -> {
-                    //TODO: Get the list of all HIWIs and show it in the Grid.
-                });
-                extraPane.addComponent(listOfAllProletarierButton);
-
-                final Button listOfAllSupervisorButton = new Button("Show all supervisors");
+                /*final Button listOfAllSupervisorButton = new Button("Show all supervisors");
                 listOfAllSupervisorButton.setSizeFull();
                 listOfAllSupervisorButton.addClickListener(event -> {
                     //TODO: Get the list of all HIWIs and show it in the Grid.
                 });
-                extraPane.addComponent(listOfAllSupervisorButton);
+                extraPane.addComponent(listOfAllSupervisorButton);*/
 
             }
 
@@ -325,6 +323,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
             /* Date picker */
 
+            /* TODO has no functionality right now
             final InlineDateField calendar = new InlineDateField();
             calendar.setValue(new Date());
             calendar.setImmediate(true);
@@ -333,7 +332,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             calendar.addValueChangeListener(e -> Notification.show("Value changed:",
                     String.valueOf(e.getProperty().getValue()),
                     Notification.Type.TRAY_NOTIFICATION));
-            controlPanel.addComponent(calendar);
+            controlPanel.addComponent(calendar);*/
 
             /* Combo box */
 

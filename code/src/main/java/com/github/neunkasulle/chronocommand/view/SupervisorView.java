@@ -37,16 +37,14 @@ public class SupervisorView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
-        final HorizontalLayout header = new HorizontalLayout(new Label("Mitarbeiter von Betreuer:"),
-                new Label("Max Mustermann"));
+        final TextField filter = new TextField();
+        filter.setSizeFull();
+
+        final HorizontalLayout header = new HorizontalLayout(new Label("Supervised HIWIs:"), filter);
         header.setId("page-header");
         header.setSizeFull();
         header.setSpacing(true);
         contentPane.addComponent(header);
-
-        final TextField filter = new TextField();
-        contentPane.addComponent(filter);
-        filter.setSizeFull();
 
         /* Form & table */
 
@@ -65,7 +63,7 @@ public class SupervisorView extends BaseView {
         recordList.setSizeFull();
 
         //Add generated columns
-        gpcontainer.addGeneratedProperty("roleSumary", new PropertyValueGenerator<String>() {
+        gpcontainer.addGeneratedProperty("roleSummary", new PropertyValueGenerator<String>() {
             @Override
             public String getValue(final Item item, final Object itemId,
                                    final Object propertyId) {
@@ -75,7 +73,7 @@ public class SupervisorView extends BaseView {
                 final StringBuilder ruleStr = new StringBuilder();
 
                 for (final Role role : roles) {
-                    ruleStr.append(role.getName());
+                    ruleStr.append(role.getDescription());
                     ruleStr.append(" ");
                 }
 
@@ -88,20 +86,15 @@ public class SupervisorView extends BaseView {
             }
         });
 
-        //Remove unused columns
-        recordList.removeColumn("id");
-        recordList.removeColumn("password");
-        recordList.removeColumn("roles");
-        recordList.removeColumn("mailFlag");
-        recordList.removeColumn("disabled");
-        recordList.removeColumn("supervisor");
 
-        recordList.setColumnOrder("username", "realname", "email", "roleSumary", "hoursPerMonth");
-        recordList.getDefaultHeaderRow().getCell("username").setHtml("Benutzername");
+        recordList.setColumns("username", "realname", "email", "hoursPerMonth", "roleSummary");
+
+        recordList.setColumnOrder("username", "realname", "email", "hoursPerMonth", "roleSummary");
+        recordList.getDefaultHeaderRow().getCell("username").setHtml("Username");
         recordList.getDefaultHeaderRow().getCell("realname").setHtml("Name");
-        recordList.getDefaultHeaderRow().getCell("email").setHtml("E-Mail");
-        recordList.getDefaultHeaderRow().getCell("roleSumary").setHtml("Rollen");
-        recordList.getDefaultHeaderRow().getCell("hoursPerMonth").setHtml("Stunden / Woche");
+        recordList.getDefaultHeaderRow().getCell("email").setHtml("Email");
+        recordList.getDefaultHeaderRow().getCell("hoursPerMonth").setHtml("Hours per month");
+        recordList.getDefaultHeaderRow().getCell("roleSummary").setHtml("Roles");
 
         // The action form
 

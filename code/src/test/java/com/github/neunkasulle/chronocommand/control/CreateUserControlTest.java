@@ -21,7 +21,7 @@ public class CreateUserControlTest extends UeberTest {
 
         createUserControl = CreateUserControl.getInstance();
 
-        Role admin = new Role("admin", true);
+        Role admin = new Role("admin", "a", true);
         UserDAO.getInstance().saveRole(admin);
 
         createUserControl.createUser(admin,"Chutulu", "chutulu@eatsyour.soul","1234", "dè real Ĉthulh⊂", null, 80);
@@ -34,13 +34,13 @@ public class CreateUserControlTest extends UeberTest {
     public void testCreateExistingUser() throws ChronoCommandException{
         CreateUserControl createUserControl;
         createUserControl = CreateUserControl.getInstance();
-        createUserControl.createUser(new Role("admin", true),"tom", "chutulu@eatsyour.soul","1234", "dè real Ĉthulh⊂", null, 999999999);
+        createUserControl.createUser(new Role("admin", "a", true),"tom", "chutulu@eatsyour.soul","1234", "dè real Ĉthulh⊂", null, 999999999);
     }
 
     @Test(expected = ChronoCommandException.class)
     public void testCreateExistingEmail()throws ChronoCommandException {
         CreateUserControl createUserControl;
         createUserControl = CreateUserControl.getInstance();
-        createUserControl.createUser(new Role("admin", true),"...", "tom@chronocommand.eu","1234", "dè real Ĉthulh⊂", null, 999999999);
+        createUserControl.createUser(new Role("admin", "a", true),"...", "tom@chronocommand.eu","1234", "dè real Ĉthulh⊂", null, 999999999);
     }
 }

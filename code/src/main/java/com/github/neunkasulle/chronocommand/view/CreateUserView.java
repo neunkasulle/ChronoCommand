@@ -55,7 +55,6 @@ public class CreateUserView extends BaseView {
             }
         }
         selectRole.addValueChangeListener(event1 -> {
-            LOGGER.info(selectRole.getValue().toString());
             if (UserManagementControl.getInstance().getRoleByName(MainControl.ROLE_PROLETARIER).equals(selectRole.getValue())) {
                 selectSupervisor.setVisible(true);
                 hoursPerMonth.setVisible(true);
@@ -91,10 +90,10 @@ public class CreateUserView extends BaseView {
         contentPane.addComponent(hoursPerMonth);
 
         //TODO @Wang Xiaoming 想办法把前3个Field拉伸
-        final VerticalLayout userInfoInput = new VerticalLayout();
+        /*final VerticalLayout userInfoInput = new VerticalLayout();
         userInfoInput.setSizeFull();
         userInfoInput.setSpacing(true);
-        contentPane.addComponent(userInfoInput);
+        contentPane.addComponent(userInfoInput);*/
 
         //Username Input
         usernameInputField = new TextField("Username:");
@@ -173,6 +172,6 @@ public class CreateUserView extends BaseView {
     }
 
     private void clearAll() {
-
+        // TODO
     }
 }

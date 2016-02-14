@@ -8,6 +8,7 @@ public enum Reason {
     BADCREDENTIALS("Bad credentials"),
     CATEGORYNOTFOUND("Category not found"),
     MISSINGCATEGORY("Missing category"),
+    MISSINGDESCRIPTION("Missing description"),
     CATEGORYALREADYSPECIFIED("Category already specified"),
     USERALREADYEXISTS("User already exists"),
     EMAILALREADYINUSE("Email already "),
@@ -21,6 +22,7 @@ public enum Reason {
     INVALIDEMAIL("Invalid email address"),
     USERNAMETAKEN("Username already taken"),
     STRINGTOOLONG("Input string is too long"),
+    INVALIDHOURSPERMONTH("Invalid number of hours per month"),
     ;
 
     private final String text;

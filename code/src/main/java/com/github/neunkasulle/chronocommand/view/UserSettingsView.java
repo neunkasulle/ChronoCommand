@@ -101,7 +101,7 @@ public class UserSettingsView extends BaseView {
 
             try {
                 UserManagementControl.getInstance().editUser(user, usernameEditInputField.getValue(), realnameEditInputField.getValue(),
-                        emailEditInputField.getValue(), passwordFirstTimeEditInputField.getValue());
+                        emailEditInputField.getValue(), passwordFirstTimeEditInputField.getValue(), user.getSupervisor(), user.getHoursPerMonth(), user.isDisabled());
             } catch(ChronoCommandException e) {
                 Notification.show("Failed to save settings: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
             }

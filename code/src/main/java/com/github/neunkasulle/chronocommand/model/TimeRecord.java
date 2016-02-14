@@ -194,7 +194,11 @@ public class TimeRecord {
      * @param end the new end time
      */
     public void setEnding(LocalDateTime end) {
-        this.ending = end.withSecond(0).withNano(0);
+        if (end != null) {
+            this.ending = end.withSecond(0).withNano(0);
+        } else {
+            this.ending = null;
+        }
     }
 
     public TimeSheet getTimeSheet() {
