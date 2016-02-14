@@ -230,6 +230,7 @@ public class TimeSheetControl {
         if (result.isEmpty()) {
             timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
             LOGGER.info("Locked:" + timeSheet.getMonth() + user.getUsername());
+            this.sendEmail(user.getSupervisor(), "New lockd time sheet from" + user.getUsername());
         } else {
             throw new ChronoCommandException(Reason.TIMESHEETINCOMPLETE, result);
         }
@@ -247,6 +248,7 @@ public class TimeSheetControl {
         }
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
         LOGGER.info("unlocked:" + timeSheet.getMonth() + user.getUsername());
+        this.sendEmail(user, "Time sheet has been unlocked again");
     }
 
     /**
@@ -259,7 +261,7 @@ public class TimeSheetControl {
         }
         LOGGER.info("checked:" + timeSheet.getMonth() + user.getUsername());
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
-
+        this.sendEmail(user, "Your time sheet has been approved");
     }
 
     /**
