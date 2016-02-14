@@ -75,21 +75,28 @@ public class TimeSheetControlTest extends UeberTest{
     }
 
     @Test
-    public void editTimeRecordTest() {
-        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
-        UserDAO userDAO = UserDAO.getInstance();
-    }
-
-    @Test
-    public void closeTimeRecordTest() {
+    public void checkForMissingCategory() {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         try {
-            timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
-            timeSheetControl.closeTimeRecord(null, " ", userDAO.findUser("tom"));
+            timeSheetControl.newTimeRecord(null, "a", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(null, "a", userDAO.findUser("tom"));
         }
         catch (ChronoCommandException ex) {
             assertTrue(ex.getReason() == Reason.MISSINGCATEGORY);
+        }
+    }
+
+    @Test
+    public void checkForMissingDescription() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        try {
+            timeSheetControl.newTimeRecord(CategoryDAO.getInstance().findCategoryByString("Programming"), " ", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(null, " ", userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException ex) {
+            assertTrue(ex.getReason() == Reason.MISSINGDESCRIPTION);
         }
     }
 
@@ -104,7 +111,7 @@ public class TimeSheetControlTest extends UeberTest{
 
         assertTrue(timeRecord.getCategory() == null);
     }
-
+    @Ignore //schlägt immer nur im januar 2016 fehl.. ansonsten wird ein timerecord zum aktuellen timesheet hinzugefügt
     @Test
     public void lockTimeSheetTest() throws Exception{
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
@@ -150,7 +157,7 @@ public class TimeSheetControlTest extends UeberTest{
 
     @Ignore
     @Test
-    public void emailtest() throws Exception {
+    public void emailTest() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         User user = new User(null, "neun", "jan@zenkner.eu", "1234", "Fuu Bar", null, 0);
 
