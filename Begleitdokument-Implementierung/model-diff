@@ -64,9 +64,3 @@ model
       ++getPrimaryRole:Role
       [ +mailFlag:bool, +isDisabled:bool, +salt:String ||]
   --UserDAO
-(     addUser -> saveUser
-      --deleteUser
-      ++findUserByEmail(email:String):List<User>
-      ++saveRole(role:Role)
-      ++getRoleByName(name:String):Role
-)
