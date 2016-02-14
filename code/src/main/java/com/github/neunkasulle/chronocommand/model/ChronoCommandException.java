@@ -8,12 +8,25 @@ package com.github.neunkasulle.chronocommand.model;
 public class ChronoCommandException extends Exception {
     private final Reason reason;
 
+    private final String details;
+
     public ChronoCommandException(Reason reason) {
         super();
         this.reason = reason;
+        this.details = "";
+    }
+
+    public ChronoCommandException(Reason reason, String details) {
+        super();
+        this.reason = reason;
+        this.details = details;
     }
 
     public Reason getReason() {
         return reason;
+    }
+
+    public String getDetails() {
+        return details;
     }
 }

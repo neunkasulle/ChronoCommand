@@ -226,9 +226,13 @@ public class TimeSheetControl {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 
-        timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
-        LOGGER.info("Locked:" + timeSheet.getMonth() + user.getUsername());
-
+        String result = Regulations.getInstance().checkTimeSheet(timeSheet);
+        if (result.isEmpty()) {
+            timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
+            LOGGER.info("Locked:" + timeSheet.getMonth() + user.getUsername());
+        } else {
+            throw new ChronoCommandException(Reason.TIMESHEETINCOMPLETE, result);
+        }
     }
 
     /**
