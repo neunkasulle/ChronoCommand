@@ -18,11 +18,20 @@ Die \emph{MessageView} wurde entfernt aufgrund einer Änderung der Anforderungen
 In der conrtol haben sich folgende Änderungen ergeben:
 \VerbatimInput{control-diff}
 
-%text
-
+Wie auch zuerst in der \emph{View} angedacht, wurde auch in der \emph{Control} die abstrakte \emph{Control} Klasse 
+nicht wie beabsichtigt angewendet werden.
+Es wurden zwei neue Klassen erstellt, welche für den \emph{Scheduler} benötigt werden. 
+Die Klasse \emph{Timer} wurde zu \emph{SchedulerHandler} umbenannt, damit der Name besser zur Funktionalität passt.
+Die Methoden aus der \emph{ReminderControl} wurden in das \emph{Model} verschoben.
+Weitere Methoden mussten unter anderem zur \emph{UserManagementControl} und \emph{TimeSheetControl} hinzugefügt werden, 
+um andere Funktionalitäten und Änderungen im \emph{Backend} korrekt zu unterstützen.
 
 Im model haben sich folgende Änderungen ergeben: %TODO tex syntax
 \VerbatimInput{model-diff}
+
+%text
+
+
 Daraus ergibt sich das aktualisierte Klassendiagramm:
 
 %neues Klassendiagramm
