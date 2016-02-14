@@ -50,22 +50,6 @@ public class LoginControlTest extends UeberTest {
     }
 
     @Test
-    public void isLoggedInTest() {
-        LoginControl loginControl = LoginControl.getInstance();
-        boolean theONETruth;
-        try {
-            loginControl.login("tom", "cat", true);
-
-        }
-        catch (ChronoCommandException ex) {
-            assertFalse(ex.getReason() == Reason.BADCREDENTIALS);
-        }
-        theONETruth = loginControl.isLoggedIn();
-
-        assert(theONETruth);
-    }
-
-    @Test
     public void getUserTest() {
         LoginControl loginControl = LoginControl.getInstance();
         try {
@@ -84,7 +68,7 @@ public class LoginControlTest extends UeberTest {
     }
 
     @Test
-    public void getUserTestFailing() {
+    public void getUserTestFailing()  {
         LoginControl loginControl = LoginControl.getInstance();
 
         try {
