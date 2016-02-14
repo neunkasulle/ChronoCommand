@@ -30,7 +30,7 @@ public class TimeSheetControl {
     private static final String NEWTIMESHEET = "New time sheet created";
     private static final String LOCKED = "Time sheet is locked";
     private static final String MISSCAT  = "Missing category";
-
+    private static final String MISSDESC  = "Missing description";
     private static TimeSheetControl ourInstance = new TimeSheetControl();
 
     private TimeSheetControl() {
@@ -161,7 +161,10 @@ public class TimeSheetControl {
             LOGGER.error(MISSCAT);
             throw new ChronoCommandException(Reason.MISSINGCATEGORY);
         }
-
+        if (description.isEmpty() && timeRecord.getDescription().isEmpty()) {
+            LOGGER.error(MISSDESC);
+            throw new ChronoCommandException(Reason.MISSINGDESCRIPTION);
+        }
         timeRecord.setCategory(category);
         timeRecord.setDescription(description);
         timeRecord.setEnding(LocalDateTime.now());

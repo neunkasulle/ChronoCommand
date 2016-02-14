@@ -8,6 +8,7 @@ public enum Reason {
     BADCREDENTIALS("Bad credentials"),
     CATEGORYNOTFOUND("Category not found"),
     MISSINGCATEGORY("Missing category"),
+    MISSINGDESCRIPTION("Missing description"),
     CATEGORYALREADYSPECIFIED("Category already specified"),
     USERALREADYEXISTS("User already exists"),
     EMAILALREADYINUSE("Email already "),
