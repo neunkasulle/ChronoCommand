@@ -35,10 +35,12 @@ public class SupervisorView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
+        /*
         final TextField filter = new TextField();
         filter.setSizeFull();
+        */
 
-        final HorizontalLayout header = new HorizontalLayout(new Label("Supervised HIWIs:"), filter);
+        final HorizontalLayout header = new HorizontalLayout(new Label("Supervised HIWIs:"));
         header.setId("page-header");
         header.setSizeFull();
         header.setSpacing(true);
