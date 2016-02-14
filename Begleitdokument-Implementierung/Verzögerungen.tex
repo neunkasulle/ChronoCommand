@@ -8,22 +8,23 @@ beschrieben wird, welche Datenbank verwendet wird. Wir haben uns der Einfachheit
 
 
 \subsection{view} %TODO jannis und xiaoming
+
 \subsection{Shiro}
-Shiro dient der Rechte und Sessionverwaltung von Usern.
-Grundlegend hat man in Shiro die möglichkeit die Default Implementierung von shiro zu nutzen, oder mithilfe der Interfaces
+\emph{Shiro} dient der Rechte- und Sessionverwaltung von Usern.
+Grundlegend gibt es in \emph{Shiro} die Möglichkeit die default Implementierung von \emph{Shiro} zu nutzen, oder mithilfe der Interfaces
 eigene Implementierungen und/oder Spezialfällle zu behandeln.
-Durch diesen aufbau gestaltet sich eine Implentation Shiros schwierig, da die Einstiegshilfen wenig abdecken und das Reference Manual
-im gegenzug bei weitem zu ausladend gestaltet ist. Um Shiro vollständig zu Implementieren war in userem Fall von nöten, mithilfe der
-größeren Conding Samples aus der Shiro Source eine funktionierende Shiro Implemtierung für unseren Use Case zu schaffen.
-Darüber hinaus war zum Zeitpunkt der Implementierung die API der neusten Shiro Version nicht verfügbar, was durch die teilweise veralteten Coding Samples
+Durch diesen Aufbau gestaltet sich eine Implentation von \emph{Shiros} schwierig, da die Einstiegshilfen wenig abdecken und das Reference Manual
+im Gegenzug bei weitem zu ausladend gestaltet ist. Um \emph{Shiro} vollständig zu Implementieren war es in userem Fall nötig, mithilfe der
+größeren Coding Samples aus der \emph{Shiro} Source eine funktionierende \emph{Shiro} Implemtierung für unseren Use Case zu schaffen.
+Darüber hinaus war zum Zeitpunkt der Implementierung die API der neusten \emph{Shiro} Version nicht verfügbar, was durch die teilweise veralteten Coding Samples
  eine lauffähige Implementierung erschwerte.
  
-\subsection{quartz} %ToDo david
-Java Quartz ist das Framework, welches uns die Möglichkkeiten geboten hat Prozesse zu einem bestimmten Zeitpunkt auszuführen. Es gab eine Verzögerung im Zeitplan durch die fehlende Kenntnisse im Umgang mit Quartz bzw die Implementierung in das Projekt.
-Desweiteren hat sich auch ergeben, dass jeder Prozess, den wir über Quartz ausführen wollten, eine eigene Klasse benötigt. Als wir aber Quartz erfolgreich in das Projekt eingebunden hatten, war es nicht weiter schwierig die gewünschten Funktionen zu programmieren. Somit haben wir monatliche und wöchentliche Events, welche regelmäßig ausgelöst werden und leicht im Code geändert werden können.
+\subsection{quartz} 
+Java \emph{Quartz} ist das Framework, welches uns die Möglichkkeiten geboten hat Prozesse zu einem bestimmten Zeitpunkt auszuführen. Es gab eine Verzögerung im Zeitplan durch die fehlende Kenntnisse im Umgang mit \emph{Quartz} bzw die Implementierung in das Projekt.
+Desweiteren hat sich auch ergeben, dass jeder Prozess, den wir über \emph{Quartz} ausführen wollten, eine eigene Klasse benötigt. Als wir aber \emph{Quartz} erfolgreich in das Projekt eingebunden hatten, war es nicht weiter schwierig die gewünschten Funktionen zu programmieren. Somit haben wir monatliche und wöchentliche Events, welche regelmäßig ausgelöst werden und leicht im Code geändert werden können.
 
-\subsection{pdfbox} %TODO david
-Durch die wenigen Gedanken, die wir uns zum Thema pdfbox und dem Entwerfen eines Dokumentes, welches man als Stundenzettel benutzen kann, gemacht haben, hat die geplante Zeit für pdfbox nicht gereicht. Es war im Vorfeld klar, dass das Generieren eines Stundenzettels als PDF-Dokument, nicht einfach werden würde.
-Die Benutzung von pdfbox war dann aber doch leichter als erwartet, was uns zugute kam, da wir eine neue Vorlage für den Stundenzettel erstellen mussten. Wir wollten nicht die offizielle KIT-Vorlage als Stundenzettel benutzen, da dort mehr Informationen zum Ausfüllen benötigt wurden als wir erfassen. Es hätte dazu geführt, dass es nach dem Ausdrucken des Stundenzettels noch Felder zum Ausfüllen gegeben hätte, dies wollten wir vermeiden. Die von uns benutzte Vorlage passt genau zu unseren Anforderungen.
+\subsection{pdfbox}
+Durch die wenigen Gedanken, die wir uns zum Thema \emph{pdfbox} und dem Entwerfen eines Dokumentes, welches man als Stundenzettel benutzen kann, gemacht haben, hat die geplante Zeit für \emph{pdfbox} nicht gereicht. Es war im Vorfeld klar, dass das Generieren eines Stundenzettels als PDF-Dokument, nicht einfach werden würde.
+Die Benutzung von \emph{pdfbox} war dann aber doch leichter als erwartet, was uns zugute kam, da wir eine neue Vorlage für den Stundenzettel erstellen mussten. Wir wollten nicht die offizielle KIT-Vorlage als Stundenzettel benutzen, da dort mehr Informationen zum Ausfüllen benötigt wurden als wir erfassen. Es hätte dazu geführt, dass es nach dem Ausdrucken des Stundenzettels noch Felder zum Ausfüllen gegeben hätte, dies wollten wir vermeiden. Die von uns benutzte Vorlage passt genau zu unseren Anforderungen.
 
 %auf Umlaute achten!
