@@ -60,7 +60,7 @@ public class MainControl {
         // initialize roles
         Role administrator = UserDAO.getInstance().getRoleByName(ROLE_ADMINISTRATOR);
         if (administrator == null) {
-            administrator = new Role(ROLE_ADMINISTRATOR, true);
+            administrator = new Role(ROLE_ADMINISTRATOR, "Administrator", true);
             Set<String> administratorPermissions = new IdentitySet(1);
             administratorPermissions.add(Role.PERM_ADMINISTRATOR);
             administrator.setPermissions(administratorPermissions);
@@ -69,7 +69,7 @@ public class MainControl {
 
         Role supervisor = UserDAO.getInstance().getRoleByName(ROLE_SUPERVISOR);
         if (supervisor == null) {
-            supervisor = new Role(ROLE_SUPERVISOR, true);
+            supervisor = new Role(ROLE_SUPERVISOR, "Supervisor", true);
             Set<String> supervisorPermissions = new IdentitySet(2);
             supervisorPermissions.add(Role.PERM_SUPERVISOR);
             supervisorPermissions.add(Role.PERM_PROLETARIER);
@@ -79,7 +79,7 @@ public class MainControl {
 
         Role proletarier = UserDAO.getInstance().getRoleByName(ROLE_PROLETARIER);
         if (proletarier == null) {
-            proletarier = new Role(ROLE_PROLETARIER, true);
+            proletarier = new Role(ROLE_PROLETARIER, "HIWI", true);
             Set<String> proletarierPermissions = new IdentitySet(1);
             proletarierPermissions.add(Role.PERM_PROLETARIER);
             proletarier.setPermissions(proletarierPermissions);
@@ -88,7 +88,7 @@ public class MainControl {
 
         Role longhours = UserDAO.getInstance().getRoleByName(ROLE_LONGHOURS);
         if (longhours == null) {
-            longhours = new Role(ROLE_LONGHOURS, false);
+            longhours = new Role(ROLE_LONGHOURS, "Nightwork allowed", false);
             Set<String> longhourPermissions = new IdentitySet(1);
             longhourPermissions.add(Role.PERM_LONGHOURS);
             longhours.setPermissions(longhourPermissions);

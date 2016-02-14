@@ -256,9 +256,9 @@ public class User {
     }
 
     public boolean trimFraud(String string) {
-        if(string.trim().equals(string)) {
-            return true;
+        if (string.trim().equals(string)) {
+            return false;
         }
-        return false;
+        return true;
     }
 }
