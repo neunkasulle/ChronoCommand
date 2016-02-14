@@ -5,7 +5,7 @@ package com.github.neunkasulle.chronocommand.model;
  * Enum for internal exceptions reasons
  */
 public enum Reason {
-    BADCREDENTIALS("Bad credentials"),
+    BADCREDENTIALS("Username or password incorrect"),
     CATEGORYNOTFOUND("Category not found"),
     MISSINGCATEGORY("Missing category"),
     MISSINGDESCRIPTION("Missing description"),
@@ -23,6 +23,7 @@ public enum Reason {
     USERNAMETAKEN("Username already taken"),
     STRINGTOOLONG("Input string is too long"),
     INVALIDHOURSPERMONTH("Invalid number of hours per month"),
+    USERDISABLED("User account is disabled"),
     ;
 
     private final String text;
