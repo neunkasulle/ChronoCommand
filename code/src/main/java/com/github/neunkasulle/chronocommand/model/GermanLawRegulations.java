@@ -22,7 +22,12 @@ public class GermanLawRegulations extends Regulations {
     public String checkTimeSheet(TimeSheet timeSheet) {
         List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
-        throw new UnsupportedOperationException();
+        String result = checkNightWork(timeRecords, timeSheet);
+        result += checkForPauses(timeRecords, timeSheet);
+        result += checkSundayWork(timeRecords, timeSheet);
+        result += checkWorkHours(timeSheet);
+        result += checkMonthHours(timeRecords, timeSheet);
+        return result;
     }
 
     /**
@@ -33,7 +38,7 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return "" für ok, Fehlermeldung sonst
      */
-    private String checkNightWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
+    private String checkNightWork(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
         String result = "";
         for (TimeRecord timeRecord: timeRecords) {
             if (timeRecord.getBeginning().isBefore(LocalDateTime.of(timeRecord.getBeginning().getYear(), timeRecord.getBeginning().getMonth(),
@@ -54,7 +59,7 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return
      */
-    private String checkForPauses(TimeRecord[] timeRecords, TimeSheet timeSheet) {
+    private String checkForPauses(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
         String result = "";
 
         int maxWorkingWithoutBreak = 6*60; // 6 Hours in minutes
@@ -73,7 +78,7 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return
      */
-    private String checkSundayWork(TimeRecord[] timeRecords, TimeSheet timeSheet) {
+    private String checkSundayWork(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
         readHolidays(timeSheet.getYear());
 
         String result = "";
@@ -84,12 +89,15 @@ public class GermanLawRegulations extends Regulations {
             else if (timeRecord.getEnding().getDayOfWeek() == DayOfWeek.SUNDAY) {
                 result += "Sonn- und Feiertagsarbeit nicht erlaubt";
             }
-            //TODO: Feiertage einlesen und hier dann überprüfen lassen
+            else if (holidays.containsKey(timeRecord.getBeginning().toLocalDate())) {
+                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+            }
+            else if (holidays.containsKey(timeRecord.getEnding().toLocalDate())) {
+                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+            }
         }
         return result;
     }
-
-    //TODO Feiertage
 
     /**
      * überprüfen, dass eine person nicht mehr als 8 (10) h am Tag
@@ -140,7 +148,7 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return
      */
-    private String checkMonthHours(TimeRecord[] timeRecords, TimeSheet timeSheet) {
+    private String checkMonthHours(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
         String result = "";
         if ( timeSheet.getCurrentMinutesThisMonth() > timeSheet.getRequiredHoursPerMonth() * 60) {
             result += "Maximale Arbeitszeit für diesen Monat überschritten";
