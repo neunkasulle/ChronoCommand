@@ -43,6 +43,9 @@ public class LoginControl {
             SecurityUtils.getSubject().login(token);
         } catch (AuthenticationException e) {
             LOGGER.error("Failed Login", e);
+            if (e.getCause() instanceof ChronoCommandException) {
+                throw (ChronoCommandException) e.getCause();
+            }
             throw new ChronoCommandException(Reason.BADCREDENTIALS);
         }
         LOGGER.info(username + " logged in successfully");

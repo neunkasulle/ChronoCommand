@@ -18,9 +18,7 @@ package com.github.neunkasulle.chronocommand.security;
  * under the License.
  */
 
-import com.github.neunkasulle.chronocommand.model.Role;
-import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.github.neunkasulle.chronocommand.model.*;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -53,7 +51,11 @@ public class Realm extends AuthorizingRealm {
             user = UserDAO.getInstance().findUserByEmail(token.getUsername());
         }
         if (user != null) {
-            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), user.getSalt(), getName());
+            if (user.isDisabled()) {
+                throw new AuthenticationException(new ChronoCommandException(Reason.USERDISABLED));
+            } else {
+                return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), user.getSalt(), getName());
+            }
         } else {
             throw new AuthenticationException();
         }
