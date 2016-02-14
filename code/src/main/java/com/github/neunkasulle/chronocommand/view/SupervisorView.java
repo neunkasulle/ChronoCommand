@@ -28,8 +28,6 @@ public class SupervisorView extends BaseView {
     private final SupervisorCtrlForm form = new SupervisorCtrlForm( e -> {
         getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
     }, e -> {
-
-    }, e -> {
         this.recordList.select(null);
         refreshSupervisedUsers();
     });

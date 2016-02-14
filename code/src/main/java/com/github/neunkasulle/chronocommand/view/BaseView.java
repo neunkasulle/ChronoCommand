@@ -52,7 +52,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
                 newTimeRecordButton.addClickListener(event -> {
-                    extraPane.getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
+                    extraPane.getUI().getNavigator().navigateTo(MainUI.NEWTIMERECORDVIEW);
                 });
                 extraPane.addComponent(newTimeRecordButton);
 
@@ -70,7 +70,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
                 final Button newTimeRecordButton = new Button("Neue Zeiterfassung");
                 newTimeRecordButton.addClickListener(event -> {
-                    extraPane.getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
+                    extraPane.getUI().getNavigator().navigateTo(MainUI.NEWTIMERECORDVIEW);
                 });
                 extraPane.addComponent(newTimeRecordButton);
                 newTimeRecordButton.setSizeFull();
@@ -342,7 +342,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             /* Combo box */
 
             // Creates a new combobox using an existing container
-            timeRecordSelection = new ComboBox("Bitte Stundenzettel auswählen");
+            timeRecordSelection = new ComboBox("Please select a timesheet");
             timeRecordSelection.setSizeFull();
             timeRecordSelection.setNullSelectionAllowed(false);
             controlPanel.addComponent(timeRecordSelection);
