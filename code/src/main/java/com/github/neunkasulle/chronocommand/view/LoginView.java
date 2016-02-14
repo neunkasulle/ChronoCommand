@@ -3,6 +3,7 @@ package com.github.neunkasulle.chronocommand.view;
 import com.ejt.vaadin.loginform.LoginForm;
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.external.org.slf4j.Logger;
 import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.navigator.View;
@@ -49,6 +50,7 @@ public class LoginView extends LoginForm implements View {
 
         layout.addComponent(loginButton);
         layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
+        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         authInfoMissing = new Label("Please provide username and password!");
         authInfoMissing.setStyleName(ValoTheme.LABEL_FAILURE);
@@ -63,12 +65,6 @@ public class LoginView extends LoginForm implements View {
         authenticationFailed.setVisible(false);
         layout.addComponent(authenticationFailed);
         layout.setComponentAlignment(authenticationFailed, Alignment.MIDDLE_CENTER);
-
-        Button forgotPassword = new Button("Forgot password");
-        forgotPassword.setStyleName(ValoTheme.BUTTON_LINK);
-        forgotPassword.addClickListener(this::forgotPasswordClicked);
-        layout.addComponent(forgotPassword);
-        layout.setComponentAlignment(forgotPassword, Alignment.MIDDLE_CENTER);
 
         // DEBUG
         HorizontalLayout links = new HorizontalLayout();

@@ -22,8 +22,7 @@ public class UserManagementControl {
         return ourInstance;
     }
 
-    public void editUser(User user, String username, String realname, String email, String password) throws ChronoCommandException {
-
+    public void editUser(User user, String username, String realname, String email, String password, User supervisor, int hoursPerMonth, boolean disable) throws ChronoCommandException {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR) || user.equals(LoginControl.getInstance().getCurrentUser())) {
             if (!username.isEmpty() && !user.getUsername().equals(username)) {
                 if (UserDAO.getInstance().findUser(username) != null) {
@@ -34,12 +33,29 @@ public class UserManagementControl {
 
             user.setRealname(realname);
 
-            if (UserDAO.getInstance().findUserByEmail(email) != null) {
-                throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
+            if (!email.isEmpty() && !user.getEmail().equals(email)) {
+                if (UserDAO.getInstance().findUserByEmail(email) != null) {
+                    throw new ChronoCommandException(Reason.EMAILALREADYINUSE);
+                }
+                user.setEmail(email);
             }
-            user.setEmail(email);
 
-            user.setPassword(password);
+            if (!password.isEmpty()) {
+                user.setPassword(password);
+            }
+
+            if (user.getPrimaryRole().equals(UserDAO.getInstance().getRoleByName(MainControl.ROLE_PROLETARIER))) {
+                if (supervisor != null && supervisor.isPermitted(Role.PERM_SUPERVISOR)) {
+                    user.setSupervisor(supervisor);
+                }
+            }
+
+            if (hoursPerMonth < 0 || hoursPerMonth > 80) {
+                throw new ChronoCommandException(Reason.INVALIDHOURSPERMONTH);
+            }
+            user.setHoursPerMonth(hoursPerMonth);
+
+            user.setDisable(disable);
 
             UserDAO.getInstance().saveUser(user);
         } else {

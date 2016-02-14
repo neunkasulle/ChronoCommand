@@ -22,6 +22,7 @@ public enum Reason {
     INVALIDEMAIL("Invalid email address"),
     USERNAMETAKEN("Username already taken"),
     STRINGTOOLONG("Input string is too long"),
+    INVALIDHOURSPERMONTH("Invalid number of hours per month"),
     ;
 
     private final String text;
