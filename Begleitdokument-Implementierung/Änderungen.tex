@@ -1,3 +1,5 @@
+\section{Veränderungen}
+\subsection{Klassendiagramm}
 Im Folgenden wird anhand des aktualisierten Klassendiagramms gezeigt, was sich zum Entwurf verändert hat.
 
 %altes klassendiagramm
@@ -12,10 +14,32 @@ Daraus ergibt sich das aktualisierte Klassendiagramm:
 
 %neues Klassendiagramm
 
+\subsection{Sequenzen}
 Die Sequenzdiagramme aus dem Entwurfen haben sich wie folgt verändert:
+\subsubsection{Login Sequenz}
 
-Erste Sequenzdiagramm \(aus Entwurfsdokumen\) 
- veränderungen : blablabla
- 
- Zweites Sequenzdiagram
- etc
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{Login-Sequenz.svg}
+   \caption{Alte Login Sequenz}
+\end{figure}
+
+\paragraph{Veränderungen}
+\begin{itemize}
+    \item Login wurde um die Funktion \emph{remember me} erweitert.
+    \item Die Authentifizierung wurde in einklang mit dem Shiro Framework gestaltet:
+    \begin{itemize}
+        \item Zum Login wird ein token aus Passwort und Username genutzt.
+        \item Durch das Token wird der Nutzer ermittelt und dessen Authentifizierungsdaten\(Password, ...\) geholt.
+        \item Diese werden mittels einen speziellen Hash vergleicher mit dem angegebenen Token verglichen.
+    \end{itemize}
+    \item Laden der View wurde durch Vaadins \emph{navigateTo} ersetzt.
+\end{itemize}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=\linewidth]{Login-Sequenz-new.svg}
+   \caption{Neue Login Sequenz}
+\end{figure}
+
+
