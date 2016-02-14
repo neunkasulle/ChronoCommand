@@ -48,7 +48,7 @@ public class TimeRecordView extends BaseView {
         }
     }, event -> {
         // delete
-        //TODO: Delete it
+        //TODO: Delete timerecord
         refreshTimeRecords();
     }, event -> {
         // cancel
@@ -58,7 +58,6 @@ public class TimeRecordView extends BaseView {
 
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
-
         header = new Label();
         header.setId("page-header");
         header.setSizeFull();
@@ -73,20 +72,20 @@ public class TimeRecordView extends BaseView {
         headLine.setSpacing(true);
 
         final ComboBox categorySelection = new ComboBox();
-        categorySelection.setInputPrompt("Kategorie");
+        categorySelection.setInputPrompt("Project");
         categorySelection.addItems(TimeSheetControl.getInstance().getAllCategories());
         headLine.addComponent(categorySelection);
         headLine.setComponentAlignment(categorySelection, Alignment.TOP_LEFT);
 
         final TextField activitySelection = new TextField();
-        activitySelection.setInputPrompt("Tätigkeit");
+        activitySelection.setInputPrompt("Description");
         headLine.addComponent(activitySelection);
         headLine.setComponentAlignment(activitySelection, Alignment.TOP_CENTER);
 
-        startButton = new Button("Starten");
+        startButton = new Button("Start");
         headLine.addComponent(startButton);
 
-        stopButton = new Button("Stoppen");
+        stopButton = new Button("Stop");
         stopButton.setVisible(false);
         headLine.addComponent(stopButton);
 

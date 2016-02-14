@@ -10,9 +10,8 @@ import com.vaadin.ui.FormLayout;
  */
 public class SupervisorCtrlForm extends FormLayout {
 
-    private Button toTimeSheets = new Button("Stundenzettel anzeigen");
-    private Button sendMessage = new Button("Nachricht senden");
-    private Button cancel = new Button("Abbrechen");
+    private Button toTimeSheets = new Button("Show timesheets");
+    private Button cancel = new Button("Cancel");
 
     private User object;
 
@@ -27,13 +26,11 @@ public class SupervisorCtrlForm extends FormLayout {
     }
 
     public SupervisorCtrlForm(final Button.ClickListener toTimeSheetsOperation,
-                              final Button.ClickListener sendMessageOperation,
                               final Button.ClickListener cancelOperation) {
         this.toTimeSheets.addClickListener(toTimeSheetsOperation);
-        this.sendMessage.addClickListener(sendMessageOperation);
         this.cancel.addClickListener(cancelOperation);
 
-        addComponents(toTimeSheets, sendMessage, cancel);
+        addComponents(toTimeSheets, cancel);
     }
 
     public void edit(final User object) {

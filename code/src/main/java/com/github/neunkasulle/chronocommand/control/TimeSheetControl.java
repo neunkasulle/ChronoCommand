@@ -365,7 +365,9 @@ public class TimeSheetControl {
      * @return List of all time sheets
      */
     public List<TimeSheet> getTimeSheetsFromUser(User user) throws ChronoCommandException {
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+        if (!LoginControl.getInstance().getCurrentUser().equals(user)
+                && !SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)
+                && !LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor())) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 

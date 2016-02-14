@@ -35,6 +35,7 @@ public class MainUI extends UI implements ViewChangeListener {
     public static final String INITIALSTARTUPVIEW = "initialstartup";
     public static final String LOGINVIEW = "login";
     public static final String TIMERECORDVIEW = "timerecord";
+    public static final String NEWTIMERECORDVIEW = "newtimerecord";
     public static final String ADMINVIEW = "admin";
     public static final String CREATEUSERVIEW = "createuser";
     public static final String TIMESHEETVIEW = "timesheet";
@@ -77,6 +78,7 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addView(SUPERVISORVIEW, new SupervisorView());
         navigator.addView(ADMINVIEW, new AdminView());
         navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
+        navigator.addView(NEWTIMERECORDVIEW, NewTimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);
         navigator.addView(TIMESHEETVIEW, TimeSheetView.class);
         navigator.addView(SETTINGSVIEW, UserSettingsView.class);
@@ -128,7 +130,7 @@ public class MainUI extends UI implements ViewChangeListener {
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MainUI.class, productionMode = MainUI.PRODUCTIONMODE)
+    @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
     public static class ChronoCommandServlet extends VaadinServlet implements ServiceDestroyListener {
         @Override
         protected void servletInitialized() throws ServletException {
