@@ -11,9 +11,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
@@ -32,6 +34,7 @@ public class TimeRecordView extends BaseView {
     private final Grid recordList = new Grid();
 
     private Label header;
+    private Button downloadPdf;
     private Button startButton;
     private Button stopButton;
     private Label elapsedTime;
@@ -102,10 +105,32 @@ public class TimeRecordView extends BaseView {
             }
         }
 
+        HorizontalLayout headerLayout = new HorizontalLayout();
+        headerLayout.setSpacing(true);
+        contentPane.addComponent(headerLayout);
+
         header = new Label();
         header.setId("page-header");
         header.setSizeFull();
-        contentPane.addComponent(header);
+        headerLayout.addComponent(header);
+
+        downloadPdf = new Button("Download pdf");
+        headerLayout.addComponent(downloadPdf);
+        downloadPdf.addClickListener(event2 -> {
+            try {
+                TimeSheet timeSheet = this.timeSheet;
+                if (timeSheet == null) {
+                    timeSheet = (TimeSheet) timeRecordSelection.getValue();
+                }
+                File pdffile = TimeSheetControl.getInstance().printTimeSheet(timeSheet);
+                FileResource pdf = new FileResource(pdffile);
+                getUI().getPage().open(pdf, "_blank", true);
+                /*FileDownloader fileDownloader = new FileDownloader(pdf);
+                fileDownloader.extend(this.form.getExportPDFBtn());*/
+            } catch(ChronoCommandException ex) {
+                Notification.show("Failed to print pdf:" + ex.getReason().toString());
+            }
+        });
 
         updateHeaderLabel();
 
@@ -270,6 +295,7 @@ public class TimeRecordView extends BaseView {
 
         timeRecordSelection.addValueChangeListener(event1 -> {
             refreshTimeRecords();
+            updateHeaderLabel();
         });
 
         // The action form
