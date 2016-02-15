@@ -1,7 +1,8 @@
 control
   --Control
   CreateUserControl
-      createUser(...) -> (userType:Role, username:String, realname:String, email:String, passwort:String, supervisor:User, hoursPerMonth:int)
+      createUser(...) -> (userType:Role, username:String, realname:String, email:String, 
+          passwort:String, supervisor:User, hoursPerMonth:int)
       --showErrorMessage
   LoginControl
       ++logout
@@ -34,7 +35,8 @@ control
       closeTimeRecord():bool -> (user:User):TimeRecord
       closeTimeRecord(...) -> (category:Category, description:String, user:User):TimeRecord
       ++getLatestTimeRecord(user:User):TimeRecord
-      addTimeToTimeSheet(time:Zeit) -> (beginn:LocalDateTime, end:LocalDateTime, category:Category, description:String, user:User)
+      addTimeToTimeSheet(time:Zeit) -> (beginn:LocalDateTime, end:LocalDateTime, category:Category, 
+          description:String, user:User)
 %      --getSupervisedTimeSheets(month:int, year:int)
       lockTimeSheet(...):bool -> (timeSheet:TimeSheet)
       unlockTimeSheet(...):bool -> (timeSheet:TimeSheet)
@@ -54,7 +56,8 @@ control
       ++sendEmail(recipient:User, message:String
   UserManagementControl
       --addUser()
-      --createUser(userType:Role, name:String, email:String, passwort:String, supervisor:Supervisor, hoursPerMonth:int):bool
+      --createUser(userType:Role, name:String, email:String, passwort:String, 
+          supervisor:Supervisor, hoursPerMonth:int):bool
       --removeUser
       editUser() -> (user:User, username:String, realname:String, email:String, passwort:String)
       getUser(sessionID:int):User -> findUser(username:String):User
