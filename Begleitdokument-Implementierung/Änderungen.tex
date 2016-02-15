@@ -6,10 +6,38 @@ Im Folgenden wird anhand des aktualisierten Klassendiagramms gezeigt, was sich z
 In der view haben sich folgenden Änderungen ergeben:
 \VerbatimInput{view-diff}
 
+Die meisten Änderungen in der \emph{View} sind durch Vaadin entstanden. 
+Im speziellen mussten Methoden und Attribute angepasst oder hinzugefügt werden, 
+damit \emph{Vaadin} funktioniert.
+Es wurden auch drei neue Sichten hinzugefügt, \emph{AdminView}, \emph{SupervisorView} und \emph{TimeRecordView}, 
+dafür wurde auch das Packet \emph{view.forms} erstellt.
+Die abstrakte \emph{View} wurde gelöscht, da mit \emph{Vaadin} das gewünschte Entwurfsmuster 
+ohne weitere Aufwendungen nicht umsetzbar war.
+Die \emph{MessageView} wurde entfernt aufgrund einer Ã„nderung der Anforderungen an das Projekt.
+
 In der conrtol haben sich folgende Änderungen ergeben:
 \VerbatimInput{control-diff}
+
+Wie auch zuerst in der \emph{View} angedacht, wurde auch in der \emph{Control} die abstrakte \emph{Control} Klasse 
+nicht wie beabsichtigt angewendet werden.
+Es wurden zwei neue Klassen erstellt, welche für den \emph{Scheduler} benötigt werden. 
+Die Klasse \emph{Timer} wurde zu \emph{SchedulerHandler} umbenannt, damit der Name besser zur Funktionalität passt.
+Die Methoden aus der \emph{ReminderControl} wurden in das \emph{Model} verschoben.
+Weitere Methoden mussten unter anderem zur \emph{UserManagementControl} und \emph{TimeSheetControl} hinzugefügt werden, 
+um andere Funktionalitäten und Änderungen im \emph{Backend} korrekt zu unterstützen.
+
 Im model haben sich folgende Änderungen ergeben: %TODO tex syntax
 \VerbatimInput{model-diff}
+
+Die drei Rollen \emph{Proletarier}, \emph{Supervisor} und \emph{Administrator} wurden gelöscht, da durch 
+die Änderung von \emph{Role} von Enum zu Klasse, sie unnötig wurden. Die Klasse \emph{UserDAO} wurde ebenso gelöscht.
+\emph{Message} wurde zu Enum, da die Anforderungen sich geändert haben und 
+die Klasse mit ursprünglicher Funktionalität nicht mehr nötig ist. Mit dazu wird auch die Klasse \emph{MessageDAO} nicht mehr benötigt.
+Wir können auch die Klasse \emph{Session} löschen, da die Verwaltung von Sessions komplett von \emph{Shiro} Äbernommen wird.
+Im \emph{TimeSheetDAO} wurden, vorallem zur \emph{TimeSheetControl}, passende Methoden hinzugefügt.
+Von der gelöschten \emph{Proletarier} Klasse wurden die Methoden in \emph{User} verschoben.
+Zur Unterstützung der DAO Klassen wurde zusÃ¤tlich die Klasse \emph{DAOHelper} implementiert.
+
 Daraus ergibt sich das aktualisierte Klassendiagramm:
 
 %neues Klassendiagramm
