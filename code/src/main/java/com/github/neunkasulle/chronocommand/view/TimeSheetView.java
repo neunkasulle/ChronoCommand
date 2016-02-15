@@ -38,8 +38,9 @@ public class TimeSheetView extends BaseView {
         try {
             File pdffile = TimeSheetControl.getInstance().printTimeSheet(this.form.getCurrentFormObject());
             FileResource pdf = new FileResource(pdffile);
-            FileDownloader fileDownloader = new FileDownloader(pdf);
-            fileDownloader.extend(this.form.getExportPDFBtn());
+            getUI().getPage().open(pdf, "_blank", true);
+            /*FileDownloader fileDownloader = new FileDownloader(pdf);
+            fileDownloader.extend(this.form.getExportPDFBtn());*/
         } catch(ChronoCommandException ex) {
             Notification.show("Failed to print pdf:" + ex.getReason().toString());
         }
