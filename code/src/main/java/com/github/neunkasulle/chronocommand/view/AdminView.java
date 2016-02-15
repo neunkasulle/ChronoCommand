@@ -58,9 +58,11 @@ public class AdminView extends BaseView {
         header.setSizeFull();
         contentPane.addComponent(header);
 
+        /*
         final TextField filter = new TextField();
         contentPane.addComponent(filter);
         filter.setSizeFull();
+        */
 
         /* Form & table */
 
