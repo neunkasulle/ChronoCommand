@@ -19,7 +19,8 @@ model
     checkFeiertagsruhe -> checkSundayWork
   Message
     --isDraft
-    [ --id:int, --sendTime:Time{readonly}, --receiveTime:Time, --content:String{readonly}, --sender:User{readonly}, --recipient:User{readonly}, --isRead:bool, --isDraft:bool ||]
+    [ --id:int, --sendTime:Time{readonly}, --receiveTime:Time, --content:String{readonly}, 
+        --sender:User{readonly}, --recipient:User{readonly}, --isRead:bool, --isDraft:bool ||]
   --MessageDAO
 
   ++Reason:Enum
@@ -39,7 +40,8 @@ model
     hoursPerMonth -> requiredHoursPerMonth
     --addTime
     --checkHourLimit (ist in GermanLawRegulations)
-    [ -proletarier:Proletarier{readonly}, +user:User{readonly}, +messages:List<Messages>, +currentMinutesThisMonth:int ||]
+    [ -proletarier:Proletarier{readonly}, +user:User{readonly}, 
+        +messages:List<Messages>, +currentMinutesThisMonth:int ||]
   TimeSheetDAO
     getTimeSheet(...) -> (month:Month,year:int, user:User) 
     addTimeSheet -> saveTimeSheet
@@ -53,7 +55,8 @@ model
       --createEmails
       ++splitRecordList(List<TimeRecord>):List
       ++fillContent(PDPageContentStream, List<TimeRecord>, TimeSheet)
-      [ +id:Long{readonly}, +FONT:PDType1Font{static}, +FONT_BOLD:PDType1Font{static}, +sumHour:int{private}, +sumMin:int{private}
+      [ +id:Long{readonly}, +FONT:PDType1Font{static}, +FONT_BOLD:PDType1Font{static}, 
+          +sumHour:int{private}, +sumMin:int{private}
   User
       ++ +String:realName
       ++ +User:supervisor
