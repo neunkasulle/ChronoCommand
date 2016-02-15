@@ -1,3 +1,4 @@
+\section{Unittests}
 Im Folgenden wird aufgelistet, welche Unit-Tests wir realisiert haben.
 
 \begin{itemize}
@@ -5,17 +6,17 @@ Im Folgenden wird aufgelistet, welche Unit-Tests wir realisiert haben.
     \begin{itemize}
       \item CreateUserControlTest
         \begin{itemize} 
-          \item testCreateUser: Es wird ein neuer User mit der Rolle "admin", der Beschreibung der Rolle "a", dem Usernamen   "Chutulu", der E-Mail Adresse "chutulu@eatsyour.soul, dem Password "1234", dem vollen Namen "dè real Ĉthulh⊂", keinem Supervisor und der monatlichen Stundenzahl von "80" erstellt. Danach wird abgefragt, ob es den Benutzer "Cthulu" mit dem vollen Namen "dè real Ĉthulh⊂" gibt.
-      \item testExistingUser: Es wird ein User mit der Rolle "admin", der Beschreibung der Rolle "a", dem Username "tom", der E-Mail Adresse "chutulu@eatsyour.soul, dem Password "1234", dem vollen Namen dem vollen Namen "dè real Ĉthulh⊂", keinem Supervisor und der monatlichen Stundenzahl von "999999999" erstellt. Es wird ein Fehler erwartet, das es schon einen User mit gleichem Namen in der Datenbank gibt. 
-           \item testCreateExistingEmail: Es wird ein neuer User mit der Rolle "admin", der Beschreibung der Rolle "a", dem Usernamen   "...", der E-Mail Adresse "tom@chronocommand.eu", dem Password "1234", dem vollen Namen "dè real Ĉthulh⊂", keinem Supervisor und der monatlichen Stundenzahl von "999999999" erstellt. Danach wird abgefragt, ob es den Benutzer "Cthulu" mit dem vollen Namen "dè real Ĉthulh⊂" gibt.
+          \item testCreateUser: Es wird ein neuer User mit der Rolle "'admin"', der Beschreibung der Rolle "'a"', dem Usernamen   "'Chutulu"', der E-Mail Adresse "'chutulu@eatsyour.soul, dem Password "'1234"', dem vollen Namen "'dè real Ĉthulh⊂"', keinem Supervisor und der monatlichen Stundenzahl von "'80"' erstellt. Danach wird abgefragt, ob es den Benutzer "'Cthulu"' mit dem vollen Namen "'dè real Ĉthulh⊂"' gibt.
+      \item testExistingUser: Es wird ein User mit der Rolle "'admin"', der Beschreibung der Rolle "'a"', dem Username "'tom"', der E-Mail Adresse "'chutulu@eatsyour.soul, dem Password "'1234"', dem vollen Namen dem vollen Namen "'dè real Ĉthulh⊂"', keinem Supervisor und der monatlichen Stundenzahl von "'999999999"' erstellt. Es wird ein Fehler erwartet, das es schon einen User mit gleichem Namen in der Datenbank gibt. 
+           \item testCreateExistingEmail: Es wird ein neuer User mit der Rolle "'admin"', der Beschreibung der Rolle "'a"', dem Usernamen   "'..."', der E-Mail Adresse "'tom@chronocommand.eu"', dem Password "'1234"', dem vollen Namen "'dè real Ĉthulh⊂"', keinem Supervisor und der monatlichen Stundenzahl von "'999999999"' erstellt. Danach wird abgefragt, ob es den Benutzer "'Cthulu"' mit dem vollen Namen "'dè real Ĉthulh⊂"' gibt.
           \end{itemize}
         \item LoginControlTest
           \begin{itemize}
-            \item CheckDB: Es wird nach dem User "tom" gesucht und überprüft, dass die E-Mail Adresse weclhe in der Datenbank steht "tom@chronocommand.eu" mit dem User "tom" verknüpft ist
-            \item testLogin: Es wird ein Loginversuch mit dem Usernamen "tom", dem Password "cat" und rememerMe = true ausgeführt, ein Fehlschlagen wird abgefangen und danach überprüft, ob der User "tom" eingeloggt ist.
-            \item testFailingLogin: Es wird ein Loginversuch mit dem Usernamen "tom", dem Password "dog" und remeberMe = true ausgeführt. Es wird ein Fehler erwartet.
-            \item getUserTest: Es wird ein Loginversuch mit dem User "tom" dem Password "cat" und remeberMe = true ausgeführt. Danach wird überprüft, ob der aktuell eingeloggte User "tom" ist.
-            \item getUserTestFailing: Es wird abgefragt, ob der derzeit eingeloggte User "tom" ist. Es wird ein Fehler mit der Begründung "NOTLOGGEDIN" erwartet.
+            \item CheckDB: Es wird nach dem User "'tom"' gesucht und überprüft, dass die E-Mail Adresse weclhe in der Datenbank steht "'tom@chronocommand.eu"' mit dem User "'tom"' verknüpft ist
+            \item testLogin: Es wird ein Loginversuch mit dem Usernamen "'tom"', dem Password "'cat"' und rememerMe = true ausgeführt, ein Fehlschlagen wird abgefangen und danach überprüft, ob der User "'tom"' eingeloggt ist.
+            \item testFailingLogin: Es wird ein Loginversuch mit dem Usernamen "'tom"', dem Password "'dog"' und remeberMe = true ausgeführt. Es wird ein Fehler erwartet.
+            \item getUserTest: Es wird ein Loginversuch mit dem User "'tom"' dem Password "'cat"' und remeberMe = true ausgeführt. Danach wird überprüft, ob der aktuell eingeloggte User "'tom"' ist.
+            \item getUserTestFailing: Es wird abgefragt, ob der derzeit eingeloggte User "'tom"' ist. Es wird ein Fehler mit der Begründung "'NOTLOGGEDIN"' erwartet.
           \end{itemize}
           \item MainControlTest
             \begin{itemize}
@@ -23,16 +24,17 @@ Im Folgenden wird aufgelistet, welche Unit-Tests wir realisiert haben.
             \end{itemize}
           \item TimeSheetControlTest
             \begin{itemize} 
-              \item testFailingCategory: Es wird eine Zeiterfassung manuel hinzugefügt. Dabei werden folgende Daten angegeben: Beginning: "now", End: "now", Kategorie: "FUU", Beschreibung: "BAR", user: "tom". Es wird ein Fehler mit der Begrüdung "CATEGORYNOTFOUND" erwartet.
-              \item testRightTimeRecordAdd: Der erste Teil testet ob die Aufzeichung eine Zeiterfassung, bei der beim Starten die Kategorie "Programming" und die Beschreibung "testing" angegeben werden, und danach die Zeiterfassung bendet wird. Der zweitet Teil testet die Aufzeichnung einer Zeiterfassung, welche gestartet wird und bei welcher beim Beenden die Kategorie "Programming" und die Beschreibung "testing" hinzugefügt werden.
+              \item testFailingCategory: Es wird eine Zeiterfassung manuel hinzugefügt. Dabei werden folgende Daten angegeben: Beginning: "'now"', End: "'now"', Kategorie: "'FUU"', Beschreibung: "'BAR"', user: "'tom"'. Es wird ein Fehler mit der Begrüdung "'CATEGORYNOTFOUND"' erwartet.
+              \item testRightTimeRecordAdd: Der erste Teil testet ob die Aufzeichung eine Zeiterfassung, bei der beim Starten die Kategorie "'Programming"' und die Beschreibung "'testing"' angegeben werden, und danach die Zeiterfassung bendet wird. Der zweitet Teil testet die Aufzeichnung einer Zeiterfassung, welche gestartet wird und bei welcher beim Beenden die Kategorie "'Programming"' und die Beschreibung "'testing"' hinzugefügt werden.
               \item testFalseTimeRecordAdd: Es wird eine Aufzeichnung einer Zeiterfallung gestartet und beendet. Dabei werden weder eine Kategorie noch eine Beschreibung hinzugefügt. Es wird ein Fehler erwartet.
-              \item checkForMissingCategory: Es wird eine Aufzeichnung einer Zeiterfassung gestartet, dabei wird beim Starten keine Kategorie und die Beschreibung "a" übergeben. Beim Stoppen wird an dieser Angabe nichts geändert. Es wird ein Fehler mit der Begründung "MISSINGCATEGORY" erwartet.
-              \item checkForMissingDescription: Es wird eine Aufzeichnung einer Zeiterfassung gestartet, dabei wird beim Starten die Kategorie "Programming" und keien Beschreibung übergeben. Beim Stoppen wird an diesen Angaben nichts geändert. Es wird Ein Fehler mit der Begründung "MISSINGDESCRIPTION" erwartet.
+              \item checkForMissingCategory: Es wird eine Aufzeichnung einer Zeiterfassung gestartet, dabei wird beim Starten keine Kategorie und die Beschreibung "'a"' übergeben. Beim Stoppen wird an dieser Angabe nichts geändert. Es wird ein Fehler mit der Begründung "'MISSINGCATEGORY"' erwartet.
+              \item checkForMissingDescription: Es wird eine Aufzeichnung einer Zeiterfassung gestartet, dabei wird beim Starten die Kategorie "'Programming"' und keien Beschreibung übergeben. Beim Stoppen wird an diesen Angaben nichts geändert. Es wird Ein Fehler mit der Begründung "'MISSINGDESCRIPTION"' erwartet.
               \item getLatestRecordTest: Es wird eine Aufzeichung einer Zeiterfassung ohne Kategorie und ohne Beschreibung gestartet. Dann wird die neueste Zeiterfassung aufgerufen und überprüft, dass die Kategorie dieser Zeiterfassung leer ist.
-              \item printAllTimeSheetsUsertest: Es werden alle Stundenzettel des Users "tom" in einem PDF-Dokument gespeichert.
+              \item printAllTimeSheetsUsertest: Es werden alle Stundenzettel des Users "'tom"' in einem PDF-Dokument gespeichert.
               \item printAllTimeSheetsTimeTest: Es werden alle Stundenzettel vom Januar 2016 in einem PDF-Dokument gespeichert.
-              \item printTimeSheet: Es wird der Stundenzettel des Users "tom" von August 1993 in einem PDF-Dokument gespeichert.
-              \item emailTest: Es wird ein User ohne Rolle, mit dem Usernamen "neun", der E-Mail Adresse "jan@zenkner.eu", dem Password "1234", dem vollen Namen "Fuu Bar", ohne Betreuer und mit der monatlichen Stundenzahl "0" erstellt. Danach wird eine E-Mail mit dem Inhalt "TROLOLOLOLO" an den User "neun" verschickt.
+              \item printTimeSheet: Es wird der Stundenzettel des Users "'tom"' von August 1993 in einem PDF-Dokument gespeichert.
+		      \newpage
+              \item emailTest: Es wird ein User ohne Rolle, mit dem Usernamen "'neun"', der E-Mail Adresse "'jan@zenkner.eu"', dem Password "'1234"', dem vollen Namen "'Fuu Bar"', ohne Betreuer und mit der monatlichen Stundenzahl "'0"' erstellt. Danach wird eine E-Mail mit dem Inhalt "'TROLOLOLOLO"' an den User "'neun"' verschickt.
             \end{itemize}
         \end{itemize}
     \item model         
@@ -44,16 +46,17 @@ Im Folgenden wird aufgelistet, welche Unit-Tests wir realisiert haben.
           \end{itemize}
         \item TimeSheetDAOTest
           \begin{itemize}
-            \item testSetMessage: Es wird eine neue Rolle mit dem Namen "r", und der Beschreibung "a" erstellt. Danach wird ein neuer User mit Username "a", E-Mail Adresse "de@e.fe", Password "b", voller Name "g" ohne Betreuer und mit einer monatlichen Stundenzahl "5" erstellt. Danach wird ein Stundenzettel für April 1984 für den User "a" erstellt. Dem Stundenzettel werden zwei Nachrichten beigefügt: "ERROR_BAR" und "ERROR_FOO". Dann wird der Stundenzettel in die Datenbank gespeichert. Danach wird überprüft, dass beide Nachrichten beim Stundenzettel vorhanden sind
-            \item TestGetTimeRecord: Es wird eine neue Rolle mit dem Namen "r", und der Beschreibung "a" erstellt. Danach wird ein neuer User mit Username "a", E-Mail Adresse "de@e.fe", Password "b", voller Name "g" ohne Betreuer und mit einer monatlichen Stundenzahl "5" erstellt. Danach wird ein Stundenzettel für April 1984 für den User "a" erstellt. Dann wird eine Kategorie "c" erstellt und in die Datenbank gespeichert. Es wird eine Zeiterfassung mit Anfang "LocalDateTime.MIN" und Ende "LocalDateTime.MAX", sowie der Kategorie "c" und der Beschreibung "bla" erstellt und gespreichert. Danach wird überprüft, dass die in der Datenbank gespeicherte Zeiterfassung korrekt gespeichert wurde
-            \item TestGetTimeRecords: Es wird eine neue Rolle mit dem Namen "r", und der Beschreibung "a" erstellt. Danach wird ein neuer User mit Username "a", E-Mail Adresse "de@e.fe", Password "b", voller Name "g" ohne Betreuer und mit einer monatlichen Stundenzahl "5" erstellt. Danach wird ein Stundenzettel für April 1984 für den User "a" erstellt. Dann wird eine Kategorie "c" erstellt und in die Datenbank gespeichert. Es werden zwei Zeiterfassungen mit Anfang "LocalDateTime.MIN" und Ende "LocalDateTime.MAX", sowie der Kategorie "c" und der Beschreibung "bla" erstellt und gespreichert. Danach werden alle Zeiterfassungen für den User "a" abgefragt und überprüft, dass die beiden zuvor gespeicherten Zeiterfassungen korrekt gespeichert wurden.
+            \item testSetMessage: Es wird eine neue Rolle mit dem Namen "'r"', und der Beschreibung "'a"' erstellt. Danach wird ein neuer User mit Username "'a"', E-Mail Adresse "'de@e.fe"', Password "'b"', voller Name "'g"' ohne Betreuer und mit einer monatlichen Stundenzahl "'5"' erstellt. Danach wird ein Stundenzettel für April 1984 für den User "'a"' erstellt. Dem Stundenzettel werden zwei Nachrichten beigefügt: "'ERROR\_BAR"' und "'ERROR\_FOO"'. Dann wird der Stundenzettel in die Datenbank gespeichert. Danach wird überprüft, dass beide Nachrichten beim Stundenzettel vorhanden sind
+            \item TestGetTimeRecord: Es wird eine neue Rolle mit dem Namen "'r"', und der Beschreibung "'a"' erstellt. Danach wird ein neuer User mit Username "'a"', E-Mail Adresse "'de@e.fe"', Password "'b"', voller Name "'g"' ohne Betreuer und mit einer monatlichen Stundenzahl "'5"' erstellt. Danach wird ein Stundenzettel für April 1984 für den User "'a"' erstellt. Dann wird eine Kategorie "'c"' erstellt und in die Datenbank gespeichert. Es wird eine Zeiterfassung mit Anfang "'LocalDateTime.MIN"' und Ende\\ "'LocalDateTime.MAX"', sowie der Kategorie "'c"' und der Beschreibung "'bla"' erstellt und gespreichert. Danach wird überprüft, dass die in der Datenbank gespeicherte Zeiterfassung korrekt gespeichert wurde
+		    \newpage
+            \item TestGetTimeRecords: Es wird eine neue Rolle mit dem Namen "'r"', und der Beschreibung "'a"' erstellt. Danach wird ein neuer User mit Username "'a"', E-Mail Adresse "'de@e.fe"', Password "'b"', voller Name "'g"' ohne Betreuer und mit einer monatlichen Stundenzahl "'5"' erstellt. Danach wird ein Stundenzettel für April 1984 für den User "'a"' erstellt. Dann wird eine Kategorie "'c"' erstellt und in die Datenbank gespeichert. Es werden zwei Zeiterfassungen mit Anfang "'LocalDateTime.MIN"' und Ende "'LocalDateTime.MAX"', sowie der Kategorie "'c"' und der Beschreibung "'bla"' erstellt und gespreichert. Danach werden alle Zeiterfassungen für den User "'a"' abgefragt und überprüft, dass die beiden zuvor gespeicherten Zeiterfassungen korrekt gespeichert wurden.
           \end{itemize}
         \item UserTest
           \begin{itemize}
-            \item testSetUsername: Es wird versucht den Usernamen zu einem leerem Usernamen zu verändern. Es wird ein Fehler mit der Begründung "INVALIDSTRING" erwartet
-            \item testSetRealname: Es wird versucht den vollen Namen eines Users zu einem leerem "vollem Namen" zu verändern. Es wird ein Fehler mit der Begründung "INVALIDSTRING" erwartet
-            \item testSetEmail: Es wird versucht die E-Mail Adresse eines Users zu der E-Mail Adresse "tom.tom" zu verändern. Es wird ein Fehler mit der Begründung "INVALIDEMAIL" erwartet. Es wird versucht die E-Mail Adresse eines Users zu der E-Mail Adresse "tom@tom" zu verändern. Es wird ein Fehler mit der Begründung "INVALIDEMAIL" erwartet.
-            \item testSetPassword: Es wird versucht das Password eines Users zu einem leeres Password zu verändern. Es wird ein Fehler mit der Begründung "INVALIDSTRING" erwartet.
+            \item testSetUsername: Es wird versucht den Usernamen zu einem leerem Usernamen zu verändern. Es wird ein Fehler mit der Begründung\\ "'INVALIDSTRING"' erwartet
+            \item testSetRealname: Es wird versucht den vollen Namen eines Users zu einem leerem "'vollem Namen"' zu verändern. Es wird ein Fehler mit der Begründung "'INVALIDSTRING"' erwartet
+            \item testSetEmail: Es wird versucht die E-Mail Adresse eines Users zu der E-Mail Adresse "'tom.tom"' zu verändern. Es wird ein Fehler mit der Begründung "'INVALIDEMAIL"' erwartet. Es wird versucht die E-Mail Adresse eines Users zu der E-Mail Adresse "'tom@tom"' zu verändern. Es wird ein Fehler mit der Begründung "'INVALIDEMAIL"' erwartet.
+            \item testSetPassword: Es wird versucht das Password eines Users zu einem leeres Password zu verändern. Es wird ein Fehler mit der Begründung "'INVALIDSTRING"' erwartet.
         
           \end{itemize}
       \end{itemize}

@@ -1,0 +1,3 @@
+++Realm
+  ++doGetAuthenticationInfo(authcToken:AuthenticationToken)
+  ++doGetAuthorizationInfo(principals:PrincipalCollection)
