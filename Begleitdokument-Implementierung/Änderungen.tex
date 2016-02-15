@@ -32,7 +32,7 @@ Die Methoden aus der \emph{ReminderControl} wurden in das \emph{Model} verschobe
 Weitere Methoden mussten unter anderem zur \emph{UserManagementControl} und \emph{TimeSheetControl} hinzugefügt werden, 
 um andere Funktionalitäten und Änderungen im \emph{Backend} korrekt zu unterstützen.\\
 \\
-Im model haben sich folgende Änderungen ergeben: %TODO tex syntax
+Im model haben sich folgende Änderungen ergeben:
 \VerbatimInput[fontsize=\small]{model-diff}
 
 Die drei Rollen \emph{Proletarier}, \emph{Supervisor} und \emph{Administrator} wurden gelöscht, da durch 
@@ -54,7 +54,7 @@ Daraus ergibt sich das aktualisierte Klassendiagramm:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.135]{Class-Diagramm-new.pdf}
+	\includegraphics[scale=0.17]{Class-Diagramm-new.pdf}
 	\caption{Neues Klassendiagramm}
 \end{figure}
 \newpage
@@ -75,7 +75,7 @@ Die Sequenzdiagramme aus dem Entwurfen haben sich wie folgt verändert:
             \item Die Authentifizierung wurde in einklang mit dem Shiro Framework gestaltet:
             \begin{itemize}
                 \item Zum Login wird ein token aus Passwort und Username genutzt.
-                \item Durch das Token wird der Nutzer ermittelt und dessen Authentifizierungsdaten\(Password, ...\) geholt.
+                \item Durch das Token wird der Nutzer ermittelt und dessen Authentifizierungsdaten (Password, ...) geholt.
                 \item Diese werden mittels einen speziellen Hash vergleicher mit dem angegebenen Token verglichen.
             \end{itemize}
             \item Laden der View wurde durch Vaadins \emph{navigateTo} ersetzt.
