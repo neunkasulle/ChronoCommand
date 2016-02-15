@@ -417,11 +417,18 @@ public class TimeSheetControl {
             LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
+
         // TODO check for valid data
         if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
             LOGGER.error("not permitted to perform action: editTimeRecord caused by" + LoginControl.getInstance().getCurrentUser().getUsername());
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
+
+        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error(LOCKED);
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
         updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
     }

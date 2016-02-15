@@ -56,11 +56,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 });
                 extraPane.addComponent(newTimeRecordButton);
 
-                final Button submitTimeRecordButton = new Button("Submit Timesheet");
+                /*final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     //TODO: Implement submission
                 });
-                extraPane.addComponent(submitTimeRecordButton);
+                extraPane.addComponent(submitTimeRecordButton);*/
             }
         }, SUPERVISOR("Supervisor") {
             @Override
@@ -75,7 +75,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 extraPane.addComponent(newTimeRecordButton);
                 newTimeRecordButton.setSizeFull();
 
-                final Button submitTimeRecordButton = new Button("Submit Timesheet");
+                /*final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     try {
                         TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue());
@@ -84,7 +84,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
                     }
                 });
                 extraPane.addComponent(submitTimeRecordButton);
-                submitTimeRecordButton.setSizeFull();
+                submitTimeRecordButton.setSizeFull();*/
 
 
                 final Button listOfMyProletarierButton = new Button("Show Supervised HIWIs");

@@ -132,6 +132,20 @@ public class TimeRecordView extends BaseView {
             }
         });
 
+        if (timeSheet == null) {
+            final Button submitTimeRecordButton = new Button("Submit Timesheet");
+            submitTimeRecordButton.addClickListener(event2 -> {
+                try {
+                    TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue());
+                    updateHeaderLabel();
+                } catch (ChronoCommandException e) {
+                    Notification.show("Failed to lock timesheet: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+                }
+            });
+            headerLayout.addComponent(submitTimeRecordButton);
+            submitTimeRecordButton.setSizeFull();
+        }
+
         updateHeaderLabel();
 
         /* Headline */
@@ -236,7 +250,8 @@ public class TimeRecordView extends BaseView {
         recordList.setContainerDataSource(gpcontainer);
         recordList.setSelectionMode(Grid.SelectionMode.SINGLE);
         recordList.addSelectionListener(e -> {
-            if (recordList.getSelectedRow() != null && ((TimeRecord) recordList.getSelectedRow()).getBeginning() != null && this.timeSheet == null) {
+            if (recordList.getSelectedRow() != null && ((TimeRecord) recordList.getSelectedRow()).getBeginning() != null
+                    && this.timeSheet == null && ((TimeSheet) timeRecordSelection.getValue()).getState() == TimeSheetState.UNLOCKED) {
                 form.edit((TimeRecord) recordList.getSelectedRow());
             }
         });

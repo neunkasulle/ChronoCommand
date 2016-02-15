@@ -12,7 +12,6 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 
@@ -41,15 +40,24 @@ public class TimeSheetView extends BaseView {
             getUI().getPage().open(pdf, "_blank", true);
             /*FileDownloader fileDownloader = new FileDownloader(pdf);
             fileDownloader.extend(this.form.getExportPDFBtn());*/
-        } catch(ChronoCommandException ex) {
+        } catch (ChronoCommandException ex) {
             Notification.show("Failed to print pdf:" + ex.getReason().toString());
         }
     }, e -> {
         // mark as checked
-        //TODO
+        try {
+            TimeSheetControl.getInstance().approveTimeSheet(this.form.getCurrentFormObject());
+        } catch (ChronoCommandException ex) {
+            Notification.show("Failed to approve timesheet:" + ex.getReason().toString());
+        }
     }, e -> {
         // mark as bad
-        //TODO
+        // TODO add message to timesheet
+        try {
+            TimeSheetControl.getInstance().unlockTimeSheet(this.form.getCurrentFormObject());
+        } catch (ChronoCommandException ex) {
+            Notification.show("Failed to unlock timesheet:" + ex.getReason().toString());
+        }
     }, e -> {
         // cancel
         this.recordList.select(null);
