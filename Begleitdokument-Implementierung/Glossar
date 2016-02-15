@@ -1,1 +1,8 @@
-%Legende für klassendiagramm diffs einfügen
+Legende für die Differenzen des Klassendiagramms:
+  \begin{itemize}
+    \item ++ wurde neu hinzugefügt
+    \item -- wurde entfernt
+    \item -> Umbenennung
+    \item [ | | ] Eine Klasse in einem Klassendiagramm. Dabei werden die Attribute und die Methoden durch | getrennt.
+    \item Beschreibungen von Methoden und Attributen folgen der UML-Syntax.
+  \end{itemize}
