@@ -24,7 +24,8 @@ view
       ++loginClicked(event:LoginEvent)
       ++forgotPasswortClicked(event:ClickEvent)
       ++enter(event:ViewChangeEvent)
-      [ +rememberMe:CheckBox, +authInfoMissing:Label, +authenticationFailed:Label, +passwortField:PasswortField ||]
+      [ +rememberMe:CheckBox, +authInfoMissing:Label, +authenticationFailed:Label, 
+          +passwortField:PasswortField ||]
   MainView -> MainUI
   --MessageView
   ++SupervisorView
@@ -34,7 +35,8 @@ view
   ++TimeRecordView
       ++refreshTimeRecords
       ++updateHeaderLabel
-      [ +beanItemContainer:BeanItemContainer<TimeRecord>, +recordList:Grid, +header:Label, +startButton:Button, +stopButton:Button, +elapsedTime:Label, +form:TimeRecordForm ||]
+      [ +beanItemContainer:BeanItemContainer<TimeRecord>, +recordList:Grid, +header:Label, 
+          +startButton:Button, +stopButton:Button, +elapsedTime:Label, +form:TimeRecordForm ||]
   TimeSheetView
       --filtersChanged
       --showTimeSheet
