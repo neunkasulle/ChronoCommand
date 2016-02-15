@@ -17,6 +17,11 @@ model
     --checkRuhezeit
     checkNachtarbeit -> checkNightWork
     checkFeiertagsruhe -> checkSundayWork
+	++ -getNumberOfDaysInMonth(timeSheet:TimeSheet): int
+	++ -readHolidays(year:int)
+	++getEasterDate(year:int): LocalDate
+	++GermanLawRegulations
+	[ -holidays:Map<LocalDate, String, -yearsIntitialized:Set<Integer> ||]
   Message
     --isDraft
     [ --id:int, --sendTime:Time{readonly}, --receiveTime:Time, --content:String{readonly}, 

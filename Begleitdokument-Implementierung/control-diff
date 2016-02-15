@@ -37,7 +37,6 @@ control
       ++getLatestTimeRecord(user:User):TimeRecord
       addTimeToTimeSheet(time:Zeit) -> (beginn:LocalDateTime, end:LocalDateTime, category:Category, 
           description:String, user:User)
-%      --getSupervisedTimeSheets(month:int, year:int)
       lockTimeSheet(...):bool -> (timeSheet:TimeSheet)
       unlockTimeSheet(...):bool -> (timeSheet:TimeSheet)
       approveTimeSheet(...):bool -> (timeSheet:TimeSheet)
@@ -49,9 +48,10 @@ control
       ++getAllCategories:List<Category>
       getTimeSheet(month:int, year:int):TimeSheet -> (month:int):List<TimeSheet>
       ++getTimeSheetsFromUser(user:User):List<TimeSheet>
-      ++getCurrentMinutes(timeRecords:TimeRecords[]):int
+      ++ -getCurrentMinutes(timeRecords:TimeRecords[]):int
+	  ++ -updateCurrentMinutesThisMonth(timeSheet:TimeSheet)
       ++editTimeRecord(timeRecord:TimeRecord)
-      ++assMessageToTimeSheet(timeSheet:TimeSheet, message:Message)
+      ++addMessageToTimeSheet(timeSheet:TimeSheet, message:Message)
       ++getMessageFromTimeSheet(timeSheet:TimeSheet):List<Message>
       ++sendEmail(recipient:User, message:String
   UserManagementControl
