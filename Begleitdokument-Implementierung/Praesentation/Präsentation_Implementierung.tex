@@ -1,34 +1,44 @@
 \include{Style}
 \include{Praeambel}
 
-\usepackage[table]{xcolor}
+%\usepackage[table]{xcolor}
 
 \begin{document}
 
 \section{User Interface}
 \begin{frame}
-	\frametitle{Login}
-	\includegraphics{images/login.png}
+	%frametitle{Login}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/login.png}
+	\end{center}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Zeiterfassung bearbeiten}
-	\includegraphics{images/timerecord-edit.png}
+	%frametitle{Zeiterfassung bearbeiten}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/timerecord-edit.png}
+	\end{center}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Nutzerübersicht des Administrators}
-	\includegraphics{images/admin-overview.png}
+	%frametitle{Nutzerübersicht des Administrators}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/admin-overview.png}
+	\end{center}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Neuen Benutzer erstellen}
-	\includegraphics{images/create-user.png}
+	%frametitle{Neuen Benutzer erstellen}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/create-user.png}
+	\end{center}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Stundenzettelübersicht eines Users}
-	\includegraphics{images/timesheets-overview.png}
+	%frametitle{Stundenzettelübersicht eines Users}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/timesheets-overview.png}
+	\end{center}
 \end{frame}
 
 
@@ -44,18 +54,18 @@
 \subsection{Probleme mit Frameworks}
 
 \begin{frame}
-	\frametitle{Probleme mit Frameworks}
-	\includegraphics{images/shiro-logo.png}
+	%frametitle{Probleme mit Frameworks}
+	\includegraphics[width=\linewidth]{images/shiro-logo.png}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Probleme mit Frameworks}
-	\includegraphics{images/hibernate-logo.png}
+	%frametitle{Probleme mit Frameworks}
+	\includegraphics[width=\linewidth]{images/hibernate-logo.png}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Probleme mit Frameworks}
-	\includegraphics{images/vaadin-logo.png}
+	%frametitle{Probleme mit Frameworks}
+	\includegraphics[width=\linewidth]{images/vaadin-logo.png}
 \end{frame}
 
 % ggf PDFbox
@@ -66,42 +76,44 @@
 
 \begin{frame}
 	\subsection{Musskriterien}
-	\begin{tabular}[l]
-		Starten und Stoppen von einer zeiterfassung: \emph{erfüllt} \\
-		Zeiten nachträglich erfassen: \emph{erfüllt} \\
-		Zeiten nachträglich ändern: \emph{erfüllt} \\
-		Erfasste Zeiten können Tätigkeiten zugeordnet werden: \emph{erfüllt} \\
-		Erfasste Zeiten können Kategorien zugeordnet werden: \emph{erfüllt} \\
-		Warnungen wenn Zeiten nicht eingetragen sind: \emph{erfüllt} \\
-		Möglichkeit die erfassten Zeiten an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
-		Möglichkeit den Stundenzettel an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
-		Warnungen wenn zu erfassten Zeiten keine Tätigkeit zugeordnet ist: \emph{erfüllt} \\
-		Warnungen wenn zu erfassten Zeiten keine Kategorie zugeordnet ist: \emph{erfüllt} \\
-		Vergangene Zeiten sind einsehbar: \emph{erfüllt} \\
-		Hinzufügen von Accounts: \emph{erfüllt} \\
-		Ändern von Accounts: \emph{erfüllt} \\
-		Bestimmte Benutzer* sind Administratoren*: \emph{erfüllt} \\
-		Bestimmte Benutzer* sind Betreuer*: \emph{erfüllt} \\
-		Administratoren* legen fest, welche Benutzer* von welchem Betreuer* betreut werden: \emph{erfüllt} \\
-		\cellcolor{pink} Warnungen wenn gesetzlich Pausen genommen werden müssen: \emph{nicht erfüllt, da die Datenerhebung für Pause signifikant komplizierter ist und uns dafür die Zeit nicht mehr gereicht hat} \\
-		\cellcolor{pink} Löschen von Accounts: \emph{nicht erfüllt, da keine Accounts gelöscht werden. Nichtbenutze Accounts werden deaktiviert.} \\
-		\cellcolor{pink} Backups werden regelmäßig angefertigt: \emph{(nicht) erfüllt, da dies die Aufgabe der Administratoren ist} \\
-		\cellcolor{pink} Es kann zwischen LDAP und lokalen Accounts zur Benutzer*verwaltung gewählt werden: \emph{nicht erfüllt, aus Zeitgründen} \\
-		\cellcolor{pink} Zeiten sollen durch eine graphische Übersicht visualisiert werden (Heatmap, Punch Card): \emph{nicht erfüllt} \\
-	\end{tabular}
+	16 Musskriterien wurden implementiert. Folgende wurden nicht erfüllt:
+	\begin{itemize}
+%		Starten und Stoppen von einer zeiterfassung: \emph{erfüllt} \\
+%		Zeiten nachträglich erfassen: \emph{erfüllt} \\
+%		Zeiten nachträglich ändern: \emph{erfüllt} \\
+%		Erfasste Zeiten können Tätigkeiten zugeordnet werden: \emph{erfüllt} \\
+%		Erfasste Zeiten können Kategorien zugeordnet werden: \emph{erfüllt} \\
+%		Warnungen wenn Zeiten nicht eingetragen sind: \emph{erfüllt} \\
+%		Möglichkeit die erfassten Zeiten an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
+%		Möglichkeit den Stundenzettel an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
+%		Warnungen wenn zu erfassten Zeiten keine Tätigkeit zugeordnet ist: \emph{erfüllt} \\
+%		Warnungen wenn zu erfassten Zeiten keine Kategorie zugeordnet ist: \emph{erfüllt} \\
+%		Vergangene Zeiten sind einsehbar: \emph{erfüllt} \\
+%		Hinzufügen von Accounts: \emph{erfüllt} \\
+%		Ändern von Accounts: \emph{erfüllt} \\
+%		Bestimmte Benutzer* sind Administratoren*: \emph{erfüllt} \\
+%		Bestimmte Benutzer* sind Betreuer*: \emph{erfüllt} \\
+%		Administratoren* legen fest, welche Benutzer* von welchem Betreuer* betreut werden: \emph{erfüllt} \\
+		\item Warnungen wenn gesetzlich Pausen genommen werden müssen
+		\item Löschen von Accounts
+		\item Backups werden regelmäßig angefertigt
+		\item Es kann zwischen LDAP und lokalen Accounts zur Benutzer*verwaltung gewählt werden
+		\item Zeiten sollen durch eine graphische Übersicht visualisiert werden (Heatmap, Punch Card)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\subsection{Wunschkriterien}
-	\begin{tabular}[l]
-		Mehrere Frontendimplementierungen sind möglich: \emph{erfüllt}
-		Über eine Toolbar Zeiten erfassen und eine Tätigkeit zuordnen: \emph{erfüllt}
-		\cellcolor{pink} Zeitvorhersagen anhand vergangener Arbeitszeit: \emph{nicht erfüllt, wegen Zeitmangen und zu wenog Erfahrung mit dem Thema}
-		\cellcolor{pink} Überwachung der Arbeitszeit auch ohne abgegebene Zeiten möglich: \emph{nicht erfüllt, da die Umsetzung zu komplex ist} 
-		\cellcolor{pink} Erfassung der Tätigkeiten während der Arbeitszeit: \emph{nicht erfüllt, da die Umsetzung zu komplex ist}
-		\cellcolor{pink} Möglichkeit, die IP-Range, von der aus sich Administratoren* einloggen können, zu beschränken: \emph{nicht erfüllt, aus Zeitgründen}
-		\cellcolor{pink} Kalendarische Übersicht erfasster Zeiten: \emph{nicht erfüllt, aus Zeitgründen}
-	\end{tabular}
+	Folgende Wunschkriterien wurden erfüllt:
+	\begin{itemize}
+		\item Mehrere Frontendimplementierungen sind möglich
+		\item Über eine Toolbar Zeiten erfassen und eine Tätigkeit zuordnen
+%		\cellcolor{pink} Zeitvorhersagen anhand vergangener Arbeitszeit: \emph{nicht erfüllt, wegen Zeitmangen und zu wenog Erfahrung mit dem Thema} \\
+%		\cellcolor{pink} Überwachung der Arbeitszeit auch ohne abgegebene Zeiten möglich: \emph{nicht erfüllt, da die Umsetzung zu komplex ist} \\
+%		\cellcolor{pink} Erfassung der Tätigkeiten während der Arbeitszeit: \emph{nicht erfüllt, da die Umsetzung zu komplex ist} \\
+%		\cellcolor{pink} Möglichkeit, die IP-Range, von der aus sich Administratoren* einloggen können, zu beschränken: \emph{nicht erfüllt, aus Zeitgründen} \\
+%		\cellcolor{pink} Kalendarische Übersicht erfasster Zeiten: \emph{nicht erfüllt, aus Zeitgründen} \\
+	\end{itemize}
 \end{frame}
 
 \section{Große Veränderungen}
