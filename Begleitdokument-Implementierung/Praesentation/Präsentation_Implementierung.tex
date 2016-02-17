@@ -1,6 +1,8 @@
 \include{Style}
 \include{Praeambel}
 
+\usepackage[table]{xcolor}
+
 \begin{document}
 
 \section{User Interface}
@@ -62,12 +64,45 @@
 
 \section{Kriterien}
 
-\subsection{Musskriterien}
-% tabelle
+\begin{frame}
+	\subsection{Musskriterien}
+	\begin{tabular}[l]
+		Starten und Stoppen von einer zeiterfassung: \emph{erfüllt} \\
+		Zeiten nachträglich erfassen: \emph{erfüllt} \\
+		Zeiten nachträglich ändern: \emph{erfüllt} \\
+		Erfasste Zeiten können Tätigkeiten zugeordnet werden: \emph{erfüllt} \\
+		Erfasste Zeiten können Kategorien zugeordnet werden: \emph{erfüllt} \\
+		Warnungen wenn Zeiten nicht eingetragen sind: \emph{erfüllt} \\
+		Möglichkeit die erfassten Zeiten an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
+		Möglichkeit den Stundenzettel an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
+		Warnungen wenn zu erfassten Zeiten keine Tätigkeit zugeordnet ist: \emph{erfüllt} \\
+		Warnungen wenn zu erfassten Zeiten keine Kategorie zugeordnet ist: \emph{erfüllt} \\
+		Vergangene Zeiten sind einsehbar: \emph{erfüllt} \\
+		Hinzufügen von Accounts: \emph{erfüllt} \\
+		Ändern von Accounts: \emph{erfüllt} \\
+		Bestimmte Benutzer* sind Administratoren*: \emph{erfüllt} \\
+		Bestimmte Benutzer* sind Betreuer*: \emph{erfüllt} \\
+		Administratoren* legen fest, welche Benutzer* von welchem Betreuer* betreut werden: \emph{erfüllt} \\
+		\cellcolor{pink} Warnungen wenn gesetzlich Pausen genommen werden müssen: \emph{nicht erfüllt, da die Datenerhebung für Pause signifikant komplizierter ist und uns dafür die Zeit nicht mehr gereicht hat} \\
+		\cellcolor{pink} Löschen von Accounts: \emph{nicht erfüllt, da keine Accounts gelöscht werden. Nichtbenutze Accounts werden deaktiviert.} \\
+		\cellcolor{pink} Backups werden regelmäßig angefertigt: \emph{(nicht) erfüllt, da dies die Aufgabe der Administratoren ist} \\
+		\cellcolor{pink} Es kann zwischen LDAP und lokalen Accounts zur Benutzer*verwaltung gewählt werden: \emph{nicht erfüllt, aus Zeitgründen} \\
+		\cellcolor{pink} Zeiten sollen durch eine graphische Übersicht visualisiert werden (Heatmap, Punch Card): \emph{nicht erfüllt} \\
+	\end{tabular}
+\end{frame}
 
-\subsection{Wunschkriterien}
-% tabelle
-
+\begin{frame}
+	\subsection{Wunschkriterien}
+	\begin{tabular}[l]
+		Mehrere Frontendimplementierungen sind möglich: \emph{erfüllt}
+		Über eine Toolbar Zeiten erfassen und eine Tätigkeit zuordnen: \emph{erfüllt}
+		\cellcolor{pink} Zeitvorhersagen anhand vergangener Arbeitszeit: \emph{nicht erfüllt, wegen Zeitmangen und zu wenog Erfahrung mit dem Thema}
+		\cellcolor{pink} Überwachung der Arbeitszeit auch ohne abgegebene Zeiten möglich: \emph{nicht erfüllt, da die Umsetzung zu komplex ist} 
+		\cellcolor{pink} Erfassung der Tätigkeiten während der Arbeitszeit: \emph{nicht erfüllt, da die Umsetzung zu komplex ist}
+		\cellcolor{pink} Möglichkeit, die IP-Range, von der aus sich Administratoren* einloggen können, zu beschränken: \emph{nicht erfüllt, aus Zeitgründen}
+		\cellcolor{pink} Kalendarische Übersicht erfasster Zeiten: \emph{nicht erfüllt, aus Zeitgründen}
+	\end{tabular}
+\end{frame}
 
 \section{Große Veränderungen}
 
@@ -86,5 +121,7 @@
 		\end{itemize}
 	\end{itemize}
 \end{frame}
+
+% add commit statistics?
 
 \end{document}
