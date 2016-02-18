@@ -109,7 +109,7 @@ public class User {
     }
 
     public void setUsername(String username) throws ChronoCommandException {
-        if (username == null || username.trim().isEmpty()) {
+        if (!username.matches("^[a-zA-Z0-9_]+")) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         if(username.length() > STRINGLENGTH) {
