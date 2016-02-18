@@ -32,6 +32,7 @@ public class TimeSheetDAO {
         Criteria criteria = session.createCriteria(TimeSheet.class);
         criteria.add(Restrictions.eq("month", month)).add(Restrictions.eq("year", year)).add(Restrictions.eq("user", user));
         Object obj = criteria.uniqueResult();
+        session.close();
         if (obj instanceof TimeSheet) {
             return (TimeSheet) obj;
         } else {
@@ -49,6 +50,7 @@ public class TimeSheetDAO {
                 timeRecordList.add((TimeRecord) obj);
             }
         }
+        session.close();
         return timeRecordList;
     }
 
@@ -62,6 +64,7 @@ public class TimeSheetDAO {
         for (Object obj : criteria.list()) {
             list.add((TimeRecord) obj);
         }
+        session.close();
         return list;
     }
 
@@ -72,6 +75,7 @@ public class TimeSheetDAO {
         for (Object obj : criteria.list()) {
             list.add((TimeSheet) obj);
         }
+        session.close();
         return list;
     }
 
@@ -103,7 +107,7 @@ public class TimeSheetDAO {
         for (Object obj : criteria.list()) {
             list.add((TimeSheet) obj);
         }
-
+        session.close();
         return list;
     }
 
@@ -129,13 +133,14 @@ public class TimeSheetDAO {
         }
 
         Object obj = criteria.list().get(0);
+        session.close();
         return (TimeRecord) obj;
     }
 
     public void saveTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         if (timeRecord.getCategory() != null && (timeRecord.getCategory().getId() == null || session.get(Category.class, timeRecord.getCategory().getId()) == null)) {
-            throw new ChronoCommandException(Reason.CATEGORYNOTFOUND);
+            throw new ChronoCommandException(Reason.PROJECTNOTFOUND);
         }
         Transaction tx = session.beginTransaction();
         session.saveOrUpdate(timeRecord);
@@ -147,9 +152,7 @@ public class TimeSheetDAO {
     public TimeSheetHandler getTimeSheetHandler() throws ChronoCommandException {
         Session session = DAOHelper.getInstance().getSessionFactory().openSession();
         Object obj = session.createCriteria(TimeSheetHandler.class).uniqueResult();
-        if (obj instanceof TimeSheetHandler) {
-            return (TimeSheetHandler) obj;
-        }
-        throw new ChronoCommandException(Reason.INVALIDSOMETHING);
+        session.close();
+        return (TimeSheetHandler) obj;
     }
 }

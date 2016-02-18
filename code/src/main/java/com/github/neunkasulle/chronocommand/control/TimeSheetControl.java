@@ -127,11 +127,12 @@ public class TimeSheetControl {
 
         if(timeRecord.getCategory() == null) {
             LOGGER.error(MISSCAT);
-            throw new ChronoCommandException(Reason.MISSINGCATEGORY);
+            throw new ChronoCommandException(Reason.MISSINGPROJECT);
         }
 
         timeRecord.setEnding(LocalDateTime.now());
         timeSheetDAO.saveTimeRecord(timeRecord);
+        updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
         LOGGER.info("Time record closed for" + user.getUsername());
 
         return timeRecord;
@@ -159,7 +160,7 @@ public class TimeSheetControl {
 
         if (category == null && timeRecord.getCategory() == null) {
             LOGGER.error(MISSCAT);
-            throw new ChronoCommandException(Reason.MISSINGCATEGORY);
+            throw new ChronoCommandException(Reason.MISSINGPROJECT);
         }
         if (description.isEmpty() && timeRecord.getDescription().isEmpty()) {
             LOGGER.error(MISSDESC);
@@ -169,6 +170,7 @@ public class TimeSheetControl {
         timeRecord.setDescription(description);
         timeRecord.setEnding(LocalDateTime.now());
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
+        updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
         LOGGER.info("Time record closed for" + user.getUsername());
 
         return timeRecord;
@@ -199,7 +201,7 @@ public class TimeSheetControl {
 
         if(category == null) {
             LOGGER.error(MISSCAT);
-            throw new ChronoCommandException(Reason.MISSINGCATEGORY);
+            throw new ChronoCommandException(Reason.MISSINGPROJECT);
         }
 
         if (timeSheet == null) {  //No Time sheet yet, we need to build a new one
@@ -214,6 +216,7 @@ public class TimeSheetControl {
         }
 
         timeSheetDAO.saveTimeRecord(new TimeRecord(beginn, end, category, description, timeSheet));
+        updateCurrentMinutesThisMonth(timeSheet);
         LOGGER.info("Time record created for" + user.getUsername());
     }
 
@@ -221,16 +224,17 @@ public class TimeSheetControl {
      * A timeSheet will be locked against changes
      * @param timeSheet the timesheet which will be locked
      */
-    public void lockTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException {
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+    public void lockTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
+        if (!timeSheet.getUser().equals(LoginControl.getInstance().getCurrentUser())) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 
         String result = Regulations.getInstance().checkTimeSheet(timeSheet);
         if (result.isEmpty()) {
             timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
-            LOGGER.info("Locked:" + timeSheet.getMonth() + user.getUsername());
-            this.sendEmail(user.getSupervisor(), "New lockd time sheet from" + user.getUsername());
+            TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+            this.sendEmail(user.getSupervisor(), "New locked time sheet from" + user.getUsername());
+            LOGGER.info("Locked:" + timeSheet.getMonth() + timeSheet.getUser().getUsername());
         } else {
             throw new ChronoCommandException(Reason.TIMESHEETINCOMPLETE, result);
         }
@@ -240,14 +244,13 @@ public class TimeSheetControl {
      * A TimeSheet will be unlocked again and thus can be changed again
      * @param timeSheet the time sheet which will be unlocked
      */
-    public void unlockTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException {
-
-        if(timeSheet.getState() != TimeSheetState.UNLOCKED
-                && SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
+    public void unlockTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
+        if(!LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser().getSupervisor())) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
-        LOGGER.info("unlocked:" + timeSheet.getMonth() + user.getUsername());
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+        LOGGER.info("unlocked: " + timeSheet.getMonth() + " " + timeSheet.getUser().getUsername());
         this.sendEmail(user, "Time sheet has been unlocked again");
     }
 
@@ -255,13 +258,15 @@ public class TimeSheetControl {
      * A time sheet will be marked as checked
      * @param timeSheet the time sheet which will be marked
      */
-    public void approveTimeSheet(TimeSheet timeSheet, User user) throws ChronoCommandException{
+    public void approveTimeSheet(TimeSheet timeSheet) throws ChronoCommandException{
         if(SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
-        LOGGER.info("checked:" + timeSheet.getMonth() + user.getUsername());
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
         this.sendEmail(user, "Your time sheet has been approved");
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+        LOGGER.info("checked: " + timeSheet.getMonth() + " " + timeSheet.getUser().getUsername());
+
     }
 
     /**
@@ -272,7 +277,7 @@ public class TimeSheetControl {
      */
     public File printCheckedTimeSheets(Month month, int year) throws ChronoCommandException {
         //TODO who can print checked time sheets?
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 
@@ -357,12 +362,22 @@ public class TimeSheetControl {
      * @param year the year of the time sheets
      * @return A list of time sheet in the specified time frame
      */
-    public List<TimeSheet> getTimeSheet(Month month, int year) throws ChronoCommandException {
+    public List<TimeSheet> getTimeSheets(Month month, int year) throws ChronoCommandException {
         if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 
         return TimeSheetDAO.getInstance().getAllTimeSheets(month, year);
+    }
+
+    public TimeSheet getTimeSheet(Month month, int year, User user) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)
+                && !LoginControl.getInstance().getCurrentUser().equals(user)
+                && !LoginControl.getInstance().getCurrentUser().equals(user.getSupervisor())) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
+        return TimeSheetDAO.getInstance().getTimeSheet(month, year, user);
     }
 
     /**
@@ -385,7 +400,7 @@ public class TimeSheetControl {
      * @param timeRecords A number of time records to sum up
      * @return the Number of working hours
      */
-    private int getCurrentMinutes(TimeRecord[] timeRecords) {
+    private int getCurrentMinutes(List<TimeRecord> timeRecords) {
         int currentMinutes = 0;
         for (TimeRecord timeRecord : timeRecords) {
             currentMinutes += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnding());
@@ -394,17 +409,31 @@ public class TimeSheetControl {
         return currentMinutes;
     }
 
+    private void updateCurrentMinutesThisMonth(TimeSheet timeSheet) throws ChronoCommandException {
+        int currentMinutes = getCurrentMinutes(TimeSheetDAO.getInstance().getTimeRecords(timeSheet));
+        timeSheet.setCurrentMinutesThisMonth(currentMinutes);
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
+    }
+
     public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
         if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
             LOGGER.error("Time sheet is locked");
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
+
         // TODO check for valid data
         if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
             LOGGER.error("not permitted to perform action: editTimeRecord caused by" + LoginControl.getInstance().getCurrentUser().getUsername());
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
+
+        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error(LOCKED);
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
+        updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
     }
 
     public void addMessageToTimeSheet(TimeSheet timeSheet, Message message) {
@@ -442,5 +471,27 @@ public class TimeSheetControl {
         } catch (java.io.UnsupportedEncodingException e) {
             LOGGER.error("Unsupported encoding", e);
         }
+    }
+
+    public void createProject(String projectName) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
+        if (projectName.isEmpty()) {
+            throw new ChronoCommandException(Reason.MISSINGPROJECT);
+        }
+
+        CategoryDAO.getInstance().saveCategory(new Category(projectName));
+    }
+
+    public List<TimeRecord> getTimeRecords(TimeSheet timeSheet) throws ChronoCommandException {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)
+                && !LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser())
+                && !LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser().getSupervisor())) {
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
+        return TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
     }
 }

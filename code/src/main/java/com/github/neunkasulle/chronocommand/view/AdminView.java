@@ -30,7 +30,7 @@ public class AdminView extends BaseView {
         getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
     }, e -> {
         // edit
-        ConfirmDialog.show(getUI(), "Möchten sie den Benutzer wirklich löschen?",
+        ConfirmDialog.show(getUI(), "Do you really want to delete this user?",
                 dialog -> {
                     if (dialog.isConfirmed()) {
                         // Confirmed to continue TODO
@@ -43,7 +43,7 @@ public class AdminView extends BaseView {
         getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
     }, e -> {
         // show timesheets
-        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW);
+        getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW + "/" + this.form.getFormFieldBinding().getItemDataSource().getBean().getUsername());
     }, e -> {
         // cancel
         this.recordList.select(null);
@@ -53,14 +53,16 @@ public class AdminView extends BaseView {
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
 
-        final Label header = new Label("Globale Benutzerverwaltung");
+        final Label header = new Label("Global user management");
         header.setId("page-header");
         header.setSizeFull();
         contentPane.addComponent(header);
 
+        /*
         final TextField filter = new TextField();
         contentPane.addComponent(filter);
         filter.setSizeFull();
+        */
 
         /* Form & table */
 

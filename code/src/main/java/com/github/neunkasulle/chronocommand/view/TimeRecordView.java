@@ -2,6 +2,7 @@ package com.github.neunkasulle.chronocommand.view;
 
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.*;
 import com.github.neunkasulle.chronocommand.view.forms.TimeRecordForm;
 import com.vaadin.data.Item;
@@ -10,10 +11,13 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -22,12 +26,15 @@ import java.util.List;
  * Created by Janze on 20.01.2016.
  */
 public class TimeRecordView extends BaseView {
+    private User user;
+    private TimeSheet timeSheet = null;
 
     private BeanItemContainer<TimeRecord> beanItemContainer = new BeanItemContainer<>(TimeRecord.class);
 
     private final Grid recordList = new Grid();
 
     private Label header;
+    private Button downloadPdf;
     private Button startButton;
     private Button stopButton;
     private Label elapsedTime;
@@ -35,7 +42,6 @@ public class TimeRecordView extends BaseView {
     private final TimeRecordForm form = new TimeRecordForm(event -> {
         // save
         try {
-            // Commit the fields from UI to DAO
             this.form.getFormFieldBinding().commit();
             TimeSheetControl.getInstance().editTimeRecord(this.form.getFormFieldBinding().getItemDataSource().getBean());
             refreshTimeRecords();
@@ -44,7 +50,7 @@ public class TimeRecordView extends BaseView {
         } catch (FieldGroup.CommitException e) {
             throw new IllegalArgumentException(e);
         } catch (ChronoCommandException e) {
-            Notification.show("Failed to save Timerecord: " + e, Notification.Type.ERROR_MESSAGE);
+            Notification.show("Failed to save Timerecord: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
         }
     }, event -> {
         // delete
@@ -58,10 +64,87 @@ public class TimeRecordView extends BaseView {
 
     @Override
     protected void enterTemplate(final ViewChangeListener.ViewChangeEvent event, final Layout contentPane) {
+        if (event.getParameters().isEmpty()) {
+            try {
+                user = LoginControl.getInstance().getCurrentUser();
+            } catch (ChronoCommandException e) {
+                Notification.show("Failed to get current user: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+                return;
+            }
+        } else {
+            String[] parameters = event.getParameters().split("/");
+            if (parameters.length != 3) {
+                try {
+                    user = LoginControl.getInstance().getCurrentUser();
+                } catch (ChronoCommandException e) {
+                    Notification.show("Failed to get current user: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+                    return;
+                }
+            } else {
+                try {
+                    user = UserManagementControl.getInstance().findUser(parameters[0]);
+                } catch (ChronoCommandException e) {
+                    Notification.show("Failed to get user \'" + parameters[0] + "\' because: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+                    return;
+                }
+                int year;
+                Month month;
+                try {
+                    year = Integer.parseInt(parameters[1]);
+                    month = Month.of(Integer.parseInt(parameters[2]));
+                } catch (NumberFormatException e) {
+                    Notification.show("Failed to parse number", Notification.Type.ERROR_MESSAGE);
+                    return;
+                }
+                try {
+                    timeSheet = TimeSheetControl.getInstance().getTimeSheet(month, year, user);
+                } catch (ChronoCommandException e) {
+                    Notification.show("Failed to get timesheet", Notification.Type.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        }
+
+        HorizontalLayout headerLayout = new HorizontalLayout();
+        headerLayout.setSpacing(true);
+        contentPane.addComponent(headerLayout);
+
         header = new Label();
         header.setId("page-header");
         header.setSizeFull();
-        contentPane.addComponent(header);
+        headerLayout.addComponent(header);
+
+        downloadPdf = new Button("Download pdf");
+        headerLayout.addComponent(downloadPdf);
+        downloadPdf.addClickListener(event2 -> {
+            try {
+                TimeSheet timeSheet = this.timeSheet;
+                if (timeSheet == null) {
+                    timeSheet = (TimeSheet) timeRecordSelection.getValue();
+                }
+                File pdffile = TimeSheetControl.getInstance().printTimeSheet(timeSheet);
+                FileResource pdf = new FileResource(pdffile);
+                getUI().getPage().open(pdf, "_blank", true);
+                /*FileDownloader fileDownloader = new FileDownloader(pdf);
+                fileDownloader.extend(this.form.getExportPDFBtn());*/
+            } catch(ChronoCommandException ex) {
+                Notification.show("Failed to print pdf:" + ex.getReason().toString());
+            }
+        });
+
+        if (timeSheet == null) {
+            final Button submitTimeRecordButton = new Button("Submit Timesheet");
+            submitTimeRecordButton.addClickListener(event2 -> {
+                try {
+                    TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue());
+                    updateHeaderLabel();
+                } catch (ChronoCommandException e) {
+                    Notification.show("Failed to lock timesheet: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+                }
+            });
+            headerLayout.addComponent(submitTimeRecordButton);
+            submitTimeRecordButton.setSizeFull();
+        }
 
         updateHeaderLabel();
 
@@ -167,7 +250,8 @@ public class TimeRecordView extends BaseView {
         recordList.setContainerDataSource(gpcontainer);
         recordList.setSelectionMode(Grid.SelectionMode.SINGLE);
         recordList.addSelectionListener(e -> {
-            if (recordList.getSelectedRow() != null && ((TimeRecord) recordList.getSelectedRow()).getBeginning() != null) {
+            if (recordList.getSelectedRow() != null && ((TimeRecord) recordList.getSelectedRow()).getBeginning() != null
+                    && this.timeSheet == null && ((TimeSheet) timeRecordSelection.getValue()).getState() == TimeSheetState.UNLOCKED) {
                 form.edit((TimeRecord) recordList.getSelectedRow());
             }
         });
@@ -226,6 +310,7 @@ public class TimeRecordView extends BaseView {
 
         timeRecordSelection.addValueChangeListener(event1 -> {
             refreshTimeRecords();
+            updateHeaderLabel();
         });
 
         // The action form
@@ -238,14 +323,28 @@ public class TimeRecordView extends BaseView {
     }
 
     private void refreshTimeRecords() {
-        if (timeRecordSelection == null) {
+        TimeSheet timeSheet;
+        if (this.timeSheet != null) {
+            timeSheet = this.timeSheet;
+        } else {
+            if (timeRecordSelection == null) {
+                return;
+            }
+            timeSheet = (TimeSheet) timeRecordSelection.getValue();
+        }
+        if (timeSheet == null) {
             return;
         }
-        TimeSheet timeSheet = (TimeSheet) timeRecordSelection.getValue();
-        final List<TimeRecord> records = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
         this.beanItemContainer.removeAllItems();
-        this.beanItemContainer.addAll(records);
+        try {
+            final List<TimeRecord> records = TimeSheetControl.getInstance().getTimeRecords(timeSheet);
+            this.beanItemContainer.addAll(records);
+        } catch (ChronoCommandException e) {
+            Notification.show("Failed to get time records: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+        }
         this.form.setVisible(false);
+
+        updateHeaderLabel();
     }
 
     private void updateHeaderLabel() {
@@ -254,7 +353,12 @@ public class TimeRecordView extends BaseView {
             header.setVisible(false);
             return;
         }
-        TimeSheet timeSheet = (TimeSheet) timeRecordSelection.getValue();
+        TimeSheet timeSheet;
+        if (this.timeSheet != null) {
+            timeSheet = this.timeSheet;
+        } else {
+            timeSheet = (TimeSheet) timeRecordSelection.getValue();
+        }
         if (timeSheet == null) {
             header.setValue("");
             header.setVisible(false);

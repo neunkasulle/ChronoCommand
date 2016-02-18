@@ -1,6 +1,7 @@
 package com.github.neunkasulle.chronocommand.view;
 
-import com.github.neunkasulle.chronocommand.view.BaseView;
+import com.github.neunkasulle.chronocommand.control.TimeSheetControl;
+import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 
@@ -50,20 +51,15 @@ public class CreateProjectView extends BaseView {
         //Create New Project Button
         final Button createNewProjectButton = new Button("Create");
         createNewProjectButton.addClickListener(e -> {
-            //TODO Fill me
+            try {
+                TimeSheetControl.getInstance().createProject(projectNameInputFiled.getValue());
+                Notification.show("Created", Notification.Type.HUMANIZED_MESSAGE);
+                projectNameInputFiled.clear();
+            } catch(ChronoCommandException ex) {
+                Notification.show("Failed to save Project: " + ex.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+                projectNameInputFiled.focus();
+            }
         });
         buttonBar.addComponent(createNewProjectButton);
-
-        //Cancel Button goes back to the last View???
-        final Button cancelButton = new Button("Cancel");
-        cancelButton.addClickListener(e -> {
-            //TODO Fill me i want go back to my last View
-        });
-        buttonBar.addComponent(cancelButton);
-
-
-
-
-
     }
 }

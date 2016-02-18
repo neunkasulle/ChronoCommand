@@ -1,0 +1,173 @@
+\include{Style}
+\include{Praeambel}
+
+%\usepackage[table]{xcolor}
+
+\begin{document}
+
+%\maketitle
+
+\section{User Interface}
+\begin{frame}
+	%frametitle{Login}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/login.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/user-defaultview.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/supervisor-defaultview.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/admin-defaultview.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	%frametitle{Zeiterfassung bearbeiten}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/timerecord-edit.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	%frametitle{Stundenzettelübersicht eines Users}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/timesheets-overview.png}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+	%frametitle{Nutzerübersicht des Administrators}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/admin-overview.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	%frametitle{Neuen Benutzer erstellen}
+	\begin{center}
+		\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/create-user.png}
+	\end{center}
+\end{frame}
+
+
+\section{Probleme}
+
+\subsection{Allgemein}
+\begin{frame}
+	\begin{itemize}
+		\item Unerfahren
+		\item Frameworks nicht genau genug im voraus angeschaut
+		\item In vorherigen Phasen zu ungenau gearbeitet
+		-> Wasserfallmodell eher shit TODO
+		\item Interne Schnittstellen nicht richtig definiert und kommuniziert
+	\end{itemize}
+\end{frame}
+
+\subsection{Probleme mit Frameworks}
+
+\begin{frame}
+	%frametitle{Probleme mit Frameworks}
+	\includegraphics[width=\linewidth]{images/shiro-logo.png}
+\end{frame}
+
+\begin{frame}
+	%frametitle{Probleme mit Frameworks}
+	\includegraphics[width=\linewidth]{images/hibernate-logo.png}
+\end{frame}
+
+\begin{frame}
+	%frametitle{Probleme mit Frameworks}
+	\includegraphics[width=\linewidth]{images/vaadin-logo.png}
+\end{frame}
+
+% ggf PDFbox
+% ggf Quartz
+
+
+\section{Kriterien}
+
+\begin{frame}
+	\subsection{Musskriterien}
+	16 Musskriterien wurden implementiert. Folgende wurden nicht erfüllt:
+	\begin{itemize}
+%		Starten und Stoppen von einer zeiterfassung: \emph{erfüllt} \\
+%		Zeiten nachträglich erfassen: \emph{erfüllt} \\
+%		Zeiten nachträglich ändern: \emph{erfüllt} \\
+%		Erfasste Zeiten können Tätigkeiten zugeordnet werden: \emph{erfüllt} \\
+%		Erfasste Zeiten können Kategorien zugeordnet werden: \emph{erfüllt} \\
+%		Warnungen wenn Zeiten nicht eingetragen sind: \emph{erfüllt} \\
+%		Möglichkeit die erfassten Zeiten an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
+%		Möglichkeit den Stundenzettel an den Administrator* und Betreuer* zu übersenden: \emph{erfüllt} \\
+%		Warnungen wenn zu erfassten Zeiten keine Tätigkeit zugeordnet ist: \emph{erfüllt} \\
+%		Warnungen wenn zu erfassten Zeiten keine Kategorie zugeordnet ist: \emph{erfüllt} \\
+%		Vergangene Zeiten sind einsehbar: \emph{erfüllt} \\
+%		Hinzufügen von Accounts: \emph{erfüllt} \\
+%		Ändern von Accounts: \emph{erfüllt} \\
+%		Bestimmte Benutzer* sind Administratoren*: \emph{erfüllt} \\
+%		Bestimmte Benutzer* sind Betreuer*: \emph{erfüllt} \\
+%		Administratoren* legen fest, welche Benutzer* von welchem Betreuer* betreut werden: \emph{erfüllt} \\
+		\item Warnungen wenn gesetzlich Pausen genommen werden müssen
+		\item Löschen von Accounts
+		\item Backups werden regelmäßig angefertigt
+		\item Es kann zwischen LDAP und lokalen Accounts zur Benutzer*verwaltung gewählt werden
+		\item Zeiten sollen durch eine graphische Übersicht visualisiert werden (Heatmap, Punch Card)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\subsection{Wunschkriterien}
+	Folgende Wunschkriterien wurden erfüllt:
+	\begin{itemize}
+		\item Mehrere Frontendimplementierungen sind möglich
+		\item Über eine Toolbar Zeiten erfassen und eine Tätigkeit zuordnen
+%		\cellcolor{pink} Zeitvorhersagen anhand vergangener Arbeitszeit: \emph{nicht erfüllt, wegen Zeitmangen und zu wenog Erfahrung mit dem Thema} \\
+%		\cellcolor{pink} Überwachung der Arbeitszeit auch ohne abgegebene Zeiten möglich: \emph{nicht erfüllt, da die Umsetzung zu komplex ist} \\
+%		\cellcolor{pink} Erfassung der Tätigkeiten während der Arbeitszeit: \emph{nicht erfüllt, da die Umsetzung zu komplex ist} \\
+%		\cellcolor{pink} Möglichkeit, die IP-Range, von der aus sich Administratoren* einloggen können, zu beschränken: \emph{nicht erfüllt, aus Zeitgründen} \\
+%		\cellcolor{pink} Kalendarische Übersicht erfasster Zeiten: \emph{nicht erfüllt, aus Zeitgründen} \\
+	\end{itemize}
+\end{frame}
+
+
+\section{Veränderungen}
+\begin{frame}
+	\begin{itemize}
+		\item Security
+		\item view.forms
+		\item Von User erbende Klassen entfernt
+		\item Viele Änderungen durch Frameworks bedingt
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\section{Statistiken}
+	\begin{itemize}
+		\item Lines of code: 4373
+		\item Klassen: 54
+		\item Test linecoverage: 21%
+		\begin{itemize}
+			\item control: 44%
+			\item model: 40%
+			\item security: 40%
+			\item view: 0%
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+% add commit statistics?
+
+\end{document}

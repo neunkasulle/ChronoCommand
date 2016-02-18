@@ -1,53 +1,73 @@
-view
-  ++AdminView
-      ++refreshContacts
-      [ +beanItemContainer:BeanItemContainer<User>, +recordList:Grid, +form:AdminCtrlForm ||]
-  ++BaseView
-      ++enter(event:ViewChangeEvent)
-      ++logoutClicked(event:ClickEvent)
-      ++menuClicked
-      ++inboxClicked
-      ++showErrorMessage(message:String)
-      ++showErrorMessage
-      ++buttonClick(event:ClickEvent)
-  CreateUserView
-  DiagrammMagic
-  ++ErrorView
-      ++enter(event:ViewChangeEvent)
-  InitialStartupView
-      ++enter(event:ViewChangeEvent)
-  ++LocalDateTimeToLocalTimeStringConverter
-      [ +propertyId:Object ||]
-  LoginView
-      --clickSendMessage
-      --clickSaveDraft
-      ++loginClicked(event:LoginEvent)
-      ++forgotPasswortClicked(event:ClickEvent)
-      ++enter(event:ViewChangeEvent)
-      [ +rememberMe:CheckBox, +authInfoMissing:Label, +authenticationFailed:Label, +passwortField:PasswortField ||]
-  MainView -> MainUI
-  --MessageView
-  ++SupervisorView
-      ++refreshSupervisedUsers
-      [ +beanItemContainer:BeanItemContainer<User>, +recordList:Grid, +form:SupervisorCtrlForm ||]
-  TimeElements
-  ++TimeRecordView
-      ++refreshTimeRecords
-      ++updateHeaderLabel
-      [ +beanItemContainer:BeanItemContainer<TimeRecord>, +recordList:Grid, +header:Label, +startButton:Button, +stopButton:Button, +elapsedTime:Label, +form:TimeRecordForm ||]
-  TimeSheetView
-      --filtersChanged
-      --showTimeSheet
-      ++refreshTimeSheets
-      [ +beanItemContainer:BeanItemContainer<TimeSheet>, +recordList:Grid, +form:TimeSheetForm ||]
-  UserSettingsView
-  --View{abstract}
+++AdminView
+  ++refreshContacts
+  [ +beanItemContainer:BeanItemContainer<User>, +recordList:Grid, +form:AdminCtrlForm ||]
+
+++BaseView
+  ++enter(event:ViewChangeEvent)
+  ++logoutClicked(event:ClickEvent)
+  ++menuClicked
+  ++inboxClicked
+  ++showErrorMessage(message:String)
+  ++showErrorMessage
+  ++buttonClick(event:ClickEvent)
+
+CreateUserView
+
+DiagrammMagic
+
+++ErrorView
+  ++enter(event:ViewChangeEvent)
+
+InitialStartupView
+  ++enter(event:ViewChangeEvent)
+
+++LocalDateTimeToLocalTimeStringConverter
+  [ +propertyId:Object ||]
+
+LoginView
+  --clickSendMessage
+  --clickSaveDraft
+  ++loginClicked(event:LoginEvent)
+  ++forgotPasswortClicked(event:ClickEvent)
+  ++enter(event:ViewChangeEvent)
+  [ +rememberMe:CheckBox, +authInfoMissing:Label, +authenticationFailed:Label, 
+      +passwortField:PasswortField ||]
+
+MainView -> MainUI
+
+--MessageView
+
+++SupervisorView
+  ++refreshSupervisedUsers
+  [ +beanItemContainer:BeanItemContainer<User>, +recordList:Grid, +form:SupervisorCtrlForm ||]
+
+TimeElements
+
+
+
+
+++TimeRecordView
+  ++refreshTimeRecords
+  ++updateHeaderLabel
+  [ +beanItemContainer:BeanItemContainer<TimeRecord>, +recordList:Grid, +header:Label, 
+      +startButton:Button, +stopButton:Button, +elapsedTime:Label, +form:TimeRecordForm ||]
+
+TimeSheetView
+  --filtersChanged
+  --showTimeSheet
+  ++refreshTimeSheets
+  [ +beanItemContainer:BeanItemContainer<TimeSheet>, +recordList:Grid, +form:TimeSheetForm ||]
+
+UserSettingsView
+
+--View{abstract}
+
 ++view.forms
+
   ++AdminCtrlForm
+
   ++SupervisorCtrlForm
+
   ++TimeRecordForm
+
   ++TimeSheetForm
-++security
-  ++Realm
-      ++doGetAuthenticationInfo(authcToken:AuthenticationToken)
-      ++doGetAuthorizationInfo(principals:PrincipalCollection)

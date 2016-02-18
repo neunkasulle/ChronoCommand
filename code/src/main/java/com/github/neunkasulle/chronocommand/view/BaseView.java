@@ -56,11 +56,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 });
                 extraPane.addComponent(newTimeRecordButton);
 
-                final Button submitTimeRecordButton = new Button("Submit Timesheet");
+                /*final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     //TODO: Implement submission
                 });
-                extraPane.addComponent(submitTimeRecordButton);
+                extraPane.addComponent(submitTimeRecordButton);*/
             }
         }, SUPERVISOR("Supervisor") {
             @Override
@@ -75,16 +75,16 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 extraPane.addComponent(newTimeRecordButton);
                 newTimeRecordButton.setSizeFull();
 
-                final Button submitTimeRecordButton = new Button("Submit Timesheet");
+                /*final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
                     try {
-                        TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue(), LoginControl.getInstance().getCurrentUser());
+                        TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue());
                     } catch(ChronoCommandException e) {
                         Notification.show("Failed to lock timesheet: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
                     }
                 });
                 extraPane.addComponent(submitTimeRecordButton);
-                submitTimeRecordButton.setSizeFull();
+                submitTimeRecordButton.setSizeFull();*/
 
 
                 final Button listOfMyProletarierButton = new Button("Show Supervised HIWIs");
