@@ -233,7 +233,7 @@ public class TimeSheetControl {
         if (result.isEmpty()) {
             timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
             TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
-            this.sendEmail(user.getSupervisor(), "New locked time sheet from" + user.getUsername());
+            this.sendEmail(timeSheet.getUser().getSupervisor(), "New locked time sheet from" + timeSheet.getUser().getUsername());
             LOGGER.info("Locked:" + timeSheet.getMonth() + timeSheet.getUser().getUsername());
         } else {
             throw new ChronoCommandException(Reason.TIMESHEETINCOMPLETE, result);
@@ -251,7 +251,7 @@ public class TimeSheetControl {
         timeSheet.setTimeSheetState(TimeSheetState.UNLOCKED);
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
         LOGGER.info("unlocked: " + timeSheet.getMonth() + " " + timeSheet.getUser().getUsername());
-        this.sendEmail(user, "Time sheet has been unlocked again");
+        this.sendEmail(timeSheet.getUser(), "Time sheet has been unlocked again");
     }
 
     /**
@@ -263,7 +263,7 @@ public class TimeSheetControl {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
         timeSheet.setTimeSheetState(TimeSheetState.CHECKED);
-        this.sendEmail(user, "Your time sheet has been approved");
+        this.sendEmail(timeSheet.getUser(), "Your time sheet has been approved");
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
         LOGGER.info("checked: " + timeSheet.getMonth() + " " + timeSheet.getUser().getUsername());
 
