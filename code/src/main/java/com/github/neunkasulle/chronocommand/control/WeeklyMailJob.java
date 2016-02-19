@@ -29,7 +29,7 @@ public class WeeklyMailJob implements Job {
             LOGGER.error(e.getReason().toString(), e);
         }
 
-        String message = "You should work more and harder lazy ass";
+        String message = "Your last time record was a week ago. Please record your working time.";
 
         try {
             for (User user : recipients) {

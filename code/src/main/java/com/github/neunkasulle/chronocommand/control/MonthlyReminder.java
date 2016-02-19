@@ -17,7 +17,7 @@ public class MonthlyReminder implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        String message = "Last day to check out your time sheet";
+        String message = "Please remember to send in your time sheet for this month.";
         List<User> proletarier = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName(Role.PERM_PROLETARIER));
         for (User user : proletarier) {
             TimeSheetControl.getInstance().sendEmail(user, message);
