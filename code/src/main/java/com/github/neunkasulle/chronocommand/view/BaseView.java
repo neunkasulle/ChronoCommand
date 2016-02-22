@@ -219,8 +219,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
     public void logoutClicked(Button.ClickEvent clickEvent) {
         LoginControl.getInstance().logout();
-        getUI().getNavigator().navigateTo(MainUI.LOGINVIEW);
-        //getUI().getPage().reload();
+        getUI().getPage().setLocation("");
     }
 
     public void menuClicked() {
