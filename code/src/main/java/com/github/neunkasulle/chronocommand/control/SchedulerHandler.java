@@ -66,8 +66,11 @@ public class SchedulerHandler {
                 .build();
 
         //trigger for tesst purpose
+        JobDetail dailyReminderJob = newJob(WeeklyMailJob.class)
+                .withIdentity("dailyTrigger", "testGroup") //name, group
+                .build();
         Trigger dailyTrigger = newTrigger()
-                .withIdentity("dailyTrigge", "testGroup")
+                .withIdentity("dailyTrigger", "testGroup")
                 .withSchedule(cronSchedule("0 0 12 * * ?"))
                 .startNow()
                 .build();
@@ -78,7 +81,7 @@ public class SchedulerHandler {
             sched.scheduleJob(monthlyReminderJob, lastDayOfMonth);
             sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
 
-            sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
+            sched.scheduleJob(dailyReminderJob, dailyTrigger);
         } catch (SchedulerException e) {
             LOGGER.error("Failure in starting scheduler", e);
         }
