@@ -128,7 +128,6 @@ public class MainUI extends UI implements ViewChangeListener {
     }
 
     @WebServlet(urlPatterns = "/*", name = "ChronoCommandServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
     public static class ChronoCommandServlet extends VaadinServlet implements ServiceDestroyListener {
         @Override
         protected void servletInitialized() throws ServletException {

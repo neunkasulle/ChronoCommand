@@ -6,3 +6,4 @@ target
 .sonar_lock
 logs
 *Study.pdf
+*.css
