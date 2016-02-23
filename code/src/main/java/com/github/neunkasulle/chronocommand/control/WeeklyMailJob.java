@@ -47,7 +47,10 @@ public class WeeklyMailJob implements Job {
         List<User> recipients = new LinkedList<>();
         for (User user : allUser) {
             try {
-                allTimeRecords.add(TimeSheetControl.getInstance().getLatestTimeRecord(user));
+                TimeRecord addToList = TimeSheetControl.getInstance().getLatestTimeRecord(user);
+                if (addToList != null) {
+                    allTimeRecords.add(addToList);
+                }
             } catch (ChronoCommandException e) {
                 LOGGER.error(e.getReason().toString(), e);
             }
