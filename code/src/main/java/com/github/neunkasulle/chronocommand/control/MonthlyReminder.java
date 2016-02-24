@@ -24,9 +24,7 @@ public class MonthlyReminder implements Job {
         }
         List<User> supervisor = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName(Role.PERM_SUPERVISOR));
         for (User user : supervisor) {
-            TimeSheet sheet = TimeSheetDAO.getInstance().getLatestTimeSheet(user);
-            LocalDateTime now = LocalDateTime.now();
-            if (sheet.getMonth() == now.getMonth()) {
+            if (user.getHoursPerMonth() != 0) {
                 TimeSheetControl.getInstance().sendEmail(user, message);
             }
         }
