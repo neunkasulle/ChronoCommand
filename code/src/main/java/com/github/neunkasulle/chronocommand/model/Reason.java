@@ -25,6 +25,7 @@ public enum Reason {
     INVALIDHOURSPERMONTH("Invalid number of hours per month"),
     USERDISABLED("User account is disabled"),
     TIMESHEETINCOMPLETE("Timesheet is incomplete"),
+    EMPTYDESC("Description is empty"),
     ;
 
     private final String text;

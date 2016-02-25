@@ -4,11 +4,13 @@ import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Janze on 01.02.2016.
@@ -43,14 +45,7 @@ public class TimeSheetControlTest extends UeberTest{
         Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
         try {
             timeSheetControl.newTimeRecord(category, "testing", userDAO.findUser("tom"));
-            timeSheetControl.closeTimeRecord(userDAO.findUser("tom"));
-        }
-        catch (ChronoCommandException e) {
-            assert false;
-        }
-        try {
-            timeSheetControl.newTimeRecord(userDAO.findUser("tom"));
-            timeSheetControl.closeTimeRecord(category, "testing", userDAO.findUser("tom"));
+            timeSheetControl.closeTimeRecord(null, "" ,userDAO.findUser("tom"));
         }
         catch (ChronoCommandException e) {
             assert false;
@@ -59,20 +54,7 @@ public class TimeSheetControlTest extends UeberTest{
 
     }
 
-    @Test
-    public void testFalseTimeRecordAdd() throws Exception {
-        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
-        UserDAO userDAO = UserDAO.getInstance();
 
-        try {
-            timeSheetControl.newTimeRecord(userDAO.findUser("tom"));
-            timeSheetControl.closeTimeRecord(userDAO.findUser("tom"));
-            assert false;
-        }
-        catch (ChronoCommandException exc) {
-            assert true;
-        }
-    }
 
     @Test
     public void checkForMissingCategory() {

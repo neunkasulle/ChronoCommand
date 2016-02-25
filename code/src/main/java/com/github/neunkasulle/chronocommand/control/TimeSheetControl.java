@@ -47,35 +47,6 @@ public class TimeSheetControl {
 
     /**
      * creates a new TimeRecord. And a new Time Sheet when there is no time sheet this month
-     * @param user The user which the time record belongs to
-     */
-    public TimeRecord newTimeRecord(User user) throws ChronoCommandException {
-        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
-            throw new ChronoCommandException(Reason.NOTPERMITTED);
-        }
-
-        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-        TimeSheet timeSheet = timeSheetDAO.getTimeSheet(LocalDate.now().getMonth(), LocalDate.now().getYear(), user);
-
-        if(timeSheet == null){  //No Time sheet yet, we need to build a new one
-            timeSheet = new TimeSheet(user, LocalDate.now().getMonth(), LocalDate.now().getYear());
-            timeSheetDAO.saveTimeSheet(timeSheet);
-            LOGGER.info(NEWTIMESHEET + LocalDate.now().getMonth() + LocalDate.now().getYear() +user.getUsername());
-        }
-
-        TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, null, null, timeSheet);
-        if (timeSheet.getState() != TimeSheetState.UNLOCKED) {
-            LOGGER.error(LOCKED);
-            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
-        }
-        timeSheetDAO.saveTimeRecord(timeRecord);
-        LOGGER.info("new time record started for" + user.getUsername());
-
-        return timeRecord;
-    }
-
-    /**
-     * creates a new TimeRecord. And a new Time Sheet when there is no time sheet this month
      * @param category the category of the work performed in this time.
      * @param description description of the work performed.
      * @param user The user which the time record belongs to
@@ -103,37 +74,6 @@ public class TimeSheetControl {
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.now(), null, category, description, timeSheet);
         timeSheetDAO.saveTimeRecord(timeRecord);
         LOGGER.info("new time record started for" + user.getUsername());
-
-        return timeRecord;
-    }
-
-    /**
-     * Closes a time record. Cant be invoked if newTimeRecord was called without category and description
-     * @param user The user which the time record belongs to
-     * @throws ChronoCommandException ChronoCommandException When there is something wrong with e.g. the category
-     */
-    public TimeRecord closeTimeRecord(User user) throws ChronoCommandException {
-        if (!user.isPermitted(Role.PERM_PROLETARIER)) {
-            throw new ChronoCommandException(Reason.NOTPERMITTED);
-        }
-
-        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-        TimeRecord timeRecord = timeSheetDAO.getLatestTimeRecord(user);
-
-        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
-            LOGGER.error(LOCKED);
-            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
-        }
-
-        if(timeRecord.getCategory() == null) {
-            LOGGER.error(MISSCAT);
-            throw new ChronoCommandException(Reason.MISSINGPROJECT);
-        }
-
-        timeRecord.setEnding(LocalDateTime.now());
-        timeSheetDAO.saveTimeRecord(timeRecord);
-        updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
-        LOGGER.info("Time record closed for" + user.getUsername());
 
         return timeRecord;
     }
