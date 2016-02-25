@@ -1,0 +1,77 @@
+\documentclass[hidelinks]{scrartcl}
+
+\usepackage[ngerman]{babel}
+\usepackage{fontspec}
+
+% some useful packages
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+%\usepackage{hyperref}
+%wird eh durch error durch default ersetzt -> auskommeentiert
+%\hypersetup{%
+%	pdfborder={0 0 0}
+%}
+\usepackage{titlesec}
+
+\newwatermark*[pages=19-28,color=gray!50,angle=45,scale=5,xpos=0,ypos=0]{DRAFT}
+\newcommand{\sectionbreak}{\clearpage}
+
+\setmainfont{SourceSerifPro-Regular.otf}[
+    BoldFont		=	SourceSerifPro-Bold.otf,
+    ItalicFont		=	EBGaramond08-Italic.otf,
+    Numbers = Lining]
+
+\begin{document}
+	\setlength{\parindent}{0pt}
+
+	\begin{titlepage}
+
+		%Title
+		\begin{center}
+			\huge \bfseries ChronoCommand \\
+			\large  Webbasierte Zeiterfassung
+		\end{center}
+
+		%Subtitle
+		\begin{center}
+				\large Qualitätssicherung \\
+		\end{center}
+
+		%Authors
+		\begin{center}
+			Jannis Friedmann \\
+			David Kuhmann \\
+			Maria Schmid \\
+			Xiaoming Wang \\
+			Jan Zenkner \\
+
+		\end{center}
+
+		%Date
+		\begin{center}
+			\large \today
+		\end{center}
+	
+		\vfill
+	\end{titlepage}
+	\thispagestyle{empty}
+
+	\pagenumbering{roman}
+
+	\clearpage
+	\pagestyle{empty}
+	\tableofcontents
+
+	\clearpage
+	\pagestyle{plain}
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+
+	\input{einleitung}
+	\input{testszenarien}
+	\input{fehlerbeschreibung}
+
+\end{document}
