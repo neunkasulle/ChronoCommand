@@ -2,7 +2,6 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
 import org.apache.shiro.SecurityUtils;
-import org.hibernate.cfg.NotYetImplementedException;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class UserManagementControl {
                 }
             }
 
-            if (hoursPerMonth < 0 || hoursPerMonth > 80) {
+            if (hoursPerMonth < 0 || hoursPerMonth > 80)  { //FIXME Shouldnt the 80 hours come from some regulation fuu?
                 throw new ChronoCommandException(Reason.INVALIDHOURSPERMONTH);
             }
             user.setHoursPerMonth(hoursPerMonth);
