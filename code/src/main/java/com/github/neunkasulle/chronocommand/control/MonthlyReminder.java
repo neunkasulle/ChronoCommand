@@ -20,11 +20,13 @@ public class MonthlyReminder implements Job {
 
         List<User> proletarier = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName(Role.PERM_PROLETARIER));
         for (User user : proletarier) {
-            TimeSheetControl.getInstance().sendEmail(user, message);
+            if (user.getHoursPerMonth() > 0) {
+                TimeSheetControl.getInstance().sendEmail(user, message);
+            }
         }
         List<User> supervisor = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName(Role.PERM_SUPERVISOR));
         for (User user : supervisor) {
-            if (user.getHoursPerMonth() != 0) {
+            if (user.getHoursPerMonth() > 0) {
                 TimeSheetControl.getInstance().sendEmail(user, message);
             }
         }
