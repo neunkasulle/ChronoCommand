@@ -1,1 +1,49 @@
 \section{Testszenarien}
+
+
+\subsection{T100: Ein Benutzer* meldet sich an.}
+T111: Aufrufen der Internetseite.
+T112: Logindaten eingeben und Anmeldeknopf drücken.
+
+\subsection{T120: Ein angemeldeter Benutzer* startet/stoppt eine Zeiterfassung.}
+T121: Starten einer neuen Zeiterfassung.
+T122: Stoppen und speichern einer Zeiterfassung
+
+\subsection{T130: Ein Benutzer* erhält eine Warnung wegen einem nicht abgegebenen Stundenzettel.}
+T110: Anmelden.
+T130: Der Benutzer* erhält nach der Anmeldung eine Warunung für einen nicht abgegebenen Stundenzettel.
+
+\subsection{T140: Ein Betreuer* prüft einen neu abgegebenen Stundenzettel.}
+T141: Ein Betreuer* bekommt die Meldung für einen abgegebenen Stundenzettel.
+T142: Der Betreuer* prüft den Stundenzettel und klickt auf "Korrekt" oder "Nicht Korrekt".
+
+\subsection{T150: Ein Benutzer* editiert die Tätigkeit in einem nicht abgegebenem Stundenzettel.}
+T151: Der Benutzer* klickt auf "Editieren" bei einer eingetragenen Zeit und kann den Eintrag bearbeiten.
+T152: Der Benutzer* bearbeitet die Tätigkeit und drückt auf "Speichern".
+
+\subsection{T160: Der Benutzer* wählt die Seite an und besitzt ein gültiges Session Cookie.}
+T111: Aufrufen der Internetseite.
+T160: Der Benutzer* hat ein Session Cookie und wird angemeldet.
+
+\subsection{T170: Ein Benutzer* verletzt gesetzliche Vorgaben.}
+T170: Ein Benutzer* erhält, während einer Zeiterfassung, eine Warnung, weil er die gesetzlichen Vorgaben verletzt.
+            
+\subsection{T180: Ein Betreuer* sieht Stundendaten ein.}
+T180: Ein Betreuer* klickt auf die Schaltfläche "Stundenzettel einsehen" und erhält die Stundendaten der ihm zugewiesenen Benutzer*.
+        
+\subsection{T190: Ein Benutzer* trägt manuell eine Zeit ein.}
+T110: Ein Benutzer* meldet sich an.
+T191: Der Benutzer* klickt auf die Schaltfläche "Zeit manuell eintragen".
+T192: Der Benutzer* trägt die Daten der Zeit ein und speichert. Die erfasste Zeit wird gespeichert.
+193: Der Benutzer* erhält eine Warnung, da die Angaben nicht vollständig sind.
+
+\subsection{T200: Ein Benutzer* löscht eine erfasste Zeit.}
+T201: Durch Klicken von "Löschen" bei einer eingetragenen Zeit wird diese gelöscht.
+    
+\subsection{T210: Ein Benutzer* stoppt eine unvollständige Zeiterfassung.}
+211: Beim Stoppen einer Zeiterfassung wird eine Warnung ausgegeben, da keine Tätigkeit eingetragen ist.
+212: Beim Stoppen einer Zeiterfassung wird eine Warnung ausgegeben, da keine Kategorie eingetragen ist.
+            
+\subsection{T220: Ein Administrator* schaut sich alle Daten an.}
+221: Ein Administrator* navigiert zur Übersicht aller Daten und erhält eine graphische Übersicht.
+222: Der Administrator* wählt eine Kategorie aus und erhält alle geleisteten Stunden in dieser Kategorie.
