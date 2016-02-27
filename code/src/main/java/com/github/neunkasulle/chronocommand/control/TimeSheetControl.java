@@ -355,15 +355,13 @@ public class TimeSheetControl {
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
     }
 
+
     public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
-        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
-            LOGGER.error("Time sheet is locked");
-            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
-        }
 
         // TODO check for valid data
         if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
-            LOGGER.error("not permitted to perform action: editTimeRecord caused by" + LoginControl.getInstance().getCurrentUser().getUsername());
+            LOGGER.error("not permitted to perform action: editTimeRecord caused by"
+                    + LoginControl.getInstance().getCurrentUser().getUsername());
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 

@@ -8,9 +8,10 @@ import org.junit.Test;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.LinkedList;
+import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Janze on 01.02.2016.
@@ -145,5 +146,214 @@ public class TimeSheetControlTest extends UeberTest{
 
         timeSheetControl.sendEmail(user, "TROLOLOLOLO");
     }
+
+    @Test
+    public void testGetAllCat() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+        assertTrue(!timeSheetControl.getAllCategories().isEmpty());
+    }
+
+    @Test
+    public void testGetTimeSheet() {
+        try {
+            LoginControl.getInstance().login("admin", "admin", true);
+        }
+        catch(ChronoCommandException e) {
+            fail();
+        }
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        List<TimeSheet> timeSheets = new LinkedList<>();
+
+
+        try {
+        timeSheets = timeSheetControl.getTimeSheets(Month.FEBRUARY, 2016);
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+
+        assertTrue(timeSheets.size() > 0);
+    }
+
+    @Test
+    public void testGetTimeSheetUser() {
+        try {
+            LoginControl.getInstance().login("admin", "admin", true);
+        }
+        catch(ChronoCommandException e) {
+            fail();
+        }
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        TimeSheet timeSheet = null;
+
+
+        try {
+            timeSheet = timeSheetControl.getTimeSheet(Month.FEBRUARY, 2016, UserDAO.getInstance().findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+
+        assertNotNull(timeSheet);
+    }
+
+    @Test
+    public void testGetTimeSheetsUser() {
+        try {
+            LoginControl.getInstance().login("admin", "admin", true);
+        }
+        catch(ChronoCommandException e) {
+            fail();
+        }
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        List<TimeSheet> timeSheets = new LinkedList<>();
+
+
+        try {
+            timeSheets = timeSheetControl.getTimeSheetsFromUser(UserDAO.getInstance().findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+
+        assertTrue(timeSheets.size() > 0);
+    }
+
+    @Test
+    public void testGetTimeSheetsUserNotPermitted() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        List<TimeSheet> timeSheets = new LinkedList<>();
+        try {
+            LoginControl.getInstance().login("tom", "cat", true);
+        }
+        catch(ChronoCommandException e) {
+            fail();
+        }
+
+        try {
+            timeSheets = timeSheetControl.getTimeSheetsFromUser(UserDAO.getInstance().findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
+    @Test
+    public void testGetTimeSheetUserNotPermitted() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        TimeSheet timeSheet = null;
+        try {
+            LoginControl.getInstance().login("tom", "cat", true);
+        }
+        catch(ChronoCommandException e) {
+            fail();
+        }
+
+        try {
+            timeSheet = timeSheetControl.getTimeSheet(Month.FEBRUARY, 2016,UserDAO.getInstance().findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
+    @Test
+    public void testTimeRecordEdit() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        TimeRecord timeRecord = new TimeRecord();
+        LocalDateTime now = LocalDateTime.now();
+
+        try {
+            LoginControl.getInstance().login("tom", "cat", true);
+            timeRecord = timeSheetControl.getLatestTimeRecord(UserDAO.getInstance().findUser("tom"));
+
+            timeRecord.setBeginning(now);
+            timeRecord.setEnding(now);
+            timeSheetControl.editTimeRecord(timeRecord);
+        }
+        catch(ChronoCommandException e) {
+            fail();
+        }
+
+        assertEquals(now ,timeRecord.getEndHour());
+    }
+
+    @Test
+    public void testTimeRecordEditFailNotPermitted() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        TimeRecord timeRecord = new TimeRecord();
+        LocalDateTime now = LocalDateTime.now();
+
+        try {
+            LoginControl.getInstance().login("admin", "admin", true);
+            timeRecord = timeSheetControl.getLatestTimeRecord(UserDAO.getInstance().findUser("tom"));
+            timeSheetControl.editTimeRecord(timeRecord);
+        }
+        catch(ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
+    @Test
+    public void testTimeRecordEditFailLocked() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        TimeRecord timeRecord = new TimeRecord();
+        LocalDateTime now = LocalDateTime.now();
+
+        try {
+            LoginControl.getInstance().login("tom", "cat", true);
+            timeRecord = timeSheetControl.getLatestTimeRecord(UserDAO.getInstance().findUser("tom"));
+            timeRecord.getTimeSheet().setTimeSheetState(TimeSheetState.LOCKED);
+            timeSheetControl.editTimeRecord(timeRecord);
+        }
+        catch(ChronoCommandException e) {
+            assertEquals(Reason.TIMESHEETLOCKED, e.getReason());
+        }
+    }
+
+    @Test
+    public void testCreateProject() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+        try {
+            LoginControl.getInstance().login("admin", "admin", true);
+            timeSheetControl.createProject("fuuBAR");
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+
+       assertEquals("fuuBAR",
+               timeSheetControl.getAllCategories().get(timeSheetControl.getAllCategories().size() - 1).toString());
+    }
+
+    @Test
+    public void testCreateProjectFailNotPerm() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+        try {
+            LoginControl.getInstance().login("tom", "cat", true);
+            timeSheetControl.createProject("fuuBAR");
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+
+    }
+
+    @Test
+    public void testCreateProjectFailMissingProject() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+        try {
+            LoginControl.getInstance().login("admin", "admin", true);
+            timeSheetControl.createProject("");
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.MISSINGPROJECT, e.getReason());
+        }
+    }
+
 
 }
