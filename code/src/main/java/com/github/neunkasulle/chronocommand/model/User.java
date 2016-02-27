@@ -115,9 +115,6 @@ public class User {
         if(username.length() > STRINGLENGTH) {
             throw new ChronoCommandException(Reason.STRINGTOOLONG);
         }
-        if(trimFraud(username)) {
-            throw new ChronoCommandException(Reason.INVALIDSTRING);
-        }
         this.username = username;
     }
 
@@ -132,9 +129,6 @@ public class User {
 
     public void setRealname(String realname) throws ChronoCommandException {
         if (realname == null) {
-            throw new ChronoCommandException(Reason.INVALIDSTRING);
-        }
-        if (realname.trim().isEmpty()) {
             throw new ChronoCommandException(Reason.INVALIDSTRING);
         }
         if (trimFraud(realname)) {
@@ -192,7 +186,6 @@ public class User {
                 return true;
             }
         }
-
         return false;
     }
 
