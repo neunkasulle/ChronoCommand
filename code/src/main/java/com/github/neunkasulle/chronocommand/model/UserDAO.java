@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by jannis on 19.01.16.
+ *
  */
 public class UserDAO{
     private static final UserDAO instance = new UserDAO();
