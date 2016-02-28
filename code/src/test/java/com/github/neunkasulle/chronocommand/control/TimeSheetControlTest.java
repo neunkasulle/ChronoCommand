@@ -360,5 +360,44 @@ public class TimeSheetControlTest extends UeberTest{
         }
     }
 
+    @Test
+    public void testMessageToSheet() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+        TimeSheet timeSheet = TimeSheetDAO.getInstance().getLatestTimeSheet(UserDAO.getInstance().findUser("tom"));
+
+        timeSheetControl.addMessageToTimeSheet(timeSheet, Message.ERROR_BAR);
+
+        assertEquals(Message.ERROR_BAR, timeSheetControl.getMessagesFromTimeSheet(timeSheet).get(0));
+    }
+
+    @Test
+    public void testGetTimeRecords() {
+        try {
+            LoginControl.getInstance().login("admin", "admin", false);
+            TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+            TimeSheet timeSheet = TimeSheetDAO.getInstance().getLatestTimeSheet(UserDAO.getInstance().findUser("tom"));
+            assertTrue(timeSheetControl.getTimeRecords(timeSheet).size() > 0);
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testGetTimeRecordsFail() {
+        try {
+            LoginControl.getInstance().login("matt", "matt", false);
+            TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+
+            TimeSheet timeSheet = TimeSheetDAO.getInstance().getLatestTimeSheet(UserDAO.getInstance().findUser("tom"));
+            assertTrue(timeSheetControl.getTimeRecords(timeSheet).size() > 0);
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
 
 }

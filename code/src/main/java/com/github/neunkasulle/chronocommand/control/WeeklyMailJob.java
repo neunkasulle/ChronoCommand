@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Created by Dav on 09.02.2016.
+ *
  */
 public class WeeklyMailJob implements Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerHandler.class);
