@@ -16,6 +16,8 @@ public class CreateUserControlTest extends UeberTest {
 
     @Test
     public void testCreateUser() throws Exception {
+        LoginControl.getInstance().login("admin", "admin", false);
+
         CreateUserControl createUserControl;
         UserDAO userDAO = UserDAO.getInstance();
 

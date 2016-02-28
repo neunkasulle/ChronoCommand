@@ -109,6 +109,8 @@ public class TimeSheetControlTest extends UeberTest{
 
     @Test
     public void printAllTimeSheetsUserTest() throws ChronoCommandException {
+        LoginControl.getInstance().login("admin", "admin", false);
+
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         File pdfSheets = null;
@@ -118,16 +120,19 @@ public class TimeSheetControlTest extends UeberTest{
 
     @Test
     public void printAllTimeSheetsTimeTest() throws ChronoCommandException{
+        LoginControl.getInstance().login("admin", "admin", false);
+
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
 
-            File pdfSheets = timeSheetControl.printAllTimeSheets(Month.JANUARY, 2016);
-            assert(pdfSheets != null);
-
+        File pdfSheets = timeSheetControl.printAllTimeSheets(Month.JANUARY, 2016);
+        assertNotNull(pdfSheets);
     }
 
     @Test
     public void printTimeSheet() throws Exception {
+        LoginControl.getInstance().login("admin", "admin", false);
+
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         File file = null;
