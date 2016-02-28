@@ -276,7 +276,7 @@ public class TimeSheetControlTest extends UeberTest{
             fail();
         }
 
-        assertEquals(now ,timeRecord.getEndHour());
+        assertEquals(0  ,timeRecord.getTotalHours());
     }
 
     @Test

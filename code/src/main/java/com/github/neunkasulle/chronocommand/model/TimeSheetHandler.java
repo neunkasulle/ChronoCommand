@@ -229,14 +229,14 @@ public class TimeSheetHandler {
             }
             //total time
             contents.newLineAtOffset(55, 0);
-            contents.showText(timeR.getTotHour() + ":");
-            if (timeR.getTotMin() < 10) {
-                contents.showText("0" + timeR.getTotMin() + "h");
+            contents.showText(timeR.getTotalHours() + ":");
+            if (timeR.getTotalMinutes() < 10) {
+                contents.showText("0" + timeR.getTotalMinutes() + "h");
             } else {
-                contents.showText(timeR.getTotMin() + "h");
+                contents.showText(timeR.getTotalMinutes() + "h");
             }
-            sumHour += timeR.getTotHour();
-            sumMin += timeR.getTotMin();
+            sumHour += timeR.getTotalHours();
+            sumMin += timeR.getTotalMinutes();
             contents.endText();
             yOff -= 17;
         }

@@ -71,38 +71,6 @@ public class TimeRecord {
     }
 
     /**
-     * Returns the beginning hour only
-     * @return the beginning hour
-     */
-    public int getBeginningHour() {
-        return this.beginning.getHour();
-    }
-
-    /**
-     * Updates the beginning hour
-     * @param hour the nre hour
-     */
-    public void setBeginningHour(final int hour) {
-        this.beginning = this.beginning.minusHours(this.beginning.getHour()).plusHours(hour);
-    }
-
-    /**
-     * Returns the beginning minute only
-     * @return the beginning minute
-     */
-    public int getBeginningMinute() {
-        return this.beginning.getMinute();
-    }
-
-    /**
-     * Updates the beginning hour
-     * @param minute the new minute
-     */
-    public void setBeginningMinute(final int minute) {
-        this.beginning = this.beginning.minusMinutes(this.beginning.getMinute()).plusMinutes(minute);
-    }
-
-    /**
      * Gets the ending time of a time record
      *
      * @return the ending time
@@ -111,46 +79,6 @@ public class TimeRecord {
         return ending;
     }
 
-    /**
-     * Returns the end hour only
-     * @return the end hour
-     */
-    public int getEndHour() {
-        return this.ending.getHour();
-    }
-
-    /**
-     * Updates the end hour
-     * @param hour the nre hour
-     */
-    public void setEndHour(final int hour) {
-        this.ending = this.ending.minusHours(this.ending.getHour()).plusHours(hour);
-    }
-
-    /**
-     * Returns the end minute only
-     * @return the end minute
-     */
-    public int getEndMinute() {
-        return this.ending.getMinute();
-    }
-
-    /**
-     * Updates the end hour
-     * @param minute the new minute
-     */
-    public void setEndMinute(final int minute) {
-        this.ending = this.ending.minusMinutes(this.ending.getMinute()).plusMinutes(minute);
-    }
-
-    /**
-     * Small sanity checks for the time record
-     *
-     * @return false, if something is bogus with the times
-     */
-    public boolean checkTimes() {
-        return false;
-    }
 
     /**
      * Gets the category of the time record
@@ -205,12 +133,12 @@ public class TimeRecord {
         return timeSheet;
     }
 
-    public int getTotHour() {
-        return  this.getEndHour() - this.getBeginningHour();
+    public int getTotalHours() {
+        return  ending.getHour() - beginning.getHour();
     }
 
-    public int getTotMin() {
-        return this.getEndMinute() - this.getBeginningMinute();
+    public int getTotalMinutes() {
+        return ending.getMinute() - beginning.getMinute();
     }
 
     public void setBeginning(LocalDateTime beginning) {
