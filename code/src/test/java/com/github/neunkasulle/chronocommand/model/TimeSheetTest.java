@@ -55,4 +55,26 @@ public class TimeSheetTest extends UeberTest {
     public void testHashCode() throws Exception {
         assertTrue(TimeSheetDAO.getInstance().getLatestTimeSheet(UserDAO.getInstance().findUser("tom")).hashCode() >= 0);
     }
+
+    @Test
+    public void testMessages() {
+        try {
+            TimeSheet timeSheet = new TimeSheet(new User(), Month.JANUARY, 2016);
+            timeSheet.setMessage(Message.ERROR_BAR);
+            assertEquals(Message.ERROR_BAR, timeSheet.getMessages().get(0));
+        }
+        catch (ChronoCommandException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testTimeSheetEmptyUser() {
+        try {
+            TimeSheet timeSheet = new TimeSheet(null, Month.JANUARY, 2011);
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOSUCHUSER, e.getReason());
+        }
+    }
 }

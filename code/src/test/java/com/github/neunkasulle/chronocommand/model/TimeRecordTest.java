@@ -33,7 +33,6 @@ public class TimeRecordTest extends UeberTest {
         timeRecord.setEnding(end);
 
         assertEquals(20, timeRecord.getTotalMinutes());
-
     }
 
 }

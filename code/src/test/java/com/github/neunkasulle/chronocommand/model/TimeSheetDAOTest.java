@@ -19,6 +19,7 @@ public class TimeSheetDAOTest extends UeberTest {
     @Before
     public void setUp() throws Exception {
         DAOHelper.getInstance().startup("hibernate-inmemory.cfg.xml");
+        super.setUp();
     }
 
     @After
@@ -98,5 +99,37 @@ public class TimeSheetDAOTest extends UeberTest {
             assertEquals(timeRecord1.getCategory().getId(), dbTimeRecord.getCategory().getId());
             assertEquals("c", dbTimeRecord.getCategory().getName());
         }
+    }
+
+    @Test
+    public void testGetTimeSheetHandler() {
+        TimeSheetHandler timeSheetHandler = null;
+
+        try {
+            timeSheetHandler = TimeSheetDAO.getInstance().getTimeSheetHandler();
+        }
+        catch (ChronoCommandException e) {
+        }
+
+        assertNotNull(timeSheetHandler);
+    }
+
+    @Test
+    public void testGetTimeRecordsByDay() {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+
+        List<TimeRecord> timeRecords = timeSheetDAO.getTimeRecordsByDay(timeSheetDAO.
+                getLatestTimeSheet(UserDAO.getInstance().findUser("matt")), 4);
+
+        assertTrue(timeRecords.size() > 0);
+    }
+
+    @Test
+    public void testGetUnlockedTimeSheets() {
+        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
+
+        List<TimeSheet> timeSheets = timeSheetDAO.getAllUnlockedTimeSheets();
+
+        assertTrue(timeSheets.size() > 0);
     }
 }
