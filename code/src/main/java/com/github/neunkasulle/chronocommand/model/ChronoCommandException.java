@@ -7,7 +7,6 @@ package com.github.neunkasulle.chronocommand.model;
  */
 public class ChronoCommandException extends Exception {
     private final Reason reason;
-
     private final String details;
 
     public ChronoCommandException(Reason reason) {
