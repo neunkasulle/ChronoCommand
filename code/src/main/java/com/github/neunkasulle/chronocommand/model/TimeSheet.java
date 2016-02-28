@@ -102,10 +102,8 @@ public class TimeSheet {
 
     @Override
     public String toString() {
-        String monthStr = String.valueOf(month.getValue());
-        if (monthStr.length() < 2) {
-            monthStr = "0" + monthStr;
-        }
+        String monthStr;
+
         monthStr = month.toString();
         return monthStr + " " + year;
     }
