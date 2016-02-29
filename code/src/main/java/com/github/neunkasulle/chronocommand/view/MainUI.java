@@ -76,8 +76,8 @@ public class MainUI extends UI implements ViewChangeListener {
         navigator.addViewChangeListener(this);
         navigator.addView(INITIALSTARTUPVIEW, InitialStartupView.class);
         navigator.addView(LOGINVIEW, new LoginView());
-        navigator.addView(SUPERVISORVIEW, new SupervisorView());
-        navigator.addView(ADMINVIEW, new AdminView());
+        navigator.addView(SUPERVISORVIEW, SupervisorView.class);
+        navigator.addView(ADMINVIEW, AdminView.class);
         navigator.addView(TIMERECORDVIEW, TimeRecordView.class);
         navigator.addView(NEWTIMERECORDVIEW, NewTimeRecordView.class);
         navigator.addView(CREATEUSERVIEW, CreateUserView.class);
