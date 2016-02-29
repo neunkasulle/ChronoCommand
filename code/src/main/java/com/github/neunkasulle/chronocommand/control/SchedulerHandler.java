@@ -61,7 +61,7 @@ public class SchedulerHandler {
 
         Trigger weeklyTrigger = newTrigger() //every week at 12pm in every month
                 .withIdentity("weeklyTrigger", "weeklyReminder")
-                .withSchedule(cronSchedule("0 0 12 ? * L"))
+                .withSchedule(cronSchedule("0 0 12 ? * SUN"))
                 .startNow()
                 .build();
 
