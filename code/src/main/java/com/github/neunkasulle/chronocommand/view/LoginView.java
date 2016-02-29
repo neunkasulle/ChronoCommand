@@ -73,7 +73,7 @@ public class LoginView extends LoginForm implements View {
     }
 
     public void loginClicked(LoginEvent loginEvent) {
-        log.info("User: {} Password: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), loginEvent.getPassword(), rememberMe.getValue()});
+        log.info("User: {} Remember Me: {}", new Object[]{loginEvent.getUserName(), rememberMe.getValue()});
 
         if (loginEvent.getUserName().isEmpty() || loginEvent.getPassword().isEmpty()) {
             authenticationFailed.setVisible(false);
