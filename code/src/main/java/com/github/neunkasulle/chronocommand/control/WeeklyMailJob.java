@@ -57,8 +57,8 @@ public class WeeklyMailJob implements Job {
             }
         }
         for (TimeRecord record : allTimeRecords) {
-            LocalDateTime lastEndTime = record.getEnding();
-            if (lastEndTime.getDayOfMonth() < (LocalDateTime.now().getDayOfMonth() - 7)) {
+            LocalDateTime oneWeekBefore = LocalDateTime.now().minusDays(7);
+            if (record.getEnding().isBefore(oneWeekBefore)) {
                 recipients.add(record.getTimeSheet().getUser());
             }
         }
