@@ -180,6 +180,12 @@ public class User {
         this.roles = roles;
     }
 
+    public void addRole(Role role) {
+        if (!roles.contains(role)) {
+            roles.add(role);
+        }
+    }
+
     public boolean isPermitted(String roleName) {
         for (Role role : roles) {
             if (role.getPermissions().contains(roleName)) {

@@ -19,7 +19,7 @@ public class DAOHelperTest extends UeberTest {
     @Test
     public void testStartup() throws Exception {
 
-        DAOHelper.getInstance().startup();
+        DAOHelper.getInstance().startup("hibernate-inmemory.cfg.xml");
         assertTrue(true);
     }
 }

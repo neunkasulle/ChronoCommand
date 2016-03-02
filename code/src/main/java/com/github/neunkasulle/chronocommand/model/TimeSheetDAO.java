@@ -62,7 +62,9 @@ public class TimeSheetDAO {
         criteria.add(Restrictions.ge("beginning", day)).add(Restrictions.lt("beginning", nextDay));
         List<TimeRecord> list = new ArrayList<>();
         for (Object obj : criteria.list()) {
-            list.add((TimeRecord) obj);
+            if (! list.contains((TimeRecord) obj)) {
+                list.add((TimeRecord) obj);
+            }
         }
         session.close();
         return list;
@@ -94,8 +96,11 @@ public class TimeSheetDAO {
 
         List<TimeSheet> timeSheets = new LinkedList<>();
 
-        for(User user: users) {
-             timeSheets.add(getTimeSheet(month, year, user));
+        for (User user: users) {
+            TimeSheet timeSheet = getTimeSheet(month, year, user);
+            if (timeSheet != null) {
+                timeSheets.add(timeSheet);
+            }
         }
         return timeSheets;
     }

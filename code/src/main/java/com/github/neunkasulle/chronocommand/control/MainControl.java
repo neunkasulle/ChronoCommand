@@ -90,7 +90,7 @@ public class MainControl {
 
         Role longhours = UserDAO.getInstance().getRoleByName(ROLE_LONGHOURS);
         if (longhours == null) {
-            longhours = new Role(ROLE_LONGHOURS, "Nightwork allowed", false);
+            longhours = new Role(ROLE_LONGHOURS, "Long hours allowed", false);
             Set<String> longhourPermissions = new IdentitySet(1);
             longhourPermissions.add(Role.PERM_LONGHOURS);
             longhours.setPermissions(longhourPermissions);

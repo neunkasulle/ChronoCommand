@@ -102,14 +102,8 @@ public class TimeSheetDAOTest extends UeberTest {
     }
 
     @Test
-    public void testGetTimeSheetHandler() {
-        TimeSheetHandler timeSheetHandler = null;
-
-        try {
-            timeSheetHandler = TimeSheetDAO.getInstance().getTimeSheetHandler();
-        }
-        catch (ChronoCommandException e) {
-        }
+    public void testGetTimeSheetHandler() throws Exception {
+        TimeSheetHandler timeSheetHandler = TimeSheetDAO.getInstance().getTimeSheetHandler();
 
         assertNotNull(timeSheetHandler);
     }

@@ -107,7 +107,7 @@ public class GermanLawRegulations extends Regulations {
      */
     private String checkWorkHours (TimeSheet timeSheet) {
         int maxWorkingHours = 8*60; // 8 Hours in minutes
-        int maxOvertime = 10*60; // 2 Hours in minutes
+        int maxOvertime = 2*60; // 2 Hours in minutes
 
         String result = "";
         for (int n = 1; n <= getNumberOfDaysInMonth(timeSheet); n++) {
@@ -117,7 +117,7 @@ public class GermanLawRegulations extends Regulations {
             for (TimeRecord timeRecord : timeRecords ) {
                 minutesPerDay += ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnding());
             }
-            if (!timeSheet.getUser().isPermitted("longHours")) {
+            if (!timeSheet.getUser().isPermitted(Role.PERM_LONGHOURS)) {
                 if (minutesPerDay > maxWorkingHours) {
                     result += "Maximale Arbeitszeit überschritten";
                 }
