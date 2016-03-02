@@ -16,10 +16,9 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.io.File;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -343,6 +342,14 @@ public class TimeRecordView extends BaseView {
             Notification.show("Failed to get time records: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
         }
         this.form.setVisible(false);
+
+        Date date;
+        try {
+            date = new Date(LocalDateTime.of(timeSheet.getYear(), timeSheet.getMonth(), LocalDate.now().getDayOfMonth(), 0, 0).toEpochSecond(ZoneOffset.UTC) * 1000);
+        } catch (DateTimeException e) {
+            date = new Date(LocalDateTime.of(timeSheet.getYear(), timeSheet.getMonth(), 1, 0, 0).toEpochSecond(ZoneOffset.UTC) * 1000);
+        }
+        calendar.setValue(date);
 
         updateHeaderLabel();
     }

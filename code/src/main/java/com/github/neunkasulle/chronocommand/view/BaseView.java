@@ -13,6 +13,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
@@ -24,6 +25,7 @@ import java.util.Locale;
  * Created by Janze on 20.01.2016.
  */
 public abstract class BaseView extends HorizontalLayout implements View {
+    protected InlineDateField calendar;
     protected ComboBox timeRecordSelection;
 
     //It would not work wenn the supervisor himself also does SZ
@@ -314,7 +316,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         final Button homeButton = new Button(new ThemeResource("img/home4.png"));
         homeButton.addClickListener(e -> {
-            getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
+            if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+                getUI().getNavigator().navigateTo(MainUI.ADMINVIEW);
+            } else {
+                getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW);
+            }
         });
         homeButton.setStyleName(BaseTheme.BUTTON_LINK);
         naviBar.addComponent(homeButton);
@@ -328,16 +334,17 @@ public abstract class BaseView extends HorizontalLayout implements View {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
             /* Date picker */
 
-            /* TODO has no functionality right now
-            final InlineDateField calendar = new InlineDateField();
+            // TODO has no functionality right now
+            calendar = new InlineDateField();
             calendar.setValue(new Date());
             calendar.setImmediate(true);
             calendar.setLocale(Locale.getDefault());
-            calendar.setResolution(Resolution.MINUTE);
-            calendar.addValueChangeListener(e -> Notification.show("Value changed:",
+            calendar.setResolution(Resolution.DAY);
+            calendar.setEnabled(false);
+            /*calendar.addValueChangeListener(e -> Notification.show("Value changed:",
                     String.valueOf(e.getProperty().getValue()),
-                    Notification.Type.TRAY_NOTIFICATION));
-            controlPanel.addComponent(calendar);*/
+                    Notification.Type.TRAY_NOTIFICATION));*/
+            controlPanel.addComponent(calendar);
 
             /* Combo box */
 
