@@ -1,72 +1,77 @@
 \section{Testszenarien}
+Die nachfolgenden Testszenarien bestehen aus Testfällen, welche im Pflichtenheft \linebreak definiert wurden. \\
+\colorbox{green}{OK} steht für einen erfolgreichen Test und \colorbox{red}{FL} für einen fehlgeschlagegenen Test.
 
+\subsection{Testszenario 1 - Anmeldung und neue Zeiterfassung}
+\emph{T100} Ein Benutzer* meldet sich an und \emph{T120} startet eine neue Zeiterfassung. Anschließend stoppt er die Zeiterfassung.
+\\\\
+\colorbox{green}{OK} \textbf{T111} Aufrufen der Internetseite. \\
+\colorbox{green}{OK} \textbf{T112} Logindaten eingeben und Anmeldeknopf drücken. \\
+\colorbox{green}{OK} \textbf{T121} Starten einer neuen Zeiterfassung. \\
+\colorbox{green}{OK} \textbf{T122} Stoppen und speichern einer Zeiterfassung.
 
-\textbf{T100: Ein Benutzer* meldet sich an.} 
+\subsection{Testszenario 2 - Nicht abgegebener Stundenzettel}
+\emph{T130} Es wird eine Warnung ausgegeben, weil ein Benutzer* seinen Stundenzettel nicht abgegeben hat.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{orange}{  \ ? \  } \textbf{T130} Es wird eine Warnung ausgegeben.
 
-$\XBox$ T111: Aufrufen der Internetseite. \\
-$\XBox$ T112: Logindaten eingeben und Anmeldeknopf drücken. \\
+\subsection{Testszenario 3 - Stundenzettelprüfung}
+\emph{T140} Ein Betreuer* bekommt eine Meldung für einen abgegebenen Stundenzettel. Er prüft ihn und entscheidet ob er korrekt oder nicht korrekt ist.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{orange}{  \ ? \  } \textbf{T141} Meldung für einen abgegebenen Stundenzettel. \\
+\colorbox{orange}{  \ ? \  } \textbf{T142} Der Betreuer* klickt auf "`Korrekt"'. \\
+\colorbox{orange}{  \ ? \  } \textbf{T142} Der Betreuer* klickt auf "`Nicht Korrekt"'.
 
-\textbf{T120: Eine neue Zeiterfassung starten/stoppen.}
+\subsection{Testszenario 4}
+\emph{T150} Ein Benutzer* editiert, bei einem nicht abgegebenen Stundenzettel, eine eingetragene Zeit. Danach speichert er die editierte Zeit.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{green}{OK} \textbf{T151} Der Benutzer* klickt auf "`Editieren". \\
+\colorbox{red}{FL } \textbf{T152} Editieren und "`Speichern"'.
 
-T100: Ein Benutzer* meldet sich an. \\
-T121: Starten einer neuen Zeiterfassung. \\
-T122: Stoppen und speichern einer Zeiterfassung. \\
+\subsection{Testszenario 5 - Session Cookie}
+\emph{T160} Ein Benutzer* hat durch eine frühere Anmeldung ein gültiges Session Cookie erhalten. Er ruft die Internetseite erneut auf und muss seine Anmeldedaten nicht erneut eingeben.
+\\\\
+\colorbox{green}{OK} \textbf{T111} Aufrufen der Internetseite. \\
+\colorbox{green}{OK} \textbf{T160} Der Benutzer* hat ein Session Cookie und wird angemeldet.
 
-\textbf{T130: Ein Benutzer* erhält eine Warnung wegen einem nicht abgegebenen Stundenzettel.}
+\subsection{Testszenario 6 - Verletzung gesetzlicher Vorgaben}
+\emph{T170} Ein Benutzer* verletzt, während einer Zeiterfassung, gegen gesetzliche Vorgaben. Er erhält eine Warnung.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{green}{OK} \textbf{T121} Starten einer neuen Zeiterfassung. \\
+\colorbox{orange}{  \ ? \  } \textbf{T170} Warnung aufgrund der Verletzung der Vorgaben.
 
-T100: Ein Benutzer* meldet sich an. \\
-T130: Der Benutzer* erhält nach der Anmeldung eine Warnung für einen nicht abgegebenen Stundenzettel. \\
+\subsection{Testszenario 7}%TODO
+\emph{T180} Ein Betreuer* sieht Stundendaten ein.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{orange}{  \ ? \  } \textbf{T180} Der Betreuer* klickt auf die Schaltfläche "`Stundenzettel einsehen"' und erhält die Stundendaten der ihm zugewiesenen Benutzer*.
 
-\textbf{T140: Ein Betreuer* prüft einen neu abgegebenen Stundenzettel.}
-
-T100: Ein Betreuer* meldet sich an. \\
-T141: Der Betreuer* bekommt die Meldung für einen abgegebenen Stundenzettel. \\
-T142: Der Betreuer* prüft den Stundenzettel und klickt auf "Korrekt" oder "Nicht Korrekt". \\
-
-\textbf{T150: Editieren der Tätigkeit in einem nicht abgegebenem Stundenzettel.}
-
-T100: Ein Benutzer* meldet sich an. \\
-T151: Der Benutzer* klickt auf "Editieren" bei einer eingetragenen Zeit und kann den Eintrag bearbeiten. \\
-T152: Der Benutzer* bearbeitet die Tätigkeit und drückt auf "Speichern". \\
-
-\textbf{T160: Anmeldung mit einem gültigem Session Cookie.}
-
-T111: Aufrufen der Internetseite. \\
-T160: Der Benutzer* hat ein Session Cookie und wird angemeldet. \\
-
-\textbf{T170: Ein Benutzer* verletzt gesetzliche Vorgaben.}
-
-T100: Ein Benutzer* meldet sich an. \\
-T121: Starten einer neuen Zeiterfassung. \\
-T170: Der Benutzer* erhält, während einer Zeiterfassung, eine Warnung, weil er die gesetzlichen Vorgaben verletzt. \\
+\subsection{Testszenario 8}%TODO
+\emph{T190} Ein Arbbeitszeit wird manuell hinzugefügt. \emph{T200} Eine eingeragene Zeit wird gelöscht.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{green}{OK} \textbf{T191} Der Benutzer* klickt auf die Schaltfläche "`Zeit manuell eintragen"'. \\
+\colorbox{green}{OK} \textbf{T192} Eintragen der entsprechenden Daten. \\
+\colorbox{red}{FL } \textbf{T193} Der Benutzer* erhält eine Warnung, da die Angaben nicht vollständig sind. \\
+\colorbox{red}{FL } \textbf{T201} Durch Klicken von "Löschen"' bei einer eingetragenen Zeit wird diese gelöscht.
 
 \newpage
 
-\textbf{T180: Ein Betreuer* sieht Stundendaten ein.}
+\subsection{Testszenario 9 - Unvollständige Zeiterfassung stoppen}
+\emph{T210} Es läuft eine Zeiterfassung. Der Benutzer* möchte die Zeiterfassung stoppen, erhält allerdings eine Warnung, da die Zeiterfassung unvollständig ist.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{green}{OK} \textbf{T121} Starten einer neuen Zeiterfassung. \\
+\colorbox{green}{OK} \textbf{T211} Warnung für fehlende Tätigkeit. \\
+\colorbox{green}{OK} \textbf{T212} Warnung für fehlende Kategorie.
 
-T100: Ein Benutzer* meldet sich an. \\
-T180: Der Betreuer* klickt auf die Schaltfläche "Stundenzettel einsehen" und erhält die Stundendaten der ihm zugewiesenen Benutzer*. \\
-        
-\textbf{T190: Manuelles Eintragen von Arbeitszeit.}
-
-T110: Ein Benutzer* meldet sich an. \\
-T191: Der Benutzer* klickt auf die Schaltfläche "Zeit manuell eintragen". \\
-T192: Der Benutzer* trägt die Daten der Zeit ein und speichert. Die erfasste Zeit wird gespeichert. \\
-T193: Der Benutzer* erhält eine Warnung, da die Angaben nicht vollständig sind. \\
-
-\textbf{T200: Löschen einer erfassten Zeit.}
-
-T100: Ein Benutzer* meldet sich an. \\
-T201: Durch Klicken von "Löschen" bei einer eingetragenen Zeit wird diese gelöscht. \\
-    
-\textbf{T210: Stoppen einer unvollständigen Zeiterfassung.}
-
-T100: Ein Benutzer* meldet sich an. \\
-T211: Beim Stoppen einer Zeiterfassung wird eine Warnung ausgegeben, da keine Tätigkeit eingetragen ist. \\
-T212: Beim Stoppen einer Zeiterfassung wird eine Warnung ausgegeben, da keine Kategorie eingetragen ist. \\
-            
-\textbf{T220:  Ein Administrator* schaut sich alle Daten an.}
-
-T100: Ein Administrator* meldet sich an. \\
-T221: Der Administrator* navigiert zur Übersicht aller Daten und erhält eine graphische Übersicht. \\
-T222: Der Administrator* wählt eine Kategorie aus und erhält alle geleisteten Stunden in dieser Kategorie.
+\subsection{Testszenario 10} %TODO
+\emph{T220} Ein Administrator* schaut sich alle Daten an.
+\\\\
+\colorbox{green}{OK} \textbf{T100} Anmeldung. \\
+\colorbox{orange}{  \ ? \  } \textbf{T221} Der Administrator* navigiert zur Übersicht aller Daten und erhält eine graphische Übersicht. \\
+\colorbox{orange}{  \ ? \  } \textbf{T222} Der Administrator* wählt eine Kategorie aus und erhält alle geleisteten Stunden in dieser Kategorie.
