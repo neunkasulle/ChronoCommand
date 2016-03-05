@@ -1,13 +1,15 @@
 package com.github.neunkasulle.chronocommand.control;
 
-import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
-import com.github.neunkasulle.chronocommand.model.User;
-import com.github.neunkasulle.chronocommand.model.UserDAO;
+import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Janze on 25.02.2016.
@@ -97,11 +99,42 @@ public class UserManagementControlTest extends UeberTest {
 
     @Test
     public void testGetUsersByRole() throws Exception {
+        Role role = UserDAO.getInstance().getRoleByName("administrator");
+        List<User> admins = UserDAO.getInstance().getUsersByRole(role);
 
+        assertNotNull(admins);
+    }
+
+    @Test
+    public void testGetUsersByRoleFail() throws Exception {
+        try {
+            LoginControl.getInstance().login("tom", "cat", false);
+
+            Role role = UserDAO.getInstance().getRoleByName("administrator");
+            UserDAO.getInstance().getUsersByRole(role);
+        } catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
     }
 
     @Test
     public void testGetUsersBySupervisor() throws Exception {
+        User supervisor = UserDAO.getInstance().findUser("tom");
+        List<User> users = UserDAO.getInstance().getUsersBySupervisor(supervisor);
+
+        assertNotNull(users);
+    }
+
+    @Test
+    public void testGetUsersBySupervisorFailPermission() throws Exception {
+        try {
+            LoginControl.getInstance().login("matt", "matt", false);
+
+            User tom = UserDAO.getInstance().findUser("tom");
+            UserDAO.getInstance().getUsersBySupervisor(tom);
+        } catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
 
     }
 
