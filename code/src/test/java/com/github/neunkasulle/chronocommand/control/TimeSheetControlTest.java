@@ -123,7 +123,6 @@ public class TimeSheetControlTest extends UeberTest{
         LoginControl.getInstance().login("admin", "admin", false);
 
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
-        UserDAO userDAO = UserDAO.getInstance();
 
         File pdfSheets = timeSheetControl.printAllTimeSheets(Month.JANUARY, 2016);
         assertNotNull(pdfSheets);

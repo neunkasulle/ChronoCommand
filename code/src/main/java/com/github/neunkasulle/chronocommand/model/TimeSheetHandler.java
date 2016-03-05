@@ -2,10 +2,10 @@ package com.github.neunkasulle.chronocommand.model;
 
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.slf4j.Logger;
@@ -15,10 +15,7 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +75,7 @@ public class TimeSheetHandler {
         sumMin = 0;
         try {
             file = new File(getClass().getClassLoader().getResource("Stundenzettel.pdf").getFile());
-            outputFile = new FileOutputStream("Study.pdf");//TODO save different
+            outputFile = new FileOutputStream("Study.pdf");
             pdfTimeSheet = PDDocument.load(file);
         } catch (FileNotFoundException e) {
             LOGGER.error("File not found", e);
@@ -264,24 +261,29 @@ public class TimeSheetHandler {
     public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) {
         File file = null;
         PDDocument doc = null;
-        PDDocument totDoc = null;
+        PDDocument totDoc = new PDDocument();
+        PDFMergerUtility mergeDoc = new PDFMergerUtility();
 
         for (TimeSheet timesheet : timeSheets) {
             File tmp = createPdfFromTimeSheet(timesheet);
             try {
                 doc = PDDocument.load(tmp);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 LOGGER.error("Loading error in createPdfFromAllTimeSheets");
             }
-            PDPageTree loopTree = doc.getPages();
             try {
-                for (int i = 0; i < loopTree.getCount(); i++) {
-                    totDoc.addPage(loopTree.get(i));
-                }
+                mergeDoc.appendDocument(totDoc, doc);
+                doc.close();
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
             }
-            catch (NullPointerException e) {
-                LOGGER.error("Nullptr", e);
-            }
+        }
+        try {
+            file = File.createTempFile("mergeDoc", ".pdf");
+            totDoc.save(file);
+            totDoc.close();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
         }
         return file;
     }
