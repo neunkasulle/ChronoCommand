@@ -261,7 +261,7 @@ public class TimeSheetHandler {
      * @param timeSheets a list of timesheets
      * @return one pdf with all timesheets
      */
-    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) {//TODO test this method
+    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) {
         File file = null;
         PDDocument doc = null;
         PDDocument totDoc = null;
