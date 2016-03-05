@@ -195,7 +195,7 @@ public class TimeSheetControlTest extends UeberTest{
 
 
         try {
-            timeSheet = timeSheetControl.getTimeSheet(Month.FEBRUARY, 2016, UserDAO.getInstance().findUser("tom"));
+            timeSheet = timeSheetControl.getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom"));
         }
         catch (ChronoCommandException e) {
             fail();
