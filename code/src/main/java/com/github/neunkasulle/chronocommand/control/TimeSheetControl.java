@@ -261,7 +261,9 @@ public class TimeSheetControl {
      * @return a Pdf File which an be printed
      */
     public File printTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
+        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)
+                && !LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser())
+                && !LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser().getSupervisor())) {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 

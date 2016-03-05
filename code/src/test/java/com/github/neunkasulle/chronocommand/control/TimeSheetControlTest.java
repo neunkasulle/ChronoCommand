@@ -138,6 +138,7 @@ public class TimeSheetControlTest extends UeberTest{
         File file = null;
 
         TimeSheet timeSheet = new TimeSheet(userDAO.findUser("tom"), Month.AUGUST, 1993);
+        TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
         file = timeSheetControl.printTimeSheet(timeSheet);
 
         assertNotNull(file);
