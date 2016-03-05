@@ -3,9 +3,13 @@ package com.github.neunkasulle.chronocommand.control;
 import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -140,21 +144,53 @@ public class UserManagementControlTest extends UeberTest {
 
     @Test
     public void testGetAllUsers() throws Exception {
+        List<User> users = UserDAO.getInstance().getAllUsers();
 
+        assertNotNull(users);
     }
 
     @Test
-    public void testCreateInitialAdministrator() throws Exception {
+    public void testGetAllUsersFail() throws Exception {
+        try {
+            LoginControl.getInstance().login("tom", "cat", false);
 
+            UserManagementControl.getInstance().getAllUsers();
+        } catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
+    @Ignore("cant change roles of a user, cant test method")
+    @Test
+    public void testCreateInitialAdministrator() throws Exception {
+        User admin = UserDAO.getInstance().findUser("admin");
+
+
+        UserManagementControl.getInstance().createInitialAdministrator("firstAdmin", "first@admin", "pw", "chief");
+    }
+
+    @Test
+    public void testCreateInitialAdministratorFail() throws Exception {
+        try {
+            UserManagementControl.getInstance().createInitialAdministrator("firstAdmin", "first@admin", "pw", "chief");
+        } catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
     }
 
     @Test
     public void testGetAllRoles() throws Exception {
+        List<Role> roles = UserManagementControl.getInstance().getAllRoles();
 
+        assertNotNull(roles);
     }
 
     @Test
     public void testGetRoleByName() throws Exception {
+        List<Role> roles = UserDAO.getInstance().getAllRoles();
+        assertNotNull(roles);
 
+        Role roleByName = UserManagementControl.getInstance().getRoleByName(roles.get(0).getName());
+        assertEquals(roleByName, roles.get(0));
     }
 }
