@@ -102,13 +102,6 @@ public class TimeSheetDAOTest extends UeberTest {
     }
 
     @Test
-    public void testGetTimeSheetHandler() throws Exception {
-        TimeSheetHandler timeSheetHandler = TimeSheetDAO.getInstance().getTimeSheetHandler();
-
-        assertNotNull(timeSheetHandler);
-    }
-
-    @Test
     public void testGetTimeRecordsByDay() {
         TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
 

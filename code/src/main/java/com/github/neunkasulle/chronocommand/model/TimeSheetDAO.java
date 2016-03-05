@@ -153,11 +153,4 @@ public class TimeSheetDAO {
         session.flush();
         session.close();
     }
-
-    public TimeSheetHandler getTimeSheetHandler() throws ChronoCommandException {
-        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
-        Object obj = session.createCriteria(TimeSheetHandler.class).uniqueResult();
-        session.close();
-        return (TimeSheetHandler) obj;
-    }
 }
