@@ -54,6 +54,21 @@ public class TimeSheetControlTest extends UeberTest{
 
     }
 
+    @Test
+    public void testTimeRecordAddMissCat() {
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
+        try {
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, "",
+                    userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.MISSINGDESCRIPTION, e.getReason());
+        }
+
+    }
+
 
 
     @Test
