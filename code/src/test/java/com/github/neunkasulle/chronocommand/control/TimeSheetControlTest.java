@@ -92,8 +92,8 @@ public class TimeSheetControlTest extends UeberTest{
             timeSheetControl.newTimeRecord(CategoryDAO.getInstance().findCategoryByString("Programming"), " ", userDAO.findUser("tom"));
             timeSheetControl.closeTimeRecord(null, " ", userDAO.findUser("tom"));
         }
-        catch (ChronoCommandException ex) {
-            assertTrue(ex.getReason() == Reason.MISSINGDESCRIPTION);
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.MISSINGDESCRIPTION, e.getReason());
         }
     }
 
@@ -106,7 +106,7 @@ public class TimeSheetControlTest extends UeberTest{
         timeSheetControl.newTimeRecord(null, " ", userDAO.findUser("tom"));
         timeRecord = timeSheetControl.getLatestTimeRecord(userDAO.findUser("tom"));
 
-        assertTrue(timeRecord.getCategory() == null);
+        assertNull(timeRecord.getCategory());
     }
 
     @Test
@@ -435,6 +435,37 @@ public class TimeSheetControlTest extends UeberTest{
         }
         catch (ChronoCommandException e) {
             assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
+    @Test
+    public void testAddTimeFailPermission() {
+
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        try {
+            LoginControl.getInstance().login("admin", "admin", false);
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(),
+                    CategoryDAO.getInstance().findCategoryByString("Programming"), "BAR" , userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
+    }
+
+    @Test
+    public void testAddTimeFailMissingProject() {
+
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+
+        try {
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(),
+                    null, "BAR" , userDAO.findUser("tom"));
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.MISSINGPROJECT, e.getReason());
         }
     }
 
