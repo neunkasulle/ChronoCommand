@@ -142,6 +142,10 @@ public class TimeSheetControl {
             LOGGER.error(MISSCAT);
             throw new ChronoCommandException(Reason.MISSINGPROJECT);
         }
+        if (description.isEmpty()) {
+            LOGGER.error(MISSDESC);
+            throw new ChronoCommandException(Reason.MISSINGDESCRIPTION);
+        }
 
         if (timeSheet == null) {  //No Time sheet yet, we need to build a new one
             timeSheet = new TimeSheet(user, beginn.getMonth(), beginn.getYear());
