@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -207,33 +206,6 @@ public class TimeSheetControl {
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
         LOGGER.info("checked: " + timeSheet.getMonth() + " " + timeSheet.getUser().getUsername());
 
-    }
-
-    /**
-     *  Prints out all time sheets which are checked
-     * @param month the month of the time sheets
-     * @param year the year of the time sheets
-     * @return a Pdf File which an be printed
-     */
-    public File printCheckedTimeSheets(Month month, int year) throws ChronoCommandException {
-        //TODO who can print checked time sheets?
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
-            throw new ChronoCommandException(Reason.NOTPERMITTED);
-        }
-
-        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-        TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
-
-        List<TimeSheet> unfilteredTimeSheets = timeSheetDAO.getAllTimeSheets(month, year);
-        List<TimeSheet> filteredTimeSheets = new LinkedList<>();
-
-        for(TimeSheet timeSheet: unfilteredTimeSheets) {
-            if(timeSheet.getState() == TimeSheetState.CHECKED){
-                filteredTimeSheets.add(timeSheet);
-            }
-        }
-
-        return timeSheetHandler.createPdfFromAllTimeSheets(filteredTimeSheets);
     }
 
     /**
