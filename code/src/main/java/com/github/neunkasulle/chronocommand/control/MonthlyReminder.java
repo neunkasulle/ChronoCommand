@@ -5,7 +5,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,13 +17,15 @@ public class MonthlyReminder implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String message = "Please remember to send in your time sheet for this month.";
 
-        List<User> proletarier = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName(Role.PERM_PROLETARIER));
+        Role role = UserDAO.getInstance().getRoleByName("PROLETARIER");
+        List<User> proletarier = UserDAO.getInstance().getUsersByRole(role);
+
         for (User user : proletarier) {
             if (user.getHoursPerMonth() > 0) {
                 TimeSheetControl.getInstance().sendEmail(user, message);
             }
         }
-        List<User> supervisor = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName(Role.PERM_SUPERVISOR));
+        List<User> supervisor = UserDAO.getInstance().getUsersByRole(UserDAO.getInstance().getRoleByName("SUPERVISOR"));
         for (User user : supervisor) {
             if (user.getHoursPerMonth() > 0) {
                 TimeSheetControl.getInstance().sendEmail(user, message);
