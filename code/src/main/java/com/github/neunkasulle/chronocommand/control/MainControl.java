@@ -114,6 +114,8 @@ public class MainControl {
 
                 User tom = new User(supervisor, "tom", "tom@chronocommand.eu", "cat", "Tom", null, 23);
                 UserDAO.getInstance().saveUser(tom);
+                tom.setSupervisor(tom);
+                UserDAO.getInstance().saveUser(tom);
 
                 User matt = new User(proletarier, "matt", "matt@example.com", "matt", "Matt", tom, 10);
                 UserDAO.getInstance().saveUser(matt);
@@ -125,12 +127,11 @@ public class MainControl {
             try {
                 TimeSheet tomTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("tom"), Month.JANUARY, 2016);
                 TimeSheetDAO.getInstance().saveTimeSheet(tomTimeSheet);
-
                 String taetigkeit = "codework for PSE";
-                TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 1, 11, 30),
-                        LocalDateTime.of(2016, 1, 1, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
-                TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 2, 8, 0),
-                        LocalDateTime.of(2016, 1, 2, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
+                TimeRecord timeRecTom = new TimeRecord(LocalDateTime.of(2016, 1, 4, 11, 30),
+                        LocalDateTime.of(2016, 1, 4, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
+                TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 7, 8, 0),
+                        LocalDateTime.of(2016, 1, 7, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
 
