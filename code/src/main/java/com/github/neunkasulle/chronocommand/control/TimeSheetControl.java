@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -210,33 +209,6 @@ public class TimeSheetControl {
     }
 
     /**
-     *  Prints out all time sheets which are checked
-     * @param month the month of the time sheets
-     * @param year the year of the time sheets
-     * @return a Pdf File which an be printed
-     */
-    public File printCheckedTimeSheets(Month month, int year) throws ChronoCommandException {
-        //TODO who can print checked time sheets?
-        if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
-            throw new ChronoCommandException(Reason.NOTPERMITTED);
-        }
-
-        TimeSheetDAO timeSheetDAO = TimeSheetDAO.getInstance();
-        TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
-
-        List<TimeSheet> unfilteredTimeSheets = timeSheetDAO.getAllTimeSheets(month, year);
-        List<TimeSheet> filteredTimeSheets = new LinkedList<>();
-
-        for(TimeSheet timeSheet: unfilteredTimeSheets) {
-            if(timeSheet.getState() == TimeSheetState.CHECKED){
-                filteredTimeSheets.add(timeSheet);
-            }
-        }
-
-        return timeSheetHandler.createPdfFromAllTimeSheets(filteredTimeSheets);
-    }
-
-    /**
      *  Prints out all time sheets
      * @param month the month of the time sheets
      * @param year the year of the time sheets
@@ -360,7 +332,6 @@ public class TimeSheetControl {
 
     public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
 
-        // TODO check for valid data
         if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
             LOGGER.error("not permitted to perform action: editTimeRecord caused by"
                     + LoginControl.getInstance().getCurrentUser().getUsername());
@@ -371,13 +342,12 @@ public class TimeSheetControl {
             LOGGER.error(LOCKED);
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
-
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
         updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
     }
 
     public void addMessageToTimeSheet(TimeSheet timeSheet, Message message) {
-        timeSheet.setMessage(message); //TODO is this method still relevant?
+        timeSheet.setMessage(message);
     }
 
     public List<Message> getMessagesFromTimeSheet(TimeSheet timeSheet) {

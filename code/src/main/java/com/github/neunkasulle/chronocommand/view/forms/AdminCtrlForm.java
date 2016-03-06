@@ -71,17 +71,6 @@ public class AdminCtrlForm extends FormLayout {
 
         editUserLayout.setSpacing(true);
 
-        // TODO do we want to allow changing the role?
-        /*selectRole = new ComboBox("Role:");
-        List<Role> roleList = UserManagementControl.getInstance().getAllRoles();
-        for (Role role : roleList) {
-            if (role.isPrimaryRole()) {
-                selectRole.addItem(role);
-            }
-        }
-        selectRole.select(object.getPrimaryRole());
-        editUserLayout.addComponent(selectRole);*/
-
         selectSupervisor = new ComboBox("Supervisor:");
         try {
             List<User> supervisorList = UserManagementControl.getInstance().getUsersByRole(UserManagementControl.getInstance().getRoleByName(MainControl.ROLE_SUPERVISOR));

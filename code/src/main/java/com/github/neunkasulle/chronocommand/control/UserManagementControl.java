@@ -49,7 +49,7 @@ public class UserManagementControl {
                 }
             }
 
-            if (hoursPerMonth < 0 || hoursPerMonth > 80)  { //FIXME Shouldnt the 80 hours come from some regulation fuu?
+            if (hoursPerMonth < 0 || hoursPerMonth > 80)  {
                 throw new ChronoCommandException(Reason.INVALIDHOURSPERMONTH);
             }
             user.setHoursPerMonth(hoursPerMonth);

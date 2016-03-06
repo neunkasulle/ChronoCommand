@@ -2,7 +2,6 @@ package com.github.neunkasulle.chronocommand.model;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -23,7 +22,6 @@ public class Role {
     public static final String PERM_PROLETARIER = "proletarier";
     @Transient
     public static final String PERM_LONGHOURS = "longhours";
-    // TODO all the other permissions
 
     @Id
     @GeneratedValue

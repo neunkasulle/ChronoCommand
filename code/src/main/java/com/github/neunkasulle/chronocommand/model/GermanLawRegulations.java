@@ -1,8 +1,13 @@
 package com.github.neunkasulle.chronocommand.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -13,7 +18,7 @@ import java.util.*;
 public class GermanLawRegulations extends Regulations {
     private Map<LocalDate, String> holidays = new HashMap<>();
     private Set<Integer> yearsInitialized = new HashSet<>();
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(TimeSheetHandler.class);
     public GermanLawRegulations() {
         readHolidays(LocalDate.now().getYear());
     }
@@ -191,8 +196,7 @@ public class GermanLawRegulations extends Regulations {
             }
             bufferedReader.close();
         } catch (Exception e) {
-            e.printStackTrace();
-            //TODO
+            LOGGER.error("Error while parsing:Holiday file", e);
         }
         yearsInitialized.add(year);
     }

@@ -2,7 +2,6 @@ package com.github.neunkasulle.chronocommand.control;
 
 import com.github.neunkasulle.chronocommand.model.*;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -94,17 +93,42 @@ public class TimeSheetControlTest extends UeberTest{
 
         assertTrue(timeRecord.getCategory() == null);
     }
-    @Ignore //schlägt immer nur im januar 2016 fehl.. ansonsten wird ein timerecord zum aktuellen timesheet hinzugefügt
+
     @Test
     public void lockTimeSheetTest() throws Exception{
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
         Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
+        LoginControl.getInstance().login("admin", "admin", false);
+        try {
+            TimeSheet timeSheet = timeSheetControl.getTimeSheets(Month.JANUARY, 2016).get(0);
+            LoginControl.getInstance().login("tom", "cat", false);
+            assertNotNull(timeSheet);
+            timeSheetControl.lockTimeSheet(timeSheet);
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, " ",
+                    timeSheet.getUser());
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.TIMESHEETLOCKED, e.getReason());
+        }
+    }
 
+    @Test
+    public void lockTimeSheetTestNotPerm() throws Exception{
+        TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
+        Category category = CategoryDAO.getInstance().findCategoryByString("Programming");
+        LoginControl.getInstance().login("matt", "matt", false);
+        try {
             TimeSheet timeSheet = timeSheetControl.getTimeSheets(Month.JANUARY, 2016).get(0);
             assertNotNull(timeSheet);
             timeSheetControl.lockTimeSheet(timeSheet);
-            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, " ", timeSheet.getUser());
+            timeSheetControl.addTimeToSheet(LocalDateTime.now(), LocalDateTime.now(), category, " ",
+                    timeSheet.getUser());
+        }
+        catch (ChronoCommandException e) {
+            assertEquals(Reason.NOTPERMITTED, e.getReason());
+        }
     }
 
     @Test
@@ -143,7 +167,7 @@ public class TimeSheetControlTest extends UeberTest{
         assertNotNull(file);
     }
 
-    @Ignore
+
     @Test
     public void emailTest() throws Exception {
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
