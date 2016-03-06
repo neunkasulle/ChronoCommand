@@ -332,7 +332,6 @@ public class TimeSheetControl {
 
     public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
 
-        // TODO check for valid data
         if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
             LOGGER.error("not permitted to perform action: editTimeRecord caused by"
                     + LoginControl.getInstance().getCurrentUser().getUsername());
@@ -343,13 +342,12 @@ public class TimeSheetControl {
             LOGGER.error(LOCKED);
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
-
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
         updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
     }
 
     public void addMessageToTimeSheet(TimeSheet timeSheet, Message message) {
-        timeSheet.setMessage(message); //TODO is this method still relevant?
+        timeSheet.setMessage(message);
     }
 
     public List<Message> getMessagesFromTimeSheet(TimeSheet timeSheet) {

@@ -15,7 +15,10 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class TimeSheetHandler {
     Long id;
 
     @Basic(optional = false)
-    String warningEmailTemplate; //TODO do we need this?
+    String warningEmailTemplate;
 
     private static final TimeSheetHandler instance = new TimeSheetHandler();
 
