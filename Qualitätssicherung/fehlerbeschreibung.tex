@@ -2,4 +2,202 @@
 
 \subsection{Behobene Fehler}
 
+\subsubsection{Fehler 1:} %make icons white
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Die Knöpfe für "`Hauptseite"' und "`Logout"' waren schlecht zu erkennen.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Die Knöpfe waren schwarz, so wie die Hintergrundfarbe der Webseite.
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Die Farbe der Knöpfe wurde zu weiß geändert.
+	\end{itemize}
+
+\subsubsection{Fehler 2:} %Receive no weekly reminder
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Es wurde in manchen Wochen keine Erinnerung verschickt.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Die Abfrage nach dem letzten Arbeitszeiteintrag hat nach Tagen verglichen.
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Es werden nun ganze Daten verglichen und nicht mehr Tage.
+	\end{itemize}
+
+\subsubsection{Fehler 3:} %Send monthly reminder to users without timesheet
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Benutzer* ohne Stundenzettel, welche aber arbeiten müssen, erhielten keine Erinnerung.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Es wurde nur eine Erinnerung an Leute mit Stundenzettel verschickt.
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Alle Benutzer* mit Arbeitszeit erhalten eine Erinnerung.
+	\end{itemize}
+
+\subsubsection{Fehler 4:} %UI bug in admin or supervisor view
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Beim Klick auf "`Show all Users"' wurde die Anzeige mehrfach nebeneinander angezeigt.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Das Template zur Anzeige wurde nicht verworfen und ist so zusammen mit der neuen Anzeige erschienen.%TODO stimmt das so?
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Das Template wird nun korrekt verwendet.
+	\end{itemize}
+	
+\subsubsection{Fehler 5:} %limit possible characters for usernames
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Ein benutzername kann nur noch bestimmte Zeichen enthalten.
+	\end{itemize}
+
+\subsubsection{Fehler 6:} %refactor whole time sheet new and close
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+
+\subsubsection{Fehler 7:} %Supervisors and Administrators can look at other timesheets
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Ein Supervisor* konnte auch andere Stundenzettel ansehen und nicht nur die, der ihm zugewiesenen Benutzer*.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Dieser Fall wurde bei der Rechteverteilung nicht berücksichtigt.
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Die Abfrage der Rechte zum Einsehen des Stundenzettels wurde geändet.
+	\end{itemize}
+
+\subsubsection{Fehler 8:} %get new session when logging out
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Wenn sich ein Benutzer* ausloggte, konnte er sich nicht sofort wieder anmelden.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item TODO
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+
+\newpage
+
 \subsection{Nichtbehobene Fehler}
+
+\subsubsection{Fehler 9:}%It is possible to save a manual time record without a description
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+
+\subsubsection{Fehler 10:}%Can't edit start/end times in existing time record
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Beim Editieren von Zeiteinträgen können die Start- und Endzeit nicht verändert werden.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	
+\subsubsection{Fehler 11:}%show success notification when user edits themselves
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	
+\subsubsection{Fehler12:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	
+\subsubsection{Fehler 13:}%Admin edit user: disabled selecting an other user while editing
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	
+\subsubsection{Fehler 14:}%Adminview: update table when saving a user
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
