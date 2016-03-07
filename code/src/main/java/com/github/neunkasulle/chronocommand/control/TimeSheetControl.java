@@ -346,6 +346,7 @@ public class TimeSheetControl {
             LOGGER.error(LOCKED);
             throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
         }
+
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
         updateCurrentMinutesThisMonth(timeRecord.getTimeSheet());
     }

@@ -132,8 +132,8 @@ public class MainControl {
                         LocalDateTime.of(2016, 1, 4, 15, 30), CategoryDAO.getInstance().findCategoryByString("Programming"), taetigkeit, tomTimeSheet);
                 TimeRecord timeRecTom2 = new TimeRecord(LocalDateTime.of(2016, 1, 7, 8, 0),
                         LocalDateTime.of(2016, 1, 7, 10, 30), CategoryDAO.getInstance().findCategoryByString("Procrastination"), "abgehangen", tomTimeSheet);
-                TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
                 TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom2);
+                TimeSheetDAO.getInstance().saveTimeRecord(timeRecTom);
 
                 TimeSheet mattTimeSheet = new TimeSheet(UserDAO.getInstance().findUser("matt"), Month.FEBRUARY, 2016);
                 TimeSheetDAO.getInstance().saveTimeSheet(mattTimeSheet);

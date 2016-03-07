@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "cc_timerecords")
-public class TimeRecord {
+public class TimeRecord implements Comparable<TimeRecord> {
     @Id
     @GeneratedValue
     private Long id;
@@ -143,5 +143,10 @@ public class TimeRecord {
 
     public void setBeginning(LocalDateTime beginning) {
         this.beginning = beginning.withNano(0).withSecond(0);
+    }
+
+    @Override
+    public int compareTo(TimeRecord timeRecord) {
+        return this.getBeginning().compareTo(timeRecord.getBeginning());
     }
 }

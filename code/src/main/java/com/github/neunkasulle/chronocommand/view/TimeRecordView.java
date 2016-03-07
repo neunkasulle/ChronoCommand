@@ -18,6 +18,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.io.File;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -337,6 +338,7 @@ public class TimeRecordView extends BaseView {
         this.beanItemContainer.removeAllItems();
         try {
             final List<TimeRecord> records = TimeSheetControl.getInstance().getTimeRecords(timeSheet);
+            Collections.sort(records);
             this.beanItemContainer.addAll(records);
         } catch (ChronoCommandException e) {
             Notification.show("Failed to get time records: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
