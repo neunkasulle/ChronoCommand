@@ -142,11 +142,25 @@
 		\item Das Backend wurde angepasst um Zeiteinträge richtig zu ändern.
 	\end{itemize}
 
+\subsubsection{Fehler 11:}%Support deleting timerecords
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Arbeitszeiteinträge konnten nicht gelöscht werden.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Das Backend hat das Löschen nicht unterstützt.
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Es wurden entsprechende Methoden hinzugefügt, die Arbeitszeiteinträge löschen.
+	\end{itemize}
+
 \newpage
 
 \subsection{Nichtbehobene Fehler}
 
-\subsubsection{Fehler11:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
+\subsubsection{Fehler12:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item Ein Stundenzettel kann beim Einreichen weniger Arbeitszeit haben als notwendig.
@@ -156,7 +170,7 @@
 		\item Es wird keine Abfrage dafür durchgeführt.
 	\end{itemize}
 	
-\subsubsection{Fehler 12:}%Admin edit user: disabled selecting an other user while editing
+\subsubsection{Fehler 13:}%Admin edit user: disabled selecting an other user while editing
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item 
@@ -166,7 +180,7 @@
 		\item 
 	\end{itemize}
 	
-\subsubsection{Fehler 13:}%Adminview: update table when saving a user
+\subsubsection{Fehler 14:}%Adminview: update table when saving a user
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item 
@@ -176,7 +190,7 @@
 		\item 
 	\end{itemize}
 	
-\subsubsection{Fehler 14:}%Set message for timesheet when rejecting
+\subsubsection{Fehler 15:}%Set message for timesheet when rejecting
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item Beim Prüfen eines Stundenzettels vom Betreuer*, kann kein Grund für die Ablehnung angegeben werden.
@@ -190,7 +204,7 @@
 		\item 
 	\end{itemize}
 
-\subsubsection{Fehler 15:}%Make table full width of page
+\subsubsection{Fehler 16:}%Make table full width of page
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item Beim Prüfen eines Stundenzettels vom Betreuer*, kann kein Grund für die Ablehnung angegeben werden.
