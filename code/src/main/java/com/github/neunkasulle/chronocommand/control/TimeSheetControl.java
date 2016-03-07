@@ -335,8 +335,7 @@ public class TimeSheetControl {
 
 
     public void editTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
-
-        if (!LoginControl.getInstance().getCurrentUser().getId().equals(timeRecord.getTimeSheet().getUser().getId())) {
+        if (!LoginControl.getInstance().getCurrentUser().equals(timeRecord.getTimeSheet().getUser())) {
             LOGGER.error("not permitted to perform action: editTimeRecord caused by"
                     + LoginControl.getInstance().getCurrentUser().getUsername());
             throw new ChronoCommandException(Reason.NOTPERMITTED);
@@ -408,5 +407,20 @@ public class TimeSheetControl {
         }
 
         return TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
+    }
+
+    public void deleteTimeRecord(TimeRecord timeRecord) throws ChronoCommandException {
+        if (!LoginControl.getInstance().getCurrentUser().equals(timeRecord.getTimeSheet().getUser())) {
+            LOGGER.error("not permitted to perform action: deleteTimeRecord caused by"
+                    + LoginControl.getInstance().getCurrentUser().getUsername());
+            throw new ChronoCommandException(Reason.NOTPERMITTED);
+        }
+
+        if (timeRecord.getTimeSheet().getState() != TimeSheetState.UNLOCKED) {
+            LOGGER.error(LOCKED);
+            throw new ChronoCommandException(Reason.TIMESHEETLOCKED);
+        }
+
+        TimeSheetDAO.getInstance().deleteTimeRecord(timeRecord);
     }
 }
