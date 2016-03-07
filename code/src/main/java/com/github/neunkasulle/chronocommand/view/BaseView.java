@@ -13,13 +13,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -383,6 +380,7 @@ public abstract class BaseView extends HorizontalLayout implements View {
             Object currentSelection = timeRecordSelection.getValue();
             timeRecordSelection.removeAllItems();
             List<TimeSheet> timeSheetList = TimeSheetControl.getInstance().getTimeSheetsFromUser(LoginControl.getInstance().getCurrentUser());
+            Collections.sort(timeSheetList);
             timeRecordSelection.addItems(timeSheetList);
             if (currentSelection == null && !timeSheetList.isEmpty()) {
                 currentSelection = timeSheetList.get(timeSheetList.size() - 1);

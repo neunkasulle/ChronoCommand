@@ -16,6 +16,7 @@ import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -183,6 +184,7 @@ public class TimeSheetView extends BaseView {
         List<TimeSheet> timeSheetList;
         try {
             timeSheetList = TimeSheetControl.getInstance().getTimeSheetsFromUser(user);
+            Collections.sort(timeSheetList);
         } catch(ChronoCommandException e) {
             Notification.show("Failed to get timesheets: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
             return;
