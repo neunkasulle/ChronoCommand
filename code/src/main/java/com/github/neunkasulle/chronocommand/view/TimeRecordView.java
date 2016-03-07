@@ -48,9 +48,9 @@ public class TimeRecordView extends BaseView {
 
             //TODO: DO other stuff
         } catch (FieldGroup.CommitException e) {
-            throw new IllegalArgumentException(e);
+            Notification.show("Failed to save Timerecord because of illegal values", Notification.Type.WARNING_MESSAGE);
         } catch (ChronoCommandException e) {
-            Notification.show("Failed to save Timerecord: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
+            Notification.show("Failed to save Timerecord: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
         }
     }, event -> {
         // delete

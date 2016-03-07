@@ -129,6 +129,46 @@ public class TimeRecord implements Comparable<TimeRecord> {
         }
     }
 
+    // needed by bean container for time record editing
+    public int getBeginningHour() {
+        return beginning.getHour();
+    }
+
+    // needed by bean container for time record editing
+    public void setBeginningHour(int hour) {
+        beginning = beginning.withHour(hour);
+    }
+
+    // needed by bean container for time record editing
+    public int getBeginningMinute() {
+        return beginning.getMinute();
+    }
+
+    // needed by bean container for time record editing
+    public void setBeginningMinute(int minute) {
+        beginning = beginning.withMinute(minute);
+    }
+
+    // needed by bean container for time record editing
+    public int getEndHour() {
+        return ending.getHour();
+    }
+
+    // needed by bean container for time record editing
+    public void setEndHour(int hour) {
+        ending = ending.withHour(hour);
+    }
+
+    // needed by bean container for time record editing
+    public void setEndMinute(int minute) {
+        ending = ending.withMinute(minute);
+    }
+
+    // needed by bean container for time record editing
+    public int getEndMinute() {
+        return ending.getMinute();
+    }
+
     public TimeSheet getTimeSheet() {
         return timeSheet;
     }
