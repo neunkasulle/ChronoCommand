@@ -153,4 +153,13 @@ public class TimeSheetDAO {
         session.flush();
         session.close();
     }
+
+    public void deleteTimeRecord(TimeRecord timeRecord) {
+        Session session = DAOHelper.getInstance().getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.delete(timeRecord);
+        tx.commit();
+        session.flush();
+        session.close();
+    }
 }

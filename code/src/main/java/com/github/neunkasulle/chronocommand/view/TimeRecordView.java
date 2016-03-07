@@ -54,8 +54,13 @@ public class TimeRecordView extends BaseView {
         }
     }, event -> {
         // delete
-        //TODO: Delete timerecord
-        refreshTimeRecords();
+        try {
+            TimeSheetControl.getInstance().deleteTimeRecord(this.form.getFormFieldBinding().getItemDataSource().getBean());
+            this.recordList.select(null);
+            refreshTimeRecords();
+        } catch (ChronoCommandException e) {
+            Notification.show("Failed to delete Timerecord: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+        }
     }, event -> {
         // cancel
         this.recordList.select(null);
