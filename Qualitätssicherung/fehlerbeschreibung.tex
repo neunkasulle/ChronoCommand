@@ -61,29 +61,29 @@
 \subsubsection{Fehler 5:} %limit possible characters for usernames
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item 
+		\item Der Pool der moeglichen Zeichen eines benutzeramens war nicht beschraenkt
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item 
+		\item Es wurde keine Abfrage auf Sonderzeichen im Namen gemacht 
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item Ein Benutzer*name kann nur noch bestimmte Zeichen enthalten.
+		\item Ein Benutzer*name kann nur noch bestimmte Zeichen enthalten. (Abfrage hinzugefuegt)
 	\end{itemize}
 
 \subsubsection{Fehler 6:} %refactor whole time sheet new and close
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item 
+		\item Stundenzettel hatte fehlerhafte Daten
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item 
+		\item es gabe mehrere methoden um einen Time Sheet zu manipulieren die verschiedene Signaturen aufwiesen.
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item 
+		\item Umschreiben der Schnittstellen zum Manipulieren der Time Sheets
 	\end{itemize}
 
 \subsubsection{Fehler 7:} %Supervisors and Administrators can look at other timesheets
@@ -135,11 +135,11 @@
 \subsubsection{Fehler 10:}%show success notification when user edits themselves
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item 
+		\item Der Benutzer wird nicht benachrichtigt
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item 
+		\item Es exsistiert keine benachrichtigungsmoeglichkeit im Backend
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
@@ -149,15 +149,15 @@
 \subsubsection{Fehler11:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item 
+		\item Der Stundenzettel koennte zu wenig Stunden enthalten
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item 
+		\item Es wird keine Abfrage dafuer durchgefuehrt
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item 
+		\item Eine Abfrage einfuegen
 	\end{itemize}
 	
 \subsubsection{Fehler 12:}%Admin edit user: disabled selecting an other user while editing
