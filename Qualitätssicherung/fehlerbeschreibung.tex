@@ -117,20 +117,16 @@
 \subsubsection{Fehler 9:}%show success notification when user edits themselves
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Der Benutzer* wird nicht benachrichtigt wenn er seine persönlichen Daten ändert.
+		\item Der Benutzer* wird nicht benachrichtigt wenn er seine persönlichen Daten erfolgreich ändert.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item Es existiert keine Benachrichtigungsmöglichkeit im Backend.
+		\item Es existiert keine Benachrichtigung, welche zu diesem Fall passt.
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item 
+		\item Es wurde eine entsprechende Benachrichtigung hinzugefügt.
 	\end{itemize}
-
-\newpage
-
-\subsection{Nichtbehobene Fehler}
 
 \subsubsection{Fehler 10:}%Can't edit start/end times in existing time record
 \textbf{Fehlersymptom:}
@@ -139,9 +135,17 @@
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item 
+		\item Die Werte, welche geändert werden sollten, konnten nicht gespeichert werden.
 	\end{itemize}
-	
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Das Backend wurde angepasst um Zeiteinträge richtig zu ändern.
+	\end{itemize}
+
+\newpage
+
+\subsection{Nichtbehobene Fehler}
+
 \subsubsection{Fehler11:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
 \textbf{Fehlersymptom:}
 	\begin{itemize}
@@ -168,6 +172,34 @@
 		\item 
 	\end{itemize}
 \textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	
+\subsubsection{Fehler 14:}%Set message for timesheet when rejecting
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Beim Prüfen eines Stundenzettels vom Betreuer*, kann kein Grund für die Ablehnung angegeben werden.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+
+\subsubsection{Fehler 15:}%Make table full width of page
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Beim Prüfen eines Stundenzettels vom Betreuer*, kann kein Grund für die Ablehnung angegeben werden.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+\textbf{Fehlerbehebung:}
 	\begin{itemize}
 		\item 
 	\end{itemize}
