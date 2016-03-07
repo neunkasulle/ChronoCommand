@@ -156,11 +156,39 @@
 		\item Es wurden entsprechende Methoden hinzugefügt, die Arbeitszeiteinträge löschen.
 	\end{itemize}
 
+\subsubsection{Fehler 12:}%Admin edit user: disabled selecting an other user while editing
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Wenn ein Administrator einen User bearbeitet, konnte er währenddessen einen anderen User auswählen und dessen Daten wurden dann stattdessen überschrieben.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Tabelle wurde beim User editieren nicht deaktiviert.
+	\end{itemize}
+\textbf{Fehlerbehebung}
+	\begin{itemize}
+		\item Tabelle wird nun vor dem editieren deaktiviert und danach wieder aktiviert.
+	\end{itemize}
+	
+\subsubsection{Fehler 13:}%Adminview: update table when saving a user
+\textbf{Fehlersymptom:}
+	\begin{itemize}
+		\item Wenn ein Administrator einen User bearbeitet und speichert, erscheinen die neuen Daten nicht direkt in der Tabelle.
+	\end{itemize}
+\textbf{Fehlergrund:}
+	\begin{itemize}
+		\item Die entsprechende Methode wurde nicht aufgerufen.
+	\end{itemize}
+\textbf{Fehlerbehebung:}
+	\begin{itemize}
+		\item Die Methode wird nun aufgerufen.
+	\end{itemize}
+	
 \newpage
 
 \subsection{Nichtbehobene Fehler}
 
-\subsubsection{Fehler12:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
+\subsubsection{Fehler 14:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item Ein Stundenzettel kann beim Einreichen weniger Arbeitszeit haben als notwendig.
@@ -170,26 +198,6 @@
 		\item Es wird keine Abfrage dafür durchgeführt.
 	\end{itemize}
 	
-\subsubsection{Fehler 13:}%Admin edit user: disabled selecting an other user while editing
-\textbf{Fehlersymptom:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-\textbf{Fehlergrund:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-	
-\subsubsection{Fehler 14:}%Adminview: update table when saving a user
-\textbf{Fehlersymptom:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-\textbf{Fehlergrund:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-	
 \subsubsection{Fehler 15:}%Set message for timesheet when rejecting
 \textbf{Fehlersymptom:}
 	\begin{itemize}
@@ -197,11 +205,7 @@
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item 
-	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item 
+		\item Wurde aus Zeitgründen nicht implementiert.
 	\end{itemize}
 
 \subsubsection{Fehler 16:}%Make table full width of page
@@ -212,8 +216,4 @@
 \textbf{Fehlergrund:}
 	\begin{itemize}
 		\item Die Größe der Tabelle ist statisch.
-	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item 
 	\end{itemize}
