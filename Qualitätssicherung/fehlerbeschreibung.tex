@@ -19,21 +19,21 @@
 \subsubsection{Fehler 2:} %Receive no weekly reminder
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Es wurde in manchen Wochen keine Erinnerung verschickt.
+		\item In manchen Wochen wurde keine Erinnerung zum letzten Arbeitszeiteintrag verschickt.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item Die Abfrage nach dem letzten Arbeitszeiteintrag hat nach Tagen verglichen.
+		\item Die Abfrage nach dem letzten Arbeitszeiteintrag hat nach Tagen, anstatt nach Daten, verglichen.
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item Es werden nun ganze Daten verglichen und nicht mehr Tage.
+		\item Es werden nun ganze Daten verglichen und nicht mehr nur Tage.
 	\end{itemize}
 
 \subsubsection{Fehler 3:} %Send monthly reminder to users without timesheet
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Benutzer* ohne Stundenzettel, welche aber arbeiten müssen, erhielten keine Erinnerung.
+		\item Benutzer* ohne Stundenzettel, welche aber arbeiten müssen, erhielten keine monatiche Erinnerung.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
@@ -69,7 +69,7 @@
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item Ein benutzername kann nur noch bestimmte Zeichen enthalten.
+		\item Ein Benutzer*name kann nur noch bestimmte Zeichen enthalten.
 	\end{itemize}
 
 \subsubsection{Fehler 6:} %refactor whole time sheet new and close
@@ -107,7 +107,7 @@
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item TODO
+		\item 
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
@@ -118,21 +118,7 @@
 
 \subsection{Nichtbehobene Fehler}
 
-\subsubsection{Fehler 9:}%It is possible to save a manual time record without a description
-\textbf{Fehlersymptom:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-\textbf{Fehlergrund:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-
-\subsubsection{Fehler 10:}%Can't edit start/end times in existing time record
+\subsubsection{Fehler 9:}%Can't edit start/end times in existing time record
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item Beim Editieren von Zeiteinträgen können die Start- und Endzeit nicht verändert werden.
@@ -146,7 +132,7 @@
 		\item 
 	\end{itemize}
 	
-\subsubsection{Fehler 11:}%show success notification when user edits themselves
+\subsubsection{Fehler 10:}%show success notification when user edits themselves
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item 
@@ -160,7 +146,7 @@
 		\item 
 	\end{itemize}
 	
-\subsubsection{Fehler12:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
+\subsubsection{Fehler11:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item 
@@ -174,7 +160,7 @@
 		\item 
 	\end{itemize}
 	
-\subsubsection{Fehler 13:}%Admin edit user: disabled selecting an other user while editing
+\subsubsection{Fehler 12:}%Admin edit user: disabled selecting an other user while editing
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item 
@@ -188,7 +174,7 @@
 		\item 
 	\end{itemize}
 	
-\subsubsection{Fehler 14:}%Adminview: update table when saving a user
+\subsubsection{Fehler 13:}%Adminview: update table when saving a user
 \textbf{Fehlersymptom:}
 	\begin{itemize}
 		\item 
