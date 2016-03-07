@@ -36,6 +36,8 @@ public class AdminCtrlForm extends FormLayout {
     private PasswordField passwordSecondTimeInputField;
     private CheckBox disable;
 
+    private Button.ClickListener postUserEditOperation;
+
     private User object;
 
     private BeanFieldGroup<User> formFieldBindings;
@@ -48,12 +50,12 @@ public class AdminCtrlForm extends FormLayout {
         return this.formFieldBindings;
     }
 
-    public AdminCtrlForm(final Button.ClickListener toSuperviserOperation,
-                         final Button.ClickListener editUserOperation,
+    public AdminCtrlForm(final Button.ClickListener editUserOperation,
+                         final Button.ClickListener postUserEditOperation,
                          final Button.ClickListener toTimeSheetsOperation,
                          final Button.ClickListener cancelOperation) {
-        //this.btnToSupervisor.addClickListener(toSuperviserOperation);
-        this.btnEditUser.addClickListener(event -> createEditUser());
+        this.btnEditUser.addClickListener(editUserOperation);
+        this.postUserEditOperation = postUserEditOperation;
         this.btnToTimeSheets.addClickListener(toTimeSheetsOperation);
         this.btnCancel.addClickListener(cancelOperation);
         actionLayout.setSpacing(true);
@@ -64,7 +66,7 @@ public class AdminCtrlForm extends FormLayout {
         addComponents(actionLayout, editUserLayout);
     }
 
-    private void createEditUser() {
+    public void createEditUser() {
         clearUserEdit();
         editUserLayout.setVisible(true);
         actionLayout.setVisible(false);
@@ -192,6 +194,7 @@ public class AdminCtrlForm extends FormLayout {
                 UserManagementControl.getInstance().editUser(object, usernameInputField.getValue(), realnameInputField.getValue(),
                         emailInputField.getValue(), passwordFirstTimeInputField.getValue(), (User) selectSupervisor.getValue(), hoursPerMonth_int, disable.getValue());
                 clearUserEdit();
+                postUserEditOperation.buttonClick(event1);
             } catch (ChronoCommandException e) {
                 LOGGER.warn("Failed to save user: " + e.getReason().toString(), e);
                 Notification.show("Failed to save user: " + e.getReason().toString(), Notification.Type.ERROR_MESSAGE);
@@ -202,6 +205,7 @@ public class AdminCtrlForm extends FormLayout {
         final Button cancelButton = new Button("Cancel");
         cancelButton.addClickListener(event1 -> {
             clearUserEdit();
+            postUserEditOperation.buttonClick(event1);
         });
         buttonBar.addComponent(cancelButton);
     }

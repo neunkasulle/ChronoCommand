@@ -11,7 +11,6 @@ import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import org.vaadin.dialogs.ConfirmDialog;
 
 import java.util.List;
 import java.util.Set;
@@ -26,28 +25,19 @@ public class AdminView extends BaseView {
     private final Grid recordList = new Grid();
 
     private final AdminCtrlForm form = new AdminCtrlForm(e -> {
-        // supervisor
-        getUI().getNavigator().navigateTo(MainUI.SUPERVISORVIEW);
+        this.recordList.setEnabled(false);
+        this.form.createEditUser();
     }, e -> {
-        // edit
-        ConfirmDialog.show(getUI(), "Do you really want to delete this user?",
-                dialog -> {
-                    if (dialog.isConfirmed()) {
-                        // Confirmed to continue TODO
-                    } else {
-                        recordList.select(null);
-                        refreshContacts();
-                    }
-                }
-        );
-        getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
+        this.recordList.setEnabled(true);
+        refreshUsers();
     }, e -> {
         // show timesheets
         getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW + "/" + this.form.getFormFieldBinding().getItemDataSource().getBean().getUsername());
     }, e -> {
         // cancel
+        this.recordList.setEnabled(true);
         this.recordList.select(null);
-        refreshContacts();
+        refreshUsers();
     });
 
     @Override
@@ -121,10 +111,12 @@ public class AdminView extends BaseView {
 
         // Updae fortable
 
-        refreshContacts();
+        refreshUsers();
     }
 
-    private void refreshContacts() {
+    private void refreshUsers() {
+        Object selected = this.recordList.getSelectedRow();
+
         this.beanItemContainer.removeAllItems();
 
         List<User> userList;
@@ -137,5 +129,7 @@ public class AdminView extends BaseView {
 
         this.beanItemContainer.addAll(userList);
         this.form.setVisible(false);
+
+        this.recordList.select(selected);
     }
 }
