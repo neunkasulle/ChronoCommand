@@ -50,10 +50,13 @@ public abstract class BaseView extends HorizontalLayout implements View {
                  /* Other actions  */
 
                 final Button newTimeRecordButton = new Button("New time record");
-                newTimeRecordButton.addClickListener(event -> {
-                    extraPane.getUI().getNavigator().navigateTo(MainUI.NEWTIMERECORDVIEW);
-                });
+                newTimeRecordButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.NEWTIMERECORDVIEW));
                 extraPane.addComponent(newTimeRecordButton);
+
+                final Button userSettingsButton = new Button("Edit my details");
+                userSettingsButton.setSizeFull();
+                userSettingsButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW));
+                extraPane.addComponent(userSettingsButton);
 
                 /*final Button submitTimeRecordButton = new Button("Submit Timesheet");
                 submitTimeRecordButton.addClickListener(event -> {
@@ -94,6 +97,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 });
                 extraPane.addComponent(listOfMyProletarierButton);
                 listOfMyProletarierButton.setSizeFull();
+
+                final Button userSettingsButton = new Button("Edit my details");
+                userSettingsButton.setSizeFull();
+                userSettingsButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW));
+                extraPane.addComponent(userSettingsButton);
 
             }
         }, ADMINISTRATOR("Administrator") {
@@ -139,6 +147,11 @@ public abstract class BaseView extends HorizontalLayout implements View {
                 createNewProjectButton.setSizeFull();
                 createNewProjectButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.CREATEPROJECTVIEW));
                 extraPane.addComponent(createNewProjectButton);
+
+                final Button userSettingsButton = new Button("Edit my details");
+                userSettingsButton.setSizeFull();
+                userSettingsButton.addClickListener(event -> extraPane.getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW));
+                extraPane.addComponent(userSettingsButton);
 
                 /*final Button editAccount = new Button("Edit account");
                 editAccount.setSizeFull();
@@ -275,35 +288,10 @@ public abstract class BaseView extends HorizontalLayout implements View {
 
         /* User information */
 
-        final HorizontalLayout userInfo = new HorizontalLayout();
-        userInfo.setSizeFull();
-
-        String nameOfUser;
         try {
-            nameOfUser = LoginControl.getInstance().getCurrentUser().getRealname();
-        } catch (ChronoCommandException e) {
-            nameOfUser = "Not logged in!";
-        }
-        final Button userSettingsButton = new Button(nameOfUser);
-        userSettingsButton.setStyleName(BaseTheme.BUTTON_LINK);
-        userSettingsButton.addClickListener(e -> {
-            getUI().getNavigator().navigateTo(MainUI.SETTINGSVIEW);
-        });
-        userInfo.addComponent(userSettingsButton);
-
-        //TODO: use role.getName() or something like that here
-        String roleOfUser;
-        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
-            roleOfUser = "Administrator";
-        } else if (SecurityUtils.getSubject().isPermitted(Role.PERM_SUPERVISOR)) {
-            roleOfUser = "Supervisor";
-        } else if (SecurityUtils.getSubject().isPermitted(Role.PERM_PROLETARIER)) {
-            roleOfUser = "HIWI";
-        } else {
-            roleOfUser = "No role!";
-        }
-        userInfo.addComponent(new Label(roleOfUser));
-        controlPanel.addComponent(userInfo);
+            controlPanel.addComponent(new Label("Welcome " + LoginControl.getInstance().getCurrentUser().getRealname()));
+            controlPanel.addComponent(new Label("Your role is " + LoginControl.getInstance().getCurrentUser().getPrimaryRole().toString()));
+        } catch (ChronoCommandException e) {}
 
         /* Action links */
 
