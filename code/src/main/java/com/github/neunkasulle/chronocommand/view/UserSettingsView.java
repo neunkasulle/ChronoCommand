@@ -31,7 +31,7 @@ public class UserSettingsView extends BaseView {
         try {
             user = LoginControl.getInstance().getCurrentUser();
         } catch(ChronoCommandException e) {
-            Notification.show("Failed got get current user. Please try to logout an login again.", Notification.Type.ERROR_MESSAGE);
+            Notification.show("Failed to get current user. Please try to logout and login again.", Notification.Type.ERROR_MESSAGE);
             return;
         }
 
@@ -108,12 +108,8 @@ public class UserSettingsView extends BaseView {
         });
         buttonBar.addComponent(editUserButton);
 
-        //Cancel Button goes back to the last View???
         final Button cancelButton = new Button("Cancel");
-        cancelButton.addClickListener(e -> {
-            Notification.show("TODO: what to do now?", Notification.Type.WARNING_MESSAGE);
-            //TODO Fill me i want go back to my last View
-        });
+        cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.LOGINVIEW));
         buttonBar.addComponent(cancelButton);
 
 
