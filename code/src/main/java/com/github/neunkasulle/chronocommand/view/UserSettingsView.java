@@ -6,11 +6,14 @@ import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * Created by Janze on 20.01.2016.
  */
 public class UserSettingsView extends BaseView {
+
+    final Label result = new Label();
 
     public void filtersChanged() {
 
@@ -94,6 +97,9 @@ public class UserSettingsView extends BaseView {
         //Create New User Button
         final Button editUserButton = new Button("Apply");
         editUserButton.addClickListener(event1 -> {
+            result.setVisible(true);
+            result.addStyleName(ValoTheme.LABEL_FAILURE);
+            result.setValue("Failed to save");
             if (!passwordFirstTimeEditInputField.getValue().equals(passwordSecondTimeEditInputField.getValue())) {
                 Notification.show("Password fields do not match", Notification.Type.WARNING_MESSAGE);
                 return;
@@ -102,6 +108,8 @@ public class UserSettingsView extends BaseView {
             try {
                 UserManagementControl.getInstance().editUser(user, usernameEditInputField.getValue(), realnameEditInputField.getValue(),
                         emailEditInputField.getValue(), passwordFirstTimeEditInputField.getValue(), user.getSupervisor(), user.getHoursPerMonth(), user.isDisabled());
+                result.addStyleName(ValoTheme.LABEL_SUCCESS);
+                result.setValue("Saved");
             } catch(ChronoCommandException e) {
                 Notification.show("Failed to save settings: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
             }
@@ -112,6 +120,7 @@ public class UserSettingsView extends BaseView {
         cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.LOGINVIEW));
         buttonBar.addComponent(cancelButton);
 
-
+        result.setVisible(false);
+        contentPane.addComponent(result);
     }
 }
