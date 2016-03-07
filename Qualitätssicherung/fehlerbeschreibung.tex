@@ -61,29 +61,29 @@
 \subsubsection{Fehler 5:} %limit possible characters for usernames
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Der Pool der moeglichen Zeichen eines benutzeramens war nicht beschraenkt
+		\item Der Pool der möglichen Zeichen eines Benutzer*namens war nicht beschränkt.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item Es wurde keine Abfrage auf Sonderzeichen im Namen gemacht 
+		\item Es wurde keine Abfrage auf Sonderzeichen im Namen gemacht.
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item Ein Benutzer*name kann nur noch bestimmte Zeichen enthalten. (Abfrage hinzugefuegt)
+		\item Es wurde eine Abfrage nach Sonderzeichen hinzugefügt.
 	\end{itemize}
 
 \subsubsection{Fehler 6:} %refactor whole time sheet new and close
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Stundenzettel hatte fehlerhafte Daten
+		\item Stundenzettel enthielten fehlerhafte Daten.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item es gabe mehrere methoden um einen Time Sheet zu manipulieren die verschiedene Signaturen aufwiesen.
+		\item Es gabe mehrere Methoden um einen Stundenzettel zu manipulieren die verschiedene Signaturen aufwiesen.
 	\end{itemize}
 \textbf{Fehlerbehebung:}
 	\begin{itemize}
-		\item Umschreiben der Schnittstellen zum Manipulieren der Time Sheets
+		\item Die Schnittstellen zum Manipulieren der Stundenzettel wurden umgeschrieben.
 	\end{itemize}
 
 \subsubsection{Fehler 7:} %Supervisors and Administrators can look at other timesheets
@@ -127,37 +127,25 @@
 	\begin{itemize}
 		\item 
 	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
 	
 \subsubsection{Fehler 10:}%show success notification when user edits themselves
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Der Benutzer wird nicht benachrichtigt
+		\item Der Benutzer* wird nicht benachrichtigt wenn er seine persönlichen Daten ändert.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item Es exsistiert keine benachrichtigungsmoeglichkeit im Backend
-	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item 
+		\item Es existiert keine Benachrichtigungsmöglichkeit im Backend.
 	\end{itemize}
 	
 \subsubsection{Fehler11:}%Bei timesheet lock überprüfen ob nicht zu wenig gearbeitet wurde
 \textbf{Fehlersymptom:}
 	\begin{itemize}
-		\item Der Stundenzettel koennte zu wenig Stunden enthalten
+		\item Ein Stundenzettel kann beim Einreichen weniger Arbeitszeit haben als notwendig.
 	\end{itemize}
 \textbf{Fehlergrund:}
 	\begin{itemize}
-		\item Es wird keine Abfrage dafuer durchgefuehrt
-	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item Eine Abfrage einfuegen
+		\item Es wird keine Abfrage dafür durchgeführt.
 	\end{itemize}
 	
 \subsubsection{Fehler 12:}%Admin edit user: disabled selecting an other user while editing
@@ -169,10 +157,6 @@
 	\begin{itemize}
 		\item 
 	\end{itemize}
-\textbf{Fehlerbehebung:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
 	
 \subsubsection{Fehler 13:}%Adminview: update table when saving a user
 \textbf{Fehlersymptom:}
@@ -180,10 +164,6 @@
 		\item 
 	\end{itemize}
 \textbf{Fehlergrund:}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-\textbf{Fehlerbehebung:}
 	\begin{itemize}
 		\item 
 	\end{itemize}
