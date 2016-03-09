@@ -65,23 +65,11 @@ public class SchedulerHandler {
                 .startNow()
                 .build();
 
-        //trigger for tesst purpose
-        JobDetail dailyReminderJob = newJob(WeeklyMailJob.class)
-                .withIdentity("dailyTrigger", "testGroup") //name, group
-                .build();
-        Trigger dailyTrigger = newTrigger()
-                .withIdentity("dailyTrigger", "testGroup")
-                .withSchedule(cronSchedule("0 0 12 * * ?"))
-                .startNow()
-                .build();
-
         try {
             sched.start();
             // Tell quartz to schedule a job with a trigger
             sched.scheduleJob(monthlyReminderJob, lastDayOfMonth);
             sched.scheduleJob(weeklyReminderJob, weeklyTrigger);
-
-            sched.scheduleJob(dailyReminderJob, dailyTrigger);
         } catch (SchedulerException e) {
             LOGGER.error("Failure in starting scheduler", e);
         }
