@@ -3,10 +3,12 @@ package com.github.neunkasulle.chronocommand.view;
 import com.github.neunkasulle.chronocommand.control.LoginControl;
 import com.github.neunkasulle.chronocommand.control.UserManagementControl;
 import com.github.neunkasulle.chronocommand.model.ChronoCommandException;
+import com.github.neunkasulle.chronocommand.model.Role;
 import com.github.neunkasulle.chronocommand.model.User;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.shiro.SecurityUtils;
 
 /**
  * Created by Janze on 20.01.2016.
@@ -117,7 +119,11 @@ public class UserSettingsView extends BaseView {
         buttonBar.addComponent(editUserButton);
 
         final Button cancelButton = new Button("Cancel");
-        cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.LOGINVIEW));
+        if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
+            cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.ADMINVIEW));
+        } else {
+            cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW));
+        }
         buttonBar.addComponent(cancelButton);
 
         result.setVisible(false);
