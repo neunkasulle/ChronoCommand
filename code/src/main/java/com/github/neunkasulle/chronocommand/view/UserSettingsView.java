@@ -122,7 +122,7 @@ public class UserSettingsView extends BaseView {
         if (SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)) {
             cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.ADMINVIEW));
         } else {
-            cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.TIMESHEETVIEW));
+            cancelButton.addClickListener(e -> getUI().getNavigator().navigateTo(MainUI.TIMERECORDVIEW));
         }
         buttonBar.addComponent(cancelButton);
 
