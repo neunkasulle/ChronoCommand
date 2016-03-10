@@ -358,7 +358,9 @@ public class TimeRecordView extends BaseView {
         } catch (DateTimeException e) {
             date = new Date(LocalDateTime.of(timeSheet.getYear(), timeSheet.getMonth(), 1, 0, 0).toEpochSecond(ZoneOffset.UTC) * 1000);
         }
-        calendar.setValue(date);
+        if (calendar != null) {
+            calendar.setValue(date);
+        }
 
         updateHeaderLabel();
     }
