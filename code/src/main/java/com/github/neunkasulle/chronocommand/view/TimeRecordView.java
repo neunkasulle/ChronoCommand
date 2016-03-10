@@ -313,10 +313,12 @@ public class TimeRecordView extends BaseView {
         recordList.getDefaultHeaderRow().getCell("category.name").setHtml("Category");
         recordList.getDefaultHeaderRow().getCell("description").setHtml("Description");
 
-        timeRecordSelection.addValueChangeListener(event1 -> {
-            refreshTimeRecords();
-            updateHeaderLabel();
-        });
+        if (timeRecordSelection != null) {
+            timeRecordSelection.addValueChangeListener(event1 -> {
+                refreshTimeRecords();
+                updateHeaderLabel();
+            });
+        }
 
         // The action form
 
