@@ -11,11 +11,16 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -128,10 +133,38 @@ public class TimeRecordView extends BaseView {
                     timeSheet = (TimeSheet) timeRecordSelection.getValue();
                 }
                 File pdffile = TimeSheetControl.getInstance().printTimeSheet(timeSheet);
-                FileResource pdf = new FileResource(pdffile);
-                getUI().getPage().open(pdf, "_blank", true);
+
+                FileResource pdf = new FileResource(pdffile); //not needed anymore?
+                getUI().getPage().open(pdf, "_blank", true); //not needed anymore?
                 /*FileDownloader fileDownloader = new FileDownloader(pdf);
                 fileDownloader.extend(this.form.getExportPDFBtn());*/
+
+                //possible solution?
+                //we need a StreamResource for the FileDownloader to work
+                StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+                    @Override
+                    public InputStream getStream() {
+
+                        InputStream targetStream = null;
+                        try {
+                            targetStream = new FileInputStream(pdffile);
+                        } catch (FileNotFoundException e) {
+                            Notification.show("Failed to convert timesheet: " + e.getMessage().toString());
+                        }
+
+                        return targetStream;
+                    }
+                };
+                StreamResource streamResource = new StreamResource(streamSource, pdffile.getName());
+
+                FileDownloader downloader = new FileDownloader(streamResource);
+                downloader.extend(downloadPdf);
+
+                //maybe not necessery?
+                //setContent(downloadPdf);
+
+                //solution end
+
             } catch(ChronoCommandException ex) {
                 Notification.show("Failed to print pdf:" + ex.getReason().toString());
             }
