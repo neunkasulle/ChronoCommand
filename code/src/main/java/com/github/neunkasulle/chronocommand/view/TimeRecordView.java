@@ -134,13 +134,8 @@ public class TimeRecordView extends BaseView {
                 }
                 File pdffile = TimeSheetControl.getInstance().printTimeSheet(timeSheet);
 
-                FileResource pdf = new FileResource(pdffile); //not needed anymore?
-                getUI().getPage().open(pdf, "_blank", true); //not needed anymore?
-                /*FileDownloader fileDownloader = new FileDownloader(pdf);
-                fileDownloader.extend(this.form.getExportPDFBtn());*/
+                //FileResource pdf = new FileResource(pdffile);
 
-                //possible solution?
-                //we need a StreamResource for the FileDownloader to work
                 StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
                     @Override
                     public InputStream getStream() {
@@ -159,11 +154,6 @@ public class TimeRecordView extends BaseView {
 
                 FileDownloader downloader = new FileDownloader(streamResource);
                 downloader.extend(downloadPdf);
-
-                //maybe not necessery?
-                //setContent(downloadPdf);
-
-                //solution end
 
             } catch(ChronoCommandException ex) {
                 Notification.show("Failed to print pdf:" + ex.getReason().toString());
