@@ -11,6 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -236,7 +237,7 @@ public class TimeSheetControl {
      * @param timeSheet the time sheet which should be printed
      * @return a Pdf File which an be printed
      */
-    public File printTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
+    public ByteArrayOutputStream printTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
         if (!SecurityUtils.getSubject().isPermitted(Role.PERM_ADMINISTRATOR)
                 && !LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser())
                 && !LoginControl.getInstance().getCurrentUser().equals(timeSheet.getUser().getSupervisor())) {

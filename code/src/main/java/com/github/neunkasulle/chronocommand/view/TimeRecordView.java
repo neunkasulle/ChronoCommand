@@ -17,10 +17,7 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -132,7 +129,11 @@ public class TimeRecordView extends BaseView {
                 if (timeSheet == null) {
                     timeSheet = (TimeSheet) timeRecordSelection.getValue();
                 }
-                File pdffile = TimeSheetControl.getInstance().printTimeSheet(timeSheet);
+                ByteArrayOutputStream pdffile = TimeSheetControl.getInstance().printTimeSheet(timeSheet);
+                if (timeSheet == null) {
+                    Notification.show("Failed to create pdf file: it's null!", Notification.Type.ERROR_MESSAGE);
+                    return;
+                }
 
                 //FileResource pdf = new FileResource(pdffile);
 
@@ -140,23 +141,17 @@ public class TimeRecordView extends BaseView {
                     @Override
                     public InputStream getStream() {
 
-                        InputStream targetStream = null;
-                        try {
-                            targetStream = new FileInputStream(pdffile);
-                        } catch (FileNotFoundException e) {
-                            Notification.show("Failed to convert timesheet: " + e.getMessage().toString());
-                        }
+                        InputStream targetStream = new ByteArrayInputStream(pdffile.toByteArray());
 
                         return targetStream;
                     }
                 };
-                StreamResource streamResource = new StreamResource(streamSource, pdffile.getName());
-
-                FileDownloader downloader = new FileDownloader(streamResource);
-                downloader.extend(downloadPdf);
-
+                String username = timeSheet.getUser().getUsername();
+                String date = Integer.toString(timeSheet.getYear()) + "-" + Integer.toString(timeSheet.getMonth().getValue());
+                StreamResource pdf = new StreamResource(streamSource, date + "-" + username + ".pdf");
+                getUI().getPage().open(pdf, "_blank", true);
             } catch(ChronoCommandException ex) {
-                Notification.show("Failed to print pdf:" + ex.getReason().toString());
+                Notification.show("Failed to print pdf: " + ex.getReason().toString(), Notification.Type.ERROR_MESSAGE);
             }
         });
 

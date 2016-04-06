@@ -11,14 +11,14 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.management.Notification;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,26 +70,31 @@ public class TimeSheetHandler {
      * @param timeSheet a timesheet
      * @return a pdf
      */
-    public File createPdfFromTimeSheet(TimeSheet timeSheet) {
-        PDDocument pdfTimeSheet = null;
-        File file;
-        FileOutputStream outputFile = null;
+    public ByteArrayOutputStream createPdfFromTimeSheet(TimeSheet timeSheet) throws ChronoCommandException {
+        PDDocument pdfTimeSheet;
+        File templateFile;
+        ByteArrayOutputStream outputFileStream = new ByteArrayOutputStream();
         sumHour = 0;
         sumMin = 0;
         try {
-            file = new File(getClass().getClassLoader().getResource("Stundenzettel.pdf").getFile());
-            outputFile = new FileOutputStream("Study.pdf");
-            pdfTimeSheet = PDDocument.load(file);
-        } catch (FileNotFoundException e) {
-            LOGGER.error("File not found", e);
-            return null;
+            templateFile = new File("webapps/ROOT/Stundenzettel.pdf");
+            pdfTimeSheet = PDDocument.load(templateFile);
+        } catch (FileNotFoundException e1) {
+            try {
+                templateFile = new File("Stundenzettel.pdf");
+                pdfTimeSheet = PDDocument.load(templateFile);
+            } catch (FileNotFoundException e2) {
+                LOGGER.error("File not found", e2);
+                throw new ChronoCommandException(Reason.TEMPLATENOTFOUND);
+            } catch (IOException e) {
+                LOGGER.error("IO", e);
+                throw new ChronoCommandException(Reason.TEMPLATECOULDNOTBEREAD);
+            }
         } catch (IOException e) {
             LOGGER.error("IO", e);
-            return null;
+            throw new ChronoCommandException(Reason.TEMPLATECOULDNOTBEREAD);
         }
-        catch (NullPointerException e) {
-            LOGGER.error("Nullptr", e);
-        }
+
         try {
             PDPage page = pdfTimeSheet.getPage(0);
             List<TimeRecord> recordsToPDF = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
@@ -113,17 +118,19 @@ public class TimeSheetHandler {
                     pdfTimeSheet.addPage(newPage);
                 }
             }
-            pdfTimeSheet.save(outputFile);
+            pdfTimeSheet.save(outputFileStream);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ChronoCommandException(Reason.FILECREATIONFAILED);
         }
         try {
             pdfTimeSheet.close();
         } catch (Exception e) {
             LOGGER.error("closing went wrong");
         }
-        File returnFile = new File("Study.pdf");
-        return returnFile;
+        return outputFileStream;
+        /*File returnFile = new File("Study.pdf");
+        return returnFile;*/
     }
 
     /**
@@ -261,16 +268,16 @@ public class TimeSheetHandler {
      * @param timeSheets a list of timesheets
      * @return one pdf with all timesheets
      */
-    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) {
+    public File createPdfFromAllTimeSheets(List<TimeSheet> timeSheets) throws ChronoCommandException {
         File file = null;
         PDDocument doc = null;
         PDDocument totDoc = new PDDocument();
         PDFMergerUtility mergeDoc = new PDFMergerUtility();
 
         for (TimeSheet timesheet : timeSheets) {
-            File tmp = createPdfFromTimeSheet(timesheet);
+            ByteArrayOutputStream tmp = createPdfFromTimeSheet(timesheet);
             try {
-                doc = PDDocument.load(tmp);
+                doc = PDDocument.load(new ByteArrayInputStream(tmp.toByteArray()));
             } catch (IOException e) {
                 LOGGER.error("Loading error in createPdfFromAllTimeSheets");
             }

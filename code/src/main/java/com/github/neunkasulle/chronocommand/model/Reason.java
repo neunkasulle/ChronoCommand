@@ -25,6 +25,9 @@ public enum Reason {
     INVALIDHOURSPERMONTH("Invalid number of hours per month"),
     USERDISABLED("User account is disabled"),
     TIMESHEETINCOMPLETE("Timesheet is incomplete"),
+    FILECREATIONFAILED("Failed to create file"),
+    TEMPLATENOTFOUND("Template not found"),
+    TEMPLATECOULDNOTBEREAD("Template could not be read"),
 
     ;
 

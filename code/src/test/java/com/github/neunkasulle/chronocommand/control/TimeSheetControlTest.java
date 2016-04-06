@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.LinkedList;
@@ -173,11 +174,10 @@ public class TimeSheetControlTest extends UeberTest{
 
         TimeSheetControl timeSheetControl = TimeSheetControl.getInstance();
         UserDAO userDAO = UserDAO.getInstance();
-        File file = null;
 
         TimeSheet timeSheet = new TimeSheet(userDAO.findUser("tom"), Month.AUGUST, 1993);
         TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
-        file = timeSheetControl.printTimeSheet(timeSheet);
+        OutputStream file = timeSheetControl.printTimeSheet(timeSheet);
 
         assertNotNull(file);
     }

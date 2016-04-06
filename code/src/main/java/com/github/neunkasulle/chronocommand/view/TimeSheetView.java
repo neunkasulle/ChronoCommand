@@ -13,9 +13,10 @@ import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 
-import java.io.File;
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,13 +37,22 @@ public class TimeSheetView extends BaseView {
     }, e -> {
         // export pdf
         try {
-            File pdffile = TimeSheetControl.getInstance().printTimeSheet(this.form.getCurrentFormObject());
-            FileResource pdf = new FileResource(pdffile);
+            ByteArrayOutputStream pdffile = TimeSheetControl.getInstance().printTimeSheet(this.form.getCurrentFormObject());
+            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+                @Override
+                public InputStream getStream() {
+
+                    InputStream targetStream = new ByteArrayInputStream(pdffile.toByteArray());
+
+                    return targetStream;
+                }
+            };
+            String username = this.form.getCurrentFormObject().getUser().getUsername();
+            String date = Integer.toString(this.form.getCurrentFormObject().getYear()) + "-" + Integer.toString(this.form.getCurrentFormObject().getMonth().getValue());
+            StreamResource pdf = new StreamResource(streamSource, date + "-" + username + ".pdf");
             getUI().getPage().open(pdf, "_blank", true);
-            /*FileDownloader fileDownloader = new FileDownloader(pdf);
-            fileDownloader.extend(this.form.getExportPDFBtn());*/
         } catch (ChronoCommandException ex) {
-            Notification.show("Failed to print pdf:" + ex.getReason().toString());
+            Notification.show("Failed to print pdf: " + ex.getReason().toString(), Notification.Type.ERROR_MESSAGE);
         }
     }, e -> {
         // mark as checked

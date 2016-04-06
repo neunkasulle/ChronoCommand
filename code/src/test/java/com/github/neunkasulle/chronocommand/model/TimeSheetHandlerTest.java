@@ -4,9 +4,11 @@ import com.github.neunkasulle.chronocommand.control.UeberTest;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.time.Month;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -25,13 +27,13 @@ public class TimeSheetHandlerTest extends UeberTest {
     }
 
     @Test
-    public void testPDF() {
+    public void testPDF() throws Exception {
         TimeSheetHandler timeSheetHandler = TimeSheetHandler.getInstance();
 
-        File pdf = timeSheetHandler.createPdfFromTimeSheet(TimeSheetDAO.getInstance()
+        OutputStream pdf = timeSheetHandler.createPdfFromTimeSheet(TimeSheetDAO.getInstance()
                 .getTimeSheet(Month.JANUARY, 2016, UserDAO.getInstance().findUser("tom")));
 
-        assertTrue(pdf.exists());
+        assertNotNull(pdf);
     }
 
 }
