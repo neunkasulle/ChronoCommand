@@ -177,7 +177,9 @@ public class TimeSheetControl {
         if (result.isEmpty()) {
             timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
             TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
-            this.sendEmail(timeSheet.getUser().getSupervisor(), "New locked time sheet from" + timeSheet.getUser().getUsername());
+            if (!timeSheet.getUser().isPermitted(Role.PERM_SUPERVISOR)) {
+                this.sendEmail(timeSheet.getUser().getSupervisor(), "New locked time sheet from" + timeSheet.getUser().getUsername());
+            }
             LOGGER.info("Locked:" + timeSheet.getMonth() + timeSheet.getUser().getUsername());
         } else {
             throw new ChronoCommandException(Reason.TIMESHEETINCOMPLETE, result);
@@ -360,6 +362,9 @@ public class TimeSheetControl {
     }
 
     public void sendEmail(User recipient, String message) {
+        if (recipient == null) {
+            return;
+        }
 
         String host = "mail.teco.edu";
         String port = "25";
