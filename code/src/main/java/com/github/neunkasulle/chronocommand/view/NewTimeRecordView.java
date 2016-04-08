@@ -43,8 +43,8 @@ public class NewTimeRecordView extends BaseView {
 
         save.addClickListener(event1 -> {
             try {
-                TimeSheetControl.getInstance().addTimeToSheet(LocalDateTime.ofInstant(begin.getValue().toInstant(), ZoneOffset.UTC),
-                        LocalDateTime.ofInstant(end.getValue().toInstant(), ZoneOffset.UTC), (Category) project.getValue(),
+                TimeSheetControl.getInstance().addTimeToSheet(LocalDateTime.ofInstant(begin.getValue().toInstant(), ZoneOffset.systemDefault()),
+                        LocalDateTime.ofInstant(end.getValue().toInstant(), ZoneOffset.systemDefault()), (Category) project.getValue(),
                         description.getValue(), LoginControl.getInstance().getCurrentUser());
                 status.setVisible(true);
                 status.setValue("Saved");
