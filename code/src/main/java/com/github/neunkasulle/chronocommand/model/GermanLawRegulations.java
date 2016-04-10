@@ -24,14 +24,14 @@ public class GermanLawRegulations extends Regulations {
     }
 
     @Override
-    public String checkTimeSheet(TimeSheet timeSheet) {
+    public List<RegulationRejectionReason> checkTimeSheet(TimeSheet timeSheet) {
         List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecords(timeSheet);
 
-        String result = checkNightWork(timeRecords, timeSheet);
-        result += checkForPauses(timeRecords, timeSheet);
-        result += checkSundayWork(timeRecords, timeSheet);
-        result += checkWorkHours(timeSheet);
-        result += checkMonthHours(timeRecords, timeSheet);
+        List<RegulationRejectionReason> result = checkNightWork(timeRecords, timeSheet);
+        result.addAll(checkForPauses(timeRecords, timeSheet));
+        result.addAll(checkSundayWork(timeRecords, timeSheet));
+        result.addAll(checkWorkHours(timeSheet));
+        //result += checkMonthHours(timeRecords, timeSheet);
         return result;
     }
 
@@ -43,16 +43,16 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return "" für ok, Fehlermeldung sonst
      */
-    private String checkNightWork(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
-        String result = "";
+    private List<RegulationRejectionReason> checkNightWork(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
+        List<RegulationRejectionReason> result = new LinkedList<RegulationRejectionReason>();
         for (TimeRecord timeRecord: timeRecords) {
             if (timeRecord.getBeginning().isBefore(LocalDateTime.of(timeRecord.getBeginning().getYear(), timeRecord.getBeginning().getMonth(),
                     timeRecord.getBeginning().getDayOfMonth(), 6, 0)) || timeRecord.getBeginning().isAfter(LocalDateTime.of(timeRecord.getBeginning().getYear(),
                     timeRecord.getBeginning().getMonth(), timeRecord.getBeginning().getDayOfMonth(), 23, 0))) {
-                result += "Nachtarbeit nicht erlaubt";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.NIGHTWORK));
             } else if (timeRecord.getEnding().isAfter(LocalDateTime.of(timeRecord.getEnding().getYear(), timeRecord.getEnding().getMonth(), timeRecord.getEnding().getDayOfMonth(), 1, 0))
                     && timeRecord.getEnding().isBefore(LocalDateTime.of(timeRecord.getEnding().getYear(), timeRecord.getEnding().getMonth(), timeRecord.getEnding().getDayOfMonth(), 6, 0))) {
-                result += "Nachtarbeit nicht erlaubt";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.NIGHTWORK));
             }
         }
         return result;
@@ -64,14 +64,14 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return
      */
-    private String checkForPauses(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
-        String result = "";
+    private List<RegulationRejectionReason> checkForPauses(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
+        List<RegulationRejectionReason> result = new LinkedList<>();
 
         int maxWorkingWithoutBreak = 6*60; // 6 Hours in minutes
 
         for (TimeRecord timeRecord : timeRecords) {
             if (ChronoUnit.MINUTES.between(timeRecord.getBeginning(), timeRecord.getEnding()) >= maxWorkingWithoutBreak) {
-                result += "Nach 6h Arbeiten muss eine Pause eingelegt werden";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.BREAK));
             }
         }
         return result;
@@ -83,22 +83,22 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return
      */
-    private String checkSundayWork(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
+    private List<RegulationRejectionReason> checkSundayWork(List<TimeRecord> timeRecords, TimeSheet timeSheet) {
         readHolidays(timeSheet.getYear());
 
-        String result = "";
+        List<RegulationRejectionReason> result = new LinkedList<>();
         for (TimeRecord timeRecord : timeRecords) {
             if (timeRecord.getBeginning().getDayOfWeek() == DayOfWeek.SUNDAY) {
-                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.SUNDAY_WORK));
             }
             else if (timeRecord.getEnding().getDayOfWeek() == DayOfWeek.SUNDAY) {
-                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.SUNDAY_WORK));
             }
             else if (holidays.containsKey(timeRecord.getBeginning().toLocalDate())) {
-                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.HOLIDAY_WORK));
             }
             else if (holidays.containsKey(timeRecord.getEnding().toLocalDate())) {
-                result += "Sonn- und Feiertagsarbeit nicht erlaubt";
+                result.add(new RegulationRejectionReason(timeRecord, RegulationRejectionReason.RejectionReason.HOLIDAY_WORK));
             }
         }
         return result;
@@ -110,11 +110,11 @@ public class GermanLawRegulations extends Regulations {
      * @param timeSheet
      * @return
      */
-    private String checkWorkHours (TimeSheet timeSheet) {
+    private List<RegulationRejectionReason> checkWorkHours (TimeSheet timeSheet) {
         int maxWorkingHours = 8*60; // 8 Hours in minutes
         int maxOvertime = 2*60; // 2 Hours in minutes
 
-        String result = "";
+        List<RegulationRejectionReason> result = new LinkedList<>();
         for (int n = 1; n <= getNumberOfDaysInMonth(timeSheet); n++) {
 
             List<TimeRecord> timeRecords = TimeSheetDAO.getInstance().getTimeRecordsByDay(timeSheet, n);
@@ -124,12 +124,12 @@ public class GermanLawRegulations extends Regulations {
             }
             if (!timeSheet.getUser().isPermitted(Role.PERM_LONGHOURS)) {
                 if (minutesPerDay > maxWorkingHours) {
-                    result += "Maximale Arbeitszeit überschritten";
+                    result.add(new RegulationRejectionReason(timeRecords.get(0), RegulationRejectionReason.RejectionReason.MAXIMUM_WORKTIME));
                 }
             }
             else
                 if (minutesPerDay > maxWorkingHours + maxOvertime) {
-                    result += "Maximale Arbeitszeit überschritten";
+                    result.add(new RegulationRejectionReason(timeRecords.get(0), RegulationRejectionReason.RejectionReason.MAXIMUM_WORKTIME));
                 }
         }
         return result;

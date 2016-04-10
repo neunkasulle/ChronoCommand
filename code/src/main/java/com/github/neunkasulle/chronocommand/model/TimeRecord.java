@@ -189,4 +189,9 @@ public class TimeRecord implements Comparable<TimeRecord> {
     public int compareTo(TimeRecord timeRecord) {
         return this.getBeginning().compareTo(timeRecord.getBeginning());
     }
+
+    @Override
+    public String toString() {
+        return beginning.toString();
+    }
 }

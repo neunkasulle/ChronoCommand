@@ -1,6 +1,6 @@
 package com.github.neunkasulle.chronocommand.model;
 
-import org.hibernate.cfg.NotYetImplementedException;
+import java.util.List;
 
 /**
  * Created by Janze on 16.01.2016.
@@ -17,5 +17,5 @@ public abstract class Regulations {
         return instance;
     }
 
-    public abstract String checkTimeSheet(TimeSheet timeSheet);
+    public abstract List<RegulationRejectionReason> checkTimeSheet(TimeSheet timeSheet);
 }

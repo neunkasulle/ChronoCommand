@@ -14,6 +14,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -40,6 +41,9 @@ public class TimeRecordView extends BaseView {
     private Button startButton;
     private Button stopButton;
     private Label elapsedTime;
+
+    private Label errorLabel = new Label("Errors:");
+    private Grid errors = new Grid();
 
     private final TimeRecordForm form = new TimeRecordForm(event -> {
         // save
@@ -159,10 +163,23 @@ public class TimeRecordView extends BaseView {
             final Button submitTimeRecordButton = new Button("Submit Timesheet");
             submitTimeRecordButton.addClickListener(event2 -> {
                 try {
+                    errorLabel.setVisible(false);
+                    errors.setVisible(false);
                     TimeSheetControl.getInstance().lockTimeSheet((TimeSheet) timeRecordSelection.getValue());
                     updateHeaderLabel();
                 } catch (ChronoCommandException e) {
                     Notification.show("Failed to lock timesheet: " + e.getReason().toString(), Notification.Type.WARNING_MESSAGE);
+                    if (e.getReason() == Reason.TIMESHEETINCOMPLETE || e.getObject() instanceof List) {
+                        List<RegulationRejectionReason> reasons = (List) e.getObject();
+                        errorLabel.setVisible(true);
+                        errors.setVisible(true);
+                        errors.setColumns("TimeRecord", "RejectionReason");
+                        for (RegulationRejectionReason reason : reasons) {
+                            errors.addRow(reason.getTimeRecord().toString(), reason.getRejectionReason().toString());
+                        }
+                        errors.recalculateColumnWidths();
+                        errors.setHeightMode(HeightMode.ROW);
+                    }
                 }
             });
             headerLayout.addComponent(submitTimeRecordButton);
@@ -342,12 +359,21 @@ public class TimeRecordView extends BaseView {
 
         formContent.addComponent(form);
 
+        // The error grid
+
+        contentPane.addComponent(errorLabel);
+        errorLabel.setVisible(false);
+        contentPane.addComponent(errors);
+        errors.setVisible(false);
+
         // Updae fortable
 
         refreshTimeRecords();
     }
 
     private void refreshTimeRecords() {
+        errorLabel.setVisible(false);
+        errors.setVisible(false);
         TimeSheet timeSheet;
         if (this.timeSheet != null) {
             timeSheet = this.timeSheet;

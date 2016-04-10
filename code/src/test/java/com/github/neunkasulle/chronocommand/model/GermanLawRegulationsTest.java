@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -53,7 +54,7 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord2 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 13, 0), LocalDateTime.of(2015, 4, 3, 16, 0), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord2);
 
-        String result = regulations.checkTimeSheet(timeSheet);
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
         assertTrue(result.isEmpty());
     }
 
@@ -71,7 +72,7 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord2 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 13, 0), LocalDateTime.of(2015, 4, 3, 18, 0), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord2);
 
-        String result = regulations.checkTimeSheet(timeSheet);
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
         assertTrue(result.isEmpty());
     }
 
@@ -83,8 +84,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord1 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 21, 31), LocalDateTime.of(2015, 4, 4, 2, 31), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord1);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.NIGHTWORK, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -95,8 +96,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord1 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 3, 0), LocalDateTime.of(2015, 4, 3, 8, 0), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord1);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.NIGHTWORK, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -110,8 +111,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord1 = new TimeRecord(LocalDateTime.of(2015, 4, 10, 2, 0), LocalDateTime.of(2015, 4, 11, 2, 0), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord1);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.NIGHTWORK, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -122,8 +123,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord1 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 7, 0), LocalDateTime.of(2015, 4, 3, 13, 15), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord1);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.BREAK, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -137,8 +138,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord2 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 13, 0), LocalDateTime.of(2015, 4, 3, 16, 15), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord2);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.MAXIMUM_WORKTIME, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -155,8 +156,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord2 = new TimeRecord(LocalDateTime.of(2015, 4, 3, 13, 0), LocalDateTime.of(2015, 4, 3, 18, 15), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord2);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.MAXIMUM_WORKTIME, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -167,8 +168,8 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.of(2015, 4, 5, 7, 0), LocalDateTime.of(2015, 4, 5, 8, 30), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.SUNDAY_WORK, result.get(0).getRejectionReason());
     }
 
     @Test
@@ -179,7 +180,7 @@ public class GermanLawRegulationsTest {
         TimeRecord timeRecord = new TimeRecord(LocalDateTime.of(2015, 1, 1, 7, 0), LocalDateTime.of(2015, 1, 1, 8, 30), category, "Foo bar", timeSheet);
         TimeSheetDAO.getInstance().saveTimeRecord(timeRecord);
 
-        String result = regulations.checkTimeSheet(timeSheet);
-        assertFalse(result.isEmpty());
+        List<RegulationRejectionReason> result = regulations.checkTimeSheet(timeSheet);
+        assertEquals(RegulationRejectionReason.RejectionReason.HOLIDAY_WORK, result.get(0).getRejectionReason());
     }
 }

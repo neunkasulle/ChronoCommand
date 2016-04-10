@@ -173,7 +173,7 @@ public class TimeSheetControl {
             throw new ChronoCommandException(Reason.NOTPERMITTED);
         }
 
-        String result = Regulations.getInstance().checkTimeSheet(timeSheet);
+        List<RegulationRejectionReason> result = Regulations.getInstance().checkTimeSheet(timeSheet);
         if (result.isEmpty()) {
             timeSheet.setTimeSheetState(TimeSheetState.LOCKED);
             TimeSheetDAO.getInstance().saveTimeSheet(timeSheet);
